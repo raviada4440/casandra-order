@@ -1,0 +1,298 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextIndex", "fullTextSearch"]
+  binaryTargets   = ["native", "debian-openssl-3.0.x", "linux-arm64-openssl-1.1.x", "rhel-openssl-3.0.x", "linux-musl-openssl-3.0.x"]
+}
+
+generator zod {
+  provider                         = "pnpm dlx zod-prisma-types"
+  writeBarrelFiles                 = "false"
+  useMultipleFiles                 = "false"
+  createRelationValuesTypes        = "true"
+  writeNullishInModelTypes         = "false"
+  addSelectType                    = "true"
+  createOptionalDefaultValuesTypes = "false"
+  validateWhereUniqueInput         = "false"
+  useDefaultValidators             = "false"
+  addIncludeType                   = "true"
+  createModelTypes                 = "true"
+  createPartialTypes               = "true"
+  addInputTypeValidation           = "false"
+  createInputTypes                 = "true"
+  coerceDate                       = "false"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  User              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId], map: "Account_userId_fkey")
+}
+
+model BIOMARKER {
+  HGNCId             String          @id @db.VarChar(20)
+  HGNCStatus         String?         @db.VarChar(128)
+  HGNCApprovedSymbol String?         @unique(map: "idx_unique_HGNCApprovedSymbol") @db.VarChar(512)
+  HGNCApprovedName   String?         @db.VarChar(512)
+  TestBiomarker      TestBiomarker[]
+}
+
+model LOINC {
+  Loinc_Num                 String            @id @db.VarChar(128)
+  COMPONENT                 String?           @db.Text
+  PROPERTY                  String?           @db.Text
+  TIME_ASPCT                String?           @db.Text
+  SYSTEM                    String?           @db.Text
+  SCALE_TYP                 String?           @db.Text
+  METHOD_TYP                String?           @db.Text
+  CLASS                     String?           @db.Text
+  VersionLastChanged        String?           @db.Text
+  CHNG_TYPE                 String?           @db.Text
+  DefinitionDescription     String?           @db.Text
+  STATUS                    String?           @db.Text
+  CONSUMER_NAME             String?           @db.Text
+  CLASSTYPE                 Int?
+  FORMULA                   String?           @db.Text
+  EXMPL_ANSWERS             String?           @db.Text
+  SURVEY_QUEST_TEXT         String?           @db.Text
+  SURVEY_QUEST_SRC          String?           @db.Text
+  UNITSREQUIRED             String?           @db.Text
+  RELATEDNAMES2             String?           @db.Text
+  SHORTNAME                 String?           @db.Text
+  ORDER_OBS                 String?           @db.Text
+  HL7_FIELD_SUBFIELD_ID     String?           @db.Text
+  EXTERNAL_COPYRIGHT_NOTICE String?           @db.Text
+  EXAMPLE_UNITS             String?           @db.Text
+  LONG_COMMON_NAME          String?           @db.Text
+  EXAMPLE_UCUM_UNITS        String?           @db.Text
+  STATUS_REASON             String?           @db.Text
+  STATUS_TEXT               String?           @db.Text
+  CHANGE_REASON_PUBLIC      String?           @db.Text
+  COMMON_TEST_RANK          Int?
+  COMMON_ORDER_RANK         Int?
+  HL7_ATTACHMENT_STRUCTURE  String?           @db.Text
+  EXTERNAL_COPYRIGHT_LINK   String?           @db.Text
+  PanelType                 String?           @db.Text
+  AskAtOrderEntry           String?           @db.Text
+  AssociatedObservations    String?           @db.Text
+  VersionFirstReleased      String?           @db.Text
+  ValidHL7AttachmentRequest String?           @db.Text
+  DisplayName               String?           @db.Text
+  TestOrderLoinc            TestOrderLoinc[]
+  TestResultLoinc           TestResultLoinc[]
+}
+
+model Lab {
+  LabId       Int           @id @default(autoincrement())
+  LabName     String?       @db.VarChar(512)
+  LabCode     String?       @db.VarChar(2)
+  Address     String?       @db.VarChar(512)
+  City        String?       @db.VarChar(512)
+  State       String?       @db.VarChar(512)
+  Zip         String?       @db.VarChar(512)
+  TestCatalog TestCatalog[]
+}
+
+model LoincComponentHierarchy {
+  Id        BigInt @id
+  ParentId  BigInt
+  Level     Int
+  Code      String @db.VarChar(128)
+  Sequence  String @db.VarChar(128)
+  CodeText  String @db.VarChar(128)
+  Component String @db.VarChar(128)
+  Property  String @db.VarChar(128)
+  Timing    String @db.VarChar(128)
+  Scale     String @db.VarChar(128)
+  Method    String @db.VarChar(128)
+}
+
+model LoincPanelHierarchy {
+  Id        Int    @id
+  ParentId  Int
+  Level     Int
+  Code      String @db.VarChar(128)
+  Sequence  String @db.VarChar(128)
+  CodeText  String @db.VarChar(128)
+  Component String @db.VarChar(128)
+  Property  String @db.VarChar(128)
+  Timing    String @db.VarChar(128)
+  Scale     String @db.VarChar(128)
+  Method    String @db.VarChar(128)
+}
+
+model LoincUniveralLabOrders {
+  Loinc_Num        String  @id @db.VarChar(128)
+  Long_Common_Name String? @db.Text
+  ORDER_OBS        String? @db.Text
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+
+  @@index([name])
+}
+
+model Session {
+  id           String   @id
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId], map: "Session_userId_fkey")
+}
+
+model TestBiomarker {
+  Id          Int         @id @default(autoincrement())
+  TestId      Int
+  LabTestId   String?     @db.VarChar(512)
+  HGNCId      String      @db.VarChar(20)
+  CreatedAt   DateTime    @default(now()) @db.DateTime(0)
+  UpdatedAt   DateTime    @default(now()) @db.DateTime(0)
+  BIOMARKER   BIOMARKER   @relation(fields: [HGNCId], references: [HGNCId], onDelete: NoAction, onUpdate: NoAction, map: "fk_HGNCId")
+  TestCatalog TestCatalog @relation(fields: [TestId], references: [TestId], onDelete: NoAction, onUpdate: NoAction, map: "tc_biomarker_fk_constraint")
+
+  @@unique([TestId, HGNCId], map: "TestBiomarker_UNIQUE")
+  @@index([HGNCId], map: "idx_HGNCId")
+  @@index([TestId], map: "idx_TestId")
+}
+
+model TestCatalog {
+  TestId                Int               @id @default(autoincrement())
+  LabId                 Int?
+  href                  String?           @db.Text
+  CasandraTestId        String            @db.VarChar(512)
+  LabTestId             String?           @db.VarChar(512)
+  TestName              String?           @db.VarChar(512)
+  AlternativeName       String?           @db.VarChar(512)
+  AlternativeName1      String?           @db.VarChar(512)
+  AlternativeName2      String?           @db.VarChar(512)
+  AlternativeName3      String?           @db.VarChar(512)
+  AlternativeName4      String?           @db.VarChar(512)
+  AlternativeName5      String?           @db.VarChar(512)
+  TestIncludes          String?           @db.Text
+  SpecimenType          String?           @db.VarChar(512)
+  SpecialInstructions   String?           @db.Text
+  Methodology           String?           @db.Text
+  TestDescription       String?           @db.Text
+  Diseases              String?           @db.Text
+  Probes                String?           @db.Text
+  ClinicalSignificance  String?           @db.Text
+  SpecimenRequirements  String?           @db.Text
+  Volume                String?           @db.VarChar(512)
+  MinimumVolume         String?           @db.VarChar(512)
+  Container             String?           @db.Text
+  Collection            String?           @db.Text
+  StabilityRequirements String?           @db.LongText
+  StorageTransportation String?           @db.Text
+  PatientPreparation    String?           @db.Text
+  CausesForRejection    String?           @db.Text
+  TestUsage             String?           @db.Text
+  TestLimitations       String?           @db.Text
+  CPTCodes              String?           @db.Text
+  NewYorkApproved       String?           @db.VarChar(512)
+  LevelOfService        String?           @db.VarChar(512)
+  TurnAroundTime        String?           @db.VarChar(512)
+  AssayCategory         String?           @db.LongText
+  ReferenceRanges       String?           @db.LongText
+  SetupSchedule         String?           @db.LongText
+  AlternativeSpecimen   String?           @db.LongText
+  LoincCodesText        String?           @db.LongText
+  LoincCodesHTML        String?           @db.LongText
+  CreatedAt             DateTime          @default(now()) @db.DateTime(0)
+  UpdatedAt             DateTime          @default(now()) @db.DateTime(0)
+  TestBiomarker         TestBiomarker[]
+  Lab                   Lab?              @relation(fields: [LabId], references: [LabId], onDelete: NoAction, onUpdate: NoAction, map: "lab_fk_constraint")
+  TestCptCode           TestCptCode[]
+  TestOrderLoinc        TestOrderLoinc[]
+  TestResultLoinc       TestResultLoinc[]
+
+  @@unique([LabId, LabTestId], map: "LabAndLabTestId")
+  @@index([LabId], map: "lab_fk_constraint")
+}
+
+model TestCptCode {
+  Id          Int         @id @default(autoincrement())
+  TestId      Int
+  LabTestId   String?     @db.VarChar(512)
+  CptCode     String?     @db.VarChar(512)
+  Modifier    String?     @db.VarChar(512)
+  Comments    String?     @db.Text
+  CreatedAt   DateTime    @default(now()) @db.DateTime(0)
+  UpdatedAt   DateTime    @default(now()) @db.DateTime(0)
+  TestCatalog TestCatalog @relation(fields: [TestId], references: [TestId], onDelete: NoAction, onUpdate: NoAction, map: "tc_cptcode_fk_constraint")
+
+  @@index([TestId], map: "tc_cptcode_fk_constraint")
+}
+
+model TestOrderLoinc {
+  Id          Int         @id @default(autoincrement())
+  TestId      Int
+  LabTestId   String?     @db.VarChar(512)
+  OrderLoinc  String?     @db.VarChar(512)
+  CreatedAt   DateTime    @default(now()) @db.DateTime(0)
+  UpdatedAt   DateTime    @default(now()) @db.DateTime(0)
+  LOINC       LOINC?      @relation(fields: [OrderLoinc], references: [Loinc_Num], onDelete: NoAction, onUpdate: NoAction, map: "fk_order_loinc")
+  TestCatalog TestCatalog @relation(fields: [TestId], references: [TestId], onDelete: NoAction, onUpdate: NoAction, map: "tc_order_loinc_fk_constraint")
+
+  @@unique([TestId, OrderLoinc], map: "TestId_OrderLoin_UNIQUE")
+  @@index([OrderLoinc], map: "idx_OrderLoinc")
+  @@index([TestId], map: "tc_order_loinc_fk_constraint")
+}
+
+model TestResultLoinc {
+  Id             Int         @id @default(autoincrement())
+  TestId         Int
+  LabTestId      String?     @db.VarChar(512)
+  ResultCode     String?     @db.VarChar(512)
+  ResultCodeName String?     @db.VarChar(512)
+  UofM           String?     @db.VarChar(512)
+  ResultLoinc    String?     @db.VarChar(512)
+  CreatedAt      DateTime    @default(now()) @db.DateTime(0)
+  UpdatedAt      DateTime    @default(now()) @db.DateTime(0)
+  LOINC          LOINC?      @relation(fields: [ResultLoinc], references: [Loinc_Num], onDelete: NoAction, onUpdate: NoAction, map: "fk_result_loinc")
+  TestCatalog    TestCatalog @relation(fields: [TestId], references: [TestId], onDelete: NoAction, onUpdate: NoAction, map: "tc_result_loinc_fk_constraint")
+
+  @@index([ResultLoinc], map: "idx_ResultLoinc")
+  @@index([TestId], map: "tc_result_loinc_fk_constraint")
+}
+
+model User {
+  id            String    @id
+  name          String?
+  email         String    @unique
+  password      String    @db.VarChar(255)
+  emailVerified DateTime?
+  image         String?
+  Account       Account[]
+  Session       Session[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
