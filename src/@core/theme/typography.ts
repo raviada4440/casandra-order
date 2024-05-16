@@ -47,21 +47,21 @@ const typography = (fontFamily: string): Theme['typography'] =>
       lineHeight: 1.5556
     },
     h6: {
-      fontSize: '0.9375rem',
+      fontSize: '0.875rem',
       fontWeight: 500,
       lineHeight: 1.46667
     },
     subtitle1: {
-      fontSize: '0.9375rem',
+      fontSize: '0.875rem',
       lineHeight: 1.46667
     },
     subtitle2: {
-      fontSize: '0.8125rem',
+      fontSize: '0.75rem',
       fontWeight: 400,
       lineHeight: 1.53846154
     },
     body1: {
-      fontSize: '0.9375rem',
+      fontSize: '0.875rem',
       lineHeight: 1.46667
     },
     body2: {
@@ -69,7 +69,7 @@ const typography = (fontFamily: string): Theme['typography'] =>
       lineHeight: 1.53846154
     },
     button: {
-      fontSize: '0.9375rem',
+      fontSize: '0.875rem',
       lineHeight: 1.46667,
       textTransform: 'none'
     },

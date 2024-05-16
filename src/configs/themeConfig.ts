@@ -54,11 +54,11 @@ export type Config = {
 
 const themeConfig: Config = {
   templateName: 'Casandra',
-  settingsCookieName: 'casandra-tc-settings-1',
+  settingsCookieName: 'casandra-order-settings-1',
   mode: 'light', // 'system', 'light', 'dark'
   skin: 'default', // 'default', 'bordered'
-  semiDark: false, // true, false
-  layout: 'horizontal', // 'vertical', 'collapsed', 'horizontal'
+  semiDark: true, // true, false
+  layout: 'collapsed', // 'vertical', 'collapsed', 'horizontal'
   layoutPadding: 24, // Common padding for header, content, footer layout components (in px)
   compactContentWidth: 1440, // in px
   navbar: {

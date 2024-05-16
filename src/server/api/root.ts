@@ -4,6 +4,7 @@ import { loincRouter } from "./routers/loinc";
 import { cptRouter } from "./routers/cpt";
 import { biomarkerRouter } from "./routers/biomarker";
 import { userRouter } from "./routers/user";
+import { labOrderRouter } from "./routers/laborder";
 
 /**
  * This is the primary router for your server.
@@ -15,6 +16,7 @@ export const appRouter = createTRPCRouter({
   loinc: loincRouter,
   cpt: cptRouter,
   biomarker: biomarkerRouter,
+  laborders: labOrderRouter,
   user: userRouter
 });
 

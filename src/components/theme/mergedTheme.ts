@@ -6,6 +6,9 @@
  * Export this file and import it in the `@components/theme/index.tsx` file to use the merged theme.
  */
 
+// Next Imports
+import { Open_Sans } from "next/font/google";
+
 // MUI Imports
 import { deepmerge } from '@mui/utils'
 import type { Theme } from '@mui/material/styles'
@@ -17,10 +20,18 @@ import type { SystemMode } from '@core/types'
 // Core Theme Imports
 import coreTheme from '@core/theme'
 
+const opensans = Open_Sans({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+});
+
 const mergedTheme = (settings: Settings, mode: SystemMode, direction: Theme['direction']) => {
   // Vars
   const userTheme = {
     // Write your overrides here.
+    typography: {
+      fontFamily: opensans.style.fontFamily
+    }
   } as Theme
 
   return deepmerge(coreTheme(settings, mode, direction), userTheme)

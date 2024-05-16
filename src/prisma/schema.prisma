@@ -46,12 +46,30 @@ model Account {
   @@index([userId], map: "Account_userId_fkey")
 }
 
+model Attachment {
+  Id                 String               @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  AttachmentType     String?              @db.VarChar(45)
+  AttachmentUrl      String?              @db.VarChar(512)
+  CreatedAt          DateTime?            @default(now()) @db.DateTime(0)
+  UpdatedAt          DateTime?            @default(now()) @db.DateTime(0)
+  LabOrderAttachment LabOrderAttachment[]
+}
+
 model BIOMARKER {
   HGNCId             String          @id @db.VarChar(20)
   HGNCStatus         String?         @db.VarChar(128)
   HGNCApprovedSymbol String?         @unique(map: "idx_unique_HGNCApprovedSymbol") @db.VarChar(512)
   HGNCApprovedName   String?         @db.VarChar(512)
   TestBiomarker      TestBiomarker[]
+}
+
+model ICD {
+  Id               String        @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  Code             String?       @db.VarChar(45)
+  ShortDescription String?       @db.Text
+  CreatedAt        DateTime?     @default(now()) @db.DateTime(0)
+  UpdatedAt        DateTime?     @default(now()) @db.DateTime(0)
+  LabOrderIcd      LabOrderIcd[]
 }
 
 model LOINC {
@@ -110,6 +128,123 @@ model Lab {
   TestCatalog TestCatalog[]
 }
 
+model LabOrder {
+  Id                                             String               @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  OrderNumber                                    String?              @db.VarChar(45)
+  AccessionNumber                                String?              @db.VarChar(45)
+  OrderingProviderId                             String?              @db.VarChar(45)
+  TreatingProviderId                             String?              @db.VarChar(45)
+  PatientId                                      String?              @db.VarChar(45)
+  PatientMRN                                     String?              @db.VarChar(45)
+  PatientMobile                                  String?              @db.Text
+  PatientEmail                                   String?              @db.Text
+  OrganizationId                                 String?              @db.VarChar(45)
+  OrderDate                                      DateTime?            @default(now()) @db.DateTime(0)
+  OrderNotes                                     String?              @db.Text
+  CreatedAt                                      DateTime?            @default(now()) @db.DateTime(0)
+  UpdatedAt                                      DateTime?            @default(now()) @db.DateTime(0)
+  OrderingProvider                               Provider?            @relation("LabOrder_OrderingProviderIdToProvider", fields: [OrderingProviderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "laborder_ibfk_1")
+  TreatingProvider                               Provider?            @relation("LabOrder_TreatingProviderIdToProvider", fields: [TreatingProviderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "laborder_ibfk_2")
+  Patient                                        Patient?             @relation(fields: [PatientId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "laborder_ibfk_3")
+  Organization                                   Organization?        @relation(fields: [OrganizationId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "laborder_ibfk_4")
+  LabOrderAttachment                             LabOrderAttachment[]
+  LabOrderBilling                                LabOrderBilling[]
+  LabOrderIcd                                    LabOrderIcd[]
+  LabOrderSpecimen                               LabOrderSpecimen[]
+  LabOrderStatus                                 LabOrderStatus[]
+  LabOrderTest                                   LabOrderTest[]
+
+  @@index([OrderingProviderId], map: "ordering_provider_order_idx")
+  @@index([OrganizationId], map: "organization_order_idx")
+  @@index([PatientId], map: "patient_order_idx")
+  @@index([TreatingProviderId], map: "treating_provider_order_idx")
+}
+
+model LabOrderAttachment {
+  Id           String      @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  LabOrderId   String?     @db.VarChar(45)
+  AttachmentId String?     @db.VarChar(45)
+  CreatedAt    DateTime?   @default(now()) @db.DateTime(0)
+  UpdatedAt    DateTime?   @default(now()) @db.DateTime(0)
+  LabOrder     LabOrder?   @relation(fields: [LabOrderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "laborderattachment_ibfk_1")
+  Attachment   Attachment? @relation(fields: [AttachmentId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "laborderattachment_ibfk_2")
+
+  @@index([AttachmentId], map: "laborder_attachment_attachment_idx")
+  @@index([LabOrderId], map: "laborder_attachment_idx")
+}
+
+model LabOrderBilling {
+  Id                       String    @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  LabOrderId               String?   @db.VarChar(45)
+  BillToId                 String?   @db.VarChar(45)
+  HealthPalnId             String?   @db.VarChar(45)
+  PatientStatus            String?   @db.VarChar(45)
+  SponoseredTestCouponCode String?   @db.VarChar(45)
+  CreatedAt                DateTime? @default(now()) @db.DateTime(0)
+  UpdatedAt                DateTime? @default(now()) @db.DateTime(0)
+  LabOrder                 LabOrder? @relation(fields: [LabOrderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "laborderbilling_ibfk_1")
+
+  @@index([LabOrderId], map: "laborder_billing_idx")
+}
+
+model LabOrderIcd {
+  Id         String    @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  LabOrderId String?   @db.VarChar(45)
+  ICDId      String?   @db.VarChar(45)
+  CreatedAt  DateTime? @default(now()) @db.DateTime(0)
+  UpdatedAt  DateTime? @default(now()) @db.DateTime(0)
+  LabOrder   LabOrder? @relation(fields: [LabOrderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "labordericd_ibfk_1")
+  ICD        ICD?      @relation(fields: [ICDId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "labordericd_ibfk_2")
+
+  @@index([ICDId], map: "laborder_icd_icd_idx")
+  @@index([LabOrderId], map: "laborder_icd_idx")
+}
+
+model LabOrderSpecimen {
+  Id               String    @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  LabOrderId       String?   @db.VarChar(45)
+  SpecimenType     String?   @db.VarChar(45)
+  SpecimenCount    String?   @db.VarChar(45)
+  CollectedDate    DateTime? @db.Date
+  CollectedTime    String?   @db.VarChar(45)
+  SpecimenID       String?   @db.VarChar(45)
+  BodySite         String?   @db.VarChar(45)
+  TumorType        String?   @db.VarChar(45)
+  Fixative         String?   @db.VarChar(45)
+  FixativeDuration String?   @db.VarChar(45)
+  ColdIschemicTime String?   @db.VarChar(45)
+  CreatedAt        DateTime? @default(now()) @db.DateTime(0)
+  UpdatedAt        DateTime? @default(now()) @db.DateTime(0)
+  LabOrder         LabOrder? @relation(fields: [LabOrderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "laborderspecimen_ibfk_1")
+
+  @@index([LabOrderId], map: "laborder_specimen_idx")
+}
+
+model LabOrderStatus {
+  Id         String    @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  LabOrderId String?   @db.VarChar(45)
+  Status     String?   @db.VarChar(45)
+  StatusDate DateTime? @db.DateTime(0)
+  CreatedAt  DateTime? @default(now()) @db.DateTime(0)
+  UpdatedAt  DateTime? @default(now()) @db.DateTime(0)
+  LabOrder   LabOrder? @relation(fields: [LabOrderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "laborderstatus_ibfk_1")
+
+  @@index([LabOrderId], map: "laborder_status_idx")
+}
+
+model LabOrderTest {
+  Id          String       @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  LabOrderId  String?      @db.VarChar(45)
+  TestId      Int?
+  CreatedAt   DateTime?    @default(now()) @db.DateTime(0)
+  UpdatedAt   DateTime?    @default(now()) @db.DateTime(0)
+  LabOrder    LabOrder?    @relation(fields: [LabOrderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "labordertest_ibfk_1")
+  TestCatalog TestCatalog? @relation(fields: [TestId], references: [TestId], onDelete: NoAction, onUpdate: NoAction, map: "labordertest_ibfk_2")
+
+  @@index([LabOrderId], map: "laborder_test_idx")
+  @@index([TestId], map: "laborder_test_test_id_idx")
+}
+
 model LoincComponentHierarchy {
   Id        BigInt @id
   ParentId  BigInt
@@ -144,6 +279,57 @@ model LoincUniveralLabOrders {
   ORDER_OBS        String? @db.Text
 }
 
+model Organization {
+  Id                       String                     @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  href                     String?                    @db.Text
+  ParentId                 String?                    @db.VarChar(45)
+  Level                    Int?
+  ParentOrgName            String?                    @db.VarChar(512)
+  OrgName                  String?                    @db.VarChar(512)
+  OrgType                  String?                    @db.VarChar(512)
+  OrgSpecialty             String?                    @db.VarChar(512)
+  OrgAddress               String?                    @db.VarChar(512)
+  OrgCity                  String?                    @db.VarChar(512)
+  OrgState                 String?                    @db.VarChar(512)
+  OrgZip                   String?                    @db.VarChar(512)
+  LabOrder                 LabOrder[]
+  Organization             Organization?              @relation("OrganizationToOrganization", fields: [ParentId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "parent_fk")
+  ChildOrganization        Organization[]             @relation("OrganizationToOrganization")
+  OrganizationFavoriteTest OrganizationFavoriteTest[]
+  ProviderOrganization     ProviderOrganization[]
+
+  @@index([ParentId], map: "parentid_idx")
+}
+
+model OrganizationFavoriteTest {
+  Id             String        @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  OrganizationId String?       @db.VarChar(45)
+  ParentId       String?       @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  ParentName     String?       @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  Level          Int?          @default(0)
+  TestId         Int?
+  CreatedAt      DateTime?     @default(now()) @db.DateTime(0)
+  UpdatedAt      DateTime?     @default(now()) @db.DateTime(0)
+  Organization   Organization? @relation(fields: [OrganizationId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "organizationfavoritetest_ibfk_1")
+  TestCatalog    TestCatalog?  @relation(fields: [TestId], references: [TestId], onDelete: NoAction, onUpdate: NoAction, map: "organizationfavoritetest_ibfk_2")
+
+  @@index([ParentId], map: "org_parent_id_idx")
+  @@index([OrganizationId], map: "org_test_idx")
+  @@index([TestId], map: "org_test_test_id_idx")
+}
+model Patient {
+  Id          String     @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  FirstName   String?    @db.VarChar(45)
+  LastName    String?    @db.VarChar(512)
+  DateOfBirth DateTime?  @db.Date
+  Gender      String?    @db.VarChar(512)
+  Email       String?    @db.VarChar(512)
+  Mobile      String?    @db.Text
+  CreatedAt   DateTime?  @default(now()) @db.DateTime(0)
+  UpdatedAt   DateTime?  @default(now()) @db.DateTime(0)
+  LabOrder    LabOrder[]
+}
+
 model Post {
   id        Int      @id @default(autoincrement())
   name      String
@@ -151,6 +337,75 @@ model Post {
   updatedAt DateTime
 
   @@index([name])
+}
+
+model Provider {
+  Id                                             String                 @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  href                                           String?                @db.Text
+  NPI                                            String?                @db.VarChar(45)
+  Name                                           String?                @db.VarChar(512)
+  Credentials                                    String?                @db.VarChar(512)
+  Specialty                                      String?                @db.VarChar(512)
+  Aboutme                                        String?                @db.Text
+  Gender                                         String?                @db.VarChar(512)
+  ProviderType                                   String?                @db.VarChar(512)
+  Affiliation                                    String?                @db.VarChar(512)
+  ProceduresAndResearch                          String?                @db.Text
+  SpecialInterests                               String?                @db.Text
+  OrderingProviderLabOrder                       LabOrder[]             @relation("LabOrder_OrderingProviderIdToProvider")
+  TreatingProviderLabOrder                       LabOrder[]             @relation("LabOrder_TreatingProviderIdToProvider")
+  ProviderEducation                              ProviderEducation[]
+  ProviderFavoriteTest                           ProviderFavoriteTest[]
+  ProviderOrganization                           ProviderOrganization[]
+}
+
+model ProviderEducation {
+  Id              String   @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  ProviderId      String   @db.VarChar(45)
+  ProviderNPI     String?  @db.VarChar(45)
+  Name            String?  @db.VarChar(512)
+  EducationType   String?  @db.VarChar(512)
+  SchoolName      String?  @db.VarChar(512)
+  AreaOfEducation String?  @db.Text
+  Provider        Provider @relation(fields: [ProviderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "provider_education_fk")
+
+  @@index([ProviderId], map: "provider_education_fk")
+}
+
+model ProviderFavoriteTest {
+  Id          String       @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  ProviderId  String?      @db.VarChar(45)
+  ParentId    String?      @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  ParentName  String?      @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  Level       Int?         @default(0)
+  TestId      Int?
+  CreatedAt   DateTime?    @default(now()) @db.DateTime(0)
+  UpdatedAt   DateTime?    @default(now()) @db.DateTime(0)
+  Provider    Provider?    @relation(fields: [ProviderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "providerfavoritetest_ibfk_1")
+  TestCatalog TestCatalog? @relation(fields: [TestId], references: [TestId], onDelete: NoAction, onUpdate: NoAction, map: "providerfavoritetest_ibfk_2")
+
+  @@index([ParentId], map: "provider_parent_id_idx")
+  @@index([ProviderId], map: "provider_test_idx")
+  @@index([TestId], map: "provider_test_test_id_idx")
+}
+
+model ProviderOrganization {
+  Id             String        @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  ProviderId     String        @db.VarChar(45)
+  OrganizationId String?       @db.VarChar(45)
+  ProviderNPI    String?       @db.VarChar(45)
+  Name           String?       @db.VarChar(512)
+  ParentOrgName  String?       @db.VarChar(512)
+  OrgName        String?       @db.VarChar(512)
+  OrgAddress     String?       @db.VarChar(512)
+  OrgCity        String?       @db.VarChar(512)
+  OrgState       String?       @db.VarChar(512)
+  OrgZip         String?       @db.VarChar(512)
+  Organization   Organization? @relation(fields: [OrganizationId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "organization_fk")
+  Provider       Provider      @relation(fields: [ProviderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "provider_fk")
+
+  @@index([OrganizationId], map: "organization_fk")
+  @@index([ProviderId], map: "provider_fk")
 }
 
 model Session {
@@ -179,54 +434,57 @@ model TestBiomarker {
 }
 
 model TestCatalog {
-  TestId                Int               @id @default(autoincrement())
-  LabId                 Int?
-  href                  String?           @db.Text
-  CasandraTestId        String            @db.VarChar(512)
-  LabTestId             String?           @db.VarChar(512)
-  TestName              String?           @db.VarChar(512)
-  AlternativeName       String?           @db.VarChar(512)
-  AlternativeName1      String?           @db.VarChar(512)
-  AlternativeName2      String?           @db.VarChar(512)
-  AlternativeName3      String?           @db.VarChar(512)
-  AlternativeName4      String?           @db.VarChar(512)
-  AlternativeName5      String?           @db.VarChar(512)
-  TestIncludes          String?           @db.Text
-  SpecimenType          String?           @db.VarChar(512)
-  SpecialInstructions   String?           @db.Text
-  Methodology           String?           @db.Text
-  TestDescription       String?           @db.Text
-  Diseases              String?           @db.Text
-  Probes                String?           @db.Text
-  ClinicalSignificance  String?           @db.Text
-  SpecimenRequirements  String?           @db.Text
-  Volume                String?           @db.VarChar(512)
-  MinimumVolume         String?           @db.VarChar(512)
-  Container             String?           @db.Text
-  Collection            String?           @db.Text
-  StabilityRequirements String?           @db.LongText
-  StorageTransportation String?           @db.Text
-  PatientPreparation    String?           @db.Text
-  CausesForRejection    String?           @db.Text
-  TestUsage             String?           @db.Text
-  TestLimitations       String?           @db.Text
-  CPTCodes              String?           @db.Text
-  NewYorkApproved       String?           @db.VarChar(512)
-  LevelOfService        String?           @db.VarChar(512)
-  TurnAroundTime        String?           @db.VarChar(512)
-  AssayCategory         String?           @db.LongText
-  ReferenceRanges       String?           @db.LongText
-  SetupSchedule         String?           @db.LongText
-  AlternativeSpecimen   String?           @db.LongText
-  LoincCodesText        String?           @db.LongText
-  LoincCodesHTML        String?           @db.LongText
-  CreatedAt             DateTime          @default(now()) @db.DateTime(0)
-  UpdatedAt             DateTime          @default(now()) @db.DateTime(0)
-  TestBiomarker         TestBiomarker[]
-  Lab                   Lab?              @relation(fields: [LabId], references: [LabId], onDelete: NoAction, onUpdate: NoAction, map: "lab_fk_constraint")
-  TestCptCode           TestCptCode[]
-  TestOrderLoinc        TestOrderLoinc[]
-  TestResultLoinc       TestResultLoinc[]
+  TestId                   Int                        @id @default(autoincrement())
+  LabId                    Int?
+  href                     String?                    @db.Text
+  CasandraTestId           String                     @db.VarChar(512)
+  LabTestId                String?                    @db.VarChar(512)
+  TestName                 String?                    @db.VarChar(512)
+  AlternativeName          String?                    @db.VarChar(512)
+  AlternativeName1         String?                    @db.VarChar(512)
+  AlternativeName2         String?                    @db.VarChar(512)
+  AlternativeName3         String?                    @db.VarChar(512)
+  AlternativeName4         String?                    @db.VarChar(512)
+  AlternativeName5         String?                    @db.VarChar(512)
+  TestIncludes             String?                    @db.Text
+  SpecimenType             String?                    @db.VarChar(512)
+  SpecialInstructions      String?                    @db.Text
+  Methodology              String?                    @db.Text
+  TestDescription          String?                    @db.Text
+  Diseases                 String?                    @db.Text
+  Probes                   String?                    @db.Text
+  ClinicalSignificance     String?                    @db.Text
+  SpecimenRequirements     String?                    @db.Text
+  Volume                   String?                    @db.VarChar(512)
+  MinimumVolume            String?                    @db.VarChar(512)
+  Container                String?                    @db.Text
+  Collection               String?                    @db.Text
+  StabilityRequirements    String?                    @db.LongText
+  StorageTransportation    String?                    @db.Text
+  PatientPreparation       String?                    @db.Text
+  CausesForRejection       String?                    @db.Text
+  TestUsage                String?                    @db.Text
+  TestLimitations          String?                    @db.Text
+  CPTCodes                 String?                    @db.Text
+  NewYorkApproved          String?                    @db.VarChar(512)
+  LevelOfService           String?                    @db.VarChar(512)
+  TurnAroundTime           String?                    @db.VarChar(512)
+  AssayCategory            String?                    @db.LongText
+  ReferenceRanges          String?                    @db.LongText
+  SetupSchedule            String?                    @db.LongText
+  AlternativeSpecimen      String?                    @db.LongText
+  LoincCodesText           String?                    @db.LongText
+  LoincCodesHTML           String?                    @db.LongText
+  CreatedAt                DateTime                   @default(now()) @db.DateTime(0)
+  UpdatedAt                DateTime                   @default(now()) @db.DateTime(0)
+  LabOrderTest             LabOrderTest[]
+  OrganizationFavoriteTest OrganizationFavoriteTest[]
+  ProviderFavoriteTest     ProviderFavoriteTest[]
+  TestBiomarker            TestBiomarker[]
+  Lab                      Lab?                       @relation(fields: [LabId], references: [LabId], onDelete: NoAction, onUpdate: NoAction, map: "lab_fk_constraint")
+  TestCptCode              TestCptCode[]
+  TestOrderLoinc           TestOrderLoinc[]
+  TestResultLoinc          TestResultLoinc[]
 
   @@unique([LabId, LabTestId], map: "LabAndLabTestId")
   @@index([LabId], map: "lab_fk_constraint")

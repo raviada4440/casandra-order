@@ -21,16 +21,16 @@ const StepperWrapper = styled(Box)<BoxProps>(({ theme }) => {
         justifyContent: 'center'
       },
       '& .step-number': {
-        ...theme.typography.h4,
-        marginRight: theme.spacing(2)
+        ...theme.typography.h6,
+        marginRight: theme.spacing(1)
       },
       '& .step-title': {
-        ...theme.typography.body1,
-        letterSpacing: 0.15,
-        fontWeight: 500
+        ...theme.typography.h6,
+        letterSpacing: 0.20,
+        fontWeight: 600
       },
       '& .step-subtitle': {
-        ...theme.typography.body2,
+        ...theme.typography.subtitle2,
         color: 'var(--mui-palette-text-secondary)'
       },
       '& .MuiStepLabel-root.Mui-disabled': {
@@ -70,12 +70,20 @@ const StepperWrapper = styled(Box)<BoxProps>(({ theme }) => {
     },
     '& .MuiStepper-vertical': {
       '& .MuiStep-root': {
+        marginBottom: theme.spacing(4),
         '& .step-label': {
-          justifyContent: 'flex-start'
+          ...theme.typography.subtitle2,
+          justifyContent: 'flex-start',
+          alignItems: 'flex-start',
+        },
+        '& .MuiStepIcon-root': {
+          justifyContent: 'flex-start',
+          alignItems: 'flex-start'
         },
         '& .MuiStepContent-root': {
-          borderInlineStartWidth: 3,
-          marginLeft: theme.spacing(2.25),
+          borderInlineStartWidth: 0,
+          marginLeft: theme.spacing(0),
+          paddingLeft: theme.spacing(0),
           borderColor: theme.vars.palette.primary.main
         },
         '& .button-wrapper': {
