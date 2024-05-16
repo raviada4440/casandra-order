@@ -69,7 +69,7 @@ const data: CustomInputVerticalData[] = [
   }
 ]
 
-const StepPropertyDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
+const StepIcdDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
   // Vars
   const initialSelectedOption: string = data.filter(item => item.isSelected)[
     data.filter(item => item.isSelected).length - 1
@@ -174,4 +174,4 @@ const StepPropertyDetails = ({ activeStep, handleNext, handlePrev, steps }: Prop
   )
 }
 
-export default StepPropertyDetails
+export default StepIcdDetails

@@ -23,7 +23,7 @@ type Props = {
   steps: { title: string; subtitle: string }[]
 }
 
-const StepPriceDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
+const StepBillingDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
   return (
     <Grid container spacing={5}>
       <Grid item xs={12} md={6}>
@@ -161,4 +161,4 @@ const StepPriceDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) 
   )
 }
 
-export default StepPriceDetails
+export default StepBillingDetails

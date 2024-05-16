@@ -1,7 +1,8 @@
 'use client'
 
 // React Imports
-import { createContext, useContext, useState } from 'react'
+import type { Dispatch, SetStateAction} from 'react';
+import { createContext, useState } from 'react'
 
 // MUI Imports
 import Card from '@mui/material/Card'
@@ -16,11 +17,17 @@ import { styled } from '@mui/material/styles'
 import Grid from '@mui/material/Grid'
 
 // Component Imports
-import StepPersonalDetails from './StepPersonalDetails'
-import StepPropertyDetails from './StepPropertyDetails'
-import StepPropertyFeatures from './StepPropertyFeatures'
-import StepPropertyArea from './StepPropertyArea'
-import StepPriceDetails from './StepPriceDetails'
+import StepPatientDetails from './StepPatientDetails'
+import StepIcdDetails from './StepIcdDetails'
+import StepTestDetails from './StepTestDetails'
+import StepSpecimenDetails from './StepSpecimenDetails'
+import StepBillingDetails from './StepBillingDetails'
+
+import PatientSubtitle from './subtitle/Patient';
+import IcdSubtitle from './subtitle/IcdCodes';
+import TestSubtitle from './subtitle/Tests';
+import SpecimenSubtitle from './subtitle/Specimen';
+import BillingSubtitle from './subtitle/Billing';
 
 // Styled Component Imports
 import StepperWrapper from '@core/styles/stepper'
@@ -28,7 +35,7 @@ import StepperCustomDot from '@views/forms/form-wizard/StepperCustomDot'
 
 import AccountCard from './AccountCard'
 
-import type { LabOrderWithRelations, Patient } from '~prisma/generated/zod'
+import type { LabOrderWithRelations } from '~prisma/generated/zod'
 
 // Types
 
@@ -39,12 +46,8 @@ const steps = [
     subtitle: 'Patient'
   },
   {
-    title: 'Patient History',
+    title: 'ICD Codes',
     subtitle: 'Patient History'
-  },
-  {
-    title: 'Routine Biomarkers',
-    subtitle: 'Routine Biomarkers'
   },
   {
     title: 'Test Selection',
@@ -63,16 +66,34 @@ const steps = [
 const getStepContent = (step: number, handleNext: () => void, handlePrev: () => void) => {
   const Tag =
     step === 0
-      ? StepPersonalDetails
+      ? StepPatientDetails
       : step === 1
-        ? StepPropertyDetails
+        ? StepIcdDetails
         : step === 2
-          ? StepPropertyFeatures
+          ? StepTestDetails
           : step === 3
-            ? StepPropertyArea
-            : StepPriceDetails
+            ? StepSpecimenDetails
+            : StepBillingDetails
+
+
 
   return <Tag activeStep={step} handleNext={handleNext} handlePrev={handlePrev} steps={steps} />
+}
+
+
+const getSubtitle = (step: number) => {
+  const Subtitle =
+    step === 0
+      ? PatientSubtitle
+      : step === 1
+        ? IcdSubtitle
+        : step === 2
+          ? TestSubtitle
+          : step === 3
+            ? SpecimenSubtitle
+            : BillingSubtitle
+
+  return <Subtitle />
 }
 
 // Styled Components
@@ -86,30 +107,21 @@ const ConnectorHeight = styled(StepConnector)(() => ({
 }))
 
 type LabOrderContextType = {
-  labOrder: LabOrderWithRelations
+  labOrder: LabOrderWithRelations,
+  setLabOrder: Dispatch<SetStateAction<LabOrderWithRelations>>
 };
 
 // Step 1: Create a new context
-const LabOrderContext = createContext<LabOrderContextType>({} as LabOrderContextType)
-
-// Use this custom hook in child components to access labOrder
-export const useLabOrder = () => useContext(LabOrderContext)
+export const LabOrderContext = createContext<LabOrderContextType>({} as LabOrderContextType)
 
 const AddLabOrder = () => {
   // States
   const [activeStep, setActiveStep] = useState<number>(0)
+  const [labOrder, setLabOrder] = useState<LabOrderWithRelations>({} as LabOrderWithRelations)
 
-  const emptyLabOrder = {} as LabOrderWithRelations
-
-  const [labOrder, setLabOrder] = useState<LabOrderWithRelations>(emptyLabOrder)
-
-
-  const handleNext = (patient: Patient) => {
-    console.log('patient', patient)
-
+  const handleNext = () => {
     if (activeStep !== steps.length - 1) {
       setActiveStep(activeStep + 1)
-      setLabOrder({ ...labOrder, Patient: patient });
     } else {
       alert('Submitted..!!')
     }
@@ -122,7 +134,7 @@ const AddLabOrder = () => {
   }
 
   return (
-    <LabOrderContext.Provider value={{ labOrder }}>
+    <LabOrderContext.Provider value={{ labOrder, setLabOrder }}>
       <Grid container spacing={6}>
         <Grid item xs={12}>
           <AccountCard totalOrdersInTransit={0} totalIncompleteOrders={0} />
@@ -143,28 +155,7 @@ const AddLabOrder = () => {
                                 {step.title}
                               </Typography>
                               <StepContent TransitionProps={{ in: true }}>
-                                <div>
-                                  <div className='flex items-center gap-4'>
-                                    <Typography className='step-subtitle min-is-[65px]'>Name:</Typography>
-                                    <Typography className='step-subtitle'>{`${labOrder.Patient?.FirstName} ${labOrder.Patient?.LastName}`}</Typography>
-                                  </div>
-                                  <div className='flex items-center gap-4'>
-                                    <Typography className='step-subtitle min-is-[65px]'>Bank name:</Typography>
-                                    <Typography className='step-subtitle'>American Bank</Typography>
-                                  </div>
-                                  <div className='flex items-center gap-4'>
-                                    <Typography className='step-subtitle min-is-[65px]'>Country:</Typography>
-                                    <Typography className='step-subtitle'>United States</Typography>
-                                  </div>
-                                  <div className='flex items-center gap-4'>
-                                    <Typography className='step-subtitle min-is-[65px]'>IBAN:</Typography>
-                                    <Typography className='step-subtitle'>ETD95476213874685</Typography>
-                                  </div>
-                                  <div className='flex items-center gap-4'>
-                                    <Typography className='step-subtitle min-is-[65px]'>SWIFT code:</Typography>
-                                    <Typography className='step-subtitle'>BR91905</Typography>
-                                  </div>
-                                </div>
+                                {getSubtitle(index)}
                               </StepContent>
                             </div>
                           </div>

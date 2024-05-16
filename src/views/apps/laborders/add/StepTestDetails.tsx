@@ -41,7 +41,7 @@ const furnishingArray: string[] = [
   'Washing Machine'
 ]
 
-const StepPropertyFeatures = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
+const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
   // States
   const [furnishingDetails, setFurnishingDetails] = useState<string[]>(['Fridge', 'AC', 'TV'])
 
@@ -136,4 +136,4 @@ const StepPropertyFeatures = ({ activeStep, handleNext, handlePrev, steps }: Pro
   )
 }
 
-export default StepPropertyFeatures
+export default StepTestDetails
