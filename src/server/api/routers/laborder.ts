@@ -150,4 +150,28 @@ export const labOrderRouter = createTRPCRouter({
     })
   }),
 
+  getIcdCodes: publicProcedure
+  .input(z.object({ searchStr: z.string() }))
+  .query(async ({ ctx, input}) => {
+    return ctx.db.iCD.findMany({
+      where: {
+        OR: [
+          {
+            Code: {
+              contains: input.searchStr,
+            },
+          },
+          {
+            ShortDescription: {
+              contains: input.searchStr,
+            },
+          }
+        ],
+      },
+      orderBy: { Code: "asc" },
+      take: input.searchStr == undefined || '' ? undefined : 10,
+    })
+  }),
+
+
 })

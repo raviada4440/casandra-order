@@ -28,21 +28,21 @@ const SpecimenSubtitle = () => {
 
   return (
     <div>
-      { labOrder.LabOrderSpecimen && labOrder.LabOrderSpecimen.length > 1 ? labOrder.LabOrderSpecimen?.map((specimen, index) => (
+      { labOrder.LabOrderSpecimen && labOrder.LabOrderSpecimen.length > 0 ? labOrder.LabOrderSpecimen?.map((specimen, index) => (
         <div key={index} className='flex items-center gap-4'>
-          <Typography className='step-subtitle min-is-[65px]'>Specimen Type:</Typography>
+          <Typography className='step-subtitle min-is-[65px]'>Type:</Typography>
           <Typography className='step-subtitle'>{`${specimen.SpecimenType}`}</Typography>
-          <Typography className='step-subtitle min-is-[65px]'>Body Site:</Typography>
+          <Typography className='step-subtitle min-is-[65px]'>Bodysite:</Typography>
           <Typography className='step-subtitle'>{`${specimen.BodySite}`}</Typography>
-          <Typography className='step-subtitle min-is-[65px]'>Collection Date:</Typography>
+          <Typography className='step-subtitle min-is-[65px]'>Date:</Typography>
           <Typography className='step-subtitle'>{`${specimen.CollectedDate}`}</Typography>
-          <Typography className='step-subtitle min-is-[65px]'>Collection Time:</Typography>
+          <Typography className='step-subtitle min-is-[65px]'>Time:</Typography>
           <Typography className='step-subtitle'>{`${specimen.CollectedTime}`}</Typography>
         </div>
       )) : (
         <>
         <div className='flex items-center gap-4'>
-          <Typography className='step-subtitle min-is-[65px]'>Specimen Type:</Typography>
+          <Typography className='step-subtitle min-is-[65px]'>Type:</Typography>
           <Typography className='step-subtitle'>&nbsp;</Typography>
         </div>
         <div className='flex items-center gap-4'>
@@ -50,11 +50,11 @@ const SpecimenSubtitle = () => {
           <Typography className='step-subtitle'>&nbsp;</Typography>
         </div>
         <div className='flex items-center gap-4'>
-          <Typography className='step-subtitle min-is-[65px]'>Collection Date:</Typography>
+          <Typography className='step-subtitle min-is-[65px]'>Date:</Typography>
           <Typography className='step-subtitle'>&nbsp;</Typography>
           </div>
         <div className='flex items-center gap-4'>
-          <Typography className='step-subtitle min-is-[65px]'>Collection Time:</Typography>
+          <Typography className='step-subtitle min-is-[65px]'>Time:</Typography>
           <Typography className='step-subtitle'>&nbsp;</Typography>
         </div>
         </>

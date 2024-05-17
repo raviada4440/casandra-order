@@ -11,7 +11,7 @@ import { LabOrderContext } from '..'
 
 const useStyles = makeStyles({
   cell25: {
-    maxWidth: 25,
+    maxWidth: 150,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
@@ -26,7 +26,7 @@ const IcdSubtitle = () => {
 
   return (
     <div>
-      { labOrder.LabOrderIcd && labOrder.LabOrderIcd.length > 1 ? labOrder.LabOrderIcd?.map((icd, index) => (
+      { labOrder.LabOrderIcd && labOrder.LabOrderIcd.length > 0 ? labOrder.LabOrderIcd?.map((icd, index) => (
         <div key={index} className='flex items-center gap-4'>
           <Typography className='step-subtitle min-is-[65px]'>{`${icd.ICD?.Code}`}</Typography>
           <Typography className={`${classes.cell25} step-subtitle`}>{`${icd.ICD?.ShortDescription}`}</Typography>

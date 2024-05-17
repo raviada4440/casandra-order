@@ -60,6 +60,7 @@ const sources: BundleScriptConfig = {
   json: [
     // Iconify JSON file (@iconify/json is a package name, /json/ is directory where files are, then filename)
     require.resolve('@iconify/json/json/ri.json'),
+    require.resolve('@iconify/json/json/healthicons.json'),
 
     // Custom file with only few icons
     {
@@ -78,7 +79,7 @@ const sources: BundleScriptConfig = {
     'uit-adobe-alt',
 
     // 'fa6-regular-comment',
-    'twemoji-auto-rickshaw'
+    'twemoji-auto-rickshaw',
   ],
 
   svg: [

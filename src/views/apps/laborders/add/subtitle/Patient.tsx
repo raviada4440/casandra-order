@@ -19,7 +19,7 @@ const PatientSubtitle = () => {
         <>
         <div className='flex items-center gap-4'>
           <Typography className='step-subtitle min-is-[65px]'>Name:</Typography>
-          <Typography className='step-subtitle'>{ labOrder.Patient.FirstName && labOrder.Patient.LastName ? `${labOrder.Patient?.FirstName} ${labOrder.Patient?.LastName}` : ''}</Typography>
+          <Typography className='step-subtitle'>{ labOrder.Patient.FirstName || labOrder.Patient.LastName ? `${labOrder.Patient.FirstName ? labOrder.Patient.FirstName : ''} ${labOrder.Patient.LastName ? labOrder.Patient.LastName : ''}` : ''}</Typography>
         </div>
         <div className='flex items-center gap-4'>
           <Typography className='step-subtitle min-is-[65px]'>DOB:</Typography>

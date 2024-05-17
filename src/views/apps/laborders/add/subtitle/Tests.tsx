@@ -26,7 +26,7 @@ const TestSubtitle = () => {
 
   return (
     <div>
-      { labOrder.LabOrderTest && labOrder.LabOrderTest.length > 1 ? labOrder.LabOrderTest?.map((test, index) => (
+      { labOrder.LabOrderTest && labOrder.LabOrderTest.length > 0 ? labOrder.LabOrderTest?.map((test, index) => (
         <div key={index} className='flex items-center gap-4'>
           <Typography className='step-subtitle min-is-[65px]'>{`${test.TestCatalog?.LabTestId}`}</Typography>
           <Typography className={`${classes.cell25} step-subtitle`}>{`${test.TestCatalog?.TestName}`}</Typography>
@@ -34,7 +34,7 @@ const TestSubtitle = () => {
       )) : (
         <>
         <div className='flex items-center gap-4'>
-          <Typography className='step-subtitle min-is-[65px]'>Lab Test Code: </Typography>
+          <Typography className='step-subtitle min-is-[65px]'>Test Code: </Typography>
           <Typography className='step-subtitle'>&nbsp;</Typography>
         </div>
         <div className='flex items-center gap-4'>
