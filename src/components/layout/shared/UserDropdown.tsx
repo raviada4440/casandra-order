@@ -87,6 +87,8 @@ const UserDropdown = () => {
     }
   }
 
+  console.log(session)
+
   return (
     <>
       <Badge
@@ -98,7 +100,7 @@ const UserDropdown = () => {
       >
         <Avatar
           ref={anchorRef}
-          alt={session?.user?.name || ''}
+          alt={session?.user?.UserAttribute?.Admin?.Name || ''}
           src={session?.user?.image || ''}
           onClick={handleDropdownOpen}
           className='cursor-pointer bs-[38px] is-[38px]'

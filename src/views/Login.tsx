@@ -1,6 +1,7 @@
 'use client'
 
 // React Imports
+import type { ChangeEvent} from 'react';
 import { useState } from 'react'
 
 // Next Imports
@@ -31,6 +32,7 @@ import { Card, CardContent } from '@mui/material'
 
 import type { Mode } from '@core/types'
 import type { Locale } from '@/configs/i18n'
+import { useSettings } from '@core/hooks/useSettings'
 
 // Component Imports
 import Logo from '@core/svg/Logo'
@@ -61,6 +63,9 @@ const Login = ({ mode }: { mode: Mode }) => {
   const [isPasswordShown, setIsPasswordShown] = useState(false)
   const [errorState, setErrorState] = useState<ErrorType | null>(null)
   const [loading, setLoading] = useState(false)
+  const [rememberMe, setRememberMe] = useState(true)
+
+  const { settings, updateSettings } = useSettings()
 
   console.log('mode', mode)
 
@@ -75,11 +80,11 @@ const Login = ({ mode }: { mode: Mode }) => {
     formState: { errors }
   } = useForm<FormData>({
     resolver: valibotResolver(schema),
-    
-    // defaultValues: {
-    //   email: 'admin@materio.com',
-    //   password: 'admin'
-    // }
+
+    defaultValues: {
+      email: settings.loggedInEmail ?? '',
+      password: ''
+    }
   })
 
 
@@ -87,6 +92,16 @@ const Login = ({ mode }: { mode: Mode }) => {
 
   const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
     setLoading(true)
+
+    if (rememberMe) {
+      updateSettings({
+        loggedInEmail: data.email,
+      })
+    } else {
+      updateSettings({
+        loggedInEmail: '',
+      })
+    }
 
     const res = await signIn('credentials', {
       email: data.email,
@@ -108,6 +123,10 @@ const Login = ({ mode }: { mode: Mode }) => {
         setErrorState(error)
       }
     }
+  }
+
+  const handleRememberMeChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setRememberMe(event.target.checked)
   }
 
   return (
@@ -182,7 +201,7 @@ const Login = ({ mode }: { mode: Mode }) => {
                 )}
               />
               <div className='flex justify-between items-center flex-wrap gap-x-3 gap-y-1'>
-                <FormControlLabel control={<Checkbox defaultChecked />} label='Remember me' />
+                <FormControlLabel control={<Checkbox checked={rememberMe} onChange={handleRememberMeChange} />} label='Remember me' />
                 <Typography className='text-end' color='primary' component={Link} href='/forgot-password'>
                   Forgot password?
                 </Typography>

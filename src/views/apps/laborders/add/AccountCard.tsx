@@ -31,14 +31,113 @@ const AccountCard = ({ totalOrdersInTransit, totalIncompleteOrders }: { totalOrd
       title: totalIncompleteOrders,
       subtitle: 'Incomplete Orders',
       icon: 'ri-wallet-line'
+    },
+    {
+      title: totalIncompleteOrders,
+      subtitle: 'Incomplete Orders',
+      icon: 'ri-wallet-line'
     }
   ]
 
   return (
     <Card>
       <CardContent>
+        <div className='flex items-center gap-2 mbe-4'>
+          <i className='ri-account-pin-circle-line text-3xl text-primary' />
+          <Typography variant='h5' className='text-primary'>
+            Account
+          </Typography>
+        </div>
+
         <Grid container spacing={6}>
-          {data.map((item, index) => (
+        <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              key={1}
+              className='sm:[&:nth-of-type(odd)>div]:pie-6 sm:[&:nth-of-type(odd)>div]:border-ie md:[&:not(:last-child)>div]:pie-6 md:[&:not(:last-child)>div]:border-ie'
+            >
+            <div className='flex flex-col gap-4'>
+              <Typography className='font-medium' color='text.primary'>
+                Organization
+              </Typography>
+              <div>
+                <Typography>Jordan Stevenson</Typography>
+                <Typography>Hall-Robbins PLC</Typography>
+                <Typography>7777 Mendez Plains</Typography>
+                <Typography>(616) 865-4180</Typography>
+                <Typography>don85@johnson.com</Typography>
+              </div>
+            </div>
+            {isBelowMdScreen && !isBelowSmScreen && (
+                <Divider
+                  className={classnames('mbs-6', {
+                    'mie-6': true
+                  })}
+                />
+              )}
+            {isBelowSmScreen && <Divider className='mbs-6' />}
+          </Grid>
+          <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              key={2}
+              className='sm:[&:nth-of-type(odd)>div]:pie-6 sm:[&:nth-of-type(odd)>div]:border-ie md:[&:not(:last-child)>div]:pie-6 md:[&:not(:last-child)>div]:border-ie'
+            >
+            <div className='flex flex-col gap-4'>
+              <Typography className='font-medium' color='text.primary'>
+                Ordering Physician
+              </Typography>
+              <div>
+              <Typography>Jordan Stevenson</Typography>
+                <Typography>Hall-Robbins PLC</Typography>
+                <Typography>7777 Mendez Plains</Typography>
+                <Typography>(616) 865-4180</Typography>
+                <Typography>don85@johnson.com</Typography>
+              </div>
+            </div>
+            {isBelowMdScreen && !isBelowSmScreen && (
+                <Divider
+                  className={classnames('mbs-6', {
+                    'mie-6': true
+                  })}
+                />
+              )}
+            {isBelowSmScreen && <Divider className='mbs-6' />}
+          </Grid>
+          <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              key={3}
+            >
+            <div className='flex flex-col gap-4'>
+              <Typography className='font-medium' color='text.primary'>
+                Treating Physician
+              </Typography>
+              <div>
+              <Typography>Jordan Stevenson</Typography>
+                <Typography>Hall-Robbins PLC</Typography>
+                <Typography>7777 Mendez Plains</Typography>
+                <Typography>(616) 865-4180</Typography>
+                <Typography>don85@johnson.com</Typography>
+              </div>
+            </div>
+            {isBelowMdScreen && !isBelowSmScreen && (
+                <Divider
+                  className={classnames('mbs-6', {
+                    'mie-6': false
+                  })}
+                />
+              )}
+            {isBelowSmScreen && <Divider className='mbs-6' />}
+          </Grid>
+
+          {/* {data.map((item, index) => (
             <Grid
               item
               xs={12}
@@ -65,7 +164,7 @@ const AccountCard = ({ totalOrdersInTransit, totalIncompleteOrders }: { totalOrd
               )}
               {isBelowSmScreen && index < data.length - 1 && <Divider className='mbs-6' />}
             </Grid>
-          ))}
+          ))}*/}
         </Grid>
       </CardContent>
     </Card>

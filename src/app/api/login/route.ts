@@ -3,13 +3,12 @@ import { NextResponse } from 'next/server'
 
 import {compare} from "bcryptjs"
 
-import type { User } from '@prisma/client'
-
 import { api } from '~trpc/server'
+import type { UserWithPartialRelations } from '~prisma/generated/zod'
 
 
 
-type ResponseUser = Omit<User, 'password'>
+type ResponseUser = Omit<UserWithPartialRelations, 'password'>
 
 export async function POST(req: Request) {
   // Vars
@@ -18,6 +17,9 @@ export async function POST(req: Request) {
   let response: null | ResponseUser = null
 
   if (user) {
+
+    console.log("user:", user);
+
     const isOk = await compare(password, user.password)
 
     console.log("isOk:", isOk);
@@ -42,6 +44,8 @@ export async function POST(req: Request) {
       ...filteredUserData
     }
 
+    console.log("response:", response);
+    
     return NextResponse.json(response)
   } else {
     // We return 401 status code and error message if user is not found

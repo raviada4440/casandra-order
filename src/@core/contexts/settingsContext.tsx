@@ -34,6 +34,7 @@ export type Settings = {
   columnFilters?: ColumnFiltersState
   selectedLab?: Lab
   globalFiler?: string
+  loggedInEmail?: string
 }
 
 // UpdateSettingsOptions type
@@ -76,6 +77,7 @@ export const SettingsProvider = (props: Props) => {
     footerContentWidth: themeConfig.footer.contentWidth,
     primaryColor: primaryColorConfig[0].main,
     columnFilters: [],
+    loggedInEmail: '',
     ...(demoName && demoConfigurations)
   }
 

@@ -46,6 +46,14 @@ model Account {
   @@index([userId], map: "Account_userId_fkey")
 }
 
+model Admin {
+  Id              String        @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  Name            String?
+  Email           String?       @db.VarChar(255)
+  UserAttributeId String        @unique(map: "UserAttributeId") @db.VarChar(45)
+  UserAttribute   UserAttribute @relation(fields: [UserAttributeId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "admin_ibfk_1")
+}
+
 model Attachment {
   Id                 String               @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
   AttachmentType     String?              @db.VarChar(45)
@@ -294,7 +302,7 @@ model Organization {
   OrgZip                   String?                    @db.VarChar(512)
   LabOrder                 LabOrder[]
   Organization             Organization?              @relation("OrganizationToOrganization", fields: [ParentId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "parent_fk")
-  ChildOrganization        Organization[]             @relation("OrganizationToOrganization")
+  other_Organization       Organization[]             @relation("OrganizationToOrganization")
   OrganizationFavoriteTest OrganizationFavoriteTest[]
   ProviderOrganization     ProviderOrganization[]
 
@@ -344,6 +352,7 @@ model Provider {
   href                                           String?                @db.Text
   NPI                                            String?                @db.VarChar(45)
   Name                                           String?                @db.VarChar(512)
+  Email                                          String?                @db.VarChar(255)
   Credentials                                    String?                @db.VarChar(512)
   Specialty                                      String?                @db.VarChar(512)
   Aboutme                                        String?                @db.Text
@@ -352,11 +361,15 @@ model Provider {
   Affiliation                                    String?                @db.VarChar(512)
   ProceduresAndResearch                          String?                @db.Text
   SpecialInterests                               String?                @db.Text
+  UserAttributeId                                String?                @unique(map: "UserAttributeId") @db.VarChar(45)
   OrderingProviderLabOrder                       LabOrder[]             @relation("LabOrder_OrderingProviderIdToProvider")
   TreatingProviderLabOrder                       LabOrder[]             @relation("LabOrder_TreatingProviderIdToProvider")
+  UserAttribute                                  UserAttribute?         @relation(fields: [UserAttributeId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "provider_ibfk_1")
   ProviderEducation                              ProviderEducation[]
   ProviderFavoriteTest                           ProviderFavoriteTest[]
   ProviderOrganization                           ProviderOrganization[]
+
+  @@index([UserAttributeId], map: "userattributeid_idx")
 }
 
 model ProviderEducation {
@@ -537,14 +550,24 @@ model TestResultLoinc {
 }
 
 model User {
-  id            String    @id
+  id            String         @id
   name          String?
-  email         String    @unique
-  password      String    @db.VarChar(255)
+  email      String         @unique(map: "User_email_key")
+  password      String         @db.VarChar(255)
   emailVerified DateTime?
   image         String?
   Account       Account[]
   Session       Session[]
+  UserAttribute UserAttribute?
+}
+
+model UserAttribute {
+  Id       String                  @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  UserId   String                  @unique(map: "UserId") @db.VarChar(45)
+  UserType UserAttribute_UserType?
+  Admin    Admin?
+  Provider Provider?
+  User     User                    @relation(fields: [UserId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "userattribute_ibfk_1")
 }
 
 model VerificationToken {
@@ -553,4 +576,9 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum UserAttribute_UserType {
+  Admin
+  Provider
 }

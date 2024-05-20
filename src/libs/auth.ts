@@ -4,7 +4,10 @@ import GoogleProvider from 'next-auth/providers/google'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import { PrismaClient } from '@prisma/client'
 import type { NextAuthOptions } from 'next-auth'
+
 import type { Adapter } from 'next-auth/adapters'
+
+import type { UserAttributePartialRelations } from '~prisma/generated/zod'
 
 const prisma = new PrismaClient()
 
@@ -110,7 +113,12 @@ export const authOptions: NextAuthOptions = {
          * For adding custom parameters to user in session, we first need to add those parameters
          * in token which then will be available in the `session()` callback
          */
+        console.log('user in JWT:', user)
+
         token.name = user.name
+        token.user = user as UserAttributePartialRelations
+
+        console.log('token:', token)
       }
 
       return token
@@ -118,7 +126,10 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (session.user) {
         // ** Add custom params to user in session which are added in `jwt()` callback via `token` parameter
-        session.user.name = token.name
+        // session.user.name = token.name
+        session.user.UserAttribute = token.UserAttribute as UserAttributePartialRelations
+
+        console.log('session:', session)
       }
 
       return session
