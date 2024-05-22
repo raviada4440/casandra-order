@@ -4,6 +4,9 @@
 import type { Dispatch, SetStateAction} from 'react';
 import { createContext, useState } from 'react'
 
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3'
+
 // MUI Imports
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -135,42 +138,44 @@ const AddLabOrder = () => {
 
   return (
     <LabOrderContext.Provider value={{ labOrder, setLabOrder }}>
-      <Grid container spacing={6}>
-        <Grid item xs={12}>
-          <AccountCard totalOrdersInTransit={0} totalIncompleteOrders={0} />
-        </Grid>
-        <Grid item xs={12}>
-          <Card className='flex flex-col lg:flex-row'>
-            <CardContent className='border-be lg:border-be-0 lg:border-ie lg:min-is-[300px]'>
-              <StepperWrapper className='bs-full'>
-                <Stepper activeStep={activeStep} orientation='vertical' connector={<ConnectorHeight />}>
-                  {steps.map((step, index) => {
-                    return (
-                      <Step key={index} onClick={() => setActiveStep(index)}>
-                        <StepLabel className='p-0' StepIconComponent={StepperCustomDot}>
-                          <div className='step-label cursor-pointer'>
-                            {/* <Typography className='step-number' color='text.primary'>{`0${index + 1}`}</Typography> */}
-                            <div>
-                              <Typography className='step-title' color='text.primary'>
-                                {step.title}
-                              </Typography>
-                              <StepContent TransitionProps={{ in: true }}>
-                                {getSubtitle(index)}
-                              </StepContent>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <Grid container spacing={6}>
+          <Grid item xs={12}>
+            <AccountCard />
+          </Grid>
+          <Grid item xs={12}>
+            <Card className='flex flex-col lg:flex-row'>
+              <CardContent className='border-be lg:border-be-0 lg:border-ie lg:min-is-[300px]'>
+                <StepperWrapper className='bs-full'>
+                  <Stepper activeStep={activeStep} orientation='vertical' connector={<ConnectorHeight />}>
+                    {steps.map((step, index) => {
+                      return (
+                        <Step key={index} onClick={() => setActiveStep(index)}>
+                          <StepLabel className='p-0' StepIconComponent={StepperCustomDot}>
+                            <div className='step-label cursor-pointer'>
+                              {/* <Typography className='step-number' color='text.primary'>{`0${index + 1}`}</Typography> */}
+                              <div>
+                                <Typography className='step-title' color='text.primary'>
+                                  {step.title}
+                                </Typography>
+                                <StepContent TransitionProps={{ in: true }}>
+                                  {getSubtitle(index)}
+                                </StepContent>
+                              </div>
                             </div>
-                          </div>
-                        </StepLabel>
-                      </Step>
-                    )
-                  })}
-                </Stepper>
-              </StepperWrapper>
-            </CardContent>
+                          </StepLabel>
+                        </Step>
+                      )
+                    })}
+                  </Stepper>
+                </StepperWrapper>
+              </CardContent>
 
-            <CardContent className='flex-1 !pbs-5'>{getStepContent(activeStep, handleNext, handlePrev)}</CardContent>
-          </Card>
+              <CardContent className='flex-1 !pbs-5'>{getStepContent(activeStep, handleNext, handlePrev)}</CardContent>
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
+      </LocalizationProvider>
     </LabOrderContext.Provider>
   )
 }

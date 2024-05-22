@@ -26,6 +26,12 @@ const SpecimenSubtitle = () => {
 
   // const classes = useStyles();
 
+  const collectionDateString = (collectionDate: Date|null) => collectionDate ? new Date(collectionDate).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }) : 'N/A'
+
   return (
     <div>
       { labOrder.LabOrderSpecimen && labOrder.LabOrderSpecimen.length > 0 ? labOrder.LabOrderSpecimen?.map((specimen, index) => (
@@ -35,7 +41,7 @@ const SpecimenSubtitle = () => {
           <Typography className='step-subtitle min-is-[65px]'>Bodysite:</Typography>
           <Typography className='step-subtitle'>{`${specimen.BodySite}`}</Typography>
           <Typography className='step-subtitle min-is-[65px]'>Date:</Typography>
-          <Typography className='step-subtitle'>{`${specimen.CollectedDate}`}</Typography>
+          <Typography className='step-subtitle'>{`${collectionDateString(specimen.CollectedDate)}`}</Typography>
           <Typography className='step-subtitle min-is-[65px]'>Time:</Typography>
           <Typography className='step-subtitle'>{`${specimen.CollectedTime}`}</Typography>
         </div>

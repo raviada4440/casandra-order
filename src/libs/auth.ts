@@ -116,7 +116,7 @@ export const authOptions: NextAuthOptions = {
         console.log('user in JWT:', user)
 
         token.name = user.name
-        token.user = user as UserAttributePartialRelations
+        token.UserAttribute = user.UserAttribute as UserAttributePartialRelations
 
         console.log('token:', token)
       }

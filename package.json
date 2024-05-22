@@ -1,5 +1,5 @@
 {
-  "name": "casandra-dashboard",
+  "name": "casandra-order",
   "version": "1.0.0",
   "license": "Commercial",
   "private": true,
@@ -39,6 +39,7 @@
     "@mui/material-nextjs": "^5.15.3",
     "@mui/styles": "^5.15.12",
     "@mui/utils": "^5.15.14",
+    "@mui/x-date-pickers": "^7.5.0",
     "@prisma/client": "^5.8.0",
     "@t3-oss/env-nextjs": "^0.9.2",
     "@tanstack/match-sorter-utils": "^8.11.3",

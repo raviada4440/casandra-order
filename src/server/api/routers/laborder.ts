@@ -173,5 +173,27 @@ export const labOrderRouter = createTRPCRouter({
     })
   }),
 
+  getProviders: publicProcedure
+  .input(z.object({ searchStr: z.string() }))
+  .query(async ({ ctx, input}) => {
+    return ctx.db.provider.findMany({
+      where: {
+        OR: [
+          {
+            Name: {
+              contains: input.searchStr,
+            },
+          },
+          {
+            NPI: {
+              contains: input.searchStr,
+            },
+          }
+        ],
+      },
+      orderBy: { Name: "asc" },
+      take: input.searchStr == undefined || '' ? undefined : 10,
+    })
+  }),
 
 })

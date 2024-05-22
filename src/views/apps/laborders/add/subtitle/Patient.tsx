@@ -11,7 +11,13 @@ import { LabOrderContext } from '..'
 const PatientSubtitle = () => {
 
   // Vars
-  const { labOrder } = useContext(LabOrderContext);
+  const { labOrder } = useContext(LabOrderContext)
+
+  const dob = labOrder.Patient?.DateOfBirth ? new Date(labOrder.Patient.DateOfBirth).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }) : null
 
   return (
     <div>
@@ -23,7 +29,7 @@ const PatientSubtitle = () => {
         </div>
         <div className='flex items-center gap-4'>
           <Typography className='step-subtitle min-is-[65px]'>DOB:</Typography>
-          <Typography className='step-subtitle'>{ labOrder.Patient.DateOfBirth ? `${labOrder.Patient?.DateOfBirth}` : ''}</Typography>
+          <Typography className='step-subtitle'>{ `${dob}` }</Typography>
         </div>
         <div className='flex items-center gap-4'>
           <Typography className='step-subtitle min-is-[65px]'>MRN:</Typography>

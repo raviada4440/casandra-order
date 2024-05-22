@@ -1,6 +1,8 @@
 // React Imports
 import { useContext, useState } from 'react'
 
+import { useSession } from 'next-auth/react'
+
 // MUI Imports
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -9,13 +11,23 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import Typography from '@mui/material/Typography'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import type { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
 
+// Styled Component Imports
+import AppReactDatepicker from '@/libs/styles/AppReactDatepicker'
 
 // Component Imports
 import DirectionalIcon from '@/components/DirectionalIcon'
 import { LabOrderContext } from '.'
 
-import type { PatientWithRelations } from '~prisma/generated/zod'
+
+
+import type { PatientWithRelations, OrganizationWithRelations, ProviderOrganizationPartialRelations } from '~prisma/generated/zod'
+import AutocompleteProvider from './AutocompleteProvider'
 
 type Props = {
   activeStep: number
@@ -30,8 +42,9 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
   // Vars
   const { labOrder, setLabOrder } = useContext(LabOrderContext);
   const [formData, setFormData] = useState<PatientWithRelations>(labOrder.Patient as PatientWithRelations)
+  const { data: session } = useSession()
 
-  // const firstRender = useRef(true)
+  const providerOrgs: ProviderOrganizationPartialRelations[] = session?.user.UserAttribute?.Provider?.ProviderOrganization || []
 
 
   const handleFormChange = (field: keyof PatientWithRelations, value: PatientWithRelations[keyof PatientWithRelations]) => {
@@ -45,16 +58,60 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
     setLabOrder({ ...labOrder, PatientMRN: value })
   }
 
+  const handleOrgChange = (event: SelectChangeEvent) => {
+    console.log('event.target.value', event.target.value)
+    const providerOrg = providerOrgs.find(org => org.Organization?.Id === event.target.value)
+
+    setLabOrder({...labOrder, Organization: providerOrg as OrganizationWithRelations })
+  };
+
+
   return (
+    <>
+    <form onSubmit={e => e.preventDefault()}>
+    {/* <Card className="mb-6">
+      <CardContent>
+    </CardContent>
+    </Card> */}
+
     <Card>
       <CardContent>
+
+      <div className='flex items-center gap-2 mbe-4'>
+        <i className='ri-hospital-line text-3xl text-primary' />
+        <Typography variant='h5' className='text-primary'>
+          Location & Treating Physician
+        </Typography>
+      </div>
+        <Grid className="mb-6" container spacing={5}>
+          <Grid item xs={12} md={6}>
+            <FormControl fullWidth>
+              <InputLabel id='select-location'>Location</InputLabel>
+              <Select
+                labelId='select-location'
+                label='Location'
+                defaultValue=''
+                onChange={handleOrgChange}>
+                {providerOrgs.map((org: ProviderOrganizationPartialRelations, index) => (
+                    <MenuItem key={index} value={org.Organization?.Id}>
+                      {org.Organization?.OrgName}
+                    </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <AutocompleteProvider />
+          </Grid>
+      </Grid>
+      {/* <Divider className="mb-6" /> */}
+
         <div className='flex items-center gap-2 mbe-4'>
           <i className='ri-user-line text-3xl text-primary' />
           <Typography variant='h5' className='text-primary'>
             Patient Demographics
           </Typography>
         </div>
-        <form onSubmit={e => e.preventDefault()}>
           <Grid container spacing={5}>
             <Grid item xs={12} md={6}>
               <TextField
@@ -75,24 +132,40 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
               />
             </Grid>
             <Grid item xs={12} md={3}>
-              <TextField
+              <AppReactDatepicker
+                boxProps={{ className: 'is-full' }}
+                selected={formData?.DateOfBirth || null }
+                dateFormat={'MM/dd/yyyy'}
+                onChange={(date: Date) => handleFormChange('DateOfBirth', date)}
+                customInput={<TextField fullWidth label='Date Of Birth' size='medium' />}
+              />
+
+              {/* <TextField
                 fullWidth
                 label='Date Of Birth'
                 value={formData?.DateOfBirth || ''}
                 placeholder='Date Of Birth'
                 onChange={e => handleFormChange('DateOfBirth', e.target.value)}
-              />
+              /> */}
             </Grid>
             <Grid item xs={12} md={3}>
-              <TextField
-                fullWidth
-                label='Gender'
-                value={formData?.Gender || ''}
-                placeholder='Gender'
-                onChange={e => handleFormChange('Gender', e.target.value)}
-              />
+              <FormControl fullWidth>
+                <InputLabel id='select-gender'>Gender</InputLabel>
+                <Select
+                  id='gender-select'
+                  label='Gender'
+                  labelId='select-gender'
+                  defaultValue=''
+                  onChange={e => handleFormChange('Gender', e.target.value)}
+                  >
+                  <MenuItem value='male'>Male</MenuItem>
+                  <MenuItem value='female'>Female</MenuItem>
+                  <MenuItem value='not-disclosed'>Not Disclosed</MenuItem>
+                  <MenuItem value='unknown'>Unknown</MenuItem>
+                </Select>
+              </FormControl>
             </Grid>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={6}>
               <TextField
                 fullWidth
                 label='Email'
@@ -150,9 +223,10 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
               </div>
             </Grid>
           </Grid>
-        </form>
       </CardContent>
     </Card>
+    </form>
+    </>
   )
 }
 

@@ -35,20 +35,8 @@ const StepIcdDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =>
         </div>
         <form onSubmit={e => e.preventDefault()}>
       <Grid container spacing={5}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={12}>
           <AutocompleteIcd />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <FormControl fullWidth>
-            <InputLabel id='country-select'>Treating Physician</InputLabel>
-            <Select label='Country' labelId='country-select' aria-describedby='country-select' defaultValue=''>
-              <MenuItem value='UK'>UK</MenuItem>
-              <MenuItem value='USA'>USA</MenuItem>
-              <MenuItem value='India'>India</MenuItem>
-              <MenuItem value='Australia'>Australia</MenuItem>
-              <MenuItem value='Germany'>Germany</MenuItem>
-            </Select>
-          </FormControl>
         </Grid>
         <Grid item xs={12} md={12}>
           <TextField
