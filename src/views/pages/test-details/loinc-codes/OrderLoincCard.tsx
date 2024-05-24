@@ -3,7 +3,7 @@
 // React Imports
 import { useState } from 'react'
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'
 
 import { toast } from 'react-toastify'
 
@@ -13,10 +13,10 @@ import Card from '@mui/material/Card'
 // Component Imports
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 
-import type { ButtonProps } from '@mui/material';
+import type { ButtonProps } from '@mui/material'
 import { Button, CardHeader, CircularProgress, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, } from '@mui/material'
 
-import { api } from '~trpc/react';
+import { api } from '~trpc/react'
 
 
 // Third-party Imports
@@ -26,51 +26,51 @@ import styles from '@core/styles/table.module.css'
 
 // Data Imports
 import type { LOINC, TestOrderLoincPartialWithRelations } from '~prisma/generated/zod'
-import OpenDialogOnElementClick from '@/components/dialogs/OpenDialogOnElementClick';
-import AddLoincCode from '@/components/dialogs/add-loinc-code';
-import { useTestData } from '..';
+import OpenDialogOnElementClick from '@/components/dialogs/OpenDialogOnElementClick'
+import AddLoincCode from '@/components/dialogs/add-loinc-code'
+import { useTestData } from '..'
 
 
 // Column Definitions
 const columnHelper = createColumnHelper<TestOrderLoincPartialWithRelations>()
 
 const OrderLoincCard = () => {
-  const router = useRouter();
+  const router = useRouter()
   const { testData } = useTestData()
 
   // States
   const [data, setData] = useState(() => testData.TestOrderLoinc || [])
-  const [deleteId, setDeleteId] = useState(undefined as number | undefined);
-  const [open, setOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState(undefined as number | undefined)
+  const [open, setOpen] = useState(false)
 
-  const createOrderLoinc = api.loinc.addOrderLoinc.useMutation();
-  const deleteOrderLoinc = api.loinc.deleteOrderLoinc.useMutation();
+  const createOrderLoinc = api.loinc.addOrderLoinc.useMutation()
+  const deleteOrderLoinc = api.loinc.deleteOrderLoinc.useMutation()
 
   const handleOpen = (id: number) => {
-    console.log('Deleting with id: ', id);
-    setDeleteId(id);
-    setOpen(true);
-  };
+    console.log('Deleting with id: ', id)
+    setDeleteId(id)
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const handleDelete = () => {
     const whereClause = { where: { Id: deleteId } }
 
     deleteOrderLoinc.mutate(whereClause, {
       onSuccess: () => {
-        setData(data.filter(item => item.Id !== deleteId));
-        router.refresh();
+        setData(data.filter(item => item.Id !== deleteId))
+        router.refresh()
       },
-    });
-    setOpen(false);
-  };
+    })
+    setOpen(false)
+  }
 
   const handleSave = (selectedLoinc: LOINC) => {
     if (selectedLoinc) {
-      console.log('Selected Value', selectedLoinc);
+      console.log('Selected Value', selectedLoinc)
 
       const newData: any = {
         TestId: testData.TestId,
@@ -80,21 +80,21 @@ const OrderLoincCard = () => {
 
       createOrderLoinc.mutate(newData, {
         onSuccess: (newData) => {
-          console.log('Returned data:', newData);
+          console.log('Returned data:', newData)
 
           const updatedData = {
             ...newData,
             LOINC: selectedLoinc,
           }
 
-          setData(data => [...data, updatedData as TestOrderLoincPartialWithRelations]);
+          setData(data => [...data, updatedData as TestOrderLoincPartialWithRelations])
 
-          router.refresh();
+          router.refresh()
         },
         onError: (error) => {
-          toast.error('Failed to create with error: ' + error.message);
+          toast.error('Failed to create with error: ' + error.message)
         },
-      });
+      })
     }
   }
 

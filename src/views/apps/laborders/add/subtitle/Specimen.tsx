@@ -35,14 +35,12 @@ const SpecimenSubtitle = () => {
   return (
     <div>
       { labOrder.LabOrderSpecimen && labOrder.LabOrderSpecimen.length > 0 ? labOrder.LabOrderSpecimen?.map((specimen, index) => (
-        <div key={index} className='flex items-center gap-4'>
-          <Typography className='step-subtitle min-is-[65px]'>Type:</Typography>
+        <div key={index} className='flex items-center gap-1'>
+          {/* <Typography className='step-subtitle min-is-[65px]'>Type:</Typography> */}
           <Typography className='step-subtitle'>{`${specimen.SpecimenType}`}</Typography>
-          <Typography className='step-subtitle min-is-[65px]'>Bodysite:</Typography>
-          <Typography className='step-subtitle'>{`${specimen.BodySite}`}</Typography>
-          <Typography className='step-subtitle min-is-[65px]'>Date:</Typography>
+          <Typography className='step-subtitle'>/</Typography>
           <Typography className='step-subtitle'>{`${collectionDateString(specimen.CollectedDate)}`}</Typography>
-          <Typography className='step-subtitle min-is-[65px]'>Time:</Typography>
+          <Typography className='step-subtitle'>/</Typography>
           <Typography className='step-subtitle'>{`${specimen.CollectedTime}`}</Typography>
         </div>
       )) : (

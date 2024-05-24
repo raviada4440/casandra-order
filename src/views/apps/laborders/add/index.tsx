@@ -5,7 +5,7 @@ import type { Dispatch, SetStateAction} from 'react';
 import { createContext, useState } from 'react'
 
 import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 // MUI Imports
 import Card from '@mui/material/Card'
@@ -53,11 +53,11 @@ const steps = [
     subtitle: 'Patient History'
   },
   {
-    title: 'Test Selection',
+    title: 'Tests',
     subtitle: 'Test Selection'
   },
   {
-    title: 'Specimen Type',
+    title: 'Specimen',
     subtitle: 'Specimen Type'
   },
   {
@@ -138,7 +138,7 @@ const AddLabOrder = () => {
 
   return (
     <LabOrderContext.Provider value={{ labOrder, setLabOrder }}>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Grid container spacing={6}>
           <Grid item xs={12}>
             <AccountCard />

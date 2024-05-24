@@ -3,7 +3,7 @@
 // React Imports
 import { useState } from 'react'
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'
 
 
 import Card from '@mui/material/Card'
@@ -11,12 +11,12 @@ import Card from '@mui/material/Card'
 // Component Imports
 import { createColumnHelper, flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table'
 
-import type { ButtonProps } from '@mui/material';
+import type { ButtonProps } from '@mui/material'
 import { Button, CardHeader, CircularProgress, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material'
 
 import TablePagination from '@mui/material/TablePagination'
 
-import { api } from '~trpc/react';
+import { api } from '~trpc/react'
 
 // import IconButton from '@mui/material/IconButton'
 
@@ -29,9 +29,9 @@ import styles from '@core/styles/table.module.css'
 // Data Imports
 import type { LOINC, TestResultLoincPartialWithRelations } from '~prisma/generated/zod'
 
-import OpenDialogOnElementClick from '@/components/dialogs/OpenDialogOnElementClick';
-import AddLoincCode from '@/components/dialogs/add-loinc-code';
-import { useTestData } from '..';
+import OpenDialogOnElementClick from '@/components/dialogs/OpenDialogOnElementClick'
+import AddLoincCode from '@/components/dialogs/add-loinc-code'
+import { useTestData } from '..'
 
 
 // Column Definitions
@@ -45,37 +45,37 @@ const ResultLoincCard = () => {
 
   // States
   const [data, setData] = useState(() => testData.TestResultLoinc || [])
-  const [deleteId, setDeleteId] = useState(undefined as number | undefined);
-  const [open, setOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState(undefined as number | undefined)
+  const [open, setOpen] = useState(false)
 
   const createResultLoinc = api.loinc.addResultLoinc.useMutation()
-  const deleteResultLoinc = api.loinc.deleteResultLoinc.useMutation();
+  const deleteResultLoinc = api.loinc.deleteResultLoinc.useMutation()
 
   const handleOpen = (id: number) => {
-    console.log('Deleting with id: ', id);
-    setDeleteId(id);
-    setOpen(true);
-  };
+    console.log('Deleting with id: ', id)
+    setDeleteId(id)
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const handleDelete = () => {
     const whereClause = { where: { Id: deleteId } }
 
     deleteResultLoinc.mutate(whereClause, {
       onSuccess: () => {
-        setData(data.filter(item => item.Id !== deleteId));
-        router.refresh();
+        setData(data.filter(item => item.Id !== deleteId))
+        router.refresh()
       },
-    });
-    setOpen(false);
-  };
+    })
+    setOpen(false)
+  }
 
   const handleSave = (selectedLoinc: LOINC) => {
     if (selectedLoinc) {
-      console.log('Selected Value', selectedLoinc);
+      console.log('Selected Value', selectedLoinc)
 
       const newData: any = {
         TestId: testData.TestId,

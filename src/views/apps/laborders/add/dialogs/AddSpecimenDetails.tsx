@@ -1,5 +1,5 @@
 // React Imports
-import { useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 
 // MUI Imports
 import Grid from '@mui/material/Grid'
@@ -13,10 +13,15 @@ import IconButton from '@mui/material/IconButton'
 import { DialogActions } from '@mui/material'
 import Autocomplete from '@mui/material/Autocomplete';
 import { TimePicker } from '@mui/x-date-pickers'
+import dayjs from 'dayjs'
 
 // Styled Component Imports
+
 import AppReactDatepicker from '@/libs/styles/AppReactDatepicker'
 import type { LabOrderSpecimenWithRelations } from '~prisma/generated/zod'
+import { LabOrderContext } from '..'
+
+
 
 
 const specimenTypes = [
@@ -49,19 +54,51 @@ const specimenTypes = [
 type AddSpecimenProps = {
   open: boolean
   setOpen: (open: boolean) => void
-  onValueChange: (value: LabOrderSpecimenWithRelations) => void;
+  specimenRecord: LabOrderSpecimenWithRelations
 }
 
-const AddSpecimenDetails = ({ open, setOpen, onValueChange }: AddSpecimenProps) => {
+const AddSpecimenDetails = ({ open, setOpen, specimenRecord }: AddSpecimenProps) => {
   // States
-  const [formData, setFormData] = useState<LabOrderSpecimenWithRelations>()
+  const { labOrder, setLabOrder } = useContext(LabOrderContext);
+  const [formData, setFormData] = useState<LabOrderSpecimenWithRelations>(specimenRecord)
   const [inputValue, setInputValue] = useState('');
+  const hasSetFormData = useRef(false);
 
+
+  useEffect(() => {
+    if (open && !hasSetFormData.current) {
+      console.log('empty specimenRecord received: ', specimenRecord);
+      setFormData({...specimenRecord});
+      hasSetFormData.current = true;
+    } else if (!open) {
+      hasSetFormData.current = false;
+    }
+  }, [open, specimenRecord]);
 
   const handleFormChange = (field: keyof LabOrderSpecimenWithRelations, value: LabOrderSpecimenWithRelations[keyof LabOrderSpecimenWithRelations]) => {
     const updatedFormData = { ...formData, [field]: value };
 
     setFormData(updatedFormData as LabOrderSpecimenWithRelations);
+  }
+
+  const handleSave = (specimen: LabOrderSpecimenWithRelations) => {
+    if (specimen) {
+      console.log('specimen: ', specimen)
+
+      // Create a copy of labOrder
+      const labOrderCopy = { ...labOrder }
+
+      // Add the specimen to LabOrderSpecimen
+      labOrderCopy.LabOrderSpecimen = [...(labOrderCopy.LabOrderSpecimen || []), specimen]
+
+      console.log('labOrderCopy: ', labOrderCopy)
+
+      // Update labOrder
+      setLabOrder(labOrderCopy)
+
+      console.log('labOrder: ', labOrder)
+      setFormData({} as LabOrderSpecimenWithRelations)
+    }
   }
 
   return (
@@ -82,7 +119,8 @@ const AddSpecimenDetails = ({ open, setOpen, onValueChange }: AddSpecimenProps) 
         <Grid item xs={12} md={6}>
           <FormControl fullWidth>
             <Autocomplete
-              value={specimenTypes.find(option => option.Name === formData?.SpecimenType || '')}
+
+              // value={specimenTypes.find(option => option.Name === formData?.SpecimenType || '')}
               onChange={(event: any, newValue: any) => {
                 handleFormChange('SpecimenType', newValue.Name);
               }}
@@ -115,7 +153,8 @@ const AddSpecimenDetails = ({ open, setOpen, onValueChange }: AddSpecimenProps) 
             fullWidth
             type='number'
             label='Specimen Count'
-            value={formData?.SpecimenCount}
+
+            // value={formData?.SpecimenCount}
             onChange={e => handleFormChange('SpecimenCount', e.target.value)}
           />
         </Grid>
@@ -131,9 +170,9 @@ const AddSpecimenDetails = ({ open, setOpen, onValueChange }: AddSpecimenProps) 
         <Grid item xs={12} md={6}>
           <TimePicker
             label="Collection Time"
-            value={formData?.CollectedTime ? new Date(`1970-01-01T${formData?.CollectedTime}Z`) : null }
+            defaultValue={formData?.CollectedTime ? dayjs(formData?.CollectedTime, 'HH:mm A') : null}
             onChange={(newValue) => {
-              const timeString = newValue ? newValue.toISOString().split('T')[1].substring(0, 8) : '';
+              const timeString = newValue ? dayjs(newValue).format('HH:mm A') : '';
 
               handleFormChange('CollectedTime', timeString)
             }}
@@ -143,7 +182,8 @@ const AddSpecimenDetails = ({ open, setOpen, onValueChange }: AddSpecimenProps) 
           <TextField
             fullWidth
             label='Specimen ID'
-            value={formData?.SpecimenID || ''}
+
+            // value={formData?.SpecimenID || ''}
             onChange={e => handleFormChange('SpecimenID', e.target.value)}
           />
         </Grid>
@@ -151,7 +191,8 @@ const AddSpecimenDetails = ({ open, setOpen, onValueChange }: AddSpecimenProps) 
           <TextField
             fullWidth
             label='Bodysite'
-            value={formData?.BodySite || ''}
+
+            // value={formData?.BodySite || ''}
             onChange={e => handleFormChange('BodySite', e.target.value)}
           />
         </Grid>
@@ -159,7 +200,8 @@ const AddSpecimenDetails = ({ open, setOpen, onValueChange }: AddSpecimenProps) 
           <TextField
             fullWidth
             label='Fixative'
-            value={formData?.Fixative || ''}
+
+            // value={formData?.Fixative || ''}
             onChange={e => handleFormChange('Fixative', e.target.value)}
           />
         </Grid>
@@ -167,7 +209,8 @@ const AddSpecimenDetails = ({ open, setOpen, onValueChange }: AddSpecimenProps) 
           <TextField
             fullWidth
             label='Fixative Duration'
-            value={formData?.FixativeDuration || ''}
+
+            // value={formData?.FixativeDuration || ''}
             onChange={e => handleFormChange('FixativeDuration', e.target.value)}
           />
         </Grid>
@@ -175,7 +218,8 @@ const AddSpecimenDetails = ({ open, setOpen, onValueChange }: AddSpecimenProps) 
           <TextField
             fullWidth
             label='ColdIschemicTime'
-            value={formData?.ColdIschemicTime || ''}
+
+            // value={formData?.ColdIschemicTime || ''}
             onChange={e => handleFormChange('ColdIschemicTime', e.target.value)}
           />
         </Grid>
@@ -184,7 +228,7 @@ const AddSpecimenDetails = ({ open, setOpen, onValueChange }: AddSpecimenProps) 
       </div>
         <DialogActions className='gap-2 justify-center pbs-0 pbe-10 pli-10 sm:pbe-16 sm:pli-16'>
           <Button variant='contained' onClick={() => {
-            onValueChange(formData || {} as LabOrderSpecimenWithRelations)
+            handleSave(formData || {} as LabOrderSpecimenWithRelations)
             setOpen(false)
           }} type='submit'
           >
@@ -194,6 +238,7 @@ const AddSpecimenDetails = ({ open, setOpen, onValueChange }: AddSpecimenProps) 
             variant='outlined'
             color='secondary'
             onClick={() => {
+              setFormData({} as LabOrderSpecimenWithRelations)
               setOpen(false)
             }}
             type='button'

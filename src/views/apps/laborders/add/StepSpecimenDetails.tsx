@@ -1,25 +1,32 @@
 // React Imports
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 // MUI Imports
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import Card from '@mui/material/Card'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
+import uuid from 'react-native-uuid'
 
+import dayjs, { extend } from 'dayjs'
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 
-import type { ButtonProps } from '@mui/material';
+import type { ButtonProps } from '@mui/material'
 import { Button, CardHeader, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, CardContent, } from '@mui/material'
 
 import styles from '@core/styles/table.module.css'
 
 // Styled Component Imports
 import DirectionalIcon from '@/components/DirectionalIcon'
-import OpenDialogOnElementClick from '@/components/dialogs/OpenDialogOnElementClick';
+import OpenDialogOnElementClick from '@/components/dialogs/OpenDialogOnElementClick'
 
 import { LabOrderContext } from '.'
 import type { LabOrderSpecimenWithRelations } from '~prisma/generated/zod'
-import AddSpecimenDetails from './dialogs/AddSpecimenDetails';
+import AddSpecimenDetails from './dialogs/AddSpecimenDetails'
+
+extend(utc);
+extend(timezone);
 
 type Props = {
   activeStep: number
@@ -27,7 +34,6 @@ type Props = {
   handlePrev: () => void
   steps: { title: string; subtitle: string }[]
 }
-
 
 const columnHelper = createColumnHelper<LabOrderSpecimenWithRelations>()
 
@@ -37,55 +43,73 @@ const convertDate = (collectionDate: Date|null) => collectionDate ? new Date(col
   day: '2-digit'
 }) : 'N/A'
 
+const now = new Date();
+
+dayjs.tz.setDefault('America/Chicago')
+const collectionTime = dayjs.utc(now).tz('America/Chicago').format('HH:mm A')
+
+const getEmptySpecimenRecord = () => {
+  return  {
+    Id: uuid.v4(),
+    LabOrderId: undefined,
+    SpecimenType: undefined,
+    SpecimenCount: undefined,
+    CollectedDate: new Date(),
+    CollectedTime: collectionTime,
+    SpecimenID: undefined,
+    BodySite: undefined,
+    TumorType: undefined,
+    Fixative: undefined,
+    FixativeDuration: undefined,
+    ColdIschemicTime: undefined,
+  } as unknown as LabOrderSpecimenWithRelations
+}
 
 const StepSpecimenDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
+
   // States
-  const { labOrder, setLabOrder } = useContext(LabOrderContext);
+  const { labOrder, setLabOrder } = useContext(LabOrderContext)
 
-  const [data, setData] = useState([] as LabOrderSpecimenWithRelations[])
-  const [deleteId, setDeleteId] = useState(undefined as string | undefined);
-  const [open, setOpen] = useState(false);
+  const [data, setData] = useState(labOrder.LabOrderSpecimen ?? [] as LabOrderSpecimenWithRelations[])
+  const [deleteId, setDeleteId] = useState(undefined as string | undefined)
+  const [open, setOpen] = useState(false)
+  const [emptySepcimenRecord, setEmptySpecimenRecord] = useState<LabOrderSpecimenWithRelations>(getEmptySpecimenRecord())
 
-  const handleOpen = (id: string) => {
-    console.log('Deleting with id: ', id);
-    setDeleteId(id);
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleDelete = () => {
-
-    // setData(data.filter(item => item.Id !== deleteId));
-    // router.refresh();
-    // setOpen(false);
+  const renderOpenDialog = () => {
+    return (
+      <OpenDialogOnElementClick
+        element={Button}
+        elementProps={buttonProps}
+        dialog={AddSpecimenDetails}
+        dialogProps={{ specimenRecord: emptySepcimenRecord }}
+      />
+    )
   }
 
-  const handleSave = (specimen: LabOrderSpecimenWithRelations) => {
-    if (specimen) {
-      console.log('specimen: ', specimen)
+  const handleOpen = (id: string) => {
+    console.log('Deleting with id: ', id)
+    setDeleteId(id)
+    setOpen(true)
+  }
 
-      // Create a copy of labOrder
-      const labOrderCopy = { ...labOrder }
+  const handleClose = () => {
+    setOpen(false)
+  }
 
-      if (labOrderCopy.LabOrderSpecimen)
-         labOrderCopy.LabOrderSpecimen.push(specimen)
-      else {
-        labOrderCopy.LabOrderSpecimen = []
-        labOrderCopy.LabOrderSpecimen.push(specimen)
-      }
+  const handleDelete = () => {
+    // Create a copy of labOrder
+    const labOrderCopy = { ...labOrder }
+    const updatedData = data.filter(item => item.Id !== deleteId)
 
-      console.log('labOrderCopy: ', labOrderCopy)
+    labOrderCopy.LabOrderSpecimen = updatedData
 
-      // labOrderCopy.LabOrderSpecimen.push(specimen)
+    setData(updatedData)
 
-      setLabOrder(labOrderCopy)
-      setData(labOrderCopy.LabOrderSpecimen)
-      console.log('data: ', data)
+    // Update labOrder
+    setLabOrder(labOrderCopy)
 
-    }
+    console.log('labOrder: ', labOrder)
+    setOpen(false)
   }
 
   const columns = [
@@ -132,7 +156,7 @@ const StepSpecimenDetails = ({ activeStep, handleNext, handlePrev, steps }: Prop
 
   // Hooks
   const table = useReactTable({
-    data,
+    data: data as LabOrderSpecimenWithRelations[],
     columns,
     getCoreRowModel: getCoreRowModel(),
     filterFns: {
@@ -140,10 +164,22 @@ const StepSpecimenDetails = ({ activeStep, handleNext, handlePrev, steps }: Prop
     },
   })
 
+  useEffect(() => {
+    if (labOrder.LabOrderSpecimen) {
+      console.log('labOrder.LabOrderSpecimen', labOrder.LabOrderSpecimen)
+
+      setData(labOrder.LabOrderSpecimen)
+      console.log('data', data)
+    }
+  }, [labOrder, data, setData])
+
   // Vars
   const buttonProps: ButtonProps = {
     variant: 'contained',
     children: '+Add Specimen(s) to Order',
+    onClick: () => {
+      setEmptySpecimenRecord(getEmptySpecimenRecord())
+    }
   }
 
   return (
@@ -158,10 +194,10 @@ const StepSpecimenDetails = ({ activeStep, handleNext, handlePrev, steps }: Prop
           }
           className='items-start sm:flex-row sm:items-center'
           sx={{ '& .MuiCardHeader-action': { m: 0 }, '& .MuiCardHeader-avatar': { mr: 0 }}}
-          action={<OpenDialogOnElementClick element={Button} elementProps={buttonProps} dialog={AddSpecimenDetails} dialogProps={{ onValueChange: handleSave }} />}
+          action={renderOpenDialog()}
         />
         <CardContent>
-        <div className='overflow-x-auto'>
+        <div className='overflow-x-auto mb-20'>
           <table className={styles.table}>
             <thead>
               {table.getHeaderGroups().map(headerGroup => (
@@ -186,8 +222,7 @@ const StepSpecimenDetails = ({ activeStep, handleNext, handlePrev, steps }: Prop
               <tbody>
                 {table
                   .getRowModel()
-                  .rows.slice(0, 10)
-                  .map(row => (
+                  .rows.map(row => (
                     <tr key={row.id}>
                       {row.getVisibleCells().map(cell => (
                         <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
