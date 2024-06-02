@@ -124,3 +124,97 @@ code {
   background-color: rgb(var(--mui-palette-info-mainChannel) / 0.08);
   border: 0;
 }
+
+.search-panel {
+  display: flex;
+}
+
+.search-panel__filters {
+  flex: 1;
+  max-inline-size: 260px;
+}
+
+.search-panel__results {
+  flex: 3;
+  margin-inline-start: 20px;
+}
+
+.searchbox {
+  margin-block-end: 2rem;
+}
+
+.pagination {
+  margin-block: 2rem auto;
+  text-align: center;
+}
+
+.hit__details {
+  float: inline-end;
+  margin-inline-start: 20px;
+}
+
+.ais-Hits-item {
+  .hit__details {
+    font-size: 0.75rem;
+    .ais-Highlight {
+      .ais-Highlight-highlighted {
+        font-weight: 500;
+        color: #831c78;
+        background-color: #ffffff;
+      }
+    }
+  }
+  .ais-Highlight-nonHighlighted {
+    font-weight: 500;
+  }
+}
+
+.ais-RefinementList-item {
+  .ais-RefinementList-label {
+    .ais-RefinementList-count {
+      display: none;
+    }
+    .ais-RefinementList-checkbox {
+      box-shadow: none;
+    }
+    .ais-RefinementList-labelText {
+      font-size: 0.75rem;
+    }
+  }
+}
+
+.ais-RefinementList-item--selected {
+  .ais-RefinementList-label {
+      .ais-RefinementList-checkbox {
+          color: #831c78;
+          background-image: url('data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23831C78%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%2220%206%209%2017%204%2012%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E');
+      }
+  }
+}
+
+.ais-CurrentRefinements {
+  .ais-CurrentRefinements-list {
+      .ais-CurrentRefinements-item {
+          background-color: #831c78;
+          color: #fff;
+          font-size: .75rem;
+          margin-block-end: 10px;
+          .ais-CurrentRefinements-category {
+              .ais-CurrentRefinements-delete {
+                  color: #fff;
+                  &:hover {
+                      color: #fff;
+                  }
+              }
+          }
+      }
+  }
+}
+
+.ais-SearchBox {
+  .ais-SearchBox-form {
+    .ais-SearchBox-input {
+      box-shadow: none;
+    }
+  }
+}

@@ -1,23 +1,84 @@
 // React Imports
-import { useState } from 'react'
+import { useContext } from 'react'
 
 // MUI Imports
 import Grid from '@mui/material/Grid'
-import TextField from '@mui/material/TextField'
 import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
 import FormLabel from '@mui/material/FormLabel'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import Button from '@mui/material/Button'
-import Autocomplete from '@mui/material/Autocomplete'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import Chip from '@mui/material/Chip'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import "instantsearch.css/themes/satellite-min.css"
+
+import {
+  InstantSearch,
+  SearchBox,
+  Hits,
+  InfiniteHits,
+  Highlight,
+  RefinementList,
+  Pagination,
+  Stats,
+  Snippet,
+  CurrentRefinements,
+  Configure,
+  DynamicWidgets,
+  useQueryRules
+} from 'react-instantsearch'
+import Client from '@searchkit/instantsearch-client'
 
 // Component Imports
 import DirectionalIcon from '@/components/DirectionalIcon'
+import { LabOrderContext } from '.'
+
+
+const searchClient = Client({
+  url: '/api/search'
+})
+
+const HitView = (props: any) => {
+  return (
+    <div>
+      <div className="hit__details">
+        <h2>
+          <Highlight attribute="TestName" hit={props.hit} />
+        </h2>
+        <Snippet attribute="TestDescription" hit={props.hit} />
+      </div>
+    </div>
+  )
+}
+
+const Panel = ({ header, children }: any) => (
+  <div className="panel">
+    <h5>{header}</h5>
+    {children}
+  </div>
+)
+
+const QueryRulesBanner = () => {
+  const { items } = useQueryRules({})
+
+  if (items.length === 0) {
+    return null
+  }
+
+  return (
+    <div className="query-rules">
+      {items.map((item) => (
+        <div key={item.objectID} className="query-rules__item">
+          <a href={item.url}>
+            <b className="query-rules__item-title">{item.title}</b>
+            <span className="query-rules__item-description">{item.body}</span>
+          </a>
+        </div>
+      ))}
+    </div>
+  )
+}
 
 type Props = {
   activeStep: number
@@ -26,84 +87,51 @@ type Props = {
   steps: { title: string; subtitle: string }[]
 }
 
-// Vars
-const furnishingArray: string[] = [
-  'AC',
-  'TV',
-  'RO',
-  'Bed',
-  'WiFi',
-  'Sofa',
-  'Fridge',
-  'Cupboard',
-  'Microwave',
-  'Dining Table',
-  'Washing Machine'
-]
 
 const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
   // States
-  const [furnishingDetails, setFurnishingDetails] = useState<string[]>(['Fridge', 'AC', 'TV'])
+  const { labOrder, setLabOrder } = useContext(LabOrderContext);
 
   return (
     <Grid container spacing={5}>
-      <Grid item xs={12} md={6}>
-        <TextField fullWidth label='Bedrooms' placeholder='3' />
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <TextField fullWidth label='Floor No' placeholder='12' />
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <TextField fullWidth label='Bathroom' placeholder='4' />
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <FormControl fullWidth>
-          <InputLabel id='select-furnished-status'>Furnished Status</InputLabel>
-          <Select id='demo-simple-select' label='Furnished Status' labelId='select-furnished-status' defaultValue=''>
-            <MenuItem value='fully-furnished'>Fully Furnished</MenuItem>
-            <MenuItem value='furnished'>Furnished</MenuItem>
-            <MenuItem value='semi-furnished'>Semi Furnished</MenuItem>
-            <MenuItem value='unfurnished'>UnFurnished</MenuItem>
-          </Select>
-        </FormControl>
-      </Grid>
       <Grid item xs={12}>
-        <Autocomplete
-          fullWidth
-          multiple
-          onChange={(event, value) => setFurnishingDetails(value as string[])}
-          id='select-furnishing-details'
-          options={furnishingArray}
-          value={furnishingDetails}
-          defaultValue={furnishingDetails}
-          getOptionLabel={option => option || ''}
-          renderInput={params => <TextField {...params} label='Furnishing Details' />}
-          renderTags={(value: string[], getTagProps) =>
-            value.map((option: string, index: number) => {
-              const { key, ...otherProps } = getTagProps({ index })
+        <div className="">
+          <InstantSearch indexName="testcatalog" searchClient={searchClient} routing>
+            <Configure hitsPerPage={10} />
+            <div className="container">
+              <div className="search-panel">
+                <div className="search-panel__filters">
+                  <DynamicWidgets facets={['*']}>
+                    <Panel header="Lab">
+                      <RefinementList attribute="Lab" />
+                    </Panel>
+                    <Panel header="Biomarker">
+                      <RefinementList attribute="Biomarker" searchable />
+                    </Panel>
+                    <Panel header="Sponsored Program">
+                      <RefinementList attribute="Sponsored Program" />
+                    </Panel>
+                    <Panel header="Therapeutic Area">
+                      <RefinementList attribute="Therapeutic Area" />
+                    </Panel>
+                  </DynamicWidgets>
+                </div>
+                <div className="search-panel__results">
+                  <div className="searchbox">
+                    <SearchBox />
+                  </div>
 
-              return <Chip key={key} size='small' label={option} {...otherProps} />
-            })
-          }
-        />
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <FormControl className='gap-2'>
-          <FormLabel>Is There Any Common Area</FormLabel>
-          <RadioGroup defaultValue='yes'>
-            <FormControlLabel value='yes' control={<Radio />} label='Yes' />
-            <FormControlLabel value='no' control={<Radio />} label='No' />
-          </RadioGroup>
-        </FormControl>
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <FormControl className='gap-2'>
-          <FormLabel>Is There Any Attached Balcony</FormLabel>
-          <RadioGroup defaultValue='yes'>
-            <FormControlLabel value='yes' control={<Radio />} label='Yes' />
-            <FormControlLabel value='no' control={<Radio />} label='No' />
-          </RadioGroup>
-        </FormControl>
+                  {/* <Stats /> */}
+                  <CurrentRefinements />
+                  <QueryRulesBanner />
+                  <InfiniteHits hitComponent={HitView} showPrevious={false} />
+                  {/* <Hits hitComponent={HitView} /> */}
+                  {/* <Pagination /> */}
+                </div>
+              </div>
+            </div>
+          </InstantSearch>
+        </div>
       </Grid>
       <Grid item xs={12}>
         <div className='flex items-center justify-between'>

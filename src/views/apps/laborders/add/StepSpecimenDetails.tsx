@@ -43,11 +43,6 @@ const convertDate = (collectionDate: Date|null) => collectionDate ? new Date(col
   day: '2-digit'
 }) : 'N/A'
 
-const now = new Date();
-
-dayjs.tz.setDefault('America/Chicago')
-const collectionTime = dayjs.utc(now).tz('America/Chicago').format('HH:mm A')
-
 const getEmptySpecimenRecord = () => {
   return  {
     Id: uuid.v4(),
@@ -55,7 +50,7 @@ const getEmptySpecimenRecord = () => {
     SpecimenType: undefined,
     SpecimenCount: undefined,
     CollectedDate: new Date(),
-    CollectedTime: collectionTime,
+    CollectedTime: dayjs.utc(new Date()).tz('America/Chicago').format('HH:mm A'),
     SpecimenID: undefined,
     BodySite: undefined,
     TumorType: undefined,
