@@ -153,15 +153,21 @@ code {
   margin-inline-start: 20px;
 }
 
-.ais-Hits-item {
+.ais-InfiniteHits-item {
   .hit__details {
-    font-size: 0.75rem;
+    h2 {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
     .ais-Highlight {
       .ais-Highlight-highlighted {
         font-weight: 500;
         color: #831c78;
         background-color: #ffffff;
       }
+    }
+    .ais-Snippet {
+      font-size: 0.7rem;
     }
   }
   .ais-Highlight-nonHighlighted {

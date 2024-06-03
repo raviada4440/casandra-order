@@ -1,5 +1,5 @@
 // React Imports
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 
 // MUI Imports
 import Grid from '@mui/material/Grid'
@@ -26,7 +26,7 @@ import {
   CurrentRefinements,
   Configure,
   DynamicWidgets,
-  useQueryRules
+  useQueryRules,
 } from 'react-instantsearch'
 import Client from '@searchkit/instantsearch-client'
 
@@ -86,7 +86,6 @@ type Props = {
   handlePrev: () => void
   steps: { title: string; subtitle: string }[]
 }
-
 
 const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
   // States
