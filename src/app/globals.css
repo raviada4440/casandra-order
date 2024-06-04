@@ -128,6 +128,11 @@ code {
 .search-panel {
   display: flex;
 }
+.panel {
+  display: flex;
+  flex-direction: column;
+  margin-block-end: 2rem;
+}
 
 .search-panel__filters {
   flex: 1;
@@ -136,7 +141,7 @@ code {
 
 .search-panel__results {
   flex: 3;
-  margin-inline-start: 20px;
+  margin-inline-end: 20px;
 }
 
 .searchbox {
@@ -150,15 +155,15 @@ code {
 
 .hit__details {
   float: inline-end;
-  margin-inline-start: 20px;
+  margin-inline-start: 0rem;
+}
+
+li.ais-InfiniteHits-item {
+  padding: 0.5rem;
 }
 
 .ais-InfiniteHits-item {
   .hit__details {
-    h2 {
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
     .ais-Highlight {
       .ais-Highlight-highlighted {
         font-weight: 500;
@@ -167,7 +172,7 @@ code {
       }
     }
     .ais-Snippet {
-      font-size: 0.7rem;
+      font-size: 0.8rem;
     }
   }
   .ais-Highlight-nonHighlighted {
@@ -198,6 +203,12 @@ code {
   }
 }
 
+/* .ais-Snippet {
+  .ais-Snippet-nonHighlighted {
+    margin-inline-start: 30px;
+  }
+} */
+
 .ais-CurrentRefinements {
   .ais-CurrentRefinements-list {
       .ais-CurrentRefinements-item {
@@ -223,4 +234,8 @@ code {
       box-shadow: none;
     }
   }
+}
+
+.MuiCheckbox-root	{
+  padding: 0.5rem;
 }

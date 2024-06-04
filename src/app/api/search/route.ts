@@ -21,7 +21,7 @@ const apiClient = API(
     },
     search_settings: {
       highlight_attributes: ['TestName'],
-      snippet_attributes: ['TestDescription:200'],
+      snippet_attributes: ['LabName'],
       search_attributes: [
         { field: 'TestName', weight: 3 },
         { field: 'LabName', weight: 3 },
@@ -29,7 +29,7 @@ const apiClient = API(
         { field: 'provider_favorite.ProviderId', weight: 2 },
         { field: 'organization_favorite.OrganizationId', weight: 2 },
       ],
-      result_attributes: ['TestName', 'TestDescription'],
+      result_attributes: ['TestId', 'LabTestId','TestName', 'LabName'],
       facet_attributes: [
         {
           attribute: 'Lab',

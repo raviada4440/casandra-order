@@ -1,8 +1,10 @@
 // React Imports
+import type { ChangeEvent} from 'react';
 import { useContext, useState } from 'react'
 
 // MUI Imports
 import Grid from '@mui/material/Grid'
+import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
 import Radio from '@mui/material/Radio'
@@ -39,18 +41,7 @@ const searchClient = Client({
   url: '/api/search'
 })
 
-const HitView = (props: any) => {
-  return (
-    <div>
-      <div className="hit__details">
-        <h2>
-          <Highlight attribute="TestName" hit={props.hit} />
-        </h2>
-        <Snippet attribute="TestDescription" hit={props.hit} />
-      </div>
-    </div>
-  )
-}
+
 
 const Panel = ({ header, children }: any) => (
   <div className="panel">
@@ -90,6 +81,65 @@ type Props = {
 const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
   // States
   const { labOrder, setLabOrder } = useContext(LabOrderContext);
+  const [selected, setSelected] = useState<readonly number[]>([]);
+
+
+  const handleClick = (event: ChangeEvent<unknown>, id: number) => {
+    event.preventDefault()
+
+    console.log(event.target)
+    console.log(id)
+
+    const selectedIndex = selected.indexOf(id);
+    let newSelected: readonly number[] = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1),
+      );
+    }
+
+    console.log('newSelected: ', newSelected)
+
+    setSelected(newSelected);
+  };
+
+  const isSelected = (id: number) => selected.indexOf(id) !== -1
+
+  const HitView = (props: any) => {
+    return (
+      <div>
+        <div className="hit__details">
+          <Grid container alignItems="center">
+            <Grid item>
+              <Checkbox checked={isSelected(props.hit.TestId)} onChange={(event) => handleClick(event, props.hit.TestId)} />
+            </Grid>
+            <Grid item xs>
+              <h4>
+                <Highlight attribute="TestName" hit={props.hit} />
+              </h4>
+              <Snippet attribute="LabName" hit={props.hit} />
+            </Grid>
+          </Grid>
+
+          {/* <span>
+          <Checkbox checked={isSelected(props.hit.TestId)} onChange={(event) => handleClick(event, props.hit.TestId)} />
+          <h4>
+            <Highlight attribute="TestName" hit={props.hit} />
+          </h4>
+          </span>
+          <Snippet attribute="LabName" hit={props.hit} /> */}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <Grid container spacing={5}>
@@ -99,6 +149,19 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
             <Configure hitsPerPage={10} />
             <div className="container">
               <div className="search-panel">
+              <div className="search-panel__results">
+                  <div className="searchbox">
+                    <SearchBox />
+                  </div>
+
+                  {/* <Stats /> */}
+                  <CurrentRefinements />
+                  <QueryRulesBanner />
+                  <InfiniteHits hitComponent={HitView} showPrevious={false} />
+                  {/* <Hits hitComponent={HitView} /> */}
+                  {/* <Pagination /> */}
+                </div>
+
                 <div className="search-panel__filters">
                   <DynamicWidgets facets={['*']}>
                     <Panel header="Lab">
@@ -114,18 +177,6 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
                       <RefinementList attribute="Therapeutic Area" />
                     </Panel>
                   </DynamicWidgets>
-                </div>
-                <div className="search-panel__results">
-                  <div className="searchbox">
-                    <SearchBox />
-                  </div>
-
-                  {/* <Stats /> */}
-                  <CurrentRefinements />
-                  <QueryRulesBanner />
-                  <InfiniteHits hitComponent={HitView} showPrevious={false} />
-                  {/* <Hits hitComponent={HitView} /> */}
-                  {/* <Pagination /> */}
                 </div>
               </div>
             </div>
