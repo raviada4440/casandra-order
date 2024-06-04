@@ -10,8 +10,8 @@ import { makeStyles } from '@mui/styles'
 import { LabOrderContext } from '..'
 
 const useStyles = makeStyles({
-  cell25: {
-    maxWidth: 25,
+  cell150: {
+    maxWidth: 150,
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
@@ -29,7 +29,7 @@ const TestSubtitle = () => {
       { labOrder.LabOrderTest && labOrder.LabOrderTest.length > 0 ? labOrder.LabOrderTest?.map((test, index) => (
         <div key={index} className='flex items-center gap-4'>
           <Typography className='step-subtitle min-is-[65px]'>{`${test.TestCatalog?.LabTestId}`}</Typography>
-          <Typography className={`${classes.cell25} step-subtitle`}>{`${test.TestCatalog?.TestName}`}</Typography>
+          <Typography className={`${classes.cell150} step-subtitle`}>{`${test.TestCatalog?.TestName}`}</Typography>
         </div>
       )) : (
         <>

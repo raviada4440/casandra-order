@@ -131,7 +131,7 @@ code {
 .panel {
   display: flex;
   flex-direction: column;
-  margin-block-end: 2rem;
+  margin-block-end: 1rem;
 }
 
 .search-panel__filters {
@@ -160,6 +160,28 @@ code {
 
 li.ais-InfiniteHits-item {
   padding: 0.5rem;
+}
+
+.ais-InfiniteHits {
+  .ais-InfiniteHits-loadMore {
+    border-color: #831c78;
+    color: #831c78;
+  }
+  .ais-InfiniteHits-loadMore:hover {
+    border-color: #831c78;
+    color: #831c78;
+  }
+  .ais-InfiniteHits-loadMore:focus {
+    border-color: #831c78;
+    color: #831c78;
+    box-shadow: 0 0 0 1px #831c78;
+  }
+  .ais-InfiniteHits-loadMore:active {
+    border-color: #831c78;
+    color: #831c78;
+    box-shadow: 0 0 0 1px #831c78;
+  }
+
 }
 
 .ais-InfiniteHits-item {

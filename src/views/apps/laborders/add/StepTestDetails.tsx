@@ -18,12 +18,9 @@ import "instantsearch.css/themes/satellite-min.css"
 import {
   InstantSearch,
   SearchBox,
-  Hits,
   InfiniteHits,
   Highlight,
   RefinementList,
-  Pagination,
-  Stats,
   Snippet,
   CurrentRefinements,
   Configure,
@@ -35,6 +32,8 @@ import Client from '@searchkit/instantsearch-client'
 // Component Imports
 import DirectionalIcon from '@/components/DirectionalIcon'
 import { LabOrderContext } from '.'
+
+import type { LabOrderTestWithRelations } from '~prisma/generated/zod';
 
 
 const searchClient = Client({
@@ -71,6 +70,7 @@ const QueryRulesBanner = () => {
   )
 }
 
+
 type Props = {
   activeStep: number
   handleNext: () => void
@@ -81,20 +81,69 @@ type Props = {
 const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
   // States
   const { labOrder, setLabOrder } = useContext(LabOrderContext);
-  const [selected, setSelected] = useState<readonly number[]>([]);
+  const [selected, setSelected] = useState<readonly LabOrderTestWithRelations[]>([]);
 
 
-  const handleClick = (event: ChangeEvent<unknown>, id: number) => {
+  // const defaultProviderFavorites = ['2021-01-01', '2021-01-10']
+
+  // const ProviderFavoritesConnector = createConnector({
+  //   displayName: 'ProviderFavorites',
+  //   getProvidedProps: (props, searchState) => {
+  //     return {
+  //       availabilityDates: searchState.availabilityDates || defaultProviderFavorites
+  //     }
+  //   },
+  //   refine: (props, searchState, nextValue) => {
+  //     return {
+  //       ...searchState,
+  //       availabilityDates: nextValue
+  //     }
+  //   },
+  //   getSearchParameters(searchParameters, props, searchState) {
+  //     const { availabilityDates = defaultProviderFavorites } = searchState;
+
+  //     return searchParameters.addNumericRefinement('availability.start_date', '<=', (new Date(availabilityDates[0])).getTime()).addNumericRefinement('availability.end_date', '>=', (new Date(availabilityDates[1])).getTime());
+  //   },
+  // })
+
+  // const ProviderFavorites = ProviderFavoritesConnector(({ availabilityDates, refine }) => {
+  //   return (
+  //     <div>
+  //       <input type="date"
+  //         value={availabilityDates[0]} onChange={(e) => {
+  //           refine([e.target.value, availabilityDates[1]])
+  //         }}
+  //         ></input>
+  //         <input type="date"
+  //         value={availabilityDates[1]}
+  //         onChange={(e) => {
+  //           refine([availabilityDates[0], e.target.value])
+  //         }}
+  //         ></input>
+  //     </div>
+  //   )
+  // })
+
+  const handleClick = (event: ChangeEvent<unknown>, hit: any) => {
     event.preventDefault()
 
     console.log(event.target)
-    console.log(id)
+    console.log(hit)
 
-    const selectedIndex = selected.indexOf(id);
-    let newSelected: readonly number[] = [];
+    const labOrderTest = {
+      TestId: hit.TestId,
+      TestCatalog: {
+        TestId: hit.TestId,
+        TestName: hit.TestName,
+        LabTestId: hit.LabTestId,
+      }
+    } as unknown as LabOrderTestWithRelations
+
+    const selectedIndex = selected.findIndex(item => item.TestId === hit.TestId)
+    let newSelected: readonly LabOrderTestWithRelations[] = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
+      newSelected = newSelected.concat(selected, labOrderTest);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -106,12 +155,18 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
       );
     }
 
-    console.log('newSelected: ', newSelected)
-
     setSelected(newSelected);
+
+    console.log(selected)
+
+    const labOrderCopy = { ...labOrder }
+
+    labOrderCopy.LabOrderTest = newSelected as LabOrderTestWithRelations[]
+
+    setLabOrder(labOrderCopy)
   };
 
-  const isSelected = (id: number) => selected.indexOf(id) !== -1
+  const isSelected = (id: number) => selected.some(item => item.TestId === id)
 
   const HitView = (props: any) => {
     return (
@@ -119,7 +174,7 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
         <div className="hit__details">
           <Grid container alignItems="center">
             <Grid item>
-              <Checkbox checked={isSelected(props.hit.TestId)} onChange={(event) => handleClick(event, props.hit.TestId)} />
+              <Checkbox checked={isSelected(props.hit.TestId)} onChange={(event) => handleClick(event, props.hit)} />
             </Grid>
             <Grid item xs>
               <h4>
@@ -148,11 +203,11 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
           <InstantSearch indexName="testcatalog" searchClient={searchClient} routing>
             <Configure hitsPerPage={10} />
             <div className="container">
+              <div className="searchbox">
+                <SearchBox />
+              </div>
               <div className="search-panel">
-              <div className="search-panel__results">
-                  <div className="searchbox">
-                    <SearchBox />
-                  </div>
+                <div className="search-panel__results">
 
                   {/* <Stats /> */}
                   <CurrentRefinements />
