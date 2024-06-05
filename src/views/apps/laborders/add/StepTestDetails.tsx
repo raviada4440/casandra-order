@@ -5,14 +5,7 @@ import { useContext, useEffect, useState } from 'react'
 // MUI Imports
 import Grid from '@mui/material/Grid'
 import Checkbox from '@mui/material/Checkbox';
-import FormControl from '@mui/material/FormControl'
-import FormLabel from '@mui/material/FormLabel'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
 import Button from '@mui/material/Button'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Card from '@mui/material/Card'
-import CardContent from '@mui/material/CardContent'
 import "instantsearch.css/themes/satellite-min.css"
 
 import {
@@ -91,7 +84,7 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
   useEffect(() => {
     setSelected(labOrder?.LabOrderTest || []);
   }, [labOrder?.LabOrderTest]);
-  
+
   // const [isSelected, setIsSelected] = useState<boolean>(false);
   // const [selectedTestId, setSelectedTestId] = useState<number>(0);
 

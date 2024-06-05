@@ -1,7 +1,7 @@
 import type { NextRequest} from 'next/server';
 import { NextResponse } from 'next/server'
 
-import API, { MatchFilter } from '@searchkit/api'
+import API from '@searchkit/api'
 
 const apiClient = API(
   {
@@ -100,7 +100,7 @@ const apiClient = API(
   { debug: true }
 )
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   const data = await req.json()
 
   const results = await apiClient.handleRequest(data)

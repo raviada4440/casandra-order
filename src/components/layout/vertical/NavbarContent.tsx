@@ -2,60 +2,56 @@
 import classnames from 'classnames'
 
 // Type Imports
-import type { ShortcutsType } from '@/components/layout/shared/ShortcutsDropdown'
+//import type { ShortcutsType } from '@/components/layout/shared/ShortcutsDropdown'
 import type { NotificationsType } from '@/components/layout/shared/NotificationsDropdown'
 
 // Component Imports
 import NavToggle from './NavToggle'
-import NavSearch from '@/components/layout/shared/search'
-import LanguageDropdown from '@/components/layout/shared/LanguageDropdown'
-import ModeDropdown from '@/components/layout/shared/ModeDropdown'
-import ShortcutsDropdown from '@/components/layout/shared/ShortcutsDropdown'
 import NotificationsDropdown from '@/components/layout/shared/NotificationsDropdown'
 import UserDropdown from '@/components/layout/shared/UserDropdown'
 
 // Util Imports
 import { verticalLayoutClasses } from '@layouts/utils/layoutClasses'
 
-// Vars
-const shortcuts: ShortcutsType[] = [
-  {
-    url: '/apps/calendar',
-    icon: 'ri-calendar-line',
-    title: 'Calendar',
-    subtitle: 'Appointments'
-  },
-  {
-    url: '/apps/invoice/list',
-    icon: 'ri-file-list-3-line',
-    title: 'Invoice App',
-    subtitle: 'Manage Accounts'
-  },
-  {
-    url: '/apps/user/list',
-    icon: 'ri-user-3-line',
-    title: 'Users',
-    subtitle: 'Manage Users'
-  },
-  {
-    url: '/apps/roles',
-    icon: 'ri-computer-line',
-    title: 'Role Management',
-    subtitle: 'Permissions'
-  },
-  {
-    url: '/dashboards/crm',
-    icon: 'ri-pie-chart-2-line',
-    title: 'Dashboard',
-    subtitle: 'User Dashboard'
-  },
-  {
-    url: '/pages/account-settings',
-    icon: 'ri-settings-4-line',
-    title: 'Settings',
-    subtitle: 'Account Settings'
-  }
-]
+// // Vars
+// const shortcuts: ShortcutsType[] = [
+//   {
+//     url: '/apps/calendar',
+//     icon: 'ri-calendar-line',
+//     title: 'Calendar',
+//     subtitle: 'Appointments'
+//   },
+//   {
+//     url: '/apps/invoice/list',
+//     icon: 'ri-file-list-3-line',
+//     title: 'Invoice App',
+//     subtitle: 'Manage Accounts'
+//   },
+//   {
+//     url: '/apps/user/list',
+//     icon: 'ri-user-3-line',
+//     title: 'Users',
+//     subtitle: 'Manage Users'
+//   },
+//   {
+//     url: '/apps/roles',
+//     icon: 'ri-computer-line',
+//     title: 'Role Management',
+//     subtitle: 'Permissions'
+//   },
+//   {
+//     url: '/dashboards/crm',
+//     icon: 'ri-pie-chart-2-line',
+//     title: 'Dashboard',
+//     subtitle: 'User Dashboard'
+//   },
+//   {
+//     url: '/pages/account-settings',
+//     icon: 'ri-settings-4-line',
+//     title: 'Settings',
+//     subtitle: 'Account Settings'
+//   }
+// ]
 
 const notifications: NotificationsType[] = [
   {
