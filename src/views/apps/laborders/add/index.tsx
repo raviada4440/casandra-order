@@ -2,7 +2,7 @@
 
 // React Imports
 import type { Dispatch, SetStateAction} from 'react';
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -20,6 +20,8 @@ import { styled } from '@mui/material/styles'
 import Grid from '@mui/material/Grid'
 
 // Component Imports
+import { useLocation } from 'react-use';
+
 import StepPatientDetails from './StepPatientDetails'
 import StepIcdDetails from './StepIcdDetails'
 import StepTestDetails from './StepTestDetails'
@@ -38,7 +40,8 @@ import StepperCustomDot from '@views/forms/form-wizard/StepperCustomDot'
 
 import AccountCard from './AccountCard'
 
-import type { LabOrderWithRelations } from '~prisma/generated/zod'
+import type { LabOrderTestWithRelations, LabOrderWithRelations } from '~prisma/generated/zod'
+import { api } from '~trpc/react';
 
 // Types
 
@@ -121,7 +124,55 @@ const AddLabOrder = () => {
   // States
   const [activeStep, setActiveStep] = useState<number>(0)
   const [labOrder, setLabOrder] = useState<LabOrderWithRelations>({} as LabOrderWithRelations)
+  const [labOrderCopy, setLabOrderCopy] = useState<LabOrderWithRelations>({} as LabOrderWithRelations)
 
+  // Get the current location
+  const location = useLocation();
+
+  // Parse the query parameters
+  const queryParams = new URLSearchParams(location.search);
+
+  // Get a specific query parameter
+  const testCatalogQuery = queryParams.get('testcatalog[query]');
+
+  console.log('testcatalog: ', testCatalogQuery);
+
+  const { data, error, isLoading } = api.testcatalog.getTestByCasandraTestId.useQuery({ casandraTestId: testCatalogQuery || ''})
+
+  useEffect(() => {
+    if (error) {
+      console.error(error);
+    }
+
+    if (isLoading) {
+      return;
+    }
+
+    if (testCatalogQuery && data && data?.TestId > 0) {
+      // Generate the LabOrderTest
+      const labOrderTest = [{
+        TestId: data.TestId,
+        TestCatalog: data
+      }] as unknown as LabOrderTestWithRelations[];
+
+      const labOrderCopy = { ...labOrder, LabOrderTest: labOrderTest };
+
+      // Only update the state if labOrderCopy has changed
+      if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrder)) {
+        console.log('LabOrderCopy: ', labOrderCopy);
+        setLabOrderCopy(labOrderCopy);
+      }
+    }
+  }, [testCatalogQuery, data, error, isLoading, labOrder]);
+
+  useEffect(() => {
+    setLabOrder(labOrderCopy);
+
+    // set th test step as active
+    setActiveStep(2);
+  }, [labOrderCopy, setLabOrder, setActiveStep])
+
+  // Handlers
   const handleNext = () => {
     if (activeStep !== steps.length - 1) {
       setActiveStep(activeStep + 1)

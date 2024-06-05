@@ -91,6 +91,35 @@ export const testCatalogRouter = createTRPCRouter({
     })
   }),
 
+  getTestByCasandraTestId: publicProcedure
+  .input(z.object({ casandraTestId: z.string() }))
+  .query(async ({ ctx, input }) => {
+    return ctx.db.testCatalog.findFirst({
+      where: {
+        CasandraTestId: input.casandraTestId,
+      },
+      include: {
+        Lab: true,
+        TestCptCode: true,
+        TestOrderLoinc: {
+          include: {
+            LOINC: true,
+          },
+        },
+        TestResultLoinc: {
+          include: {
+            LOINC: true,
+          },
+        },
+        TestBiomarker: {
+          include: {
+            BIOMARKER: true,
+          },
+        }
+      }
+    })
+  }),
+
   getFilteredTests: publicProcedure
   .input(z.object({ testId: z.string() }))
   .query(async ({ ctx, input }) => {

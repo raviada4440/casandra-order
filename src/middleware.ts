@@ -89,9 +89,17 @@ export default withAuth(
       let redirectUrl = '/login'
 
       if (!(pathname === '/' || pathname === `/${locale}`)) {
-        const searchParamsStr = new URLSearchParams({ redirectTo: withoutSuffix(pathname, '/') }).toString()
+        const url = new URL(request.url);
+        const redirectPathname = url.pathname + url.search
+
+        console.log('redirectPathname: ', redirectPathname)
+
+        const searchParamsStr = new URLSearchParams({ redirectTo: withoutSuffix(redirectPathname, '/') }).toString()
 
         redirectUrl += `?${searchParamsStr}`
+
+        console.log('redirectUrl: ', redirectUrl)
+
       }
 
       return localizedRedirect(redirectUrl, locale, request)

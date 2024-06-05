@@ -34,7 +34,7 @@ const SpecimenSubtitle = () => {
 
   return (
     <div>
-      { labOrder.LabOrderSpecimen && labOrder.LabOrderSpecimen.length > 0 ? labOrder.LabOrderSpecimen?.map((specimen, index) => (
+      { labOrder?.LabOrderSpecimen && labOrder?.LabOrderSpecimen.length > 0 ? labOrder?.LabOrderSpecimen?.map((specimen, index) => (
         <div key={index} className='flex items-center gap-1'>
           {/* <Typography className='step-subtitle min-is-[65px]'>Type:</Typography> */}
           <Typography className='step-subtitle'>{`${specimen.SpecimenType}`}</Typography>

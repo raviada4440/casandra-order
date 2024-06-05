@@ -1,6 +1,6 @@
 // React Imports
 import type { ChangeEvent} from 'react';
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 // MUI Imports
 import Grid from '@mui/material/Grid'
@@ -81,8 +81,19 @@ type Props = {
 const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
   // States
   const { labOrder, setLabOrder } = useContext(LabOrderContext);
+
+  console.log('labOrder ', labOrder)
+
   const [selected, setSelected] = useState<readonly LabOrderTestWithRelations[]>([]);
 
+  console.log('selected ', selected)
+
+  useEffect(() => {
+    setSelected(labOrder?.LabOrderTest || []);
+  }, [labOrder?.LabOrderTest]);
+  
+  // const [isSelected, setIsSelected] = useState<boolean>(false);
+  // const [selectedTestId, setSelectedTestId] = useState<number>(0);
 
   // const defaultProviderFavorites = ['2021-01-01', '2021-01-10']
 
@@ -127,8 +138,8 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
   const handleClick = (event: ChangeEvent<unknown>, hit: any) => {
     event.preventDefault()
 
-    console.log(event.target)
-    console.log(hit)
+    // console.log(event.target)
+    // console.log(hit)
 
     const labOrderTest = {
       TestId: hit.TestId,
@@ -164,9 +175,12 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
     labOrderCopy.LabOrderTest = newSelected as LabOrderTestWithRelations[]
 
     setLabOrder(labOrderCopy)
-  };
 
-  const isSelected = (id: number) => selected.some(item => item.TestId === id)
+    // setSelectedTestId(hit.TestId)
+  }
+
+
+  const isSelected = (id: number) => selected?.some(item => item.TestId === id)
 
   const HitView = (props: any) => {
     return (
@@ -174,7 +188,7 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
         <div className="hit__details">
           <Grid container alignItems="center">
             <Grid item>
-              <Checkbox checked={isSelected(props.hit.TestId)} onChange={(event) => handleClick(event, props.hit)} />
+              <Checkbox checked={isSelected(props.hit.TestId) } onChange={(event) => handleClick(event, props.hit)} />
             </Grid>
             <Grid item xs>
               <h4>

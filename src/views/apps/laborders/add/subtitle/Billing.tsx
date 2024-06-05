@@ -26,7 +26,7 @@ const BillingSubtitle = () => {
 
   return (
     <div>
-      { labOrder.LabOrderBilling && labOrder.LabOrderBilling.length > 0 ? labOrder.LabOrderBilling?.map((billing, index) => (
+      { labOrder?.LabOrderBilling && labOrder?.LabOrderBilling.length > 0 ? labOrder?.LabOrderBilling?.map((billing, index) => (
         <div key={index} className='flex items-center gap-4'>
           <Typography className='step-subtitle min-is-[65px]'>Healthplan Id:</Typography>
           <Typography className={`${classes.cell25} step-subtitle`}> {`${billing.HealthPalnId}`}</Typography>

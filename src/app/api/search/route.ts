@@ -25,11 +25,15 @@ const apiClient = API(
       search_attributes: [
         { field: 'TestName', weight: 3 },
         { field: 'LabName', weight: 3 },
+        { field: 'LabTestId', weight: 5 },
+        { field: 'CasandraTestId', weight: 5 },
+        { field: 'sponsored_program.ProgramName', weight: 2 },
+        { field: 'sponsored_program.TherapeuticArea', weight: 2 },
         { field: 'biomarkers.HGNCApprovedSymbol', weight: 2 },
         { field: 'provider_favorite.ProviderId', weight: 2 },
         { field: 'organization_favorite.OrganizationId', weight: 2 },
       ],
-      result_attributes: ['TestId', 'LabTestId','TestName', 'LabName'],
+      result_attributes: ['TestId', 'LabTestId', 'CasandraTestId', 'TestName', 'LabName'],
       facet_attributes: [
         {
           attribute: 'Lab',
@@ -53,6 +57,16 @@ const apiClient = API(
         }
       ],
       filter_attributes: [
+        {
+          attribute: 'TestId',
+          field: 'TestId',
+          type: 'numeric'
+        },
+        {
+          attribute: 'CasandraTestId',
+          field: 'CasandraTestId',
+          type: 'string'
+        },
         {
           attribute: 'provider_favorite.ProviderId',
           field: 'provider_favorite.ProviderId.keyword',

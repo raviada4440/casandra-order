@@ -30,12 +30,12 @@ const AccountCard = () => {
   const orderingPhysicianName = session?.user.UserAttribute?.Provider ? session?.user.UserAttribute?.Provider?.Name + ', ' + session?.user.UserAttribute?.Provider?.Credentials : ''
   const orderingPhysiciaSpecialty = session?.user.UserAttribute?.Provider ? session?.user.UserAttribute?.Provider?.Specialty  : ''
 
-  const treatingPhysicianName = labOrder.TreatingProvider ? labOrder.TreatingProvider?.Name + ', ' + labOrder.TreatingProvider?.Credentials : ''
-  const treatingPhysiciaSpecialty = labOrder.TreatingProvider ? labOrder.TreatingProvider?.Specialty  : ''
+  const treatingPhysicianName = labOrder?.TreatingProvider ? labOrder.TreatingProvider?.Name + ', ' + labOrder.TreatingProvider?.Credentials : ''
+  const treatingPhysiciaSpecialty = labOrder?.TreatingProvider ? labOrder.TreatingProvider?.Specialty  : ''
 
-  const organizationName = labOrder.Organization ? labOrder.Organization?.OrgName : ''
-  const organizationAddress = labOrder.Organization ? labOrder.Organization?.OrgAddress  : ''
-  const organizationCityState = labOrder.Organization ? labOrder.Organization?.OrgCity + ', ' +  labOrder.Organization?.OrgState + ' - ' + labOrder.Organization?.OrgZip : ''
+  const organizationName = labOrder?.Organization ? labOrder.Organization?.OrgName : ''
+  const organizationAddress = labOrder?.Organization ? labOrder.Organization?.OrgAddress  : ''
+  const organizationCityState = labOrder?.Organization ? labOrder.Organization?.OrgCity + ', ' +  labOrder.Organization?.OrgState + ' - ' + labOrder.Organization?.OrgZip : ''
 
   return (
     <Card>
