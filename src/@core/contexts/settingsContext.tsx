@@ -7,7 +7,7 @@ import { createContext, useMemo, useState } from 'react'
 import type { ColumnFiltersState } from '@tanstack/react-table'
 
 // Type Imports
-import type { Lab } from '~prisma/generated/zod'
+import type { Lab, OrganizationEndpoint } from '~prisma/generated/zod'
 
 import type { Mode, Skin, Layout, LayoutComponentWidth, DemoName } from '@core/types'
 
@@ -35,6 +35,7 @@ export type Settings = {
   selectedLab?: Lab
   globalFiler?: string
   loggedInEmail?: string
+  selectedEndpoint?: OrganizationEndpoint
 }
 
 // UpdateSettingsOptions type

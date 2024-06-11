@@ -7,7 +7,11 @@ import type { NextAuthOptions } from 'next-auth'
 
 import type { Adapter } from 'next-auth/adapters'
 
-import type { UserAttributePartialRelations } from '~prisma/generated/zod'
+import type { Bundle, Location, Practitioner, PractitionerRole, Reference } from "~node_modules/@types/fhir/r4.d";
+
+import type { UserAttributePartialRelations, OrganizationUncheckedCreateInputSchema } from '~prisma/generated/zod'
+import { api } from '~trpc/server'
+
 
 const prisma = new PrismaClient()
 
@@ -72,9 +76,35 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
-    })
+    }),
 
     // ** ...add more providers here
+    {
+      id: "epic",
+      name: "Epic",
+      type: "oauth",
+      version: "2.0",
+      client: {
+        token_endpoint_auth_method: "client_secret_post",
+      },
+      clientId: process.env.EPIC_CLIENT_ID,
+      clientSecret: process.env.EPIC_CLIENT_SECRET,
+      wellKnown: "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/.well-known/openid-configuration",
+      authorization: { params: { scope: "openid profile fhirUser" } },
+      idToken: true,
+      checks: ["pkce", "state"],
+      profile(profile) {
+        return {
+          id: profile.sub,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+          password: '',
+          emailVerified: new Date(),
+        }
+      },
+    }
+
   ],
 
   // ** Please refer to https://next-auth.js.org/configuration/options#session for more `session` options
@@ -107,32 +137,90 @@ export const authOptions: NextAuthOptions = {
      * the `session()` callback. So we have to add custom parameters in `token`
      * via `jwt()` callback to make them accessible in the `session()` callback
      */
-    async jwt({ token, user }) {
+    async jwt({ token, user, account, profile }) {
+      console.log('token (jwt()):', token)
+      console.log('user (jwt()):', user)
+      console.log('account (jwt()):', account)
+      console.log('profile (jwt()):', profile)
+
+      if(account && profile && profile.fhirUser && account.access_token) {
+        // const epicProvider: Practitioner = await api.fhir.getPractitioner.query({accessToken: account?.access_token as string, fhirUser: profile?.fhirUser as string})
+
+        // console.log('epicProvider:', epicProvider)
+
+        // const epicProviderRole: PractitionerRole = await api.fhir.getPractitionerRole.query({accessToken: account?.access_token as string, providerAccountId: account?.providerAccountId as string})
+
+        // console.log('epicProviderRole:', epicProviderRole)
+        // console.log('epic location:', epicProviderRole.location)
+
+        // for (const location of epicProviderRole.location as Reference[]) {
+        //   console.log('location:', location)
+
+        //   const epicLocation: Location = await api.fhir.getLocation.query({accessToken: account?.access_token as string, fhirLocation: location.reference as string})
+
+        //   console.log('epicLocation:', epicLocation)
+        // }
+
+        const practitionerRoleBundle: Bundle = await api.fhir.getPractitionerRoleWithIncludes.query({accessToken: account?.access_token as string, providerAccountId: account?.providerAccountId as string})
+
+        // console.log('practitionerRoleBundle:', practitionerRoleBundle)
+
+        if (practitionerRoleBundle && practitionerRoleBundle.entry && practitionerRoleBundle.entry.length > 0) {
+          for (const entry of practitionerRoleBundle.entry) {
+            console.log('entry:', entry)
+          }
+        }
+      }
+
       if (user) {
         /*
          * For adding custom parameters to user in session, we first need to add those parameters
          * in token which then will be available in the `session()` callback
          */
-        console.log('user in JWT:', user)
-
         token.name = user.name
-        token.UserAttribute = user.UserAttribute as UserAttributePartialRelations
 
-        console.log('token:', token)
+        if(user.UserAttribute) {
+          token.UserAttribute = user?.UserAttribute as UserAttributePartialRelations
+        }
+      }
+
+      // Persist the OAuth access_token and or the user id to the token right after signin
+      if (account) {
+        token.accessToken = account.access_token
+        token.id = profile?.email
       }
 
       return token
     },
     async session({ session, token }) {
-      if (session.user) {
+
+      console.log('session (session():', session)
+      console.log('token (session()):', token)
+
+      if (session && session.user) {
         // ** Add custom params to user in session which are added in `jwt()` callback via `token` parameter
         // session.user.name = token.name
-        session.user.UserAttribute = token.UserAttribute as UserAttributePartialRelations
-
-        console.log('session:', session)
+        if (token && token.UserAttribute) {
+          session.user.UserAttribute = token.UserAttribute as UserAttributePartialRelations
+        }
       }
 
       return session
-    }
-  }
+    },
+
+    // async redirect({ url, baseUrl }) {
+
+    //   console.log('redirect url:', url)
+    //   console.log('redirect baseUrl:', baseUrl)
+
+    //   // Allows relative callback URLs
+    //   if (url.startsWith("/")) return `${baseUrl}${url}`
+
+    //   // Allows callback URLs on the same origin
+    //   else if (new URL(url).origin === baseUrl) return url
+
+    //   return baseUrl
+    // }
+  },
+
 }

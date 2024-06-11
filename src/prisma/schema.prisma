@@ -28,22 +28,27 @@ datasource db {
 }
 
 model Account {
-  id                String  @id
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?
-  access_token      String?
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?
-  session_state     String?
-  User              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                       String  @id @default(cuid())
+  userId                   String  @unique
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String? @db.Text
+  access_token             String? @db.Text
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  state                    String?
+  id_token                 String? @db.Text
+  session_state            String?
+  refresh_token_expires_in Int?
+  user                     User?   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([provider, providerAccountId])
-  @@index([userId], map: "Account_userId_fkey")
+  @@index([userId])
 }
 
 model Admin {
@@ -302,7 +307,7 @@ model Organization {
   OrgZip                   String?                    @db.VarChar(512)
   LabOrder                 LabOrder[]
   Organization             Organization?              @relation("OrganizationToOrganization", fields: [ParentId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "parent_fk")
-  other_Organization       Organization[]             @relation("OrganizationToOrganization")
+  ChildOrganization       Organization[]             @relation("OrganizationToOrganization")
   OrganizationFavoriteTest OrganizationFavoriteTest[]
   ProviderOrganization     ProviderOrganization[]
 
@@ -325,6 +330,15 @@ model OrganizationFavoriteTest {
   @@index([OrganizationId], map: "org_test_idx")
   @@index([TestId], map: "org_test_test_id_idx")
 }
+
+model OrganizationEndpoint {
+  Id             String        @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  OrgName        String?       @db.VarChar(512)
+  EHRVendor      String?       @db.VarChar(45)
+  FHIRVersion    String?       @db.VarChar(45)
+  Endpoint       String?       @db.VarChar(512)
+}
+
 model Patient {
   Id          String     @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
   FirstName   String?    @db.VarChar(45)
@@ -422,11 +436,11 @@ model ProviderOrganization {
 }
 
 model Session {
-  id           String   @id
+  id           String   @id @default(cuid())
   sessionToken String   @unique
   userId       String
   expires      DateTime
-  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId], map: "Session_userId_fkey")
 }
@@ -550,14 +564,14 @@ model TestResultLoinc {
 }
 
 model User {
-  id            String         @id
+  id            String      @id @default(cuid())
   name          String?
-  email      String         @unique(map: "User_email_key")
-  password      String         @db.VarChar(255)
+  email         String?     @unique(map: "User_email_key")
+  password      String?     @db.VarChar(255)
   emailVerified DateTime?
   image         String?
-  Account       Account[]
   Session       Session[]
+  Account       Account?
   UserAttribute UserAttribute?
 }
 

@@ -2,7 +2,7 @@
 
 import type { DefaultSession } from "next-auth";
 
-import type {DefaultJWT} from "@auth/core/jwt"
+import type { DefaultJWT, DefaultP } from "@auth/core/jwt"
 
 import type { UserAttributePartialRelations, UserWithPartialRelations } from '~prisma/generated/zod'
 
@@ -20,6 +20,10 @@ declare module "next-auth" {
 
   interface JWT {
     UserAttribute: UserAttributePartialRelations & DefaultJWT
+  }
+
+  interface Profile {
+    fhirUser: string & DefaultP["profile"]
   }
 
 }

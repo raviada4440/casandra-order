@@ -67,6 +67,9 @@
       ],
       "~trpc/*": [
         "./src/trpc/*"
+      ],
+      "~node_modules/*": [
+        "./node_modules/*"
       ]
     }
   },
