@@ -1,14 +1,28 @@
-// Third-party Imports
-import NextAuth from 'next-auth'
+import type { NextApiHandler, NextApiRequest, NextApiResponse } from "next"
+import NextAuth from "next-auth"
 
-// Lib Imports
-import { authOptions } from '@/libs/auth'
+import { authOptions } from "@/libs/auth"
 
-/*
- * As we do not have backend server, the refresh token feature has not been incorporated into the template.
- * Please refer https://next-auth.js.org/tutorials/refresh-token-rotation link for a reference.
- */
+const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
 
-const handler = NextAuth(authOptions)
+  console.log("req.url", req.url)
+  const url = new URL(req.url as string)
+
+  if(req?.url?.includes("epic") && req.method === "POST") {
+    console.log(
+      "Handling callback request from my Identity Provider",
+      url.searchParams.get("wellknownUrl")
+    )
+    const wellknownUrl = url.searchParams.get("wellknownUrl")
+    const epicProvider: any = authOptions.providers.find(provider => provider.id === 'epic')
+
+    epicProvider.wellKnown = wellknownUrl
+
+    console.log("authOptions providers in route: ", authOptions.providers)
+  }
+
+  return await NextAuth(req, res, authOptions)
+
+}
 
 export { handler as GET, handler as POST }

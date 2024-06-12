@@ -25,6 +25,9 @@ const AutocompleteEndpoint = () => {
   const onProviderChange = (value: OrganizationEndpoint) => {
     console.log('value', value)
 
+    // NEXT_PUBLIC_EPIC_ENDPOINT = value.Endpoint ?? undefined;
+
+
     // Update the labOrder state
     updateSettings({selectedEndpoint: value})
 

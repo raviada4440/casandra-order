@@ -2,7 +2,7 @@
 
 // React Imports
 import type { ChangeEvent} from 'react';
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // Next Imports
 import Link from 'next/link'
@@ -44,6 +44,7 @@ import themeConfig from '@configs/themeConfig'
 import { getLocalizedUrl } from '@/utils/i18n'
 import AutocompleteEndpoint from './AutocompleteEndpoint';
 
+// Lib Imports
 
 type ErrorType = {
   message: string[]
@@ -70,6 +71,17 @@ const Login = ({ mode }: { mode: Mode }) => {
   const matches = useMediaQuery(theme.breakpoints.down('sm'))
 
   console.log('mode', mode)
+
+  useEffect(() => {
+    const fhirUrl = settings.selectedEndpoint?.Endpoint
+
+    console.log('fhirUrl', fhirUrl)
+
+    // if (fhirUrl) {
+    //   setAuthOptions(fhirUrl);
+    // }
+
+  }, [settings])
 
   // Hooks
   const router = useRouter()
@@ -247,7 +259,7 @@ const Login = ({ mode }: { mode: Mode }) => {
                   className='self-center text-textPrimary'
                   startIcon={<img src='/images/pages/epic.png' alt='Google' width={45} />}
                   sx={{ '& .MuiButton-startIcon': { marginInlineEnd: 3 } }}
-                  onClick={() => signIn('epic')}
+                  onClick={() => signIn('epic', undefined , { display: 'popup', wellknownUrl: settings.selectedEndpoint?.Endpoint as string })}
                 >
                   Sign in with my EPIC
                 </Button>

@@ -2,7 +2,8 @@
 import CredentialProvider from 'next-auth/providers/credentials'
 import GoogleProvider from 'next-auth/providers/google'
 import { PrismaAdapter } from '@auth/prisma-adapter'
-import { PrismaClient } from '@prisma/client'
+
+// import { PrismaClient } from '@prisma/client'
 import type { NextAuthOptions } from 'next-auth'
 
 import type { Adapter } from 'next-auth/adapters'
@@ -12,11 +13,13 @@ import type { Bundle, Location, Practitioner, PractitionerRole, Reference } from
 import type { UserAttributePartialRelations, OrganizationUncheckedCreateInputSchema } from '~prisma/generated/zod'
 import { api } from '~trpc/server'
 
+import { db } from "@server/db";
 
-const prisma = new PrismaClient()
+
+// const prisma = new PrismaClient()
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma) as Adapter,
+  adapter: PrismaAdapter(db) as Adapter,
 
   // ** Configure one or more authentication providers
   // ** Please refer to https://next-auth.js.org/configuration/options#providers for more `providers` options
@@ -208,19 +211,6 @@ export const authOptions: NextAuthOptions = {
       return session
     },
 
-    // async redirect({ url, baseUrl }) {
-
-    //   console.log('redirect url:', url)
-    //   console.log('redirect baseUrl:', baseUrl)
-
-    //   // Allows relative callback URLs
-    //   if (url.startsWith("/")) return `${baseUrl}${url}`
-
-    //   // Allows callback URLs on the same origin
-    //   else if (new URL(url).origin === baseUrl) return url
-
-    //   return baseUrl
-    // }
   },
 
 }

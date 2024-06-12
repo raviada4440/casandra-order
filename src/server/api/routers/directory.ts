@@ -37,7 +37,7 @@ export const directoryRouter = createTRPCRouter({
         ],
       },
       orderBy: { OrgName: "asc" },
-      take: input.searchStr == undefined || '' ? undefined : 10,
+      take: input.searchStr == undefined || '' ? undefined : 50,
     })
   }),
 
