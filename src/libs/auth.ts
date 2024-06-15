@@ -8,9 +8,10 @@ import type { NextAuthOptions } from 'next-auth'
 
 import type { Adapter } from 'next-auth/adapters'
 
-import type { Bundle, Location, Practitioner, PractitionerRole, Reference } from "~node_modules/@types/fhir/r4.d";
+import type { Bundle, Location, Practitioner, PractitionerRole } from "~node_modules/@types/fhir/r4.d";
 
-import type { UserAttributePartialRelations, OrganizationUncheckedCreateInputSchema } from '~prisma/generated/zod'
+import type { UserAttributePartialRelations } from '~prisma/generated/zod'
+
 import { api } from '~trpc/server'
 
 import { db } from "@server/db";
@@ -146,7 +147,7 @@ export const authOptions: NextAuthOptions = {
       console.log('account (jwt()):', account)
       console.log('profile (jwt()):', profile)
 
-      if(account && profile && profile.fhirUser && account.access_token) {
+      if(account && profile && user && profile.fhirUser && account.access_token && user.id ) {
         // const epicProvider: Practitioner = await api.fhir.getPractitioner.query({accessToken: account?.access_token as string, fhirUser: profile?.fhirUser as string})
 
         // console.log('epicProvider:', epicProvider)
@@ -166,13 +167,10 @@ export const authOptions: NextAuthOptions = {
 
         const practitionerRoleBundle: Bundle = await api.fhir.getPractitionerRoleWithIncludes.query({accessToken: account?.access_token as string, providerAccountId: account?.providerAccountId as string})
 
+        processBundle(practitionerRoleBundle, user.id as string)
+
         // console.log('practitionerRoleBundle:', practitionerRoleBundle)
 
-        if (practitionerRoleBundle && practitionerRoleBundle.entry && practitionerRoleBundle.entry.length > 0) {
-          for (const entry of practitionerRoleBundle.entry) {
-            console.log('entry:', entry)
-          }
-        }
       }
 
       if (user) {
@@ -214,3 +212,85 @@ export const authOptions: NextAuthOptions = {
   },
 
 }
+
+export const processBundle = async (bundle: Bundle, userId: string) => {
+
+  if (bundle && bundle.entry && bundle.entry.length > 0) {
+    let org: any = {}
+    let provider: any = {}
+    let userAttribute: any = {}
+
+    for (const entry of bundle.entry) {
+      if (entry.resource && entry.resource.resourceType === 'Location') {
+        const location: Location = entry.resource as Location
+
+        console.log('location:', location)
+        org = mapLocation(org, location);
+      }
+
+      if (entry.resource && entry.resource.resourceType === 'Practitioner') {
+        const practitioner: Practitioner = entry.resource as Practitioner
+
+        console.log('practitioner:', practitioner)
+        provider = mapProvider(provider, practitioner);
+      }
+
+      if (entry.resource && entry.resource.resourceType === 'PractitionerRole') {
+        const practitionerRole: PractitionerRole = entry.resource as PractitionerRole
+
+        console.log('practitionerRole:', practitionerRole)
+
+        userAttribute = {
+          UserId: userId,
+          UserType: 'Provider',
+        }
+      }
+    }
+
+    const organization = { Organization: { connectOrCreate: { where: { Id: org.Id }, create: org } } }
+
+    const providerToProviderOrg = {...provider,  ProviderOrganization: { connectOrCreate: { where: { Id: provider.Id }, create: organization }}}
+
+    const userAttributeProvider = {...userAttribute, Provider: { connectOrCreate: { where: { Id: provider.Id },create : providerToProviderOrg }}}
+
+
+    console.log('userAttributeProvider:', JSON.stringify(userAttributeProvider))
+
+    const userAttributeAfterCreate = await api.directory.addOrganization.mutate(userAttributeProvider)
+
+    console.log('orgAfterCreate:', JSON.stringify(userAttributeAfterCreate))
+
+  }
+}
+
+const mapLocation = (org: any, location: Location) => {
+
+  org = {
+    Id: location.id,
+    OrgName: location.name ? location.name : 'Epic Health Systems',
+    OrgType: 'Organization',
+    Level: 0,
+    ParentId: null,
+    OrgAddress: location.address?.line?.join(' '),
+    OrgCity: location.address?.city,
+    OrgState: location.address?.state,
+    OrgZip: location.address?.postalCode,
+  };
+
+  return org;
+
+}
+
+const mapProvider = (provider: any, practitioner: Practitioner) => {
+
+  provider = {
+    Id: practitioner.id,
+    Name: practitioner.name?.[0].family + ' ' + practitioner.name?.[0].given?.[0],
+    NPI: practitioner.identifier?.[0].value,
+    Credentials: practitioner.qualification?.[0].code?.text,
+    Gender: practitioner.gender
+  };
+
+  return provider;
+}
+

@@ -12,7 +12,7 @@ import { useSettings } from '@core/hooks/useSettings';
 
 const AutocompleteEndpoint = () => {
 
-  const { updateSettings } = useSettings()
+  const { settings, updateSettings } = useSettings()
 
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState<OrganizationEndpoint[]>([]);
@@ -53,6 +53,7 @@ const AutocompleteEndpoint = () => {
       className='flex flex-col sm:flex-row is-full'
       id="endpoint-autocomplete"
       fullWidth
+      value={settings.selectedEndpoint}
       open={open}
       onOpen={() => {
         setOpen(true);

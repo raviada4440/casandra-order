@@ -3,18 +3,22 @@ import { z } from "zod"
 
 import { createTRPCRouter, publicProcedure } from "@server/api/trpc"
 import {
-  OrganizationUncheckedCreateInputSchema
+  UserAttributeUncheckedCreateInputSchema
 } from "~prisma/generated/zod";
 
 
 export const directoryRouter = createTRPCRouter({
 
   addOrganization: publicProcedure
-    .input(OrganizationUncheckedCreateInputSchema)
+    .input(UserAttributeUncheckedCreateInputSchema)
     .mutation(async ({ ctx, input }) => {
 
-      return ctx.db.organization.create({
-        data: input,
+      return ctx.db.userAttribute.upsert({
+        where: {
+          UserId: input.UserId,
+        },
+        update: input,
+        create: input,
       });
     }),
 
