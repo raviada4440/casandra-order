@@ -32,4 +32,32 @@ export const userRouter = createTRPCRouter({
         }
       })
     }),
+
+    getUserById: publicProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return  ctx.db.user.findFirst({
+        where: {
+          AND: [
+            { id: input.id },
+            { UserAttribute: { is: { UserType: 'Provider' } }}
+          ],
+        },
+        include: {
+          UserAttribute: {
+            include: {
+              Provider: {
+                include: {
+                  ProviderOrganization: {
+                    include: {
+                      Organization: true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      })
+    }),
 });

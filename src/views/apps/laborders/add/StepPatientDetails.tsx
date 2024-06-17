@@ -46,6 +46,7 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
 
   const providerOrgs: ProviderOrganizationPartialRelations[] = session?.user.UserAttribute?.Provider?.ProviderOrganization || []
 
+  console.log('providerOrgs', providerOrgs)
 
   const handleFormChange = (field: keyof PatientWithRelations, value: PatientWithRelations[keyof PatientWithRelations]) => {
     const updatedFormData = { ...formData, [field]: value };
@@ -62,7 +63,11 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
     console.log('event.target.value', event.target.value)
     const providerOrg = providerOrgs.find(org => org.Organization?.Id === event.target.value)
 
-    setLabOrder({...labOrder, Organization: providerOrg as OrganizationWithRelations })
+    console.log('providerOrg', providerOrg)
+
+    setLabOrder({...labOrder, Organization: providerOrg?.Organization as OrganizationWithRelations })
+
+    console.log('labOrder', labOrder)
   };
 
 

@@ -174,14 +174,21 @@ export const authOptions: NextAuthOptions = {
       }
 
       if (user) {
-        /*
-         * For adding custom parameters to user in session, we first need to add those parameters
-         * in token which then will be available in the `session()` callback
-         */
-        token.name = user.name
-
-        if(user.UserAttribute) {
+        if (user.name && user.email && user.UserAttribute) {
+          /*
+          * For adding custom parameters to user in session, we first need to add those parameters
+          * in token which then will be available in the `session()` callback
+          */
+          token.name = user.name
           token.UserAttribute = user?.UserAttribute as UserAttributePartialRelations
+
+        } else if (account) {
+          const oathUser = await api.user.getUserById.query({id: user.id as string})
+
+          if (oathUser) {
+            token.name = oathUser?.UserAttribute?.Provider?.Name
+            token.UserAttribute = oathUser?.UserAttribute as UserAttributePartialRelations
+          }
         }
       }
 
