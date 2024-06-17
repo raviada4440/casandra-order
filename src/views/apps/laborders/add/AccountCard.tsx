@@ -28,7 +28,7 @@ const AccountCard = () => {
   const { data: session } = useSession()
 
   const orderingPhysicianName = session?.user.UserAttribute?.Provider ? session?.user.UserAttribute?.Provider?.Name + ', ' + session?.user.UserAttribute?.Provider?.Credentials : ''
-  const orderingPhysiciaSpecialty = session?.user.UserAttribute?.Provider ? session?.user.UserAttribute?.Provider?.Specialty  : ''
+  const orderingPhysiciaSpecialty = session?.user.UserAttribute?.Provider?.Specialty ? session?.user.UserAttribute?.Provider?.Specialty  : ''
 
   const treatingPhysicianName = labOrder?.TreatingProvider ? labOrder.TreatingProvider?.Name + ', ' + labOrder.TreatingProvider?.Credentials : ''
   const treatingPhysiciaSpecialty = labOrder?.TreatingProvider ? labOrder.TreatingProvider?.Specialty  : ''

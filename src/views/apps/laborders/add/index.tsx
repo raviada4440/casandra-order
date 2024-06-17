@@ -168,9 +168,12 @@ const AddLabOrder = () => {
   useEffect(() => {
     setLabOrder(labOrderCopy);
 
-    // set th test step as active
-    setActiveStep(2);
-  }, [labOrderCopy, setLabOrder, setActiveStep])
+    if (testCatalogQuery) {
+      // set th test step as active
+      setActiveStep(2);
+    }
+
+  }, [labOrderCopy, setLabOrder, setActiveStep, testCatalogQuery])
 
   // Handlers
   const handleNext = () => {

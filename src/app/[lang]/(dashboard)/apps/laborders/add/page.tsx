@@ -6,7 +6,7 @@ import AddLabOrder from '@views/apps/laborders/add'
 // import { api } from '~trpc/server'
 
 
-const InvoiceAdd = async () => {
+const LabOrderAdd = async () => {
 
   // const labOrder = await api.laborders.getLabOrder.query({ labOrderId: '' })
 
@@ -21,4 +21,4 @@ const InvoiceAdd = async () => {
   )
 }
 
-export default InvoiceAdd
+export default LabOrderAdd

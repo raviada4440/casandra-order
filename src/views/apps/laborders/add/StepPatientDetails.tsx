@@ -1,5 +1,5 @@
 // React Imports
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { useSession } from 'next-auth/react'
 
@@ -43,8 +43,11 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
   const { labOrder, setLabOrder } = useContext(LabOrderContext);
   const [formData, setFormData] = useState<PatientWithRelations>(labOrder.Patient as PatientWithRelations)
   const { data: session } = useSession()
+  const [providerOrgs] = useState<ProviderOrganizationPartialRelations[]>(session?.user.UserAttribute?.Provider?.ProviderOrganization || [])
 
-  const providerOrgs: ProviderOrganizationPartialRelations[] = session?.user.UserAttribute?.Provider?.ProviderOrganization || []
+  // const providerOrgs: ProviderOrganizationPartialRelations[] = session?.user.UserAttribute?.Provider?.ProviderOrganization || []
+
+
 
   console.log('providerOrgs', providerOrgs)
 
@@ -70,6 +73,11 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
     console.log('labOrder', labOrder)
   };
 
+  useEffect(() => {
+    if (providerOrgs.length === 1) {
+      labOrder.Organization = providerOrgs[0].Organization as OrganizationWithRelations
+    }
+  }, [labOrder, providerOrgs])
 
   return (
     <>
@@ -95,7 +103,7 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
               <Select
                 labelId='select-location'
                 label='Location'
-                defaultValue=''
+                defaultValue={providerOrgs.length === 1 ? providerOrgs[0]?.Organization?.Id : ''}
                 onChange={handleOrgChange}>
                 {providerOrgs.map((org: ProviderOrganizationPartialRelations, index) => (
                     <MenuItem key={index} value={org.Organization?.Id}>
