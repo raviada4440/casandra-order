@@ -283,7 +283,7 @@ const Login = ({ mode }: { mode: Mode }) => {
                   className='self-center text-textPrimary'
                   startIcon={<img src='/images/pages/epic.png' alt='Google' width={45} />}
                   sx={{ '& .MuiButton-startIcon': { marginInlineEnd: 3 } }}
-                  onClick={() => signIn('epic', undefined , { display: 'popup', wellknownUrl: settings.selectedEndpoint?.Endpoint as string })}
+                  onClick={() => signIn('epic', undefined , { display: 'popup', wellknownUrl: settings.selectedEndpoint?.Endpoint + ".well-known/openid-configuration" as string })}
                 >
                   Sign in with my EPIC
                 </Button>

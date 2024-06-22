@@ -76,7 +76,7 @@ export default withAuth(
     const isUserLoggedIn = !!token
 
     // Guest routes (Routes that can be accessed by guest users who are not logged in)
-    const guestRoutes = ['login', 'register', 'forgot-password']
+    const guestRoutes = ['login', 'register', 'forgot-password', '/launch/epic']
 
     // Shared routes (Routes that can be accessed by both guest and logged in users)
     const sharedRoutes = ['shared-route']

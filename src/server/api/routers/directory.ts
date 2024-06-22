@@ -38,10 +38,24 @@ export const directoryRouter = createTRPCRouter({
               equals: 'R4',
             },
           }
-        ],
+        ]
       },
       orderBy: { OrgName: "asc" },
       take: input.searchStr == undefined || '' ? undefined : 50,
+    })
+  }),
+
+  getOrgFHIREndpointByISS: publicProcedure
+  .input(z.object({ issuer: z.string() }))
+  .query(async ({ ctx, input}) => {
+    return ctx.db.organizationEndpoint.findMany({
+      where: {
+        Endpoint: {
+          equals: input.issuer,
+        },
+      },
+      orderBy: { OrgName: "asc" },
+      take: input.issuer == undefined || '' ? undefined : 50,
     })
   }),
 

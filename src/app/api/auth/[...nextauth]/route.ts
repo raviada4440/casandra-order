@@ -1,3 +1,4 @@
+import { data } from '@/data/searchData';
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from "next"
 import NextAuth from "next-auth"
 
@@ -17,11 +18,20 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
     const epicProvider: any = authOptions.providers.find(provider => provider.id === 'epic')
 
     epicProvider.wellKnown = wellknownUrl
+    const launchToken = url.searchParams.get("launch")
 
-    console.log("authOptions providers in route: ", authOptions.providers)
+    if (launchToken && launchToken.length > 0) {
+      epicProvider.authorization.params.scope = "launch launch/provider online-access openid profile fhirUser"
+    }
+
+    console.log("authOptions providers in route: ", JSON.stringify(authOptions.providers))
   }
 
-  return await NextAuth(req, res, authOptions)
+  const response =  await NextAuth(req, res, authOptions)
+
+  console.log("response: ", JSON.stringify(response))
+
+  return response
 
 }
 

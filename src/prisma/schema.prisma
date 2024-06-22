@@ -42,6 +42,17 @@ model Account {
   id_token                 String? @db.Text
   session_state            String?
   refresh_token_expires_in Int?
+  epic_dstu2_patient       String?
+  appointment              String?
+  dob                      String?
+  encounter                String?
+  location                 String?
+  loginDepartment          String?
+  need_patient_banner      String?
+  patient                  String?
+  smart_style_url          String? @db.Text
+  unconfirmed_status       String?
+  user_email               String?
   user                     User?   @relation(fields: [userId], references: [id])
 
   createdAt DateTime @default(now())

@@ -1,23 +1,17 @@
 // Third-party Imports
 import CredentialProvider from 'next-auth/providers/credentials'
 import GoogleProvider from 'next-auth/providers/google'
-import { PrismaAdapter } from '@auth/prisma-adapter'
+
+import { PrismaAdapter } from '@auth/prisma-adapter';
 
 // import { PrismaClient } from '@prisma/client'
 import type { NextAuthOptions } from 'next-auth'
-
 import type { Adapter } from 'next-auth/adapters'
-
-import type { Bundle, Location, Practitioner, PractitionerRole } from "~node_modules/@types/fhir/r4.d";
+import type { Bundle, Location, Practitioner, OperationOutcome } from "~node_modules/@types/fhir/r4.d";
 
 import type { UserAttributePartialRelations } from '~prisma/generated/zod'
-
 import { api } from '~trpc/server'
-
 import { db } from "@server/db";
-
-
-// const prisma = new PrismaClient()
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db) as Adapter,
@@ -79,8 +73,9 @@ export const authOptions: NextAuthOptions = {
 
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
-    }),
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    },
+  ),
 
     // ** ...add more providers here
     {
@@ -142,34 +137,31 @@ export const authOptions: NextAuthOptions = {
      * via `jwt()` callback to make them accessible in the `session()` callback
      */
     async jwt({ token, user, account, profile }) {
-      console.log('token (jwt()):', token)
-      console.log('user (jwt()):', user)
+
+      // console.log('token (jwt()):', token)
+      // console.log('user (jwt()):', user)
+
       console.log('account (jwt()):', account)
       console.log('profile (jwt()):', profile)
 
-      if(account && profile && user && profile.fhirUser && account.access_token && user.id ) {
-        // const epicProvider: Practitioner = await api.fhir.getPractitioner.query({accessToken: account?.access_token as string, fhirUser: profile?.fhirUser as string})
+      let practitionerRoleBundle: Bundle | OperationOutcome;
 
-        // console.log('epicProvider:', epicProvider)
+      if(account && profile && user && account.providerAccountId && account.access_token && user.id ) {
+        practitionerRoleBundle = await api.fhir.getPractitionerRoleWithIncludes.query({accessToken: account?.access_token as string, providerAccountId: account?.providerAccountId as string})
+        console.log('practitionerRoleBundle:', JSON.stringify(practitionerRoleBundle))
 
-        // const epicProviderRole: PractitionerRole = await api.fhir.getPractitionerRole.query({accessToken: account?.access_token as string, providerAccountId: account?.providerAccountId as string})
+        if (isOperationOutcome(practitionerRoleBundle)) {
+          console.log('practitionerRoleBundle is of type OperationOutcome');
+          const location = await api.fhir.getLocation.query({accessToken: account?.access_token as string, fhirLocation: 'Location/' + account?.location as string})
+          const provider = await api.fhir.getPractitioner.query({accessToken: account?.access_token as string, fhirUser: profile?.fhirUser as string})
 
-        // console.log('epicProviderRole:', epicProviderRole)
-        // console.log('epic location:', epicProviderRole.location)
+          await processLocationProvider(location, provider, user.id as string)
+        } else {
 
-        // for (const location of epicProviderRole.location as Reference[]) {
-        //   console.log('location:', location)
+          console.log('practitionerRoleBundle is of type Bundle');
+          await processBundle(practitionerRoleBundle, user.id as string)
+        }
 
-        //   const epicLocation: Location = await api.fhir.getLocation.query({accessToken: account?.access_token as string, fhirLocation: location.reference as string})
-
-        //   console.log('epicLocation:', epicLocation)
-        // }
-
-        const practitionerRoleBundle: Bundle = await api.fhir.getPractitionerRoleWithIncludes.query({accessToken: account?.access_token as string, providerAccountId: account?.providerAccountId as string})
-
-        processBundle(practitionerRoleBundle, user.id as string)
-
-        // console.log('practitionerRoleBundle:', practitionerRoleBundle)
 
       }
 
@@ -181,7 +173,6 @@ export const authOptions: NextAuthOptions = {
           */
           token.name = user.name
           token.UserAttribute = user?.UserAttribute as UserAttributePartialRelations
-
         } else if (account) {
           const oathUser = await api.user.getUserById.query({id: user.id as string})
 
@@ -201,10 +192,8 @@ export const authOptions: NextAuthOptions = {
       return token
     },
     async session({ session, token }) {
-
-      console.log('session (session():', session)
-      console.log('token (session()):', token)
-
+      // console.log('session (session():', session)
+      // console.log('token (session()):', token)
       if (session && session.user) {
         // ** Add custom params to user in session which are added in `jwt()` callback via `token` parameter
         // session.user.name = token.name
@@ -215,9 +204,32 @@ export const authOptions: NextAuthOptions = {
 
       return session
     },
+    async signIn({ account }) {
+      // console.log('user (signIn()):', user)
+      // console.log('account (signIn()):', account)
+      // console.log('profile (signIn()):', profile)
+      if (account) {
+        const dstu2PatientExistsIn = "__epic.dstu2.patient" in account
+
+        if (dstu2PatientExistsIn) {
+          account.epic_dstu2_patient = account["__epic.dstu2.patient"]
+          delete account["__epic.dstu2.patient"]
+        }
+
+        const userExistsIn = "user" in account
+
+        if (userExistsIn) {
+          account.user_email = account["user"]
+          delete account["user"]
+        }
+
+      }
+
+      // console.log('account after deleting (signIn()):', account)
+      return true
+    }
 
   },
-
 }
 
 export const processBundle = async (bundle: Bundle, userId: string) => {
@@ -231,22 +243,20 @@ export const processBundle = async (bundle: Bundle, userId: string) => {
       if (entry.resource && entry.resource.resourceType === 'Location') {
         const location: Location = entry.resource as Location
 
-        console.log('location:', location)
+        // console.log('location:', location)
         org = mapLocation(org, location);
       }
 
       if (entry.resource && entry.resource.resourceType === 'Practitioner') {
         const practitioner: Practitioner = entry.resource as Practitioner
 
-        console.log('practitioner:', practitioner)
+        // console.log('practitioner:', practitioner)
         provider = mapProvider(provider, practitioner);
       }
 
       if (entry.resource && entry.resource.resourceType === 'PractitionerRole') {
-        const practitionerRole: PractitionerRole = entry.resource as PractitionerRole
-
-        console.log('practitionerRole:', practitionerRole)
-
+        // const practitionerRole: PractitionerRole = entry.resource as PractitionerRole
+        // console.log('practitionerRole:', practitionerRole)
         userAttribute = {
           UserId: userId,
           UserType: 'Provider',
@@ -255,14 +265,10 @@ export const processBundle = async (bundle: Bundle, userId: string) => {
     }
 
     const organization = { Organization: { connectOrCreate: { where: { Id: org.Id }, create: org } } }
-
     const providerToProviderOrg = {...provider,  ProviderOrganization: { connectOrCreate: { where: { Id: provider.Id }, create: organization }}}
-
     const userAttributeProvider = {...userAttribute, Provider: { connectOrCreate: { where: { Id: provider.Id },create : providerToProviderOrg }}}
 
-
-    console.log('userAttributeProvider:', JSON.stringify(userAttributeProvider))
-
+    // console.log('userAttributeProvider:', JSON.stringify(userAttributeProvider))
     const userAttributeAfterCreate = await api.directory.addOrganization.mutate(userAttributeProvider)
 
     console.log('orgAfterCreate:', JSON.stringify(userAttributeAfterCreate))
@@ -301,3 +307,29 @@ const mapProvider = (provider: any, practitioner: Practitioner) => {
   return provider;
 }
 
+const isOperationOutcome = (obj: any): obj is OperationOutcome => {
+  return obj && obj.resourceType === 'OperationOutcome' && Array.isArray(obj.issue);
+}
+
+const processLocationProvider = async (location: Location, practitioner: Practitioner, userId: string) => {
+  let org: any = {}
+  let provider: any = {}
+  let userAttribute: any = {}
+
+  org = mapLocation(org, location);
+  provider = mapProvider(provider, practitioner);
+  userAttribute = {
+    UserId: userId,
+    UserType: 'Provider',
+  }
+
+  const organization = { Organization: { connectOrCreate: { where: { Id: org.Id }, create: org } } }
+  const providerToProviderOrg = {...provider,  ProviderOrganization: { connectOrCreate: { where: { Id: provider.Id }, create: organization }}}
+  const userAttributeProvider = {...userAttribute, Provider: { connectOrCreate: { where: { Id: provider.Id },create : providerToProviderOrg }}}
+
+  // console.log('userAttributeProvider:', JSON.stringify(userAttributeProvider))
+  const userAttributeAfterCreate = await api.directory.addOrganization.mutate(userAttributeProvider)
+
+  console.log('orgAfterCreate:', JSON.stringify(userAttributeAfterCreate))
+
+}
