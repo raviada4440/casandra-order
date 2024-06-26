@@ -1,6 +1,7 @@
 
-import { createTRPCRouter, publicProcedure } from "@server/api/trpc";
 import { z } from "zod";
+
+import { createTRPCRouter, publicProcedure } from "@server/api/trpc";
 import { PatientUncheckedCreateInputSchema } from "~prisma/generated/zod";
 
 export const patientRouter = createTRPCRouter({
