@@ -21,6 +21,7 @@ import Grid from '@mui/material/Grid'
 
 // Component Imports
 import { useLocation } from 'react-use';
+import { useSession } from 'next-auth/react';
 
 import StepPatientDetails from './StepPatientDetails'
 import StepIcdDetails from './StepIcdDetails'
@@ -40,67 +41,52 @@ import StepperCustomDot from '@views/forms/form-wizard/StepperCustomDot'
 
 import AccountCard from './AccountCard'
 
-import type { LabOrderTestWithRelations, LabOrderWithRelations } from '~prisma/generated/zod'
+import type { LabOrderTestWithRelations, LabOrderWithRelations, PatientWithRelations } from '~prisma/generated/zod'
 import { api } from '~trpc/react';
 
 // Types
+type Step = {
+  title: string,
+  subtitle: string,
+  stepDetails: any,
+  subTitleDetails: any
+}
 
 // Vars
-const steps = [
+const stepEntries = [
   {
     title: 'Patient',
-    subtitle: 'Patient'
+    subtitle: 'Patient',
+    stepDetails: StepPatientDetails,
+    subTitleDetails: PatientSubtitle
   },
   {
     title: 'ICD Codes',
-    subtitle: 'Patient History'
+    subtitle: 'Patient History',
+    stepDetails: StepIcdDetails,
+    subTitleDetails: IcdSubtitle
   },
   {
     title: 'Tests',
-    subtitle: 'Test Selection'
+    subtitle: 'Test Selection',
+    stepDetails: StepTestDetails,
+    subTitleDetails: TestSubtitle
   },
   {
     title: 'Specimen',
-    subtitle: 'Specimen Type'
+    subtitle: 'Specimen Type',
+    stepDetails: StepSpecimenDetails,
+    subTitleDetails: SpecimenSubtitle
   },
   {
     title: 'Billing',
-    subtitle: 'Billing'
+    subtitle: 'Billing',
+    stepDetails: StepBillingDetails,
+    subTitleDetails: BillingSubtitle
   }
 ]
 
-const getStepContent = (step: number, handleNext: () => void, handlePrev: () => void) => {
-  const Tag =
-    step === 0
-      ? StepPatientDetails
-      : step === 1
-        ? StepIcdDetails
-        : step === 2
-          ? StepTestDetails
-          : step === 3
-            ? StepSpecimenDetails
-            : StepBillingDetails
 
-
-
-  return <Tag activeStep={step} handleNext={handleNext} handlePrev={handlePrev} steps={steps} />
-}
-
-
-const getSubtitle = (step: number) => {
-  const Subtitle =
-    step === 0
-      ? PatientSubtitle
-      : step === 1
-        ? IcdSubtitle
-        : step === 2
-          ? TestSubtitle
-          : step === 3
-            ? SpecimenSubtitle
-            : BillingSubtitle
-
-  return <Subtitle />
-}
 
 // Styled Components
 const ConnectorHeight = styled(StepConnector)(() => ({
@@ -123,8 +109,69 @@ export const LabOrderContext = createContext<LabOrderContextType>({} as LabOrder
 const AddLabOrder = () => {
   // States
   const [activeStep, setActiveStep] = useState<number>(0)
+  const [patientId, setPatientId] = useState<string>('')
   const [labOrder, setLabOrder] = useState<LabOrderWithRelations>({} as LabOrderWithRelations)
   const [labOrderCopy, setLabOrderCopy] = useState<LabOrderWithRelations>({} as LabOrderWithRelations)
+  const [steps, setSteps] = useState<Step[]>(stepEntries)
+
+  const { data: session } = useSession()
+
+  console.log('patientId: ', session?.patientId)
+
+  const getStepContent = (step: number, handleNext: () => void, handlePrev: () => void) => {
+    const Tag = steps[step].stepDetails;
+
+    return <Tag activeStep={step} handleNext={handleNext} handlePrev={handlePrev} steps={steps} />
+  }
+
+  const getSubtitle = (step: number) => {
+    const Subtitle = steps[step].subTitleDetails;
+
+    return <Subtitle />
+  }
+
+  // rearrange steps
+  const rearrangeSteps = (steps: any[], stepToMove: number) => {
+    const newSteps = [...steps]
+    const targetObj = newSteps.splice(stepToMove, 1)
+
+    return [...targetObj, ...newSteps]
+  }
+
+  useEffect(() => {
+    if (session && session.patientId && session.patientId.length > 0) {
+      setPatientId(session.patientId)
+
+      console.log('patientId: ', patientId)
+    }
+  }, [session, setPatientId, patientId])
+
+  const { data: patData, error: patError, isLoading: patIsLoading } = api.patient.getPatientById.useQuery({ id: patientId })
+
+  useEffect(() => {
+    if (patError) {
+      console.error(patError);
+    }
+
+    if (patIsLoading) {
+      return;
+    }
+
+    if (session && patData && patData?.Id.length > 0) {
+      const labOrderCopy = { ...labOrder, Patient: patData as PatientWithRelations }
+
+      console.log('LabOrderCopy after patient: ', labOrderCopy);
+
+        // Only update the state if labOrderCopy has changed
+      if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrder)) {
+        console.log('LabOrderCopy: ', labOrderCopy);
+        setLabOrderCopy(labOrderCopy);
+      }
+    }
+
+  }, [session, patData, patError, patIsLoading, labOrder, setLabOrderCopy]);
+
+
 
   // Get the current location
   const location = useLocation();
@@ -137,22 +184,36 @@ const AddLabOrder = () => {
 
   console.log('testcatalog: ', testCatalogQuery);
 
-  const { data, error, isLoading } = api.testcatalog.getTestByCasandraTestId.useQuery({ casandraTestId: testCatalogQuery || ''})
-
   useEffect(() => {
-    if (error) {
-      console.error(error);
+    if (testCatalogQuery) {
+
+      //move test details to top
+      const newSteps = rearrangeSteps(stepEntries, 2);
+
+      setSteps(newSteps);
+
+      // set th test step as active
+      setActiveStep(0);
     }
 
-    if (isLoading) {
+  }, [setActiveStep, testCatalogQuery])
+
+  const { data: tcData, error: tcError, isLoading: tcIsLoading } = api.testcatalog.getTestByCasandraTestId.useQuery({ casandraTestId: testCatalogQuery || ''})
+
+  useEffect(() => {
+    if (tcError) {
+      console.error(tcError);
+    }
+
+    if (tcIsLoading) {
       return;
     }
 
-    if (testCatalogQuery && data && data?.TestId > 0) {
+    if (testCatalogQuery && tcData && tcData?.TestId > 0) {
       // Generate the LabOrderTest
       const labOrderTest = [{
-        TestId: data.TestId,
-        TestCatalog: data
+        TestId: tcData.TestId,
+        TestCatalog: tcData
       }] as unknown as LabOrderTestWithRelations[];
 
       const labOrderCopy = { ...labOrder, LabOrderTest: labOrderTest };
@@ -163,17 +224,12 @@ const AddLabOrder = () => {
         setLabOrderCopy(labOrderCopy);
       }
     }
-  }, [testCatalogQuery, data, error, isLoading, labOrder]);
+
+  }, [testCatalogQuery, tcData, tcError, tcIsLoading, labOrder, setLabOrderCopy]);
 
   useEffect(() => {
     setLabOrder(labOrderCopy);
-
-    if (testCatalogQuery) {
-      // set th test step as active
-      setActiveStep(2);
-    }
-
-  }, [labOrderCopy, setLabOrder, setActiveStep, testCatalogQuery])
+  }, [labOrderCopy, setLabOrder])
 
   // Handlers
   const handleNext = () => {

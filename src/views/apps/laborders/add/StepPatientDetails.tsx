@@ -41,7 +41,7 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
 
   // Vars
   const { labOrder, setLabOrder } = useContext(LabOrderContext);
-  const [formData, setFormData] = useState<PatientWithRelations>(labOrder.Patient as PatientWithRelations)
+  const [formData, setFormData] = useState<PatientWithRelations>(labOrder?.Patient as PatientWithRelations)
   const { data: session } = useSession()
   const [providerOrgs] = useState<ProviderOrganizationPartialRelations[]>(session?.user.UserAttribute?.Provider?.ProviderOrganization || [])
 
@@ -49,7 +49,7 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
 
 
 
-  console.log('providerOrgs', providerOrgs)
+  console.log('formData', formData)
 
   const handleFormChange = (field: keyof PatientWithRelations, value: PatientWithRelations[keyof PatientWithRelations]) => {
     const updatedFormData = { ...formData, [field]: value };
@@ -78,6 +78,12 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
       labOrder.Organization = providerOrgs[0].Organization as OrganizationWithRelations
     }
   }, [labOrder, providerOrgs])
+
+  useEffect(() => {
+    if (labOrder?.Patient) {
+      setFormData(labOrder.Patient as PatientWithRelations);
+    }
+  }, [labOrder?.Patient]);
 
   return (
     <>
@@ -168,7 +174,7 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
                   id='gender-select'
                   label='Gender'
                   labelId='select-gender'
-                  defaultValue=''
+                  value={formData?.Gender || ''}
                   onChange={e => handleFormChange('Gender', e.target.value)}
                   >
                   <MenuItem value='male'>Male</MenuItem>

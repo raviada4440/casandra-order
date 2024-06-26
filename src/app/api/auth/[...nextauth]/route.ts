@@ -1,4 +1,3 @@
-import { data } from '@/data/searchData';
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from "next"
 import NextAuth from "next-auth"
 

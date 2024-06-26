@@ -7,7 +7,8 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 // import { PrismaClient } from '@prisma/client'
 import type { NextAuthOptions } from 'next-auth'
 import type { Adapter } from 'next-auth/adapters'
-import type { Bundle, Location, Practitioner, OperationOutcome } from "~node_modules/@types/fhir/r4.d";
+import type { Bundle, Location, Practitioner, OperationOutcome, Patient } from "~node_modules/@types/fhir/r4.d";
+import dayjs from 'dayjs';
 
 import type { UserAttributePartialRelations } from '~prisma/generated/zod'
 import { api } from '~trpc/server'
@@ -145,6 +146,7 @@ export const authOptions: NextAuthOptions = {
       console.log('profile (jwt()):', profile)
 
       let practitionerRoleBundle: Bundle | OperationOutcome;
+      let fhirPatient: Patient | OperationOutcome | null = null;
 
       if(account && profile && user && account.providerAccountId && account.access_token && user.id ) {
         practitionerRoleBundle = await api.fhir.getPractitionerRoleWithIncludes.query({accessToken: account?.access_token as string, providerAccountId: account?.providerAccountId as string})
@@ -155,7 +157,9 @@ export const authOptions: NextAuthOptions = {
           const location = await api.fhir.getLocation.query({accessToken: account?.access_token as string, fhirLocation: 'Location/' + account?.location as string})
           const provider = await api.fhir.getPractitioner.query({accessToken: account?.access_token as string, fhirUser: profile?.fhirUser as string})
 
-          await processLocationProvider(location, provider, user.id as string)
+          fhirPatient = await api.fhir.getPatient.query({accessToken: account?.access_token as string, fhirPatient: 'Patient/' + account?.patient as string})
+
+          await processLocationProviderPatient(location, provider, fhirPatient, user.id as string)
         } else {
 
           console.log('practitionerRoleBundle is of type Bundle');
@@ -180,6 +184,10 @@ export const authOptions: NextAuthOptions = {
             token.name = oathUser?.UserAttribute?.Provider?.Name
             token.UserAttribute = oathUser?.UserAttribute as UserAttributePartialRelations
           }
+
+          if(fhirPatient && !isOperationOutcome(fhirPatient) && fhirPatient.id) {
+            token.patientId = fhirPatient.id
+          }
         }
       }
 
@@ -200,7 +208,12 @@ export const authOptions: NextAuthOptions = {
         if (token && token.UserAttribute) {
           session.user.UserAttribute = token.UserAttribute as UserAttributePartialRelations
         }
+
+        if(token && token.patientId) {
+          session.patientId = token.patientId
+        }
       }
+
 
       return session
     },
@@ -244,14 +257,14 @@ export const processBundle = async (bundle: Bundle, userId: string) => {
         const location: Location = entry.resource as Location
 
         // console.log('location:', location)
-        org = mapLocation(org, location);
+        org = mapLocation(location);
       }
 
       if (entry.resource && entry.resource.resourceType === 'Practitioner') {
         const practitioner: Practitioner = entry.resource as Practitioner
 
         // console.log('practitioner:', practitioner)
-        provider = mapProvider(provider, practitioner);
+        provider = mapProvider(practitioner);
       }
 
       if (entry.resource && entry.resource.resourceType === 'PractitionerRole') {
@@ -276,9 +289,8 @@ export const processBundle = async (bundle: Bundle, userId: string) => {
   }
 }
 
-const mapLocation = (org: any, location: Location) => {
-
-  org = {
+const mapLocation = (location: Location) => {
+  return {
     Id: location.id,
     OrgName: location.name ? location.name : 'Epic Health Systems',
     OrgType: 'Organization',
@@ -288,48 +300,80 @@ const mapLocation = (org: any, location: Location) => {
     OrgCity: location.address?.city,
     OrgState: location.address?.state,
     OrgZip: location.address?.postalCode,
-  };
-
-  return org;
+  }
 
 }
 
-const mapProvider = (provider: any, practitioner: Practitioner) => {
+const mapProvider = (practitioner: Practitioner) => {
 
-  provider = {
+  return {
     Id: practitioner.id,
     Name: practitioner.name?.[0].family + ' ' + practitioner.name?.[0].given?.[0],
     NPI: practitioner.identifier?.[0].value,
     Credentials: practitioner.qualification?.[0].code?.text,
     Gender: practitioner.gender
-  };
+  }
+}
 
-  return provider;
+const mapPatient = (fhirPatient: Patient) => {
+  let email = ''
+  let mobile = ''
+
+  if (fhirPatient.telecom) {
+    for (const telecom of fhirPatient.telecom) {
+      if (telecom.system === 'email') {
+        email = telecom.value ? telecom.value : ''
+      }
+
+      if (telecom.system === 'phone') {
+        mobile = telecom.value ? telecom.value : ''
+      }
+    }
+  }
+
+  return {
+    Id: fhirPatient.id,
+    FirstName: fhirPatient.name?.[0].given?.[0],
+    LastName: fhirPatient.name?.[0].family,
+    DateOfBirth: dayjs(fhirPatient.birthDate,'YYYY-MM-DD').toDate(),
+    Gender: fhirPatient.gender,
+    Email: email,
+    Mobile: mobile,
+
+  }
 }
 
 const isOperationOutcome = (obj: any): obj is OperationOutcome => {
   return obj && obj.resourceType === 'OperationOutcome' && Array.isArray(obj.issue);
 }
 
-const processLocationProvider = async (location: Location, practitioner: Practitioner, userId: string) => {
+const processLocationProviderPatient = async (location: Location, practitioner: Practitioner, patient: Patient, userId: string) => {
   let org: any = {}
   let provider: any = {}
   let userAttribute: any = {}
+  let patientObj: any = {}
 
-  org = mapLocation(org, location);
-  provider = mapProvider(provider, practitioner);
+  org = mapLocation(location)
+  provider = mapProvider(practitioner)
   userAttribute = {
     UserId: userId,
     UserType: 'Provider',
   }
+  patientObj = mapPatient(patient)
 
   const organization = { Organization: { connectOrCreate: { where: { Id: org.Id }, create: org } } }
   const providerToProviderOrg = {...provider,  ProviderOrganization: { connectOrCreate: { where: { Id: provider.Id }, create: organization }}}
   const userAttributeProvider = {...userAttribute, Provider: { connectOrCreate: { where: { Id: provider.Id },create : providerToProviderOrg }}}
 
+
+  const patientAfterCreate = await api.patient.upsertPatient.mutate(patientObj)
+
   // console.log('userAttributeProvider:', JSON.stringify(userAttributeProvider))
   const userAttributeAfterCreate = await api.directory.addOrganization.mutate(userAttributeProvider)
 
   console.log('orgAfterCreate:', JSON.stringify(userAttributeAfterCreate))
+  console.log('patientAfterCreate:', JSON.stringify(patientAfterCreate))
+
 
 }
+

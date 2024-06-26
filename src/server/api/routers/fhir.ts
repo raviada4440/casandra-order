@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-import type { Bundle, Location, Practitioner, PractitionerRole } from "~node_modules/@types/fhir/r4.d";
+import type { Bundle, Location, Patient, Practitioner, PractitionerRole } from "~node_modules/@types/fhir/r4.d";
 
 import { createTRPCRouter, publicProcedure } from "@server/api/trpc";
 
@@ -91,6 +91,28 @@ const getFHIRLocation = async (params: {
   return data;
 }
 
+const getFHIRPatient = async (params: {
+  accessToken: string;
+  fhirPatient: string;
+}): Promise<Patient>  => {
+
+  const url = new URL('https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/' + params.fhirPatient)
+
+  const response = await fetch(url.toString(), {
+    headers: {
+      Authorization: `Bearer ${params.accessToken}`,
+      Accept: "application/json",
+    },
+
+  });
+
+  const data = (await response.json()) as Patient;
+
+  console.log('data: ', data)
+
+  return data;
+}
+
 export const fhirRouter = createTRPCRouter({
 
 
@@ -146,6 +168,18 @@ export const fhirRouter = createTRPCRouter({
     console.log(location)
 
     return location;
+
+  }),
+
+  getPatient: publicProcedure
+  .input(z.object({ accessToken: z.string(), fhirPatient: z.string() }))
+  .query(async ({ input}) => {
+
+    const patient = await getFHIRPatient({accessToken: input.accessToken, fhirPatient: input.fhirPatient})
+
+    console.log(patient)
+
+    return patient;
 
   }),
 
