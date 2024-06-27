@@ -27,10 +27,12 @@ const AccountCard = () => {
   const isBelowSmScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
   const { data: session } = useSession()
 
-  const orderingPhysicianName = session?.user.UserAttribute?.Provider ? session?.user.UserAttribute?.Provider?.Name + ', ' + session?.user.UserAttribute?.Provider?.Credentials : ''
+  const orderingPhysicianCredentials = session?.user.UserAttribute?.Provider?.Credentials ? session?.user.UserAttribute?.Provider?.Credentials : ''
+  const orderingPhysicianName = session?.user.UserAttribute?.Provider && orderingPhysicianCredentials.length > 0 ? session?.user.UserAttribute?.Provider?.Name + ', ' + orderingPhysicianCredentials : session?.user.UserAttribute?.Provider?.Name
   const orderingPhysiciaSpecialty = session?.user.UserAttribute?.Provider?.Specialty ? session?.user.UserAttribute?.Provider?.Specialty  : ''
 
-  const treatingPhysicianName = labOrder?.TreatingProvider ? labOrder.TreatingProvider?.Name + ', ' + labOrder.TreatingProvider?.Credentials : ''
+  const treatingPhysicianCredentials = labOrder?.TreatingProvider ? labOrder.TreatingProvider?.Credentials ? labOrder.TreatingProvider?.Credentials : '' : ''
+  const treatingPhysicianName = labOrder?.TreatingProvider && treatingPhysicianCredentials.length > 0 ? labOrder.TreatingProvider?.Name + ', ' + treatingPhysicianCredentials : labOrder.TreatingProvider?.Name ? labOrder.TreatingProvider?.Name : ''
   const treatingPhysiciaSpecialty = labOrder?.TreatingProvider ? labOrder.TreatingProvider?.Specialty  : ''
 
   const organizationName = labOrder?.Organization ? labOrder.Organization?.OrgName : ''
@@ -41,7 +43,7 @@ const AccountCard = () => {
     <Card>
       <CardContent>
         <div className='flex items-center gap-2 mbe-4'>
-          <i className='ri-account-pin-circle-line text-3xl text-primary' />
+          <i className='ri-account-pin-circle-line text-3xl text-primary' />x
           <Typography variant='h5' className='text-primary'>
             Account
           </Typography>

@@ -3,6 +3,7 @@ import { z } from "zod"
 
 import { createTRPCRouter, publicProcedure } from "@server/api/trpc"
 import {
+  OrganizationUncheckedCreateInputSchema,
   UserAttributeUncheckedCreateInputSchema
 } from "~prisma/generated/zod";
 
@@ -10,6 +11,19 @@ import {
 export const directoryRouter = createTRPCRouter({
 
   addOrganization: publicProcedure
+    .input(OrganizationUncheckedCreateInputSchema)
+    .mutation(async ({ ctx, input }) => {
+
+      return ctx.db.organization.upsert({
+        where: {
+          Id: input.Id,
+        },
+        update: input,
+        create: input,
+      });
+    }),
+
+  addUserAttribute: publicProcedure
     .input(UserAttributeUncheckedCreateInputSchema)
     .mutation(async ({ ctx, input }) => {
 
@@ -23,40 +37,40 @@ export const directoryRouter = createTRPCRouter({
     }),
 
   getFHIREndpoints: publicProcedure
-  .input(z.object({ searchStr: z.string() }))
-  .query(async ({ ctx, input}) => {
-    return ctx.db.organizationEndpoint.findMany({
-      where: {
-        AND: [
-          {
-            OrgName: {
-              contains: input.searchStr,
+    .input(z.object({ searchStr: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.organizationEndpoint.findMany({
+        where: {
+          AND: [
+            {
+              OrgName: {
+                contains: input.searchStr,
+              },
             },
-          },
-          {
-            FHIRVersion: {
-              equals: 'R4',
-            },
-          }
-        ]
-      },
-      orderBy: { OrgName: "asc" },
-      take: input.searchStr == undefined || '' ? undefined : 50,
-    })
-  }),
+            {
+              FHIRVersion: {
+                equals: 'R4',
+              },
+            }
+          ]
+        },
+        orderBy: { OrgName: "asc" },
+        take: input.searchStr == undefined || '' ? undefined : 50,
+      })
+    }),
 
   getOrgFHIREndpointByISS: publicProcedure
-  .input(z.object({ issuer: z.string() }))
-  .query(async ({ ctx, input}) => {
-    return ctx.db.organizationEndpoint.findMany({
-      where: {
-        Endpoint: {
-          equals: input.issuer,
+    .input(z.object({ issuer: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.organizationEndpoint.findMany({
+        where: {
+          Endpoint: {
+            equals: input.issuer,
+          },
         },
-      },
-      orderBy: { OrgName: "asc" },
-      take: input.issuer == undefined || '' ? undefined : 50,
-    })
-  }),
+        orderBy: { OrgName: "asc" },
+        take: input.issuer == undefined || '' ? undefined : 50,
+      })
+    }),
 
 })

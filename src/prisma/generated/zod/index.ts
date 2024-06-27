@@ -48,11 +48,13 @@ export const LoincUniveralLabOrdersScalarFieldEnumSchema = z.enum(['Loinc_Num','
 
 export const OrganizationScalarFieldEnumSchema = z.enum(['Id','href','ParentId','Level','ParentOrgName','OrgName','OrgType','OrgSpecialty','OrgAddress','OrgCity','OrgState','OrgZip']);
 
-export const OrganizationFavoriteTestScalarFieldEnumSchema = z.enum(['Id','OrganizationId','ParentId','ParentName','Level','TestId','CreatedAt','UpdatedAt']);
-
 export const OrganizationEndpointScalarFieldEnumSchema = z.enum(['Id','OrgName','EHRVendor','FHIRVersion','Endpoint']);
 
+export const OrganizationFavoriteTestScalarFieldEnumSchema = z.enum(['Id','OrganizationId','ParentId','ParentName','Level','TestId','CreatedAt','UpdatedAt']);
+
 export const PatientScalarFieldEnumSchema = z.enum(['Id','FirstName','LastName','DateOfBirth','Gender','Email','Mobile','CreatedAt','UpdatedAt']);
+
+export const PatientOrganizationScalarFieldEnumSchema = z.enum(['Id','PatientId','OrganizationId','MRN','Mobile','Email']);
 
 export const PostScalarFieldEnumSchema = z.enum(['id','name','createdAt','updatedAt']);
 
@@ -66,11 +68,19 @@ export const ProviderOrganizationScalarFieldEnumSchema = z.enum(['Id','ProviderI
 
 export const SessionScalarFieldEnumSchema = z.enum(['id','sessionToken','userId','expires']);
 
-export const TestBiomarkerScalarFieldEnumSchema = z.enum(['Id','TestId','LabTestId','HGNCId','CreatedAt','UpdatedAt']);
+export const SponsorScalarFieldEnumSchema = z.enum(['SponsorId','SponsorName','SponsorCode','SponsorWebsite','SponsorType','Address','City','State','Zip']);
 
-export const TestCatalogScalarFieldEnumSchema = z.enum(['TestId','LabId','href','CasandraTestId','LabTestId','TestName','AlternativeName','AlternativeName1','AlternativeName2','AlternativeName3','AlternativeName4','AlternativeName5','TestIncludes','SpecimenType','SpecialInstructions','Methodology','TestDescription','Diseases','Probes','ClinicalSignificance','SpecimenRequirements','Volume','MinimumVolume','Container','Collection','StabilityRequirements','StorageTransportation','PatientPreparation','CausesForRejection','TestUsage','TestLimitations','CPTCodes','NewYorkApproved','LevelOfService','TurnAroundTime','AssayCategory','ReferenceRanges','SetupSchedule','AlternativeSpecimen','LoincCodesText','LoincCodesHTML','CreatedAt','UpdatedAt']);
+export const SponsoredProgramScalarFieldEnumSchema = z.enum(['ProgramId','SponsorId','TherapeuticArea','ProgramName','ProgramUrl','ProgramLabUrl','SponosoredTestingUrl','CreatedAt','UpdatedAt']);
+
+export const SponsoredTestScalarFieldEnumSchema = z.enum(['Id','TestId','LabTestId','SponsoredProgramId','LabId','CasandraTestId','Category','SubCategory','CreatedAt','UpdatedAt']);
+
+export const TestBiomarkerScalarFieldEnumSchema = z.enum(['Id','TestId','LabTestId','HGNCId','TranscriptReference','CreatedAt','UpdatedAt']);
+
+export const TestCatalogScalarFieldEnumSchema = z.enum(['TestId','LabId','href','CasandraTestId','LabTestId','TestName','AlternativeName','AlternativeName1','AlternativeName2','AlternativeName3','AlternativeName4','AlternativeName5','TestIncludes','SpecimenType','SpecialInstructions','Methodology','TestDescription','Diseases','Probes','ClinicalSignificance','SpecimenRequirements','Volume','MinimumVolume','Container','Collection','StabilityRequirements','StorageTransportation','PatientPreparation','CausesForRejection','TestUsage','TestLimitations','CPTCodes','NewYorkApproved','LevelOfService','TurnAroundTime','AssayCategory','ReferenceRanges','SetupSchedule','AlternativeSpecimen','LoincCodesText','LoincCodesHTML','TestCategory','TestSubCategory','CreatedAt','UpdatedAt']);
 
 export const TestCptCodeScalarFieldEnumSchema = z.enum(['Id','TestId','LabTestId','CptCode','Modifier','Comments','CreatedAt','UpdatedAt']);
+
+export const TestGeneScalarFieldEnumSchema = z.enum(['Id','TestId','LabTestId','Gene','TranscriptReference','CreatedAt','UpdatedAt']);
 
 export const TestOrderLoincScalarFieldEnumSchema = z.enum(['Id','TestId','LabTestId','OrderLoinc','CreatedAt','UpdatedAt']);
 
@@ -122,11 +132,13 @@ export const LoincUniveralLabOrdersOrderByRelevanceFieldEnumSchema = z.enum(['Lo
 
 export const OrganizationOrderByRelevanceFieldEnumSchema = z.enum(['Id','href','ParentId','ParentOrgName','OrgName','OrgType','OrgSpecialty','OrgAddress','OrgCity','OrgState','OrgZip']);
 
-export const OrganizationFavoriteTestOrderByRelevanceFieldEnumSchema = z.enum(['Id','OrganizationId','ParentId','ParentName']);
-
 export const OrganizationEndpointOrderByRelevanceFieldEnumSchema = z.enum(['Id','OrgName','EHRVendor','FHIRVersion','Endpoint']);
 
+export const OrganizationFavoriteTestOrderByRelevanceFieldEnumSchema = z.enum(['Id','OrganizationId','ParentId','ParentName']);
+
 export const PatientOrderByRelevanceFieldEnumSchema = z.enum(['Id','FirstName','LastName','Gender','Email','Mobile']);
+
+export const PatientOrganizationOrderByRelevanceFieldEnumSchema = z.enum(['Id','PatientId','OrganizationId','MRN','Mobile','Email']);
 
 export const PostOrderByRelevanceFieldEnumSchema = z.enum(['name']);
 
@@ -140,11 +152,19 @@ export const ProviderOrganizationOrderByRelevanceFieldEnumSchema = z.enum(['Id',
 
 export const SessionOrderByRelevanceFieldEnumSchema = z.enum(['id','sessionToken','userId']);
 
-export const TestBiomarkerOrderByRelevanceFieldEnumSchema = z.enum(['LabTestId','HGNCId']);
+export const SponsorOrderByRelevanceFieldEnumSchema = z.enum(['SponsorName','SponsorCode','SponsorWebsite','SponsorType','Address','City','State','Zip']);
 
-export const TestCatalogOrderByRelevanceFieldEnumSchema = z.enum(['href','CasandraTestId','LabTestId','TestName','AlternativeName','AlternativeName1','AlternativeName2','AlternativeName3','AlternativeName4','AlternativeName5','TestIncludes','SpecimenType','SpecialInstructions','Methodology','TestDescription','Diseases','Probes','ClinicalSignificance','SpecimenRequirements','Volume','MinimumVolume','Container','Collection','StabilityRequirements','StorageTransportation','PatientPreparation','CausesForRejection','TestUsage','TestLimitations','CPTCodes','NewYorkApproved','LevelOfService','TurnAroundTime','AssayCategory','ReferenceRanges','SetupSchedule','AlternativeSpecimen','LoincCodesText','LoincCodesHTML']);
+export const SponsoredProgramOrderByRelevanceFieldEnumSchema = z.enum(['TherapeuticArea','ProgramName','ProgramUrl','ProgramLabUrl','SponosoredTestingUrl']);
+
+export const SponsoredTestOrderByRelevanceFieldEnumSchema = z.enum(['Id','LabTestId','CasandraTestId','Category','SubCategory']);
+
+export const TestBiomarkerOrderByRelevanceFieldEnumSchema = z.enum(['LabTestId','HGNCId','TranscriptReference']);
+
+export const TestCatalogOrderByRelevanceFieldEnumSchema = z.enum(['href','CasandraTestId','LabTestId','TestName','AlternativeName','AlternativeName1','AlternativeName2','AlternativeName3','AlternativeName4','AlternativeName5','TestIncludes','SpecimenType','SpecialInstructions','Methodology','TestDescription','Diseases','Probes','ClinicalSignificance','SpecimenRequirements','Volume','MinimumVolume','Container','Collection','StabilityRequirements','StorageTransportation','PatientPreparation','CausesForRejection','TestUsage','TestLimitations','CPTCodes','NewYorkApproved','LevelOfService','TurnAroundTime','AssayCategory','ReferenceRanges','SetupSchedule','AlternativeSpecimen','LoincCodesText','LoincCodesHTML','TestCategory','TestSubCategory']);
 
 export const TestCptCodeOrderByRelevanceFieldEnumSchema = z.enum(['LabTestId','CptCode','Modifier','Comments']);
+
+export const TestGeneOrderByRelevanceFieldEnumSchema = z.enum(['LabTestId','Gene','TranscriptReference']);
 
 export const TestOrderLoincOrderByRelevanceFieldEnumSchema = z.enum(['LabTestId','OrderLoinc']);
 
@@ -194,8 +214,8 @@ export const AccountSchema = z.object({
   smart_style_url: z.string().nullable(),
   unconfirmed_status: z.string().nullable(),
   user_email: z.string().nullable(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: z.date().nullable(),
+  updatedAt: z.date().nullable(),
 })
 
 export type Account = z.infer<typeof AccountSchema>
@@ -212,32 +232,32 @@ export type AccountPartial = z.infer<typeof AccountPartialSchema>
 //------------------------------------------------------
 
 export type AccountRelations = {
-  user?: UserWithRelations | null;
+  user: UserWithRelations;
 };
 
 export type AccountWithRelations = z.infer<typeof AccountSchema> & AccountRelations
 
 export const AccountWithRelationsSchema: z.ZodType<AccountWithRelations> = AccountSchema.merge(z.object({
-  user: z.lazy(() => UserWithRelationsSchema).nullable(),
+  user: z.lazy(() => UserWithRelationsSchema),
 }))
 
 // ACCOUNT PARTIAL RELATION SCHEMA
 //------------------------------------------------------
 
 export type AccountPartialRelations = {
-  user?: UserPartialWithRelations | null;
+  user?: UserPartialWithRelations;
 };
 
 export type AccountPartialWithRelations = z.infer<typeof AccountPartialSchema> & AccountPartialRelations
 
 export const AccountPartialWithRelationsSchema: z.ZodType<AccountPartialWithRelations> = AccountPartialSchema.merge(z.object({
-  user: z.lazy(() => UserPartialWithRelationsSchema).nullable(),
+  user: z.lazy(() => UserPartialWithRelationsSchema),
 })).partial()
 
 export type AccountWithPartialRelations = z.infer<typeof AccountSchema> & AccountPartialRelations
 
 export const AccountWithPartialRelationsSchema: z.ZodType<AccountWithPartialRelations> = AccountSchema.merge(z.object({
-  user: z.lazy(() => UserPartialWithRelationsSchema).nullable(),
+  user: z.lazy(() => UserPartialWithRelationsSchema),
 }).partial())
 
 /////////////////////////////////////////
@@ -576,12 +596,14 @@ export type LabPartial = z.infer<typeof LabPartialSchema>
 //------------------------------------------------------
 
 export type LabRelations = {
+  SponsoredTest: SponsoredTestWithRelations[];
   TestCatalog: TestCatalogWithRelations[];
 };
 
 export type LabWithRelations = z.infer<typeof LabSchema> & LabRelations
 
 export const LabWithRelationsSchema: z.ZodType<LabWithRelations> = LabSchema.merge(z.object({
+  SponsoredTest: z.lazy(() => SponsoredTestWithRelationsSchema).array(),
   TestCatalog: z.lazy(() => TestCatalogWithRelationsSchema).array(),
 }))
 
@@ -589,18 +611,21 @@ export const LabWithRelationsSchema: z.ZodType<LabWithRelations> = LabSchema.mer
 //------------------------------------------------------
 
 export type LabPartialRelations = {
+  SponsoredTest?: SponsoredTestPartialWithRelations[];
   TestCatalog?: TestCatalogPartialWithRelations[];
 };
 
 export type LabPartialWithRelations = z.infer<typeof LabPartialSchema> & LabPartialRelations
 
 export const LabPartialWithRelationsSchema: z.ZodType<LabPartialWithRelations> = LabPartialSchema.merge(z.object({
+  SponsoredTest: z.lazy(() => SponsoredTestPartialWithRelationsSchema).array(),
   TestCatalog: z.lazy(() => TestCatalogPartialWithRelationsSchema).array(),
 })).partial()
 
 export type LabWithPartialRelations = z.infer<typeof LabSchema> & LabPartialRelations
 
 export const LabWithPartialRelationsSchema: z.ZodType<LabWithPartialRelations> = LabSchema.merge(z.object({
+  SponsoredTest: z.lazy(() => SponsoredTestPartialWithRelationsSchema).array(),
   TestCatalog: z.lazy(() => TestCatalogPartialWithRelationsSchema).array(),
 }).partial())
 
@@ -1177,6 +1202,7 @@ export type OrganizationRelations = {
   Organization?: OrganizationWithRelations | null;
   ChildOrganization: OrganizationWithRelations[];
   OrganizationFavoriteTest: OrganizationFavoriteTestWithRelations[];
+  PatientOrganization: PatientOrganizationWithRelations[];
   ProviderOrganization: ProviderOrganizationWithRelations[];
 };
 
@@ -1187,6 +1213,7 @@ export const OrganizationWithRelationsSchema: z.ZodType<OrganizationWithRelation
   Organization: z.lazy(() => OrganizationWithRelationsSchema).nullable(),
   ChildOrganization: z.lazy(() => OrganizationWithRelationsSchema).array(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestWithRelationsSchema).array(),
+  PatientOrganization: z.lazy(() => PatientOrganizationWithRelationsSchema).array(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationWithRelationsSchema).array(),
 }))
 
@@ -1198,6 +1225,7 @@ export type OrganizationPartialRelations = {
   Organization?: OrganizationPartialWithRelations | null;
   ChildOrganization?: OrganizationPartialWithRelations[];
   OrganizationFavoriteTest?: OrganizationFavoriteTestPartialWithRelations[];
+  PatientOrganization?: PatientOrganizationPartialWithRelations[];
   ProviderOrganization?: ProviderOrganizationPartialWithRelations[];
 };
 
@@ -1208,6 +1236,7 @@ export const OrganizationPartialWithRelationsSchema: z.ZodType<OrganizationParti
   Organization: z.lazy(() => OrganizationPartialWithRelationsSchema).nullable(),
   ChildOrganization: z.lazy(() => OrganizationPartialWithRelationsSchema).array(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestPartialWithRelationsSchema).array(),
+  PatientOrganization: z.lazy(() => PatientOrganizationPartialWithRelationsSchema).array(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationPartialWithRelationsSchema).array(),
 })).partial()
 
@@ -1218,8 +1247,31 @@ export const OrganizationWithPartialRelationsSchema: z.ZodType<OrganizationWithP
   Organization: z.lazy(() => OrganizationPartialWithRelationsSchema).nullable(),
   ChildOrganization: z.lazy(() => OrganizationPartialWithRelationsSchema).array(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestPartialWithRelationsSchema).array(),
+  PatientOrganization: z.lazy(() => PatientOrganizationPartialWithRelationsSchema).array(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationPartialWithRelationsSchema).array(),
 }).partial())
+
+/////////////////////////////////////////
+// ORGANIZATION ENDPOINT SCHEMA
+/////////////////////////////////////////
+
+export const OrganizationEndpointSchema = z.object({
+  Id: z.string(),
+  OrgName: z.string().nullable(),
+  EHRVendor: z.string().nullable(),
+  FHIRVersion: z.string().nullable(),
+  Endpoint: z.string().nullable(),
+})
+
+export type OrganizationEndpoint = z.infer<typeof OrganizationEndpointSchema>
+
+/////////////////////////////////////////
+// ORGANIZATION ENDPOINT PARTIAL SCHEMA
+/////////////////////////////////////////
+
+export const OrganizationEndpointPartialSchema = OrganizationEndpointSchema.partial()
+
+export type OrganizationEndpointPartial = z.infer<typeof OrganizationEndpointPartialSchema>
 
 /////////////////////////////////////////
 // ORGANIZATION FAVORITE TEST SCHEMA
@@ -1284,28 +1336,6 @@ export const OrganizationFavoriteTestWithPartialRelationsSchema: z.ZodType<Organ
 }).partial())
 
 /////////////////////////////////////////
-// ORGANIZATION ENDPOINT SCHEMA
-/////////////////////////////////////////
-
-export const OrganizationEndpointSchema = z.object({
-  Id: z.string(),
-  OrgName: z.string().nullable(),
-  EHRVendor: z.string().nullable(),
-  FHIRVersion: z.string().nullable(),
-  Endpoint: z.string().nullable(),
-})
-
-export type OrganizationEndpoint = z.infer<typeof OrganizationEndpointSchema>
-
-/////////////////////////////////////////
-// ORGANIZATION ENDPOINT PARTIAL SCHEMA
-/////////////////////////////////////////
-
-export const OrganizationEndpointPartialSchema = OrganizationEndpointSchema.partial()
-
-export type OrganizationEndpointPartial = z.infer<typeof OrganizationEndpointPartialSchema>
-
-/////////////////////////////////////////
 // PATIENT SCHEMA
 /////////////////////////////////////////
 
@@ -1336,12 +1366,14 @@ export type PatientPartial = z.infer<typeof PatientPartialSchema>
 
 export type PatientRelations = {
   LabOrder: LabOrderWithRelations[];
+  PatientOrganization: PatientOrganizationWithRelations[];
 };
 
 export type PatientWithRelations = z.infer<typeof PatientSchema> & PatientRelations
 
 export const PatientWithRelationsSchema: z.ZodType<PatientWithRelations> = PatientSchema.merge(z.object({
   LabOrder: z.lazy(() => LabOrderWithRelationsSchema).array(),
+  PatientOrganization: z.lazy(() => PatientOrganizationWithRelationsSchema).array(),
 }))
 
 // PATIENT PARTIAL RELATION SCHEMA
@@ -1349,18 +1381,81 @@ export const PatientWithRelationsSchema: z.ZodType<PatientWithRelations> = Patie
 
 export type PatientPartialRelations = {
   LabOrder?: LabOrderPartialWithRelations[];
+  PatientOrganization?: PatientOrganizationPartialWithRelations[];
 };
 
 export type PatientPartialWithRelations = z.infer<typeof PatientPartialSchema> & PatientPartialRelations
 
 export const PatientPartialWithRelationsSchema: z.ZodType<PatientPartialWithRelations> = PatientPartialSchema.merge(z.object({
   LabOrder: z.lazy(() => LabOrderPartialWithRelationsSchema).array(),
+  PatientOrganization: z.lazy(() => PatientOrganizationPartialWithRelationsSchema).array(),
 })).partial()
 
 export type PatientWithPartialRelations = z.infer<typeof PatientSchema> & PatientPartialRelations
 
 export const PatientWithPartialRelationsSchema: z.ZodType<PatientWithPartialRelations> = PatientSchema.merge(z.object({
   LabOrder: z.lazy(() => LabOrderPartialWithRelationsSchema).array(),
+  PatientOrganization: z.lazy(() => PatientOrganizationPartialWithRelationsSchema).array(),
+}).partial())
+
+/////////////////////////////////////////
+// PATIENT ORGANIZATION SCHEMA
+/////////////////////////////////////////
+
+export const PatientOrganizationSchema = z.object({
+  Id: z.string(),
+  PatientId: z.string(),
+  OrganizationId: z.string(),
+  MRN: z.string().nullable(),
+  Mobile: z.string().nullable(),
+  Email: z.string().nullable(),
+})
+
+export type PatientOrganization = z.infer<typeof PatientOrganizationSchema>
+
+/////////////////////////////////////////
+// PATIENT ORGANIZATION PARTIAL SCHEMA
+/////////////////////////////////////////
+
+export const PatientOrganizationPartialSchema = PatientOrganizationSchema.partial()
+
+export type PatientOrganizationPartial = z.infer<typeof PatientOrganizationPartialSchema>
+
+// PATIENT ORGANIZATION RELATION SCHEMA
+//------------------------------------------------------
+
+export type PatientOrganizationRelations = {
+  Organization: OrganizationWithRelations;
+  Patient: PatientWithRelations;
+};
+
+export type PatientOrganizationWithRelations = z.infer<typeof PatientOrganizationSchema> & PatientOrganizationRelations
+
+export const PatientOrganizationWithRelationsSchema: z.ZodType<PatientOrganizationWithRelations> = PatientOrganizationSchema.merge(z.object({
+  Organization: z.lazy(() => OrganizationWithRelationsSchema),
+  Patient: z.lazy(() => PatientWithRelationsSchema),
+}))
+
+// PATIENT ORGANIZATION PARTIAL RELATION SCHEMA
+//------------------------------------------------------
+
+export type PatientOrganizationPartialRelations = {
+  Organization?: OrganizationPartialWithRelations;
+  Patient?: PatientPartialWithRelations;
+};
+
+export type PatientOrganizationPartialWithRelations = z.infer<typeof PatientOrganizationPartialSchema> & PatientOrganizationPartialRelations
+
+export const PatientOrganizationPartialWithRelationsSchema: z.ZodType<PatientOrganizationPartialWithRelations> = PatientOrganizationPartialSchema.merge(z.object({
+  Organization: z.lazy(() => OrganizationPartialWithRelationsSchema),
+  Patient: z.lazy(() => PatientPartialWithRelationsSchema),
+})).partial()
+
+export type PatientOrganizationWithPartialRelations = z.infer<typeof PatientOrganizationSchema> & PatientOrganizationPartialRelations
+
+export const PatientOrganizationWithPartialRelationsSchema: z.ZodType<PatientOrganizationWithPartialRelations> = PatientOrganizationSchema.merge(z.object({
+  Organization: z.lazy(() => OrganizationPartialWithRelationsSchema),
+  Patient: z.lazy(() => PatientPartialWithRelationsSchema),
 }).partial())
 
 /////////////////////////////////////////
@@ -1597,7 +1692,7 @@ export const ProviderFavoriteTestWithPartialRelationsSchema: z.ZodType<ProviderF
 export const ProviderOrganizationSchema = z.object({
   Id: z.string(),
   ProviderId: z.string(),
-  OrganizationId: z.string().nullable(),
+  OrganizationId: z.string(),
   ProviderNPI: z.string().nullable(),
   Name: z.string().nullable(),
   ParentOrgName: z.string().nullable(),
@@ -1622,14 +1717,14 @@ export type ProviderOrganizationPartial = z.infer<typeof ProviderOrganizationPar
 //------------------------------------------------------
 
 export type ProviderOrganizationRelations = {
-  Organization?: OrganizationWithRelations | null;
+  Organization: OrganizationWithRelations;
   Provider: ProviderWithRelations;
 };
 
 export type ProviderOrganizationWithRelations = z.infer<typeof ProviderOrganizationSchema> & ProviderOrganizationRelations
 
 export const ProviderOrganizationWithRelationsSchema: z.ZodType<ProviderOrganizationWithRelations> = ProviderOrganizationSchema.merge(z.object({
-  Organization: z.lazy(() => OrganizationWithRelationsSchema).nullable(),
+  Organization: z.lazy(() => OrganizationWithRelationsSchema),
   Provider: z.lazy(() => ProviderWithRelationsSchema),
 }))
 
@@ -1637,21 +1732,21 @@ export const ProviderOrganizationWithRelationsSchema: z.ZodType<ProviderOrganiza
 //------------------------------------------------------
 
 export type ProviderOrganizationPartialRelations = {
-  Organization?: OrganizationPartialWithRelations | null;
+  Organization?: OrganizationPartialWithRelations;
   Provider?: ProviderPartialWithRelations;
 };
 
 export type ProviderOrganizationPartialWithRelations = z.infer<typeof ProviderOrganizationPartialSchema> & ProviderOrganizationPartialRelations
 
 export const ProviderOrganizationPartialWithRelationsSchema: z.ZodType<ProviderOrganizationPartialWithRelations> = ProviderOrganizationPartialSchema.merge(z.object({
-  Organization: z.lazy(() => OrganizationPartialWithRelationsSchema).nullable(),
+  Organization: z.lazy(() => OrganizationPartialWithRelationsSchema),
   Provider: z.lazy(() => ProviderPartialWithRelationsSchema),
 })).partial()
 
 export type ProviderOrganizationWithPartialRelations = z.infer<typeof ProviderOrganizationSchema> & ProviderOrganizationPartialRelations
 
 export const ProviderOrganizationWithPartialRelationsSchema: z.ZodType<ProviderOrganizationWithPartialRelations> = ProviderOrganizationSchema.merge(z.object({
-  Organization: z.lazy(() => OrganizationPartialWithRelationsSchema).nullable(),
+  Organization: z.lazy(() => OrganizationPartialWithRelationsSchema),
   Provider: z.lazy(() => ProviderPartialWithRelationsSchema),
 }).partial())
 
@@ -1680,32 +1775,222 @@ export type SessionPartial = z.infer<typeof SessionPartialSchema>
 //------------------------------------------------------
 
 export type SessionRelations = {
-  user: UserWithRelations;
+  User: UserWithRelations;
 };
 
 export type SessionWithRelations = z.infer<typeof SessionSchema> & SessionRelations
 
 export const SessionWithRelationsSchema: z.ZodType<SessionWithRelations> = SessionSchema.merge(z.object({
-  user: z.lazy(() => UserWithRelationsSchema),
+  User: z.lazy(() => UserWithRelationsSchema),
 }))
 
 // SESSION PARTIAL RELATION SCHEMA
 //------------------------------------------------------
 
 export type SessionPartialRelations = {
-  user?: UserPartialWithRelations;
+  User?: UserPartialWithRelations;
 };
 
 export type SessionPartialWithRelations = z.infer<typeof SessionPartialSchema> & SessionPartialRelations
 
 export const SessionPartialWithRelationsSchema: z.ZodType<SessionPartialWithRelations> = SessionPartialSchema.merge(z.object({
-  user: z.lazy(() => UserPartialWithRelationsSchema),
+  User: z.lazy(() => UserPartialWithRelationsSchema),
 })).partial()
 
 export type SessionWithPartialRelations = z.infer<typeof SessionSchema> & SessionPartialRelations
 
 export const SessionWithPartialRelationsSchema: z.ZodType<SessionWithPartialRelations> = SessionSchema.merge(z.object({
-  user: z.lazy(() => UserPartialWithRelationsSchema),
+  User: z.lazy(() => UserPartialWithRelationsSchema),
+}).partial())
+
+/////////////////////////////////////////
+// SPONSOR SCHEMA
+/////////////////////////////////////////
+
+export const SponsorSchema = z.object({
+  SponsorId: z.number(),
+  SponsorName: z.string().nullable(),
+  SponsorCode: z.string().nullable(),
+  SponsorWebsite: z.string().nullable(),
+  SponsorType: z.string().nullable(),
+  Address: z.string().nullable(),
+  City: z.string().nullable(),
+  State: z.string().nullable(),
+  Zip: z.string().nullable(),
+})
+
+export type Sponsor = z.infer<typeof SponsorSchema>
+
+/////////////////////////////////////////
+// SPONSOR PARTIAL SCHEMA
+/////////////////////////////////////////
+
+export const SponsorPartialSchema = SponsorSchema.partial()
+
+export type SponsorPartial = z.infer<typeof SponsorPartialSchema>
+
+// SPONSOR RELATION SCHEMA
+//------------------------------------------------------
+
+export type SponsorRelations = {
+  SponsoredProgram: SponsoredProgramWithRelations[];
+};
+
+export type SponsorWithRelations = z.infer<typeof SponsorSchema> & SponsorRelations
+
+export const SponsorWithRelationsSchema: z.ZodType<SponsorWithRelations> = SponsorSchema.merge(z.object({
+  SponsoredProgram: z.lazy(() => SponsoredProgramWithRelationsSchema).array(),
+}))
+
+// SPONSOR PARTIAL RELATION SCHEMA
+//------------------------------------------------------
+
+export type SponsorPartialRelations = {
+  SponsoredProgram?: SponsoredProgramPartialWithRelations[];
+};
+
+export type SponsorPartialWithRelations = z.infer<typeof SponsorPartialSchema> & SponsorPartialRelations
+
+export const SponsorPartialWithRelationsSchema: z.ZodType<SponsorPartialWithRelations> = SponsorPartialSchema.merge(z.object({
+  SponsoredProgram: z.lazy(() => SponsoredProgramPartialWithRelationsSchema).array(),
+})).partial()
+
+export type SponsorWithPartialRelations = z.infer<typeof SponsorSchema> & SponsorPartialRelations
+
+export const SponsorWithPartialRelationsSchema: z.ZodType<SponsorWithPartialRelations> = SponsorSchema.merge(z.object({
+  SponsoredProgram: z.lazy(() => SponsoredProgramPartialWithRelationsSchema).array(),
+}).partial())
+
+/////////////////////////////////////////
+// SPONSORED PROGRAM SCHEMA
+/////////////////////////////////////////
+
+export const SponsoredProgramSchema = z.object({
+  ProgramId: z.number(),
+  SponsorId: z.number().nullable(),
+  TherapeuticArea: z.string().nullable(),
+  ProgramName: z.string().nullable(),
+  ProgramUrl: z.string().nullable(),
+  ProgramLabUrl: z.string().nullable(),
+  SponosoredTestingUrl: z.string().nullable(),
+  CreatedAt: z.date().nullable(),
+  UpdatedAt: z.date().nullable(),
+})
+
+export type SponsoredProgram = z.infer<typeof SponsoredProgramSchema>
+
+/////////////////////////////////////////
+// SPONSORED PROGRAM PARTIAL SCHEMA
+/////////////////////////////////////////
+
+export const SponsoredProgramPartialSchema = SponsoredProgramSchema.partial()
+
+export type SponsoredProgramPartial = z.infer<typeof SponsoredProgramPartialSchema>
+
+// SPONSORED PROGRAM RELATION SCHEMA
+//------------------------------------------------------
+
+export type SponsoredProgramRelations = {
+  Sponsor?: SponsorWithRelations | null;
+  SponsoredTest: SponsoredTestWithRelations[];
+};
+
+export type SponsoredProgramWithRelations = z.infer<typeof SponsoredProgramSchema> & SponsoredProgramRelations
+
+export const SponsoredProgramWithRelationsSchema: z.ZodType<SponsoredProgramWithRelations> = SponsoredProgramSchema.merge(z.object({
+  Sponsor: z.lazy(() => SponsorWithRelationsSchema).nullable(),
+  SponsoredTest: z.lazy(() => SponsoredTestWithRelationsSchema).array(),
+}))
+
+// SPONSORED PROGRAM PARTIAL RELATION SCHEMA
+//------------------------------------------------------
+
+export type SponsoredProgramPartialRelations = {
+  Sponsor?: SponsorPartialWithRelations | null;
+  SponsoredTest?: SponsoredTestPartialWithRelations[];
+};
+
+export type SponsoredProgramPartialWithRelations = z.infer<typeof SponsoredProgramPartialSchema> & SponsoredProgramPartialRelations
+
+export const SponsoredProgramPartialWithRelationsSchema: z.ZodType<SponsoredProgramPartialWithRelations> = SponsoredProgramPartialSchema.merge(z.object({
+  Sponsor: z.lazy(() => SponsorPartialWithRelationsSchema).nullable(),
+  SponsoredTest: z.lazy(() => SponsoredTestPartialWithRelationsSchema).array(),
+})).partial()
+
+export type SponsoredProgramWithPartialRelations = z.infer<typeof SponsoredProgramSchema> & SponsoredProgramPartialRelations
+
+export const SponsoredProgramWithPartialRelationsSchema: z.ZodType<SponsoredProgramWithPartialRelations> = SponsoredProgramSchema.merge(z.object({
+  Sponsor: z.lazy(() => SponsorPartialWithRelationsSchema).nullable(),
+  SponsoredTest: z.lazy(() => SponsoredTestPartialWithRelationsSchema).array(),
+}).partial())
+
+/////////////////////////////////////////
+// SPONSORED TEST SCHEMA
+/////////////////////////////////////////
+
+export const SponsoredTestSchema = z.object({
+  Id: z.string(),
+  TestId: z.number(),
+  LabTestId: z.string().nullable(),
+  SponsoredProgramId: z.number().nullable(),
+  LabId: z.number().nullable(),
+  CasandraTestId: z.string(),
+  Category: z.string(),
+  SubCategory: z.string().nullable(),
+  CreatedAt: z.date().nullable(),
+  UpdatedAt: z.date().nullable(),
+})
+
+export type SponsoredTest = z.infer<typeof SponsoredTestSchema>
+
+/////////////////////////////////////////
+// SPONSORED TEST PARTIAL SCHEMA
+/////////////////////////////////////////
+
+export const SponsoredTestPartialSchema = SponsoredTestSchema.partial()
+
+export type SponsoredTestPartial = z.infer<typeof SponsoredTestPartialSchema>
+
+// SPONSORED TEST RELATION SCHEMA
+//------------------------------------------------------
+
+export type SponsoredTestRelations = {
+  Lab?: LabWithRelations | null;
+  SponsoredProgram?: SponsoredProgramWithRelations | null;
+  TestCatalog: TestCatalogWithRelations;
+};
+
+export type SponsoredTestWithRelations = z.infer<typeof SponsoredTestSchema> & SponsoredTestRelations
+
+export const SponsoredTestWithRelationsSchema: z.ZodType<SponsoredTestWithRelations> = SponsoredTestSchema.merge(z.object({
+  Lab: z.lazy(() => LabWithRelationsSchema).nullable(),
+  SponsoredProgram: z.lazy(() => SponsoredProgramWithRelationsSchema).nullable(),
+  TestCatalog: z.lazy(() => TestCatalogWithRelationsSchema),
+}))
+
+// SPONSORED TEST PARTIAL RELATION SCHEMA
+//------------------------------------------------------
+
+export type SponsoredTestPartialRelations = {
+  Lab?: LabPartialWithRelations | null;
+  SponsoredProgram?: SponsoredProgramPartialWithRelations | null;
+  TestCatalog?: TestCatalogPartialWithRelations;
+};
+
+export type SponsoredTestPartialWithRelations = z.infer<typeof SponsoredTestPartialSchema> & SponsoredTestPartialRelations
+
+export const SponsoredTestPartialWithRelationsSchema: z.ZodType<SponsoredTestPartialWithRelations> = SponsoredTestPartialSchema.merge(z.object({
+  Lab: z.lazy(() => LabPartialWithRelationsSchema).nullable(),
+  SponsoredProgram: z.lazy(() => SponsoredProgramPartialWithRelationsSchema).nullable(),
+  TestCatalog: z.lazy(() => TestCatalogPartialWithRelationsSchema),
+})).partial()
+
+export type SponsoredTestWithPartialRelations = z.infer<typeof SponsoredTestSchema> & SponsoredTestPartialRelations
+
+export const SponsoredTestWithPartialRelationsSchema: z.ZodType<SponsoredTestWithPartialRelations> = SponsoredTestSchema.merge(z.object({
+  Lab: z.lazy(() => LabPartialWithRelationsSchema).nullable(),
+  SponsoredProgram: z.lazy(() => SponsoredProgramPartialWithRelationsSchema).nullable(),
+  TestCatalog: z.lazy(() => TestCatalogPartialWithRelationsSchema),
 }).partial())
 
 /////////////////////////////////////////
@@ -1717,6 +2002,7 @@ export const TestBiomarkerSchema = z.object({
   TestId: z.number(),
   LabTestId: z.string().nullable(),
   HGNCId: z.string(),
+  TranscriptReference: z.string().nullable(),
   CreatedAt: z.date(),
   UpdatedAt: z.date(),
 })
@@ -1814,6 +2100,8 @@ export const TestCatalogSchema = z.object({
   AlternativeSpecimen: z.string().nullable(),
   LoincCodesText: z.string().nullable(),
   LoincCodesHTML: z.string().nullable(),
+  TestCategory: z.string().nullable(),
+  TestSubCategory: z.string().nullable(),
   CreatedAt: z.date(),
   UpdatedAt: z.date(),
 })
@@ -1835,9 +2123,11 @@ export type TestCatalogRelations = {
   LabOrderTest: LabOrderTestWithRelations[];
   OrganizationFavoriteTest: OrganizationFavoriteTestWithRelations[];
   ProviderFavoriteTest: ProviderFavoriteTestWithRelations[];
+  SponsoredTest: SponsoredTestWithRelations[];
   TestBiomarker: TestBiomarkerWithRelations[];
   Lab?: LabWithRelations | null;
   TestCptCode: TestCptCodeWithRelations[];
+  TestGene: TestGeneWithRelations[];
   TestOrderLoinc: TestOrderLoincWithRelations[];
   TestResultLoinc: TestResultLoincWithRelations[];
 };
@@ -1848,9 +2138,11 @@ export const TestCatalogWithRelationsSchema: z.ZodType<TestCatalogWithRelations>
   LabOrderTest: z.lazy(() => LabOrderTestWithRelationsSchema).array(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestWithRelationsSchema).array(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestWithRelationsSchema).array(),
+  SponsoredTest: z.lazy(() => SponsoredTestWithRelationsSchema).array(),
   TestBiomarker: z.lazy(() => TestBiomarkerWithRelationsSchema).array(),
   Lab: z.lazy(() => LabWithRelationsSchema).nullable(),
   TestCptCode: z.lazy(() => TestCptCodeWithRelationsSchema).array(),
+  TestGene: z.lazy(() => TestGeneWithRelationsSchema).array(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincWithRelationsSchema).array(),
   TestResultLoinc: z.lazy(() => TestResultLoincWithRelationsSchema).array(),
 }))
@@ -1862,9 +2154,11 @@ export type TestCatalogPartialRelations = {
   LabOrderTest?: LabOrderTestPartialWithRelations[];
   OrganizationFavoriteTest?: OrganizationFavoriteTestPartialWithRelations[];
   ProviderFavoriteTest?: ProviderFavoriteTestPartialWithRelations[];
+  SponsoredTest?: SponsoredTestPartialWithRelations[];
   TestBiomarker?: TestBiomarkerPartialWithRelations[];
   Lab?: LabPartialWithRelations | null;
   TestCptCode?: TestCptCodePartialWithRelations[];
+  TestGene?: TestGenePartialWithRelations[];
   TestOrderLoinc?: TestOrderLoincPartialWithRelations[];
   TestResultLoinc?: TestResultLoincPartialWithRelations[];
 };
@@ -1875,9 +2169,11 @@ export const TestCatalogPartialWithRelationsSchema: z.ZodType<TestCatalogPartial
   LabOrderTest: z.lazy(() => LabOrderTestPartialWithRelationsSchema).array(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestPartialWithRelationsSchema).array(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestPartialWithRelationsSchema).array(),
+  SponsoredTest: z.lazy(() => SponsoredTestPartialWithRelationsSchema).array(),
   TestBiomarker: z.lazy(() => TestBiomarkerPartialWithRelationsSchema).array(),
   Lab: z.lazy(() => LabPartialWithRelationsSchema).nullable(),
   TestCptCode: z.lazy(() => TestCptCodePartialWithRelationsSchema).array(),
+  TestGene: z.lazy(() => TestGenePartialWithRelationsSchema).array(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincPartialWithRelationsSchema).array(),
   TestResultLoinc: z.lazy(() => TestResultLoincPartialWithRelationsSchema).array(),
 })).partial()
@@ -1888,9 +2184,11 @@ export const TestCatalogWithPartialRelationsSchema: z.ZodType<TestCatalogWithPar
   LabOrderTest: z.lazy(() => LabOrderTestPartialWithRelationsSchema).array(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestPartialWithRelationsSchema).array(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestPartialWithRelationsSchema).array(),
+  SponsoredTest: z.lazy(() => SponsoredTestPartialWithRelationsSchema).array(),
   TestBiomarker: z.lazy(() => TestBiomarkerPartialWithRelationsSchema).array(),
   Lab: z.lazy(() => LabPartialWithRelationsSchema).nullable(),
   TestCptCode: z.lazy(() => TestCptCodePartialWithRelationsSchema).array(),
+  TestGene: z.lazy(() => TestGenePartialWithRelationsSchema).array(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincPartialWithRelationsSchema).array(),
   TestResultLoinc: z.lazy(() => TestResultLoincPartialWithRelationsSchema).array(),
 }).partial())
@@ -1949,6 +2247,62 @@ export const TestCptCodePartialWithRelationsSchema: z.ZodType<TestCptCodePartial
 export type TestCptCodeWithPartialRelations = z.infer<typeof TestCptCodeSchema> & TestCptCodePartialRelations
 
 export const TestCptCodeWithPartialRelationsSchema: z.ZodType<TestCptCodeWithPartialRelations> = TestCptCodeSchema.merge(z.object({
+  TestCatalog: z.lazy(() => TestCatalogPartialWithRelationsSchema),
+}).partial())
+
+/////////////////////////////////////////
+// TEST GENE SCHEMA
+/////////////////////////////////////////
+
+export const TestGeneSchema = z.object({
+  Id: z.number(),
+  TestId: z.number(),
+  LabTestId: z.string().nullable(),
+  Gene: z.string(),
+  TranscriptReference: z.string().nullable(),
+  CreatedAt: z.date(),
+  UpdatedAt: z.date(),
+})
+
+export type TestGene = z.infer<typeof TestGeneSchema>
+
+/////////////////////////////////////////
+// TEST GENE PARTIAL SCHEMA
+/////////////////////////////////////////
+
+export const TestGenePartialSchema = TestGeneSchema.partial()
+
+export type TestGenePartial = z.infer<typeof TestGenePartialSchema>
+
+// TEST GENE RELATION SCHEMA
+//------------------------------------------------------
+
+export type TestGeneRelations = {
+  TestCatalog: TestCatalogWithRelations;
+};
+
+export type TestGeneWithRelations = z.infer<typeof TestGeneSchema> & TestGeneRelations
+
+export const TestGeneWithRelationsSchema: z.ZodType<TestGeneWithRelations> = TestGeneSchema.merge(z.object({
+  TestCatalog: z.lazy(() => TestCatalogWithRelationsSchema),
+}))
+
+// TEST GENE PARTIAL RELATION SCHEMA
+//------------------------------------------------------
+
+export type TestGenePartialRelations = {
+  TestCatalog?: TestCatalogPartialWithRelations;
+};
+
+export type TestGenePartialWithRelations = z.infer<typeof TestGenePartialSchema> & TestGenePartialRelations
+
+export const TestGenePartialWithRelationsSchema: z.ZodType<TestGenePartialWithRelations> = TestGenePartialSchema.merge(z.object({
+  TestCatalog: z.lazy(() => TestCatalogPartialWithRelationsSchema),
+})).partial()
+
+export type TestGeneWithPartialRelations = z.infer<typeof TestGeneSchema> & TestGenePartialRelations
+
+export const TestGeneWithPartialRelationsSchema: z.ZodType<TestGeneWithPartialRelations> = TestGeneSchema.merge(z.object({
   TestCatalog: z.lazy(() => TestCatalogPartialWithRelationsSchema),
 }).partial())
 
@@ -2102,16 +2456,16 @@ export type UserPartial = z.infer<typeof UserPartialSchema>
 //------------------------------------------------------
 
 export type UserRelations = {
-  Session: SessionWithRelations[];
   Account?: AccountWithRelations | null;
+  Session: SessionWithRelations[];
   UserAttribute?: UserAttributeWithRelations | null;
 };
 
 export type UserWithRelations = z.infer<typeof UserSchema> & UserRelations
 
 export const UserWithRelationsSchema: z.ZodType<UserWithRelations> = UserSchema.merge(z.object({
-  Session: z.lazy(() => SessionWithRelationsSchema).array(),
   Account: z.lazy(() => AccountWithRelationsSchema).nullable(),
+  Session: z.lazy(() => SessionWithRelationsSchema).array(),
   UserAttribute: z.lazy(() => UserAttributeWithRelationsSchema).nullable(),
 }))
 
@@ -2119,24 +2473,24 @@ export const UserWithRelationsSchema: z.ZodType<UserWithRelations> = UserSchema.
 //------------------------------------------------------
 
 export type UserPartialRelations = {
-  Session?: SessionPartialWithRelations[];
   Account?: AccountPartialWithRelations | null;
+  Session?: SessionPartialWithRelations[];
   UserAttribute?: UserAttributePartialWithRelations | null;
 };
 
 export type UserPartialWithRelations = z.infer<typeof UserPartialSchema> & UserPartialRelations
 
 export const UserPartialWithRelationsSchema: z.ZodType<UserPartialWithRelations> = UserPartialSchema.merge(z.object({
-  Session: z.lazy(() => SessionPartialWithRelationsSchema).array(),
   Account: z.lazy(() => AccountPartialWithRelationsSchema).nullable(),
+  Session: z.lazy(() => SessionPartialWithRelationsSchema).array(),
   UserAttribute: z.lazy(() => UserAttributePartialWithRelationsSchema).nullable(),
 })).partial()
 
 export type UserWithPartialRelations = z.infer<typeof UserSchema> & UserPartialRelations
 
 export const UserWithPartialRelationsSchema: z.ZodType<UserWithPartialRelations> = UserSchema.merge(z.object({
-  Session: z.lazy(() => SessionPartialWithRelationsSchema).array(),
   Account: z.lazy(() => AccountPartialWithRelationsSchema).nullable(),
+  Session: z.lazy(() => SessionPartialWithRelationsSchema).array(),
   UserAttribute: z.lazy(() => UserAttributePartialWithRelationsSchema).nullable(),
 }).partial())
 
@@ -2454,6 +2808,7 @@ export const LOINCSelectSchema: z.ZodType<Prisma.LOINCSelect> = z.object({
 //------------------------------------------------------
 
 export const LabIncludeSchema: z.ZodType<Prisma.LabInclude> = z.object({
+  SponsoredTest: z.union([z.boolean(),z.lazy(() => SponsoredTestFindManyArgsSchema)]).optional(),
   TestCatalog: z.union([z.boolean(),z.lazy(() => TestCatalogFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => LabCountOutputTypeArgsSchema)]).optional(),
 }).strict()
@@ -2468,6 +2823,7 @@ export const LabCountOutputTypeArgsSchema: z.ZodType<Prisma.LabCountOutputTypeDe
 }).strict();
 
 export const LabCountOutputTypeSelectSchema: z.ZodType<Prisma.LabCountOutputTypeSelect> = z.object({
+  SponsoredTest: z.boolean().optional(),
   TestCatalog: z.boolean().optional(),
 }).strict();
 
@@ -2479,6 +2835,7 @@ export const LabSelectSchema: z.ZodType<Prisma.LabSelect> = z.object({
   City: z.boolean().optional(),
   State: z.boolean().optional(),
   Zip: z.boolean().optional(),
+  SponsoredTest: z.union([z.boolean(),z.lazy(() => SponsoredTestFindManyArgsSchema)]).optional(),
   TestCatalog: z.union([z.boolean(),z.lazy(() => TestCatalogFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => LabCountOutputTypeArgsSchema)]).optional(),
 }).strict()
@@ -2742,6 +3099,7 @@ export const OrganizationIncludeSchema: z.ZodType<Prisma.OrganizationInclude> = 
   Organization: z.union([z.boolean(),z.lazy(() => OrganizationArgsSchema)]).optional(),
   ChildOrganization: z.union([z.boolean(),z.lazy(() => OrganizationFindManyArgsSchema)]).optional(),
   OrganizationFavoriteTest: z.union([z.boolean(),z.lazy(() => OrganizationFavoriteTestFindManyArgsSchema)]).optional(),
+  PatientOrganization: z.union([z.boolean(),z.lazy(() => PatientOrganizationFindManyArgsSchema)]).optional(),
   ProviderOrganization: z.union([z.boolean(),z.lazy(() => ProviderOrganizationFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => OrganizationCountOutputTypeArgsSchema)]).optional(),
 }).strict()
@@ -2759,6 +3117,7 @@ export const OrganizationCountOutputTypeSelectSchema: z.ZodType<Prisma.Organizat
   LabOrder: z.boolean().optional(),
   ChildOrganization: z.boolean().optional(),
   OrganizationFavoriteTest: z.boolean().optional(),
+  PatientOrganization: z.boolean().optional(),
   ProviderOrganization: z.boolean().optional(),
 }).strict();
 
@@ -2779,8 +3138,20 @@ export const OrganizationSelectSchema: z.ZodType<Prisma.OrganizationSelect> = z.
   Organization: z.union([z.boolean(),z.lazy(() => OrganizationArgsSchema)]).optional(),
   ChildOrganization: z.union([z.boolean(),z.lazy(() => OrganizationFindManyArgsSchema)]).optional(),
   OrganizationFavoriteTest: z.union([z.boolean(),z.lazy(() => OrganizationFavoriteTestFindManyArgsSchema)]).optional(),
+  PatientOrganization: z.union([z.boolean(),z.lazy(() => PatientOrganizationFindManyArgsSchema)]).optional(),
   ProviderOrganization: z.union([z.boolean(),z.lazy(() => ProviderOrganizationFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => OrganizationCountOutputTypeArgsSchema)]).optional(),
+}).strict()
+
+// ORGANIZATION ENDPOINT
+//------------------------------------------------------
+
+export const OrganizationEndpointSelectSchema: z.ZodType<Prisma.OrganizationEndpointSelect> = z.object({
+  Id: z.boolean().optional(),
+  OrgName: z.boolean().optional(),
+  EHRVendor: z.boolean().optional(),
+  FHIRVersion: z.boolean().optional(),
+  Endpoint: z.boolean().optional(),
 }).strict()
 
 // ORGANIZATION FAVORITE TEST
@@ -2809,22 +3180,12 @@ export const OrganizationFavoriteTestSelectSchema: z.ZodType<Prisma.Organization
   TestCatalog: z.union([z.boolean(),z.lazy(() => TestCatalogArgsSchema)]).optional(),
 }).strict()
 
-// ORGANIZATION ENDPOINT
-//------------------------------------------------------
-
-export const OrganizationEndpointSelectSchema: z.ZodType<Prisma.OrganizationEndpointSelect> = z.object({
-  Id: z.boolean().optional(),
-  OrgName: z.boolean().optional(),
-  EHRVendor: z.boolean().optional(),
-  FHIRVersion: z.boolean().optional(),
-  Endpoint: z.boolean().optional(),
-}).strict()
-
 // PATIENT
 //------------------------------------------------------
 
 export const PatientIncludeSchema: z.ZodType<Prisma.PatientInclude> = z.object({
   LabOrder: z.union([z.boolean(),z.lazy(() => LabOrderFindManyArgsSchema)]).optional(),
+  PatientOrganization: z.union([z.boolean(),z.lazy(() => PatientOrganizationFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => PatientCountOutputTypeArgsSchema)]).optional(),
 }).strict()
 
@@ -2839,6 +3200,7 @@ export const PatientCountOutputTypeArgsSchema: z.ZodType<Prisma.PatientCountOutp
 
 export const PatientCountOutputTypeSelectSchema: z.ZodType<Prisma.PatientCountOutputTypeSelect> = z.object({
   LabOrder: z.boolean().optional(),
+  PatientOrganization: z.boolean().optional(),
 }).strict();
 
 export const PatientSelectSchema: z.ZodType<Prisma.PatientSelect> = z.object({
@@ -2852,7 +3214,32 @@ export const PatientSelectSchema: z.ZodType<Prisma.PatientSelect> = z.object({
   CreatedAt: z.boolean().optional(),
   UpdatedAt: z.boolean().optional(),
   LabOrder: z.union([z.boolean(),z.lazy(() => LabOrderFindManyArgsSchema)]).optional(),
+  PatientOrganization: z.union([z.boolean(),z.lazy(() => PatientOrganizationFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => PatientCountOutputTypeArgsSchema)]).optional(),
+}).strict()
+
+// PATIENT ORGANIZATION
+//------------------------------------------------------
+
+export const PatientOrganizationIncludeSchema: z.ZodType<Prisma.PatientOrganizationInclude> = z.object({
+  Organization: z.union([z.boolean(),z.lazy(() => OrganizationArgsSchema)]).optional(),
+  Patient: z.union([z.boolean(),z.lazy(() => PatientArgsSchema)]).optional(),
+}).strict()
+
+export const PatientOrganizationArgsSchema: z.ZodType<Prisma.PatientOrganizationDefaultArgs> = z.object({
+  select: z.lazy(() => PatientOrganizationSelectSchema).optional(),
+  include: z.lazy(() => PatientOrganizationIncludeSchema).optional(),
+}).strict();
+
+export const PatientOrganizationSelectSchema: z.ZodType<Prisma.PatientOrganizationSelect> = z.object({
+  Id: z.boolean().optional(),
+  PatientId: z.boolean().optional(),
+  OrganizationId: z.boolean().optional(),
+  MRN: z.boolean().optional(),
+  Mobile: z.boolean().optional(),
+  Email: z.boolean().optional(),
+  Organization: z.union([z.boolean(),z.lazy(() => OrganizationArgsSchema)]).optional(),
+  Patient: z.union([z.boolean(),z.lazy(() => PatientArgsSchema)]).optional(),
 }).strict()
 
 // POST
@@ -3001,7 +3388,7 @@ export const ProviderOrganizationSelectSchema: z.ZodType<Prisma.ProviderOrganiza
 //------------------------------------------------------
 
 export const SessionIncludeSchema: z.ZodType<Prisma.SessionInclude> = z.object({
-  user: z.union([z.boolean(),z.lazy(() => UserArgsSchema)]).optional(),
+  User: z.union([z.boolean(),z.lazy(() => UserArgsSchema)]).optional(),
 }).strict()
 
 export const SessionArgsSchema: z.ZodType<Prisma.SessionDefaultArgs> = z.object({
@@ -3014,7 +3401,109 @@ export const SessionSelectSchema: z.ZodType<Prisma.SessionSelect> = z.object({
   sessionToken: z.boolean().optional(),
   userId: z.boolean().optional(),
   expires: z.boolean().optional(),
-  user: z.union([z.boolean(),z.lazy(() => UserArgsSchema)]).optional(),
+  User: z.union([z.boolean(),z.lazy(() => UserArgsSchema)]).optional(),
+}).strict()
+
+// SPONSOR
+//------------------------------------------------------
+
+export const SponsorIncludeSchema: z.ZodType<Prisma.SponsorInclude> = z.object({
+  SponsoredProgram: z.union([z.boolean(),z.lazy(() => SponsoredProgramFindManyArgsSchema)]).optional(),
+  _count: z.union([z.boolean(),z.lazy(() => SponsorCountOutputTypeArgsSchema)]).optional(),
+}).strict()
+
+export const SponsorArgsSchema: z.ZodType<Prisma.SponsorDefaultArgs> = z.object({
+  select: z.lazy(() => SponsorSelectSchema).optional(),
+  include: z.lazy(() => SponsorIncludeSchema).optional(),
+}).strict();
+
+export const SponsorCountOutputTypeArgsSchema: z.ZodType<Prisma.SponsorCountOutputTypeDefaultArgs> = z.object({
+  select: z.lazy(() => SponsorCountOutputTypeSelectSchema).nullish(),
+}).strict();
+
+export const SponsorCountOutputTypeSelectSchema: z.ZodType<Prisma.SponsorCountOutputTypeSelect> = z.object({
+  SponsoredProgram: z.boolean().optional(),
+}).strict();
+
+export const SponsorSelectSchema: z.ZodType<Prisma.SponsorSelect> = z.object({
+  SponsorId: z.boolean().optional(),
+  SponsorName: z.boolean().optional(),
+  SponsorCode: z.boolean().optional(),
+  SponsorWebsite: z.boolean().optional(),
+  SponsorType: z.boolean().optional(),
+  Address: z.boolean().optional(),
+  City: z.boolean().optional(),
+  State: z.boolean().optional(),
+  Zip: z.boolean().optional(),
+  SponsoredProgram: z.union([z.boolean(),z.lazy(() => SponsoredProgramFindManyArgsSchema)]).optional(),
+  _count: z.union([z.boolean(),z.lazy(() => SponsorCountOutputTypeArgsSchema)]).optional(),
+}).strict()
+
+// SPONSORED PROGRAM
+//------------------------------------------------------
+
+export const SponsoredProgramIncludeSchema: z.ZodType<Prisma.SponsoredProgramInclude> = z.object({
+  Sponsor: z.union([z.boolean(),z.lazy(() => SponsorArgsSchema)]).optional(),
+  SponsoredTest: z.union([z.boolean(),z.lazy(() => SponsoredTestFindManyArgsSchema)]).optional(),
+  _count: z.union([z.boolean(),z.lazy(() => SponsoredProgramCountOutputTypeArgsSchema)]).optional(),
+}).strict()
+
+export const SponsoredProgramArgsSchema: z.ZodType<Prisma.SponsoredProgramDefaultArgs> = z.object({
+  select: z.lazy(() => SponsoredProgramSelectSchema).optional(),
+  include: z.lazy(() => SponsoredProgramIncludeSchema).optional(),
+}).strict();
+
+export const SponsoredProgramCountOutputTypeArgsSchema: z.ZodType<Prisma.SponsoredProgramCountOutputTypeDefaultArgs> = z.object({
+  select: z.lazy(() => SponsoredProgramCountOutputTypeSelectSchema).nullish(),
+}).strict();
+
+export const SponsoredProgramCountOutputTypeSelectSchema: z.ZodType<Prisma.SponsoredProgramCountOutputTypeSelect> = z.object({
+  SponsoredTest: z.boolean().optional(),
+}).strict();
+
+export const SponsoredProgramSelectSchema: z.ZodType<Prisma.SponsoredProgramSelect> = z.object({
+  ProgramId: z.boolean().optional(),
+  SponsorId: z.boolean().optional(),
+  TherapeuticArea: z.boolean().optional(),
+  ProgramName: z.boolean().optional(),
+  ProgramUrl: z.boolean().optional(),
+  ProgramLabUrl: z.boolean().optional(),
+  SponosoredTestingUrl: z.boolean().optional(),
+  CreatedAt: z.boolean().optional(),
+  UpdatedAt: z.boolean().optional(),
+  Sponsor: z.union([z.boolean(),z.lazy(() => SponsorArgsSchema)]).optional(),
+  SponsoredTest: z.union([z.boolean(),z.lazy(() => SponsoredTestFindManyArgsSchema)]).optional(),
+  _count: z.union([z.boolean(),z.lazy(() => SponsoredProgramCountOutputTypeArgsSchema)]).optional(),
+}).strict()
+
+// SPONSORED TEST
+//------------------------------------------------------
+
+export const SponsoredTestIncludeSchema: z.ZodType<Prisma.SponsoredTestInclude> = z.object({
+  Lab: z.union([z.boolean(),z.lazy(() => LabArgsSchema)]).optional(),
+  SponsoredProgram: z.union([z.boolean(),z.lazy(() => SponsoredProgramArgsSchema)]).optional(),
+  TestCatalog: z.union([z.boolean(),z.lazy(() => TestCatalogArgsSchema)]).optional(),
+}).strict()
+
+export const SponsoredTestArgsSchema: z.ZodType<Prisma.SponsoredTestDefaultArgs> = z.object({
+  select: z.lazy(() => SponsoredTestSelectSchema).optional(),
+  include: z.lazy(() => SponsoredTestIncludeSchema).optional(),
+}).strict();
+
+export const SponsoredTestSelectSchema: z.ZodType<Prisma.SponsoredTestSelect> = z.object({
+  Id: z.boolean().optional(),
+  TestId: z.boolean().optional(),
+  LabTestId: z.boolean().optional(),
+  SponsoredProgramId: z.boolean().optional(),
+  LabId: z.boolean().optional(),
+  CasandraTestId: z.boolean().optional(),
+  Category: z.boolean().optional(),
+  SubCategory: z.boolean().optional(),
+  CreatedAt: z.boolean().optional(),
+  UpdatedAt: z.boolean().optional(),
+  Lab: z.union([z.boolean(),z.lazy(() => LabArgsSchema)]).optional(),
+  SponsoredProgram: z.union([z.boolean(),z.lazy(() => SponsoredProgramArgsSchema)]).optional(),
+  TestCatalog: z.union([z.boolean(),z.lazy(() => TestCatalogArgsSchema)]).optional(),
 }).strict()
 
 // TEST BIOMARKER
@@ -3035,6 +3524,7 @@ export const TestBiomarkerSelectSchema: z.ZodType<Prisma.TestBiomarkerSelect> = 
   TestId: z.boolean().optional(),
   LabTestId: z.boolean().optional(),
   HGNCId: z.boolean().optional(),
+  TranscriptReference: z.boolean().optional(),
   CreatedAt: z.boolean().optional(),
   UpdatedAt: z.boolean().optional(),
   BIOMARKER: z.union([z.boolean(),z.lazy(() => BIOMARKERArgsSchema)]).optional(),
@@ -3048,9 +3538,11 @@ export const TestCatalogIncludeSchema: z.ZodType<Prisma.TestCatalogInclude> = z.
   LabOrderTest: z.union([z.boolean(),z.lazy(() => LabOrderTestFindManyArgsSchema)]).optional(),
   OrganizationFavoriteTest: z.union([z.boolean(),z.lazy(() => OrganizationFavoriteTestFindManyArgsSchema)]).optional(),
   ProviderFavoriteTest: z.union([z.boolean(),z.lazy(() => ProviderFavoriteTestFindManyArgsSchema)]).optional(),
+  SponsoredTest: z.union([z.boolean(),z.lazy(() => SponsoredTestFindManyArgsSchema)]).optional(),
   TestBiomarker: z.union([z.boolean(),z.lazy(() => TestBiomarkerFindManyArgsSchema)]).optional(),
   Lab: z.union([z.boolean(),z.lazy(() => LabArgsSchema)]).optional(),
   TestCptCode: z.union([z.boolean(),z.lazy(() => TestCptCodeFindManyArgsSchema)]).optional(),
+  TestGene: z.union([z.boolean(),z.lazy(() => TestGeneFindManyArgsSchema)]).optional(),
   TestOrderLoinc: z.union([z.boolean(),z.lazy(() => TestOrderLoincFindManyArgsSchema)]).optional(),
   TestResultLoinc: z.union([z.boolean(),z.lazy(() => TestResultLoincFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => TestCatalogCountOutputTypeArgsSchema)]).optional(),
@@ -3069,8 +3561,10 @@ export const TestCatalogCountOutputTypeSelectSchema: z.ZodType<Prisma.TestCatalo
   LabOrderTest: z.boolean().optional(),
   OrganizationFavoriteTest: z.boolean().optional(),
   ProviderFavoriteTest: z.boolean().optional(),
+  SponsoredTest: z.boolean().optional(),
   TestBiomarker: z.boolean().optional(),
   TestCptCode: z.boolean().optional(),
+  TestGene: z.boolean().optional(),
   TestOrderLoinc: z.boolean().optional(),
   TestResultLoinc: z.boolean().optional(),
 }).strict();
@@ -3117,14 +3611,18 @@ export const TestCatalogSelectSchema: z.ZodType<Prisma.TestCatalogSelect> = z.ob
   AlternativeSpecimen: z.boolean().optional(),
   LoincCodesText: z.boolean().optional(),
   LoincCodesHTML: z.boolean().optional(),
+  TestCategory: z.boolean().optional(),
+  TestSubCategory: z.boolean().optional(),
   CreatedAt: z.boolean().optional(),
   UpdatedAt: z.boolean().optional(),
   LabOrderTest: z.union([z.boolean(),z.lazy(() => LabOrderTestFindManyArgsSchema)]).optional(),
   OrganizationFavoriteTest: z.union([z.boolean(),z.lazy(() => OrganizationFavoriteTestFindManyArgsSchema)]).optional(),
   ProviderFavoriteTest: z.union([z.boolean(),z.lazy(() => ProviderFavoriteTestFindManyArgsSchema)]).optional(),
+  SponsoredTest: z.union([z.boolean(),z.lazy(() => SponsoredTestFindManyArgsSchema)]).optional(),
   TestBiomarker: z.union([z.boolean(),z.lazy(() => TestBiomarkerFindManyArgsSchema)]).optional(),
   Lab: z.union([z.boolean(),z.lazy(() => LabArgsSchema)]).optional(),
   TestCptCode: z.union([z.boolean(),z.lazy(() => TestCptCodeFindManyArgsSchema)]).optional(),
+  TestGene: z.union([z.boolean(),z.lazy(() => TestGeneFindManyArgsSchema)]).optional(),
   TestOrderLoinc: z.union([z.boolean(),z.lazy(() => TestOrderLoincFindManyArgsSchema)]).optional(),
   TestResultLoinc: z.union([z.boolean(),z.lazy(() => TestResultLoincFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => TestCatalogCountOutputTypeArgsSchema)]).optional(),
@@ -3149,6 +3647,29 @@ export const TestCptCodeSelectSchema: z.ZodType<Prisma.TestCptCodeSelect> = z.ob
   CptCode: z.boolean().optional(),
   Modifier: z.boolean().optional(),
   Comments: z.boolean().optional(),
+  CreatedAt: z.boolean().optional(),
+  UpdatedAt: z.boolean().optional(),
+  TestCatalog: z.union([z.boolean(),z.lazy(() => TestCatalogArgsSchema)]).optional(),
+}).strict()
+
+// TEST GENE
+//------------------------------------------------------
+
+export const TestGeneIncludeSchema: z.ZodType<Prisma.TestGeneInclude> = z.object({
+  TestCatalog: z.union([z.boolean(),z.lazy(() => TestCatalogArgsSchema)]).optional(),
+}).strict()
+
+export const TestGeneArgsSchema: z.ZodType<Prisma.TestGeneDefaultArgs> = z.object({
+  select: z.lazy(() => TestGeneSelectSchema).optional(),
+  include: z.lazy(() => TestGeneIncludeSchema).optional(),
+}).strict();
+
+export const TestGeneSelectSchema: z.ZodType<Prisma.TestGeneSelect> = z.object({
+  Id: z.boolean().optional(),
+  TestId: z.boolean().optional(),
+  LabTestId: z.boolean().optional(),
+  Gene: z.boolean().optional(),
+  TranscriptReference: z.boolean().optional(),
   CreatedAt: z.boolean().optional(),
   UpdatedAt: z.boolean().optional(),
   TestCatalog: z.union([z.boolean(),z.lazy(() => TestCatalogArgsSchema)]).optional(),
@@ -3209,8 +3730,8 @@ export const TestResultLoincSelectSchema: z.ZodType<Prisma.TestResultLoincSelect
 //------------------------------------------------------
 
 export const UserIncludeSchema: z.ZodType<Prisma.UserInclude> = z.object({
-  Session: z.union([z.boolean(),z.lazy(() => SessionFindManyArgsSchema)]).optional(),
   Account: z.union([z.boolean(),z.lazy(() => AccountArgsSchema)]).optional(),
+  Session: z.union([z.boolean(),z.lazy(() => SessionFindManyArgsSchema)]).optional(),
   UserAttribute: z.union([z.boolean(),z.lazy(() => UserAttributeArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => UserCountOutputTypeArgsSchema)]).optional(),
 }).strict()
@@ -3235,8 +3756,8 @@ export const UserSelectSchema: z.ZodType<Prisma.UserSelect> = z.object({
   password: z.boolean().optional(),
   emailVerified: z.boolean().optional(),
   image: z.boolean().optional(),
-  Session: z.union([z.boolean(),z.lazy(() => SessionFindManyArgsSchema)]).optional(),
   Account: z.union([z.boolean(),z.lazy(() => AccountArgsSchema)]).optional(),
+  Session: z.union([z.boolean(),z.lazy(() => SessionFindManyArgsSchema)]).optional(),
   UserAttribute: z.union([z.boolean(),z.lazy(() => UserAttributeArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => UserCountOutputTypeArgsSchema)]).optional(),
 }).strict()
@@ -3307,12 +3828,12 @@ export const AccountWhereInputSchema: z.ZodType<Prisma.AccountWhereInput> = z.ob
   smart_style_url: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   unconfirmed_status: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   user_email: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
-  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
-  user: z.union([ z.lazy(() => UserNullableRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional().nullable(),
+  createdAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  updatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  user: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
 }).strict();
 
-export const AccountOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.AccountOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const AccountOrderByWithRelationInputSchema: z.ZodType<Prisma.AccountOrderByWithRelationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   userId: z.lazy(() => SortOrderSchema).optional(),
   type: z.lazy(() => SortOrderSchema).optional(),
@@ -3338,9 +3859,9 @@ export const AccountOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<
   smart_style_url: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   unconfirmed_status: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   user_email: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  createdAt: z.lazy(() => SortOrderSchema).optional(),
-  updatedAt: z.lazy(() => SortOrderSchema).optional(),
-  user: z.lazy(() => UserOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  createdAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  updatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  user: z.lazy(() => UserOrderByWithRelationInputSchema).optional(),
   _relevance: z.lazy(() => AccountOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -3402,9 +3923,9 @@ export const AccountWhereUniqueInputSchema: z.ZodType<Prisma.AccountWhereUniqueI
   smart_style_url: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   unconfirmed_status: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   user_email: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  createdAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
-  updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
-  user: z.union([ z.lazy(() => UserNullableRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional().nullable(),
+  createdAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  updatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  user: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
 }).strict());
 
 export const AccountOrderByWithAggregationInputSchema: z.ZodType<Prisma.AccountOrderByWithAggregationInput> = z.object({
@@ -3433,8 +3954,8 @@ export const AccountOrderByWithAggregationInputSchema: z.ZodType<Prisma.AccountO
   smart_style_url: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   unconfirmed_status: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   user_email: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  createdAt: z.lazy(() => SortOrderSchema).optional(),
-  updatedAt: z.lazy(() => SortOrderSchema).optional(),
+  createdAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  updatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   _count: z.lazy(() => AccountCountOrderByAggregateInputSchema).optional(),
   _avg: z.lazy(() => AccountAvgOrderByAggregateInputSchema).optional(),
   _max: z.lazy(() => AccountMaxOrderByAggregateInputSchema).optional(),
@@ -3471,8 +3992,8 @@ export const AccountScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Accou
   smart_style_url: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   unconfirmed_status: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   user_email: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
-  createdAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.date() ]).optional(),
-  updatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.date() ]).optional(),
+  createdAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
+  updatedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
 }).strict();
 
 export const AdminWhereInputSchema: z.ZodType<Prisma.AdminWhereInput> = z.object({
@@ -3486,12 +4007,12 @@ export const AdminWhereInputSchema: z.ZodType<Prisma.AdminWhereInput> = z.object
   UserAttribute: z.union([ z.lazy(() => UserAttributeRelationFilterSchema),z.lazy(() => UserAttributeWhereInputSchema) ]).optional(),
 }).strict();
 
-export const AdminOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.AdminOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const AdminOrderByWithRelationInputSchema: z.ZodType<Prisma.AdminOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   Name: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   Email: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UserAttributeId: z.lazy(() => SortOrderSchema).optional(),
-  UserAttribute: z.lazy(() => UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  UserAttribute: z.lazy(() => UserAttributeOrderByWithRelationInputSchema).optional(),
   _relevance: z.lazy(() => AdminOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -3550,7 +4071,7 @@ export const AttachmentWhereInputSchema: z.ZodType<Prisma.AttachmentWhereInput> 
   LabOrderAttachment: z.lazy(() => LabOrderAttachmentListRelationFilterSchema).optional()
 }).strict();
 
-export const AttachmentOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.AttachmentOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const AttachmentOrderByWithRelationInputSchema: z.ZodType<Prisma.AttachmentOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   AttachmentType: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   AttachmentUrl: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -3608,7 +4129,7 @@ export const BIOMARKERWhereInputSchema: z.ZodType<Prisma.BIOMARKERWhereInput> = 
   TestBiomarker: z.lazy(() => TestBiomarkerListRelationFilterSchema).optional()
 }).strict();
 
-export const BIOMARKEROrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.BIOMARKEROrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const BIOMARKEROrderByWithRelationInputSchema: z.ZodType<Prisma.BIOMARKEROrderByWithRelationInput> = z.object({
   HGNCId: z.lazy(() => SortOrderSchema).optional(),
   HGNCStatus: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   HGNCApprovedSymbol: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -3672,7 +4193,7 @@ export const ICDWhereInputSchema: z.ZodType<Prisma.ICDWhereInput> = z.object({
   LabOrderIcd: z.lazy(() => LabOrderIcdListRelationFilterSchema).optional()
 }).strict();
 
-export const ICDOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.ICDOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const ICDOrderByWithRelationInputSchema: z.ZodType<Prisma.ICDOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   Code: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ShortDescription: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -3767,7 +4288,7 @@ export const LOINCWhereInputSchema: z.ZodType<Prisma.LOINCWhereInput> = z.object
   TestResultLoinc: z.lazy(() => TestResultLoincListRelationFilterSchema).optional()
 }).strict();
 
-export const LOINCOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LOINCOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const LOINCOrderByWithRelationInputSchema: z.ZodType<Prisma.LOINCOrderByWithRelationInput> = z.object({
   Loinc_Num: z.lazy(() => SortOrderSchema).optional(),
   COMPONENT: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   PROPERTY: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -3969,10 +4490,11 @@ export const LabWhereInputSchema: z.ZodType<Prisma.LabWhereInput> = z.object({
   City: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   State: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   Zip: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  SponsoredTest: z.lazy(() => SponsoredTestListRelationFilterSchema).optional(),
   TestCatalog: z.lazy(() => TestCatalogListRelationFilterSchema).optional()
 }).strict();
 
-export const LabOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LabOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const LabOrderByWithRelationInputSchema: z.ZodType<Prisma.LabOrderByWithRelationInput> = z.object({
   LabId: z.lazy(() => SortOrderSchema).optional(),
   LabName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   LabCode: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -3980,6 +4502,7 @@ export const LabOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Pris
   City: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   State: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   Zip: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestOrderByRelationAggregateInputSchema).optional(),
   TestCatalog: z.lazy(() => TestCatalogOrderByRelationAggregateInputSchema).optional(),
   _relevance: z.lazy(() => LabOrderByRelevanceInputSchema).optional()
 }).strict();
@@ -3998,6 +4521,7 @@ export const LabWhereUniqueInputSchema: z.ZodType<Prisma.LabWhereUniqueInput> = 
   City: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   State: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   Zip: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  SponsoredTest: z.lazy(() => SponsoredTestListRelationFilterSchema).optional(),
   TestCatalog: z.lazy(() => TestCatalogListRelationFilterSchema).optional()
 }).strict());
 
@@ -4059,7 +4583,7 @@ export const LabOrderWhereInputSchema: z.ZodType<Prisma.LabOrderWhereInput> = z.
   LabOrderTest: z.lazy(() => LabOrderTestListRelationFilterSchema).optional()
 }).strict();
 
-export const LabOrderOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LabOrderOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const LabOrderOrderByWithRelationInputSchema: z.ZodType<Prisma.LabOrderOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   OrderNumber: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   AccessionNumber: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -4074,10 +4598,10 @@ export const LabOrderOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType
   OrderNotes: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  OrderingProvider: z.lazy(() => ProviderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
-  TreatingProvider: z.lazy(() => ProviderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
-  Patient: z.lazy(() => PatientOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
-  Organization: z.lazy(() => OrganizationOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  OrderingProvider: z.lazy(() => ProviderOrderByWithRelationInputSchema).optional(),
+  TreatingProvider: z.lazy(() => ProviderOrderByWithRelationInputSchema).optional(),
+  Patient: z.lazy(() => PatientOrderByWithRelationInputSchema).optional(),
+  Organization: z.lazy(() => OrganizationOrderByWithRelationInputSchema).optional(),
   LabOrderAttachment: z.lazy(() => LabOrderAttachmentOrderByRelationAggregateInputSchema).optional(),
   LabOrderBilling: z.lazy(() => LabOrderBillingOrderByRelationAggregateInputSchema).optional(),
   LabOrderIcd: z.lazy(() => LabOrderIcdOrderByRelationAggregateInputSchema).optional(),
@@ -4173,14 +4697,14 @@ export const LabOrderAttachmentWhereInputSchema: z.ZodType<Prisma.LabOrderAttach
   Attachment: z.union([ z.lazy(() => AttachmentNullableRelationFilterSchema),z.lazy(() => AttachmentWhereInputSchema) ]).optional().nullable(),
 }).strict();
 
-export const LabOrderAttachmentOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LabOrderAttachmentOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const LabOrderAttachmentOrderByWithRelationInputSchema: z.ZodType<Prisma.LabOrderAttachmentOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   AttachmentId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  LabOrder: z.lazy(() => LabOrderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
-  Attachment: z.lazy(() => AttachmentOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  LabOrder: z.lazy(() => LabOrderOrderByWithRelationInputSchema).optional(),
+  Attachment: z.lazy(() => AttachmentOrderByWithRelationInputSchema).optional(),
   _relevance: z.lazy(() => LabOrderAttachmentOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -4237,7 +4761,7 @@ export const LabOrderBillingWhereInputSchema: z.ZodType<Prisma.LabOrderBillingWh
   LabOrder: z.union([ z.lazy(() => LabOrderNullableRelationFilterSchema),z.lazy(() => LabOrderWhereInputSchema) ]).optional().nullable(),
 }).strict();
 
-export const LabOrderBillingOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LabOrderBillingOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const LabOrderBillingOrderByWithRelationInputSchema: z.ZodType<Prisma.LabOrderBillingOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   BillToId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -4246,7 +4770,7 @@ export const LabOrderBillingOrderByWithRelationAndSearchRelevanceInputSchema: z.
   SponoseredTestCouponCode: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  LabOrder: z.lazy(() => LabOrderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  LabOrder: z.lazy(() => LabOrderOrderByWithRelationInputSchema).optional(),
   _relevance: z.lazy(() => LabOrderBillingOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -4309,14 +4833,14 @@ export const LabOrderIcdWhereInputSchema: z.ZodType<Prisma.LabOrderIcdWhereInput
   ICD: z.union([ z.lazy(() => ICDNullableRelationFilterSchema),z.lazy(() => ICDWhereInputSchema) ]).optional().nullable(),
 }).strict();
 
-export const LabOrderIcdOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LabOrderIcdOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const LabOrderIcdOrderByWithRelationInputSchema: z.ZodType<Prisma.LabOrderIcdOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ICDId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  LabOrder: z.lazy(() => LabOrderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
-  ICD: z.lazy(() => ICDOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  LabOrder: z.lazy(() => LabOrderOrderByWithRelationInputSchema).optional(),
+  ICD: z.lazy(() => ICDOrderByWithRelationInputSchema).optional(),
   _relevance: z.lazy(() => LabOrderIcdOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -4379,7 +4903,7 @@ export const LabOrderSpecimenWhereInputSchema: z.ZodType<Prisma.LabOrderSpecimen
   LabOrder: z.union([ z.lazy(() => LabOrderNullableRelationFilterSchema),z.lazy(() => LabOrderWhereInputSchema) ]).optional().nullable(),
 }).strict();
 
-export const LabOrderSpecimenOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LabOrderSpecimenOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const LabOrderSpecimenOrderByWithRelationInputSchema: z.ZodType<Prisma.LabOrderSpecimenOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   SpecimenType: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -4394,7 +4918,7 @@ export const LabOrderSpecimenOrderByWithRelationAndSearchRelevanceInputSchema: z
   ColdIschemicTime: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  LabOrder: z.lazy(() => LabOrderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  LabOrder: z.lazy(() => LabOrderOrderByWithRelationInputSchema).optional(),
   _relevance: z.lazy(() => LabOrderSpecimenOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -4475,14 +4999,14 @@ export const LabOrderStatusWhereInputSchema: z.ZodType<Prisma.LabOrderStatusWher
   LabOrder: z.union([ z.lazy(() => LabOrderNullableRelationFilterSchema),z.lazy(() => LabOrderWhereInputSchema) ]).optional().nullable(),
 }).strict();
 
-export const LabOrderStatusOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LabOrderStatusOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const LabOrderStatusOrderByWithRelationInputSchema: z.ZodType<Prisma.LabOrderStatusOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   Status: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   StatusDate: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  LabOrder: z.lazy(() => LabOrderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  LabOrder: z.lazy(() => LabOrderOrderByWithRelationInputSchema).optional(),
   _relevance: z.lazy(() => LabOrderStatusOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -4539,14 +5063,14 @@ export const LabOrderTestWhereInputSchema: z.ZodType<Prisma.LabOrderTestWhereInp
   TestCatalog: z.union([ z.lazy(() => TestCatalogNullableRelationFilterSchema),z.lazy(() => TestCatalogWhereInputSchema) ]).optional().nullable(),
 }).strict();
 
-export const LabOrderTestOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LabOrderTestOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const LabOrderTestOrderByWithRelationInputSchema: z.ZodType<Prisma.LabOrderTestOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   TestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  LabOrder: z.lazy(() => LabOrderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
-  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  LabOrder: z.lazy(() => LabOrderOrderByWithRelationInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationInputSchema).optional(),
   _relevance: z.lazy(() => LabOrderTestOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -4607,7 +5131,7 @@ export const LoincComponentHierarchyWhereInputSchema: z.ZodType<Prisma.LoincComp
   Method: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
 }).strict();
 
-export const LoincComponentHierarchyOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LoincComponentHierarchyOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const LoincComponentHierarchyOrderByWithRelationInputSchema: z.ZodType<Prisma.LoincComponentHierarchyOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   ParentId: z.lazy(() => SortOrderSchema).optional(),
   Level: z.lazy(() => SortOrderSchema).optional(),
@@ -4695,7 +5219,7 @@ export const LoincPanelHierarchyWhereInputSchema: z.ZodType<Prisma.LoincPanelHie
   Method: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
 }).strict();
 
-export const LoincPanelHierarchyOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LoincPanelHierarchyOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const LoincPanelHierarchyOrderByWithRelationInputSchema: z.ZodType<Prisma.LoincPanelHierarchyOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   ParentId: z.lazy(() => SortOrderSchema).optional(),
   Level: z.lazy(() => SortOrderSchema).optional(),
@@ -4775,7 +5299,7 @@ export const LoincUniveralLabOrdersWhereInputSchema: z.ZodType<Prisma.LoincUnive
   ORDER_OBS: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
 }).strict();
 
-export const LoincUniveralLabOrdersOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LoincUniveralLabOrdersOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const LoincUniveralLabOrdersOrderByWithRelationInputSchema: z.ZodType<Prisma.LoincUniveralLabOrdersOrderByWithRelationInput> = z.object({
   Loinc_Num: z.lazy(() => SortOrderSchema).optional(),
   Long_Common_Name: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ORDER_OBS: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -4832,10 +5356,11 @@ export const OrganizationWhereInputSchema: z.ZodType<Prisma.OrganizationWhereInp
   Organization: z.union([ z.lazy(() => OrganizationNullableRelationFilterSchema),z.lazy(() => OrganizationWhereInputSchema) ]).optional().nullable(),
   ChildOrganization: z.lazy(() => OrganizationListRelationFilterSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestListRelationFilterSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationListRelationFilterSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationListRelationFilterSchema).optional()
 }).strict();
 
-export const OrganizationOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.OrganizationOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const OrganizationOrderByWithRelationInputSchema: z.ZodType<Prisma.OrganizationOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   href: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ParentId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -4849,9 +5374,10 @@ export const OrganizationOrderByWithRelationAndSearchRelevanceInputSchema: z.Zod
   OrgState: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   OrgZip: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   LabOrder: z.lazy(() => LabOrderOrderByRelationAggregateInputSchema).optional(),
-  Organization: z.lazy(() => OrganizationOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  Organization: z.lazy(() => OrganizationOrderByWithRelationInputSchema).optional(),
   ChildOrganization: z.lazy(() => OrganizationOrderByRelationAggregateInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestOrderByRelationAggregateInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationOrderByRelationAggregateInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationOrderByRelationAggregateInputSchema).optional(),
   _relevance: z.lazy(() => OrganizationOrderByRelevanceInputSchema).optional()
 }).strict();
@@ -4879,6 +5405,7 @@ export const OrganizationWhereUniqueInputSchema: z.ZodType<Prisma.OrganizationWh
   Organization: z.union([ z.lazy(() => OrganizationNullableRelationFilterSchema),z.lazy(() => OrganizationWhereInputSchema) ]).optional().nullable(),
   ChildOrganization: z.lazy(() => OrganizationListRelationFilterSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestListRelationFilterSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationListRelationFilterSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationListRelationFilterSchema).optional()
 }).strict());
 
@@ -4920,6 +5447,62 @@ export const OrganizationScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.
   OrgZip: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
 }).strict();
 
+export const OrganizationEndpointWhereInputSchema: z.ZodType<Prisma.OrganizationEndpointWhereInput> = z.object({
+  AND: z.union([ z.lazy(() => OrganizationEndpointWhereInputSchema),z.lazy(() => OrganizationEndpointWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => OrganizationEndpointWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => OrganizationEndpointWhereInputSchema),z.lazy(() => OrganizationEndpointWhereInputSchema).array() ]).optional(),
+  Id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  OrgName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  EHRVendor: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  FHIRVersion: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Endpoint: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+}).strict();
+
+export const OrganizationEndpointOrderByWithRelationInputSchema: z.ZodType<Prisma.OrganizationEndpointOrderByWithRelationInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  OrgName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  EHRVendor: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  FHIRVersion: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Endpoint: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  _relevance: z.lazy(() => OrganizationEndpointOrderByRelevanceInputSchema).optional()
+}).strict();
+
+export const OrganizationEndpointWhereUniqueInputSchema: z.ZodType<Prisma.OrganizationEndpointWhereUniqueInput> = z.object({
+  Id: z.string()
+})
+.and(z.object({
+  Id: z.string().optional(),
+  AND: z.union([ z.lazy(() => OrganizationEndpointWhereInputSchema),z.lazy(() => OrganizationEndpointWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => OrganizationEndpointWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => OrganizationEndpointWhereInputSchema),z.lazy(() => OrganizationEndpointWhereInputSchema).array() ]).optional(),
+  OrgName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  EHRVendor: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  FHIRVersion: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Endpoint: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+}).strict());
+
+export const OrganizationEndpointOrderByWithAggregationInputSchema: z.ZodType<Prisma.OrganizationEndpointOrderByWithAggregationInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  OrgName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  EHRVendor: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  FHIRVersion: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Endpoint: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  _count: z.lazy(() => OrganizationEndpointCountOrderByAggregateInputSchema).optional(),
+  _max: z.lazy(() => OrganizationEndpointMaxOrderByAggregateInputSchema).optional(),
+  _min: z.lazy(() => OrganizationEndpointMinOrderByAggregateInputSchema).optional()
+}).strict();
+
+export const OrganizationEndpointScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.OrganizationEndpointScalarWhereWithAggregatesInput> = z.object({
+  AND: z.union([ z.lazy(() => OrganizationEndpointScalarWhereWithAggregatesInputSchema),z.lazy(() => OrganizationEndpointScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  OR: z.lazy(() => OrganizationEndpointScalarWhereWithAggregatesInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => OrganizationEndpointScalarWhereWithAggregatesInputSchema),z.lazy(() => OrganizationEndpointScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  Id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  OrgName: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  EHRVendor: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  FHIRVersion: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  Endpoint: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+}).strict();
+
 export const OrganizationFavoriteTestWhereInputSchema: z.ZodType<Prisma.OrganizationFavoriteTestWhereInput> = z.object({
   AND: z.union([ z.lazy(() => OrganizationFavoriteTestWhereInputSchema),z.lazy(() => OrganizationFavoriteTestWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => OrganizationFavoriteTestWhereInputSchema).array().optional(),
@@ -4936,7 +5519,7 @@ export const OrganizationFavoriteTestWhereInputSchema: z.ZodType<Prisma.Organiza
   TestCatalog: z.union([ z.lazy(() => TestCatalogNullableRelationFilterSchema),z.lazy(() => TestCatalogWhereInputSchema) ]).optional().nullable(),
 }).strict();
 
-export const OrganizationFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.OrganizationFavoriteTestOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const OrganizationFavoriteTestOrderByWithRelationInputSchema: z.ZodType<Prisma.OrganizationFavoriteTestOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   OrganizationId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ParentId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -4945,8 +5528,8 @@ export const OrganizationFavoriteTestOrderByWithRelationAndSearchRelevanceInputS
   TestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  Organization: z.lazy(() => OrganizationOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
-  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  Organization: z.lazy(() => OrganizationOrderByWithRelationInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationInputSchema).optional(),
   _relevance: z.lazy(() => OrganizationFavoriteTestOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -4999,62 +5582,6 @@ export const OrganizationFavoriteTestScalarWhereWithAggregatesInputSchema: z.Zod
   UpdatedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
 }).strict();
 
-export const OrganizationEndpointWhereInputSchema: z.ZodType<Prisma.OrganizationEndpointWhereInput> = z.object({
-  AND: z.union([ z.lazy(() => OrganizationEndpointWhereInputSchema),z.lazy(() => OrganizationEndpointWhereInputSchema).array() ]).optional(),
-  OR: z.lazy(() => OrganizationEndpointWhereInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => OrganizationEndpointWhereInputSchema),z.lazy(() => OrganizationEndpointWhereInputSchema).array() ]).optional(),
-  Id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  OrgName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  EHRVendor: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  FHIRVersion: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  Endpoint: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-}).strict();
-
-export const OrganizationEndpointOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.OrganizationEndpointOrderByWithRelationAndSearchRelevanceInput> = z.object({
-  Id: z.lazy(() => SortOrderSchema).optional(),
-  OrgName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  EHRVendor: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  FHIRVersion: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  Endpoint: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  _relevance: z.lazy(() => OrganizationEndpointOrderByRelevanceInputSchema).optional()
-}).strict();
-
-export const OrganizationEndpointWhereUniqueInputSchema: z.ZodType<Prisma.OrganizationEndpointWhereUniqueInput> = z.object({
-  Id: z.string()
-})
-.and(z.object({
-  Id: z.string().optional(),
-  AND: z.union([ z.lazy(() => OrganizationEndpointWhereInputSchema),z.lazy(() => OrganizationEndpointWhereInputSchema).array() ]).optional(),
-  OR: z.lazy(() => OrganizationEndpointWhereInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => OrganizationEndpointWhereInputSchema),z.lazy(() => OrganizationEndpointWhereInputSchema).array() ]).optional(),
-  OrgName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  EHRVendor: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  FHIRVersion: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  Endpoint: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-}).strict());
-
-export const OrganizationEndpointOrderByWithAggregationInputSchema: z.ZodType<Prisma.OrganizationEndpointOrderByWithAggregationInput> = z.object({
-  Id: z.lazy(() => SortOrderSchema).optional(),
-  OrgName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  EHRVendor: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  FHIRVersion: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  Endpoint: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  _count: z.lazy(() => OrganizationEndpointCountOrderByAggregateInputSchema).optional(),
-  _max: z.lazy(() => OrganizationEndpointMaxOrderByAggregateInputSchema).optional(),
-  _min: z.lazy(() => OrganizationEndpointMinOrderByAggregateInputSchema).optional()
-}).strict();
-
-export const OrganizationEndpointScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.OrganizationEndpointScalarWhereWithAggregatesInput> = z.object({
-  AND: z.union([ z.lazy(() => OrganizationEndpointScalarWhereWithAggregatesInputSchema),z.lazy(() => OrganizationEndpointScalarWhereWithAggregatesInputSchema).array() ]).optional(),
-  OR: z.lazy(() => OrganizationEndpointScalarWhereWithAggregatesInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => OrganizationEndpointScalarWhereWithAggregatesInputSchema),z.lazy(() => OrganizationEndpointScalarWhereWithAggregatesInputSchema).array() ]).optional(),
-  Id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  OrgName: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
-  EHRVendor: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
-  FHIRVersion: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
-  Endpoint: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
-}).strict();
-
 export const PatientWhereInputSchema: z.ZodType<Prisma.PatientWhereInput> = z.object({
   AND: z.union([ z.lazy(() => PatientWhereInputSchema),z.lazy(() => PatientWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => PatientWhereInputSchema).array().optional(),
@@ -5068,10 +5595,11 @@ export const PatientWhereInputSchema: z.ZodType<Prisma.PatientWhereInput> = z.ob
   Mobile: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
-  LabOrder: z.lazy(() => LabOrderListRelationFilterSchema).optional()
+  LabOrder: z.lazy(() => LabOrderListRelationFilterSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationListRelationFilterSchema).optional()
 }).strict();
 
-export const PatientOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.PatientOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const PatientOrderByWithRelationInputSchema: z.ZodType<Prisma.PatientOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   FirstName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   LastName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -5082,6 +5610,7 @@ export const PatientOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   LabOrder: z.lazy(() => LabOrderOrderByRelationAggregateInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationOrderByRelationAggregateInputSchema).optional(),
   _relevance: z.lazy(() => PatientOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -5101,7 +5630,8 @@ export const PatientWhereUniqueInputSchema: z.ZodType<Prisma.PatientWhereUniqueI
   Mobile: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
-  LabOrder: z.lazy(() => LabOrderListRelationFilterSchema).optional()
+  LabOrder: z.lazy(() => LabOrderListRelationFilterSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationListRelationFilterSchema).optional()
 }).strict());
 
 export const PatientOrderByWithAggregationInputSchema: z.ZodType<Prisma.PatientOrderByWithAggregationInput> = z.object({
@@ -5134,6 +5664,73 @@ export const PatientScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Patie
   UpdatedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
 }).strict();
 
+export const PatientOrganizationWhereInputSchema: z.ZodType<Prisma.PatientOrganizationWhereInput> = z.object({
+  AND: z.union([ z.lazy(() => PatientOrganizationWhereInputSchema),z.lazy(() => PatientOrganizationWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => PatientOrganizationWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => PatientOrganizationWhereInputSchema),z.lazy(() => PatientOrganizationWhereInputSchema).array() ]).optional(),
+  Id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  PatientId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  OrganizationId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  MRN: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Mobile: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Email: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Organization: z.union([ z.lazy(() => OrganizationRelationFilterSchema),z.lazy(() => OrganizationWhereInputSchema) ]).optional(),
+  Patient: z.union([ z.lazy(() => PatientRelationFilterSchema),z.lazy(() => PatientWhereInputSchema) ]).optional(),
+}).strict();
+
+export const PatientOrganizationOrderByWithRelationInputSchema: z.ZodType<Prisma.PatientOrganizationOrderByWithRelationInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  PatientId: z.lazy(() => SortOrderSchema).optional(),
+  OrganizationId: z.lazy(() => SortOrderSchema).optional(),
+  MRN: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Mobile: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Email: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Organization: z.lazy(() => OrganizationOrderByWithRelationInputSchema).optional(),
+  Patient: z.lazy(() => PatientOrderByWithRelationInputSchema).optional(),
+  _relevance: z.lazy(() => PatientOrganizationOrderByRelevanceInputSchema).optional()
+}).strict();
+
+export const PatientOrganizationWhereUniqueInputSchema: z.ZodType<Prisma.PatientOrganizationWhereUniqueInput> = z.object({
+  Id: z.string()
+})
+.and(z.object({
+  Id: z.string().optional(),
+  AND: z.union([ z.lazy(() => PatientOrganizationWhereInputSchema),z.lazy(() => PatientOrganizationWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => PatientOrganizationWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => PatientOrganizationWhereInputSchema),z.lazy(() => PatientOrganizationWhereInputSchema).array() ]).optional(),
+  PatientId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  OrganizationId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  MRN: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Mobile: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Email: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Organization: z.union([ z.lazy(() => OrganizationRelationFilterSchema),z.lazy(() => OrganizationWhereInputSchema) ]).optional(),
+  Patient: z.union([ z.lazy(() => PatientRelationFilterSchema),z.lazy(() => PatientWhereInputSchema) ]).optional(),
+}).strict());
+
+export const PatientOrganizationOrderByWithAggregationInputSchema: z.ZodType<Prisma.PatientOrganizationOrderByWithAggregationInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  PatientId: z.lazy(() => SortOrderSchema).optional(),
+  OrganizationId: z.lazy(() => SortOrderSchema).optional(),
+  MRN: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Mobile: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Email: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  _count: z.lazy(() => PatientOrganizationCountOrderByAggregateInputSchema).optional(),
+  _max: z.lazy(() => PatientOrganizationMaxOrderByAggregateInputSchema).optional(),
+  _min: z.lazy(() => PatientOrganizationMinOrderByAggregateInputSchema).optional()
+}).strict();
+
+export const PatientOrganizationScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.PatientOrganizationScalarWhereWithAggregatesInput> = z.object({
+  AND: z.union([ z.lazy(() => PatientOrganizationScalarWhereWithAggregatesInputSchema),z.lazy(() => PatientOrganizationScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  OR: z.lazy(() => PatientOrganizationScalarWhereWithAggregatesInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => PatientOrganizationScalarWhereWithAggregatesInputSchema),z.lazy(() => PatientOrganizationScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  Id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  PatientId: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  OrganizationId: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  MRN: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  Mobile: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  Email: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+}).strict();
+
 export const PostWhereInputSchema: z.ZodType<Prisma.PostWhereInput> = z.object({
   AND: z.union([ z.lazy(() => PostWhereInputSchema),z.lazy(() => PostWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => PostWhereInputSchema).array().optional(),
@@ -5144,7 +5741,7 @@ export const PostWhereInputSchema: z.ZodType<Prisma.PostWhereInput> = z.object({
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
 }).strict();
 
-export const PostOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.PostOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const PostOrderByWithRelationInputSchema: z.ZodType<Prisma.PostOrderByWithRelationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   name: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
@@ -5213,7 +5810,7 @@ export const ProviderWhereInputSchema: z.ZodType<Prisma.ProviderWhereInput> = z.
   ProviderOrganization: z.lazy(() => ProviderOrganizationListRelationFilterSchema).optional()
 }).strict();
 
-export const ProviderOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.ProviderOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const ProviderOrderByWithRelationInputSchema: z.ZodType<Prisma.ProviderOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   href: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   NPI: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -5230,7 +5827,7 @@ export const ProviderOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType
   UserAttributeId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   OrderingProviderLabOrder: z.lazy(() => LabOrderOrderByRelationAggregateInputSchema).optional(),
   TreatingProviderLabOrder: z.lazy(() => LabOrderOrderByRelationAggregateInputSchema).optional(),
-  UserAttribute: z.lazy(() => UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  UserAttribute: z.lazy(() => UserAttributeOrderByWithRelationInputSchema).optional(),
   ProviderEducation: z.lazy(() => ProviderEducationOrderByRelationAggregateInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestOrderByRelationAggregateInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationOrderByRelationAggregateInputSchema).optional(),
@@ -5329,7 +5926,7 @@ export const ProviderEducationWhereInputSchema: z.ZodType<Prisma.ProviderEducati
   Provider: z.union([ z.lazy(() => ProviderRelationFilterSchema),z.lazy(() => ProviderWhereInputSchema) ]).optional(),
 }).strict();
 
-export const ProviderEducationOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.ProviderEducationOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const ProviderEducationOrderByWithRelationInputSchema: z.ZodType<Prisma.ProviderEducationOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   ProviderId: z.lazy(() => SortOrderSchema).optional(),
   ProviderNPI: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -5337,7 +5934,7 @@ export const ProviderEducationOrderByWithRelationAndSearchRelevanceInputSchema: 
   EducationType: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   SchoolName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   AreaOfEducation: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  Provider: z.lazy(() => ProviderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  Provider: z.lazy(() => ProviderOrderByWithRelationInputSchema).optional(),
   _relevance: z.lazy(() => ProviderEducationOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -5400,7 +5997,7 @@ export const ProviderFavoriteTestWhereInputSchema: z.ZodType<Prisma.ProviderFavo
   TestCatalog: z.union([ z.lazy(() => TestCatalogNullableRelationFilterSchema),z.lazy(() => TestCatalogWhereInputSchema) ]).optional().nullable(),
 }).strict();
 
-export const ProviderFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.ProviderFavoriteTestOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const ProviderFavoriteTestOrderByWithRelationInputSchema: z.ZodType<Prisma.ProviderFavoriteTestOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   ProviderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ParentId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -5409,8 +6006,8 @@ export const ProviderFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchem
   TestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  Provider: z.lazy(() => ProviderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
-  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  Provider: z.lazy(() => ProviderOrderByWithRelationInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationInputSchema).optional(),
   _relevance: z.lazy(() => ProviderFavoriteTestOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -5469,7 +6066,7 @@ export const ProviderOrganizationWhereInputSchema: z.ZodType<Prisma.ProviderOrga
   NOT: z.union([ z.lazy(() => ProviderOrganizationWhereInputSchema),z.lazy(() => ProviderOrganizationWhereInputSchema).array() ]).optional(),
   Id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   ProviderId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  OrganizationId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  OrganizationId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   ProviderNPI: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   Name: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   ParentOrgName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
@@ -5478,14 +6075,14 @@ export const ProviderOrganizationWhereInputSchema: z.ZodType<Prisma.ProviderOrga
   OrgCity: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   OrgState: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   OrgZip: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  Organization: z.union([ z.lazy(() => OrganizationNullableRelationFilterSchema),z.lazy(() => OrganizationWhereInputSchema) ]).optional().nullable(),
+  Organization: z.union([ z.lazy(() => OrganizationRelationFilterSchema),z.lazy(() => OrganizationWhereInputSchema) ]).optional(),
   Provider: z.union([ z.lazy(() => ProviderRelationFilterSchema),z.lazy(() => ProviderWhereInputSchema) ]).optional(),
 }).strict();
 
-export const ProviderOrganizationOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.ProviderOrganizationOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const ProviderOrganizationOrderByWithRelationInputSchema: z.ZodType<Prisma.ProviderOrganizationOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   ProviderId: z.lazy(() => SortOrderSchema).optional(),
-  OrganizationId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  OrganizationId: z.lazy(() => SortOrderSchema).optional(),
   ProviderNPI: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   Name: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ParentOrgName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -5494,8 +6091,8 @@ export const ProviderOrganizationOrderByWithRelationAndSearchRelevanceInputSchem
   OrgCity: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   OrgState: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   OrgZip: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  Organization: z.lazy(() => OrganizationOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
-  Provider: z.lazy(() => ProviderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  Organization: z.lazy(() => OrganizationOrderByWithRelationInputSchema).optional(),
+  Provider: z.lazy(() => ProviderOrderByWithRelationInputSchema).optional(),
   _relevance: z.lazy(() => ProviderOrganizationOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -5508,7 +6105,7 @@ export const ProviderOrganizationWhereUniqueInputSchema: z.ZodType<Prisma.Provid
   OR: z.lazy(() => ProviderOrganizationWhereInputSchema).array().optional(),
   NOT: z.union([ z.lazy(() => ProviderOrganizationWhereInputSchema),z.lazy(() => ProviderOrganizationWhereInputSchema).array() ]).optional(),
   ProviderId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  OrganizationId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  OrganizationId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   ProviderNPI: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   Name: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   ParentOrgName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
@@ -5517,14 +6114,14 @@ export const ProviderOrganizationWhereUniqueInputSchema: z.ZodType<Prisma.Provid
   OrgCity: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   OrgState: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   OrgZip: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  Organization: z.union([ z.lazy(() => OrganizationNullableRelationFilterSchema),z.lazy(() => OrganizationWhereInputSchema) ]).optional().nullable(),
+  Organization: z.union([ z.lazy(() => OrganizationRelationFilterSchema),z.lazy(() => OrganizationWhereInputSchema) ]).optional(),
   Provider: z.union([ z.lazy(() => ProviderRelationFilterSchema),z.lazy(() => ProviderWhereInputSchema) ]).optional(),
 }).strict());
 
 export const ProviderOrganizationOrderByWithAggregationInputSchema: z.ZodType<Prisma.ProviderOrganizationOrderByWithAggregationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   ProviderId: z.lazy(() => SortOrderSchema).optional(),
-  OrganizationId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  OrganizationId: z.lazy(() => SortOrderSchema).optional(),
   ProviderNPI: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   Name: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ParentOrgName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -5544,7 +6141,7 @@ export const ProviderOrganizationScalarWhereWithAggregatesInputSchema: z.ZodType
   NOT: z.union([ z.lazy(() => ProviderOrganizationScalarWhereWithAggregatesInputSchema),z.lazy(() => ProviderOrganizationScalarWhereWithAggregatesInputSchema).array() ]).optional(),
   Id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   ProviderId: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  OrganizationId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  OrganizationId: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   ProviderNPI: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   Name: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   ParentOrgName: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
@@ -5563,15 +6160,15 @@ export const SessionWhereInputSchema: z.ZodType<Prisma.SessionWhereInput> = z.ob
   sessionToken: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   userId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   expires: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
-  user: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
+  User: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
 }).strict();
 
-export const SessionOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.SessionOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const SessionOrderByWithRelationInputSchema: z.ZodType<Prisma.SessionOrderByWithRelationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   sessionToken: z.lazy(() => SortOrderSchema).optional(),
   userId: z.lazy(() => SortOrderSchema).optional(),
   expires: z.lazy(() => SortOrderSchema).optional(),
-  user: z.lazy(() => UserOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  User: z.lazy(() => UserOrderByWithRelationInputSchema).optional(),
   _relevance: z.lazy(() => SessionOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -5595,7 +6192,7 @@ export const SessionWhereUniqueInputSchema: z.ZodType<Prisma.SessionWhereUniqueI
   NOT: z.union([ z.lazy(() => SessionWhereInputSchema),z.lazy(() => SessionWhereInputSchema).array() ]).optional(),
   userId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   expires: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
-  user: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
+  User: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
 }).strict());
 
 export const SessionOrderByWithAggregationInputSchema: z.ZodType<Prisma.SessionOrderByWithAggregationInput> = z.object({
@@ -5618,6 +6215,263 @@ export const SessionScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Sessi
   expires: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.date() ]).optional(),
 }).strict();
 
+export const SponsorWhereInputSchema: z.ZodType<Prisma.SponsorWhereInput> = z.object({
+  AND: z.union([ z.lazy(() => SponsorWhereInputSchema),z.lazy(() => SponsorWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => SponsorWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => SponsorWhereInputSchema),z.lazy(() => SponsorWhereInputSchema).array() ]).optional(),
+  SponsorId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
+  SponsorName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  SponsorCode: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  SponsorWebsite: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  SponsorType: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Address: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  City: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  State: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Zip: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  SponsoredProgram: z.lazy(() => SponsoredProgramListRelationFilterSchema).optional()
+}).strict();
+
+export const SponsorOrderByWithRelationInputSchema: z.ZodType<Prisma.SponsorOrderByWithRelationInput> = z.object({
+  SponsorId: z.lazy(() => SortOrderSchema).optional(),
+  SponsorName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  SponsorCode: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  SponsorWebsite: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  SponsorType: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Address: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  City: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  State: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Zip: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  SponsoredProgram: z.lazy(() => SponsoredProgramOrderByRelationAggregateInputSchema).optional(),
+  _relevance: z.lazy(() => SponsorOrderByRelevanceInputSchema).optional()
+}).strict();
+
+export const SponsorWhereUniqueInputSchema: z.ZodType<Prisma.SponsorWhereUniqueInput> = z.object({
+  SponsorId: z.number()
+})
+.and(z.object({
+  SponsorId: z.number().optional(),
+  AND: z.union([ z.lazy(() => SponsorWhereInputSchema),z.lazy(() => SponsorWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => SponsorWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => SponsorWhereInputSchema),z.lazy(() => SponsorWhereInputSchema).array() ]).optional(),
+  SponsorName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  SponsorCode: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  SponsorWebsite: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  SponsorType: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Address: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  City: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  State: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Zip: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  SponsoredProgram: z.lazy(() => SponsoredProgramListRelationFilterSchema).optional()
+}).strict());
+
+export const SponsorOrderByWithAggregationInputSchema: z.ZodType<Prisma.SponsorOrderByWithAggregationInput> = z.object({
+  SponsorId: z.lazy(() => SortOrderSchema).optional(),
+  SponsorName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  SponsorCode: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  SponsorWebsite: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  SponsorType: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Address: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  City: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  State: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Zip: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  _count: z.lazy(() => SponsorCountOrderByAggregateInputSchema).optional(),
+  _avg: z.lazy(() => SponsorAvgOrderByAggregateInputSchema).optional(),
+  _max: z.lazy(() => SponsorMaxOrderByAggregateInputSchema).optional(),
+  _min: z.lazy(() => SponsorMinOrderByAggregateInputSchema).optional(),
+  _sum: z.lazy(() => SponsorSumOrderByAggregateInputSchema).optional()
+}).strict();
+
+export const SponsorScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.SponsorScalarWhereWithAggregatesInput> = z.object({
+  AND: z.union([ z.lazy(() => SponsorScalarWhereWithAggregatesInputSchema),z.lazy(() => SponsorScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  OR: z.lazy(() => SponsorScalarWhereWithAggregatesInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => SponsorScalarWhereWithAggregatesInputSchema),z.lazy(() => SponsorScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  SponsorId: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
+  SponsorName: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  SponsorCode: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  SponsorWebsite: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  SponsorType: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  Address: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  City: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  State: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  Zip: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+}).strict();
+
+export const SponsoredProgramWhereInputSchema: z.ZodType<Prisma.SponsoredProgramWhereInput> = z.object({
+  AND: z.union([ z.lazy(() => SponsoredProgramWhereInputSchema),z.lazy(() => SponsoredProgramWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => SponsoredProgramWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => SponsoredProgramWhereInputSchema),z.lazy(() => SponsoredProgramWhereInputSchema).array() ]).optional(),
+  ProgramId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
+  SponsorId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
+  TherapeuticArea: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  ProgramName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  ProgramUrl: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  ProgramLabUrl: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  SponosoredTestingUrl: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  Sponsor: z.union([ z.lazy(() => SponsorNullableRelationFilterSchema),z.lazy(() => SponsorWhereInputSchema) ]).optional().nullable(),
+  SponsoredTest: z.lazy(() => SponsoredTestListRelationFilterSchema).optional()
+}).strict();
+
+export const SponsoredProgramOrderByWithRelationInputSchema: z.ZodType<Prisma.SponsoredProgramOrderByWithRelationInput> = z.object({
+  ProgramId: z.lazy(() => SortOrderSchema).optional(),
+  SponsorId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  TherapeuticArea: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  ProgramName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  ProgramUrl: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  ProgramLabUrl: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  SponosoredTestingUrl: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Sponsor: z.lazy(() => SponsorOrderByWithRelationInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestOrderByRelationAggregateInputSchema).optional(),
+  _relevance: z.lazy(() => SponsoredProgramOrderByRelevanceInputSchema).optional()
+}).strict();
+
+export const SponsoredProgramWhereUniqueInputSchema: z.ZodType<Prisma.SponsoredProgramWhereUniqueInput> = z.object({
+  ProgramId: z.number()
+})
+.and(z.object({
+  ProgramId: z.number().optional(),
+  AND: z.union([ z.lazy(() => SponsoredProgramWhereInputSchema),z.lazy(() => SponsoredProgramWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => SponsoredProgramWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => SponsoredProgramWhereInputSchema),z.lazy(() => SponsoredProgramWhereInputSchema).array() ]).optional(),
+  SponsorId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
+  TherapeuticArea: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  ProgramName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  ProgramUrl: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  ProgramLabUrl: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  SponosoredTestingUrl: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  Sponsor: z.union([ z.lazy(() => SponsorNullableRelationFilterSchema),z.lazy(() => SponsorWhereInputSchema) ]).optional().nullable(),
+  SponsoredTest: z.lazy(() => SponsoredTestListRelationFilterSchema).optional()
+}).strict());
+
+export const SponsoredProgramOrderByWithAggregationInputSchema: z.ZodType<Prisma.SponsoredProgramOrderByWithAggregationInput> = z.object({
+  ProgramId: z.lazy(() => SortOrderSchema).optional(),
+  SponsorId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  TherapeuticArea: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  ProgramName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  ProgramUrl: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  ProgramLabUrl: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  SponosoredTestingUrl: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  _count: z.lazy(() => SponsoredProgramCountOrderByAggregateInputSchema).optional(),
+  _avg: z.lazy(() => SponsoredProgramAvgOrderByAggregateInputSchema).optional(),
+  _max: z.lazy(() => SponsoredProgramMaxOrderByAggregateInputSchema).optional(),
+  _min: z.lazy(() => SponsoredProgramMinOrderByAggregateInputSchema).optional(),
+  _sum: z.lazy(() => SponsoredProgramSumOrderByAggregateInputSchema).optional()
+}).strict();
+
+export const SponsoredProgramScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.SponsoredProgramScalarWhereWithAggregatesInput> = z.object({
+  AND: z.union([ z.lazy(() => SponsoredProgramScalarWhereWithAggregatesInputSchema),z.lazy(() => SponsoredProgramScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  OR: z.lazy(() => SponsoredProgramScalarWhereWithAggregatesInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => SponsoredProgramScalarWhereWithAggregatesInputSchema),z.lazy(() => SponsoredProgramScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  ProgramId: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
+  SponsorId: z.union([ z.lazy(() => IntNullableWithAggregatesFilterSchema),z.number() ]).optional().nullable(),
+  TherapeuticArea: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  ProgramName: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  ProgramUrl: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  ProgramLabUrl: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  SponosoredTestingUrl: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  CreatedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
+  UpdatedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
+}).strict();
+
+export const SponsoredTestWhereInputSchema: z.ZodType<Prisma.SponsoredTestWhereInput> = z.object({
+  AND: z.union([ z.lazy(() => SponsoredTestWhereInputSchema),z.lazy(() => SponsoredTestWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => SponsoredTestWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => SponsoredTestWhereInputSchema),z.lazy(() => SponsoredTestWhereInputSchema).array() ]).optional(),
+  Id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  TestId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
+  LabTestId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  SponsoredProgramId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
+  LabId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
+  CasandraTestId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  Category: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  SubCategory: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  Lab: z.union([ z.lazy(() => LabNullableRelationFilterSchema),z.lazy(() => LabWhereInputSchema) ]).optional().nullable(),
+  SponsoredProgram: z.union([ z.lazy(() => SponsoredProgramNullableRelationFilterSchema),z.lazy(() => SponsoredProgramWhereInputSchema) ]).optional().nullable(),
+  TestCatalog: z.union([ z.lazy(() => TestCatalogRelationFilterSchema),z.lazy(() => TestCatalogWhereInputSchema) ]).optional(),
+}).strict();
+
+export const SponsoredTestOrderByWithRelationInputSchema: z.ZodType<Prisma.SponsoredTestOrderByWithRelationInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  TestId: z.lazy(() => SortOrderSchema).optional(),
+  LabTestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  SponsoredProgramId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  LabId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  CasandraTestId: z.lazy(() => SortOrderSchema).optional(),
+  Category: z.lazy(() => SortOrderSchema).optional(),
+  SubCategory: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Lab: z.lazy(() => LabOrderByWithRelationInputSchema).optional(),
+  SponsoredProgram: z.lazy(() => SponsoredProgramOrderByWithRelationInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationInputSchema).optional(),
+  _relevance: z.lazy(() => SponsoredTestOrderByRelevanceInputSchema).optional()
+}).strict();
+
+export const SponsoredTestWhereUniqueInputSchema: z.ZodType<Prisma.SponsoredTestWhereUniqueInput> = z.object({
+  Id: z.string()
+})
+.and(z.object({
+  Id: z.string().optional(),
+  AND: z.union([ z.lazy(() => SponsoredTestWhereInputSchema),z.lazy(() => SponsoredTestWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => SponsoredTestWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => SponsoredTestWhereInputSchema),z.lazy(() => SponsoredTestWhereInputSchema).array() ]).optional(),
+  TestId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
+  LabTestId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  SponsoredProgramId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
+  LabId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
+  CasandraTestId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  Category: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  SubCategory: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  Lab: z.union([ z.lazy(() => LabNullableRelationFilterSchema),z.lazy(() => LabWhereInputSchema) ]).optional().nullable(),
+  SponsoredProgram: z.union([ z.lazy(() => SponsoredProgramNullableRelationFilterSchema),z.lazy(() => SponsoredProgramWhereInputSchema) ]).optional().nullable(),
+  TestCatalog: z.union([ z.lazy(() => TestCatalogRelationFilterSchema),z.lazy(() => TestCatalogWhereInputSchema) ]).optional(),
+}).strict());
+
+export const SponsoredTestOrderByWithAggregationInputSchema: z.ZodType<Prisma.SponsoredTestOrderByWithAggregationInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  TestId: z.lazy(() => SortOrderSchema).optional(),
+  LabTestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  SponsoredProgramId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  LabId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  CasandraTestId: z.lazy(() => SortOrderSchema).optional(),
+  Category: z.lazy(() => SortOrderSchema).optional(),
+  SubCategory: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  _count: z.lazy(() => SponsoredTestCountOrderByAggregateInputSchema).optional(),
+  _avg: z.lazy(() => SponsoredTestAvgOrderByAggregateInputSchema).optional(),
+  _max: z.lazy(() => SponsoredTestMaxOrderByAggregateInputSchema).optional(),
+  _min: z.lazy(() => SponsoredTestMinOrderByAggregateInputSchema).optional(),
+  _sum: z.lazy(() => SponsoredTestSumOrderByAggregateInputSchema).optional()
+}).strict();
+
+export const SponsoredTestScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.SponsoredTestScalarWhereWithAggregatesInput> = z.object({
+  AND: z.union([ z.lazy(() => SponsoredTestScalarWhereWithAggregatesInputSchema),z.lazy(() => SponsoredTestScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  OR: z.lazy(() => SponsoredTestScalarWhereWithAggregatesInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => SponsoredTestScalarWhereWithAggregatesInputSchema),z.lazy(() => SponsoredTestScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  Id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  TestId: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
+  LabTestId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  SponsoredProgramId: z.union([ z.lazy(() => IntNullableWithAggregatesFilterSchema),z.number() ]).optional().nullable(),
+  LabId: z.union([ z.lazy(() => IntNullableWithAggregatesFilterSchema),z.number() ]).optional().nullable(),
+  CasandraTestId: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  Category: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  SubCategory: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  CreatedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
+  UpdatedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
+}).strict();
+
 export const TestBiomarkerWhereInputSchema: z.ZodType<Prisma.TestBiomarkerWhereInput> = z.object({
   AND: z.union([ z.lazy(() => TestBiomarkerWhereInputSchema),z.lazy(() => TestBiomarkerWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => TestBiomarkerWhereInputSchema).array().optional(),
@@ -5626,21 +6480,23 @@ export const TestBiomarkerWhereInputSchema: z.ZodType<Prisma.TestBiomarkerWhereI
   TestId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   LabTestId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   HGNCId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  TranscriptReference: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
   BIOMARKER: z.union([ z.lazy(() => BIOMARKERRelationFilterSchema),z.lazy(() => BIOMARKERWhereInputSchema) ]).optional(),
   TestCatalog: z.union([ z.lazy(() => TestCatalogRelationFilterSchema),z.lazy(() => TestCatalogWhereInputSchema) ]).optional(),
 }).strict();
 
-export const TestBiomarkerOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.TestBiomarkerOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const TestBiomarkerOrderByWithRelationInputSchema: z.ZodType<Prisma.TestBiomarkerOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   TestId: z.lazy(() => SortOrderSchema).optional(),
   LabTestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   HGNCId: z.lazy(() => SortOrderSchema).optional(),
+  TranscriptReference: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional(),
-  BIOMARKER: z.lazy(() => BIOMARKEROrderByWithRelationAndSearchRelevanceInputSchema).optional(),
-  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  BIOMARKER: z.lazy(() => BIOMARKEROrderByWithRelationInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationInputSchema).optional(),
   _relevance: z.lazy(() => TestBiomarkerOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -5665,6 +6521,7 @@ export const TestBiomarkerWhereUniqueInputSchema: z.ZodType<Prisma.TestBiomarker
   TestId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   LabTestId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   HGNCId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  TranscriptReference: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
   BIOMARKER: z.union([ z.lazy(() => BIOMARKERRelationFilterSchema),z.lazy(() => BIOMARKERWhereInputSchema) ]).optional(),
@@ -5676,6 +6533,7 @@ export const TestBiomarkerOrderByWithAggregationInputSchema: z.ZodType<Prisma.Te
   TestId: z.lazy(() => SortOrderSchema).optional(),
   LabTestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   HGNCId: z.lazy(() => SortOrderSchema).optional(),
+  TranscriptReference: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional(),
   _count: z.lazy(() => TestBiomarkerCountOrderByAggregateInputSchema).optional(),
@@ -5693,6 +6551,7 @@ export const TestBiomarkerScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma
   TestId: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
   LabTestId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   HGNCId: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  TranscriptReference: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.date() ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.date() ]).optional(),
 }).strict();
@@ -5742,19 +6601,23 @@ export const TestCatalogWhereInputSchema: z.ZodType<Prisma.TestCatalogWhereInput
   AlternativeSpecimen: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   LoincCodesText: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  TestCategory: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  TestSubCategory: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
   LabOrderTest: z.lazy(() => LabOrderTestListRelationFilterSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestListRelationFilterSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestListRelationFilterSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestListRelationFilterSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerListRelationFilterSchema).optional(),
   Lab: z.union([ z.lazy(() => LabNullableRelationFilterSchema),z.lazy(() => LabWhereInputSchema) ]).optional().nullable(),
   TestCptCode: z.lazy(() => TestCptCodeListRelationFilterSchema).optional(),
+  TestGene: z.lazy(() => TestGeneListRelationFilterSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincListRelationFilterSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincListRelationFilterSchema).optional()
 }).strict();
 
-export const TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.TestCatalogOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const TestCatalogOrderByWithRelationInputSchema: z.ZodType<Prisma.TestCatalogOrderByWithRelationInput> = z.object({
   TestId: z.lazy(() => SortOrderSchema).optional(),
   LabId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   href: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -5796,14 +6659,18 @@ export const TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodT
   AlternativeSpecimen: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   LoincCodesText: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   LoincCodesHTML: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  TestCategory: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  TestSubCategory: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional(),
   LabOrderTest: z.lazy(() => LabOrderTestOrderByRelationAggregateInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestOrderByRelationAggregateInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestOrderByRelationAggregateInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestOrderByRelationAggregateInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerOrderByRelationAggregateInputSchema).optional(),
-  Lab: z.lazy(() => LabOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  Lab: z.lazy(() => LabOrderByWithRelationInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeOrderByRelationAggregateInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneOrderByRelationAggregateInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincOrderByRelationAggregateInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincOrderByRelationAggregateInputSchema).optional(),
   _relevance: z.lazy(() => TestCatalogOrderByRelevanceInputSchema).optional()
@@ -5867,14 +6734,18 @@ export const TestCatalogWhereUniqueInputSchema: z.ZodType<Prisma.TestCatalogWher
   AlternativeSpecimen: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   LoincCodesText: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  TestCategory: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  TestSubCategory: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
   LabOrderTest: z.lazy(() => LabOrderTestListRelationFilterSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestListRelationFilterSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestListRelationFilterSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestListRelationFilterSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerListRelationFilterSchema).optional(),
   Lab: z.union([ z.lazy(() => LabNullableRelationFilterSchema),z.lazy(() => LabWhereInputSchema) ]).optional().nullable(),
   TestCptCode: z.lazy(() => TestCptCodeListRelationFilterSchema).optional(),
+  TestGene: z.lazy(() => TestGeneListRelationFilterSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincListRelationFilterSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincListRelationFilterSchema).optional()
 }).strict());
@@ -5921,6 +6792,8 @@ export const TestCatalogOrderByWithAggregationInputSchema: z.ZodType<Prisma.Test
   AlternativeSpecimen: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   LoincCodesText: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   LoincCodesHTML: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  TestCategory: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  TestSubCategory: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional(),
   _count: z.lazy(() => TestCatalogCountOrderByAggregateInputSchema).optional(),
@@ -5975,6 +6848,8 @@ export const TestCatalogScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.T
   AlternativeSpecimen: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   LoincCodesText: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  TestCategory: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  TestSubCategory: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.date() ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.date() ]).optional(),
 }).strict();
@@ -5994,7 +6869,7 @@ export const TestCptCodeWhereInputSchema: z.ZodType<Prisma.TestCptCodeWhereInput
   TestCatalog: z.union([ z.lazy(() => TestCatalogRelationFilterSchema),z.lazy(() => TestCatalogWhereInputSchema) ]).optional(),
 }).strict();
 
-export const TestCptCodeOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.TestCptCodeOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const TestCptCodeOrderByWithRelationInputSchema: z.ZodType<Prisma.TestCptCodeOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   TestId: z.lazy(() => SortOrderSchema).optional(),
   LabTestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -6003,7 +6878,7 @@ export const TestCptCodeOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodT
   Comments: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional(),
-  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationInputSchema).optional(),
   _relevance: z.lazy(() => TestCptCodeOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -6055,6 +6930,87 @@ export const TestCptCodeScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.T
   UpdatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.date() ]).optional(),
 }).strict();
 
+export const TestGeneWhereInputSchema: z.ZodType<Prisma.TestGeneWhereInput> = z.object({
+  AND: z.union([ z.lazy(() => TestGeneWhereInputSchema),z.lazy(() => TestGeneWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => TestGeneWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => TestGeneWhereInputSchema),z.lazy(() => TestGeneWhereInputSchema).array() ]).optional(),
+  Id: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
+  TestId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
+  LabTestId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Gene: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  TranscriptReference: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  CreatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
+  UpdatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
+  TestCatalog: z.union([ z.lazy(() => TestCatalogRelationFilterSchema),z.lazy(() => TestCatalogWhereInputSchema) ]).optional(),
+}).strict();
+
+export const TestGeneOrderByWithRelationInputSchema: z.ZodType<Prisma.TestGeneOrderByWithRelationInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  TestId: z.lazy(() => SortOrderSchema).optional(),
+  LabTestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Gene: z.lazy(() => SortOrderSchema).optional(),
+  TranscriptReference: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  CreatedAt: z.lazy(() => SortOrderSchema).optional(),
+  UpdatedAt: z.lazy(() => SortOrderSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationInputSchema).optional(),
+  _relevance: z.lazy(() => TestGeneOrderByRelevanceInputSchema).optional()
+}).strict();
+
+export const TestGeneWhereUniqueInputSchema: z.ZodType<Prisma.TestGeneWhereUniqueInput> = z.union([
+  z.object({
+    Id: z.number(),
+    TestId_Gene: z.lazy(() => TestGeneTestIdGeneCompoundUniqueInputSchema)
+  }),
+  z.object({
+    Id: z.number(),
+  }),
+  z.object({
+    TestId_Gene: z.lazy(() => TestGeneTestIdGeneCompoundUniqueInputSchema),
+  }),
+])
+.and(z.object({
+  Id: z.number().optional(),
+  TestId_Gene: z.lazy(() => TestGeneTestIdGeneCompoundUniqueInputSchema).optional(),
+  AND: z.union([ z.lazy(() => TestGeneWhereInputSchema),z.lazy(() => TestGeneWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => TestGeneWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => TestGeneWhereInputSchema),z.lazy(() => TestGeneWhereInputSchema).array() ]).optional(),
+  TestId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
+  LabTestId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Gene: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  TranscriptReference: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  CreatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
+  UpdatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
+  TestCatalog: z.union([ z.lazy(() => TestCatalogRelationFilterSchema),z.lazy(() => TestCatalogWhereInputSchema) ]).optional(),
+}).strict());
+
+export const TestGeneOrderByWithAggregationInputSchema: z.ZodType<Prisma.TestGeneOrderByWithAggregationInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  TestId: z.lazy(() => SortOrderSchema).optional(),
+  LabTestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Gene: z.lazy(() => SortOrderSchema).optional(),
+  TranscriptReference: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  CreatedAt: z.lazy(() => SortOrderSchema).optional(),
+  UpdatedAt: z.lazy(() => SortOrderSchema).optional(),
+  _count: z.lazy(() => TestGeneCountOrderByAggregateInputSchema).optional(),
+  _avg: z.lazy(() => TestGeneAvgOrderByAggregateInputSchema).optional(),
+  _max: z.lazy(() => TestGeneMaxOrderByAggregateInputSchema).optional(),
+  _min: z.lazy(() => TestGeneMinOrderByAggregateInputSchema).optional(),
+  _sum: z.lazy(() => TestGeneSumOrderByAggregateInputSchema).optional()
+}).strict();
+
+export const TestGeneScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.TestGeneScalarWhereWithAggregatesInput> = z.object({
+  AND: z.union([ z.lazy(() => TestGeneScalarWhereWithAggregatesInputSchema),z.lazy(() => TestGeneScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  OR: z.lazy(() => TestGeneScalarWhereWithAggregatesInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => TestGeneScalarWhereWithAggregatesInputSchema),z.lazy(() => TestGeneScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  Id: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
+  TestId: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
+  LabTestId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  Gene: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  TranscriptReference: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  CreatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.date() ]).optional(),
+  UpdatedAt: z.union([ z.lazy(() => DateTimeWithAggregatesFilterSchema),z.date() ]).optional(),
+}).strict();
+
 export const TestOrderLoincWhereInputSchema: z.ZodType<Prisma.TestOrderLoincWhereInput> = z.object({
   AND: z.union([ z.lazy(() => TestOrderLoincWhereInputSchema),z.lazy(() => TestOrderLoincWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => TestOrderLoincWhereInputSchema).array().optional(),
@@ -6069,15 +7025,15 @@ export const TestOrderLoincWhereInputSchema: z.ZodType<Prisma.TestOrderLoincWher
   TestCatalog: z.union([ z.lazy(() => TestCatalogRelationFilterSchema),z.lazy(() => TestCatalogWhereInputSchema) ]).optional(),
 }).strict();
 
-export const TestOrderLoincOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.TestOrderLoincOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const TestOrderLoincOrderByWithRelationInputSchema: z.ZodType<Prisma.TestOrderLoincOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   TestId: z.lazy(() => SortOrderSchema).optional(),
   LabTestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   OrderLoinc: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional(),
-  LOINC: z.lazy(() => LOINCOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
-  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  LOINC: z.lazy(() => LOINCOrderByWithRelationInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationInputSchema).optional(),
   _relevance: z.lazy(() => TestOrderLoincOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -6151,7 +7107,7 @@ export const TestResultLoincWhereInputSchema: z.ZodType<Prisma.TestResultLoincWh
   TestCatalog: z.union([ z.lazy(() => TestCatalogRelationFilterSchema),z.lazy(() => TestCatalogWhereInputSchema) ]).optional(),
 }).strict();
 
-export const TestResultLoincOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.TestResultLoincOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const TestResultLoincOrderByWithRelationInputSchema: z.ZodType<Prisma.TestResultLoincOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   TestId: z.lazy(() => SortOrderSchema).optional(),
   LabTestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -6161,8 +7117,8 @@ export const TestResultLoincOrderByWithRelationAndSearchRelevanceInputSchema: z.
   ResultLoinc: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional(),
-  LOINC: z.lazy(() => LOINCOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
-  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  LOINC: z.lazy(() => LOINCOrderByWithRelationInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationInputSchema).optional(),
   _relevance: z.lazy(() => TestResultLoincOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -6228,21 +7184,21 @@ export const UserWhereInputSchema: z.ZodType<Prisma.UserWhereInput> = z.object({
   password: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   emailVerified: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   image: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  Session: z.lazy(() => SessionListRelationFilterSchema).optional(),
   Account: z.union([ z.lazy(() => AccountNullableRelationFilterSchema),z.lazy(() => AccountWhereInputSchema) ]).optional().nullable(),
+  Session: z.lazy(() => SessionListRelationFilterSchema).optional(),
   UserAttribute: z.union([ z.lazy(() => UserAttributeNullableRelationFilterSchema),z.lazy(() => UserAttributeWhereInputSchema) ]).optional().nullable(),
 }).strict();
 
-export const UserOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.UserOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const UserOrderByWithRelationInputSchema: z.ZodType<Prisma.UserOrderByWithRelationInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   name: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   email: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   password: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   emailVerified: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   image: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Account: z.lazy(() => AccountOrderByWithRelationInputSchema).optional(),
   Session: z.lazy(() => SessionOrderByRelationAggregateInputSchema).optional(),
-  Account: z.lazy(() => AccountOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
-  UserAttribute: z.lazy(() => UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  UserAttribute: z.lazy(() => UserAttributeOrderByWithRelationInputSchema).optional(),
   _relevance: z.lazy(() => UserOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -6268,8 +7224,8 @@ export const UserWhereUniqueInputSchema: z.ZodType<Prisma.UserWhereUniqueInput> 
   password: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   emailVerified: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   image: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  Session: z.lazy(() => SessionListRelationFilterSchema).optional(),
   Account: z.union([ z.lazy(() => AccountNullableRelationFilterSchema),z.lazy(() => AccountWhereInputSchema) ]).optional().nullable(),
+  Session: z.lazy(() => SessionListRelationFilterSchema).optional(),
   UserAttribute: z.union([ z.lazy(() => UserAttributeNullableRelationFilterSchema),z.lazy(() => UserAttributeWhereInputSchema) ]).optional().nullable(),
 }).strict());
 
@@ -6309,13 +7265,13 @@ export const UserAttributeWhereInputSchema: z.ZodType<Prisma.UserAttributeWhereI
   User: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
 }).strict();
 
-export const UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.UserAttributeOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const UserAttributeOrderByWithRelationInputSchema: z.ZodType<Prisma.UserAttributeOrderByWithRelationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   UserId: z.lazy(() => SortOrderSchema).optional(),
   UserType: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  Admin: z.lazy(() => AdminOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
-  Provider: z.lazy(() => ProviderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
-  User: z.lazy(() => UserOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  Admin: z.lazy(() => AdminOrderByWithRelationInputSchema).optional(),
+  Provider: z.lazy(() => ProviderOrderByWithRelationInputSchema).optional(),
+  User: z.lazy(() => UserOrderByWithRelationInputSchema).optional(),
   _relevance: z.lazy(() => UserAttributeOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -6370,7 +7326,7 @@ export const VerificationTokenWhereInputSchema: z.ZodType<Prisma.VerificationTok
   expires: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
 }).strict();
 
-export const VerificationTokenOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.VerificationTokenOrderByWithRelationAndSearchRelevanceInput> = z.object({
+export const VerificationTokenOrderByWithRelationInputSchema: z.ZodType<Prisma.VerificationTokenOrderByWithRelationInput> = z.object({
   identifier: z.lazy(() => SortOrderSchema).optional(),
   token: z.lazy(() => SortOrderSchema).optional(),
   expires: z.lazy(() => SortOrderSchema).optional(),
@@ -6418,7 +7374,7 @@ export const VerificationTokenScalarWhereWithAggregatesInputSchema: z.ZodType<Pr
 }).strict();
 
 export const AccountCreateInputSchema: z.ZodType<Prisma.AccountCreateInput> = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   type: z.string(),
   provider: z.string(),
   providerAccountId: z.string(),
@@ -6442,13 +7398,13 @@ export const AccountCreateInputSchema: z.ZodType<Prisma.AccountCreateInput> = z.
   smart_style_url: z.string().optional().nullable(),
   unconfirmed_status: z.string().optional().nullable(),
   user_email: z.string().optional().nullable(),
-  createdAt: z.date().optional(),
-  updatedAt: z.date().optional(),
-  user: z.lazy(() => UserCreateNestedOneWithoutAccountInputSchema).optional()
+  createdAt: z.date().optional().nullable(),
+  updatedAt: z.date().optional().nullable(),
+  user: z.lazy(() => UserCreateNestedOneWithoutAccountInputSchema)
 }).strict();
 
 export const AccountUncheckedCreateInputSchema: z.ZodType<Prisma.AccountUncheckedCreateInput> = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   userId: z.string(),
   type: z.string(),
   provider: z.string(),
@@ -6473,8 +7429,8 @@ export const AccountUncheckedCreateInputSchema: z.ZodType<Prisma.AccountUnchecke
   smart_style_url: z.string().optional().nullable(),
   unconfirmed_status: z.string().optional().nullable(),
   user_email: z.string().optional().nullable(),
-  createdAt: z.date().optional(),
-  updatedAt: z.date().optional()
+  createdAt: z.date().optional().nullable(),
+  updatedAt: z.date().optional().nullable()
 }).strict();
 
 export const AccountUpdateInputSchema: z.ZodType<Prisma.AccountUpdateInput> = z.object({
@@ -6502,9 +7458,9 @@ export const AccountUpdateInputSchema: z.ZodType<Prisma.AccountUpdateInput> = z.
   smart_style_url: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   unconfirmed_status: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   user_email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  createdAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  updatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  user: z.lazy(() => UserUpdateOneWithoutAccountNestedInputSchema).optional()
+  createdAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  updatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  user: z.lazy(() => UserUpdateOneRequiredWithoutAccountNestedInputSchema).optional()
 }).strict();
 
 export const AccountUncheckedUpdateInputSchema: z.ZodType<Prisma.AccountUncheckedUpdateInput> = z.object({
@@ -6533,12 +7489,12 @@ export const AccountUncheckedUpdateInputSchema: z.ZodType<Prisma.AccountUnchecke
   smart_style_url: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   unconfirmed_status: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   user_email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  createdAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  updatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  createdAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  updatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const AccountCreateManyInputSchema: z.ZodType<Prisma.AccountCreateManyInput> = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   userId: z.string(),
   type: z.string(),
   provider: z.string(),
@@ -6563,8 +7519,8 @@ export const AccountCreateManyInputSchema: z.ZodType<Prisma.AccountCreateManyInp
   smart_style_url: z.string().optional().nullable(),
   unconfirmed_status: z.string().optional().nullable(),
   user_email: z.string().optional().nullable(),
-  createdAt: z.date().optional(),
-  updatedAt: z.date().optional()
+  createdAt: z.date().optional().nullable(),
+  updatedAt: z.date().optional().nullable()
 }).strict();
 
 export const AccountUpdateManyMutationInputSchema: z.ZodType<Prisma.AccountUpdateManyMutationInput> = z.object({
@@ -6592,8 +7548,8 @@ export const AccountUpdateManyMutationInputSchema: z.ZodType<Prisma.AccountUpdat
   smart_style_url: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   unconfirmed_status: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   user_email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  createdAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  updatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  createdAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  updatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const AccountUncheckedUpdateManyInputSchema: z.ZodType<Prisma.AccountUncheckedUpdateManyInput> = z.object({
@@ -6622,8 +7578,8 @@ export const AccountUncheckedUpdateManyInputSchema: z.ZodType<Prisma.AccountUnch
   smart_style_url: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   unconfirmed_status: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   user_email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  createdAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  updatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  createdAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  updatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const AdminCreateInputSchema: z.ZodType<Prisma.AdminCreateInput> = z.object({
@@ -7163,6 +8119,7 @@ export const LabCreateInputSchema: z.ZodType<Prisma.LabCreateInput> = z.object({
   City: z.string().optional().nullable(),
   State: z.string().optional().nullable(),
   Zip: z.string().optional().nullable(),
+  SponsoredTest: z.lazy(() => SponsoredTestCreateNestedManyWithoutLabInputSchema).optional(),
   TestCatalog: z.lazy(() => TestCatalogCreateNestedManyWithoutLabInputSchema).optional()
 }).strict();
 
@@ -7174,6 +8131,7 @@ export const LabUncheckedCreateInputSchema: z.ZodType<Prisma.LabUncheckedCreateI
   City: z.string().optional().nullable(),
   State: z.string().optional().nullable(),
   Zip: z.string().optional().nullable(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedCreateNestedManyWithoutLabInputSchema).optional(),
   TestCatalog: z.lazy(() => TestCatalogUncheckedCreateNestedManyWithoutLabInputSchema).optional()
 }).strict();
 
@@ -7184,6 +8142,7 @@ export const LabUpdateInputSchema: z.ZodType<Prisma.LabUpdateInput> = z.object({
   City: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   State: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Zip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsoredTest: z.lazy(() => SponsoredTestUpdateManyWithoutLabNestedInputSchema).optional(),
   TestCatalog: z.lazy(() => TestCatalogUpdateManyWithoutLabNestedInputSchema).optional()
 }).strict();
 
@@ -7195,6 +8154,7 @@ export const LabUncheckedUpdateInputSchema: z.ZodType<Prisma.LabUncheckedUpdateI
   City: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   State: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Zip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedUpdateManyWithoutLabNestedInputSchema).optional(),
   TestCatalog: z.lazy(() => TestCatalogUncheckedUpdateManyWithoutLabNestedInputSchema).optional()
 }).strict();
 
@@ -8023,7 +8983,7 @@ export const LoincUniveralLabOrdersUncheckedUpdateManyInputSchema: z.ZodType<Pri
 }).strict();
 
 export const OrganizationCreateInputSchema: z.ZodType<Prisma.OrganizationCreateInput> = z.object({
-  Id: z.string().optional(),
+  Id: z.string(),
   href: z.string().optional().nullable(),
   Level: z.number().optional().nullable(),
   ParentOrgName: z.string().optional().nullable(),
@@ -8038,11 +8998,12 @@ export const OrganizationCreateInputSchema: z.ZodType<Prisma.OrganizationCreateI
   Organization: z.lazy(() => OrganizationCreateNestedOneWithoutChildOrganizationInputSchema).optional(),
   ChildOrganization: z.lazy(() => OrganizationCreateNestedManyWithoutOrganizationInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestCreateNestedManyWithoutOrganizationInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationCreateNestedManyWithoutOrganizationInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationCreateNestedManyWithoutOrganizationInputSchema).optional()
 }).strict();
 
 export const OrganizationUncheckedCreateInputSchema: z.ZodType<Prisma.OrganizationUncheckedCreateInput> = z.object({
-  Id: z.string().optional(),
+  Id: z.string(),
   href: z.string().optional().nullable(),
   ParentId: z.string().optional().nullable(),
   Level: z.number().optional().nullable(),
@@ -8057,6 +9018,7 @@ export const OrganizationUncheckedCreateInputSchema: z.ZodType<Prisma.Organizati
   LabOrder: z.lazy(() => LabOrderUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
   ChildOrganization: z.lazy(() => OrganizationUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional()
 }).strict();
 
@@ -8076,6 +9038,7 @@ export const OrganizationUpdateInputSchema: z.ZodType<Prisma.OrganizationUpdateI
   Organization: z.lazy(() => OrganizationUpdateOneWithoutChildOrganizationNestedInputSchema).optional(),
   ChildOrganization: z.lazy(() => OrganizationUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUpdateManyWithoutOrganizationNestedInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationUpdateManyWithoutOrganizationNestedInputSchema).optional()
 }).strict();
 
@@ -8095,11 +9058,12 @@ export const OrganizationUncheckedUpdateInputSchema: z.ZodType<Prisma.Organizati
   LabOrder: z.lazy(() => LabOrderUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   ChildOrganization: z.lazy(() => OrganizationUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional()
 }).strict();
 
 export const OrganizationCreateManyInputSchema: z.ZodType<Prisma.OrganizationCreateManyInput> = z.object({
-  Id: z.string().optional(),
+  Id: z.string(),
   href: z.string().optional().nullable(),
   ParentId: z.string().optional().nullable(),
   Level: z.number().optional().nullable(),
@@ -8140,6 +9104,62 @@ export const OrganizationUncheckedUpdateManyInputSchema: z.ZodType<Prisma.Organi
   OrgCity: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   OrgState: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   OrgZip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const OrganizationEndpointCreateInputSchema: z.ZodType<Prisma.OrganizationEndpointCreateInput> = z.object({
+  Id: z.string().optional(),
+  OrgName: z.string().optional().nullable(),
+  EHRVendor: z.string().optional().nullable(),
+  FHIRVersion: z.string().optional().nullable(),
+  Endpoint: z.string().optional().nullable()
+}).strict();
+
+export const OrganizationEndpointUncheckedCreateInputSchema: z.ZodType<Prisma.OrganizationEndpointUncheckedCreateInput> = z.object({
+  Id: z.string().optional(),
+  OrgName: z.string().optional().nullable(),
+  EHRVendor: z.string().optional().nullable(),
+  FHIRVersion: z.string().optional().nullable(),
+  Endpoint: z.string().optional().nullable()
+}).strict();
+
+export const OrganizationEndpointUpdateInputSchema: z.ZodType<Prisma.OrganizationEndpointUpdateInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  OrgName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  EHRVendor: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  FHIRVersion: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Endpoint: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const OrganizationEndpointUncheckedUpdateInputSchema: z.ZodType<Prisma.OrganizationEndpointUncheckedUpdateInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  OrgName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  EHRVendor: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  FHIRVersion: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Endpoint: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const OrganizationEndpointCreateManyInputSchema: z.ZodType<Prisma.OrganizationEndpointCreateManyInput> = z.object({
+  Id: z.string().optional(),
+  OrgName: z.string().optional().nullable(),
+  EHRVendor: z.string().optional().nullable(),
+  FHIRVersion: z.string().optional().nullable(),
+  Endpoint: z.string().optional().nullable()
+}).strict();
+
+export const OrganizationEndpointUpdateManyMutationInputSchema: z.ZodType<Prisma.OrganizationEndpointUpdateManyMutationInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  OrgName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  EHRVendor: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  FHIRVersion: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Endpoint: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const OrganizationEndpointUncheckedUpdateManyInputSchema: z.ZodType<Prisma.OrganizationEndpointUncheckedUpdateManyInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  OrgName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  EHRVendor: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  FHIRVersion: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Endpoint: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const OrganizationFavoriteTestCreateInputSchema: z.ZodType<Prisma.OrganizationFavoriteTestCreateInput> = z.object({
@@ -8217,62 +9237,6 @@ export const OrganizationFavoriteTestUncheckedUpdateManyInputSchema: z.ZodType<P
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
-export const OrganizationEndpointCreateInputSchema: z.ZodType<Prisma.OrganizationEndpointCreateInput> = z.object({
-  Id: z.string().optional(),
-  OrgName: z.string().optional().nullable(),
-  EHRVendor: z.string().optional().nullable(),
-  FHIRVersion: z.string().optional().nullable(),
-  Endpoint: z.string().optional().nullable()
-}).strict();
-
-export const OrganizationEndpointUncheckedCreateInputSchema: z.ZodType<Prisma.OrganizationEndpointUncheckedCreateInput> = z.object({
-  Id: z.string().optional(),
-  OrgName: z.string().optional().nullable(),
-  EHRVendor: z.string().optional().nullable(),
-  FHIRVersion: z.string().optional().nullable(),
-  Endpoint: z.string().optional().nullable()
-}).strict();
-
-export const OrganizationEndpointUpdateInputSchema: z.ZodType<Prisma.OrganizationEndpointUpdateInput> = z.object({
-  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  OrgName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  EHRVendor: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  FHIRVersion: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  Endpoint: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-}).strict();
-
-export const OrganizationEndpointUncheckedUpdateInputSchema: z.ZodType<Prisma.OrganizationEndpointUncheckedUpdateInput> = z.object({
-  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  OrgName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  EHRVendor: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  FHIRVersion: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  Endpoint: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-}).strict();
-
-export const OrganizationEndpointCreateManyInputSchema: z.ZodType<Prisma.OrganizationEndpointCreateManyInput> = z.object({
-  Id: z.string().optional(),
-  OrgName: z.string().optional().nullable(),
-  EHRVendor: z.string().optional().nullable(),
-  FHIRVersion: z.string().optional().nullable(),
-  Endpoint: z.string().optional().nullable()
-}).strict();
-
-export const OrganizationEndpointUpdateManyMutationInputSchema: z.ZodType<Prisma.OrganizationEndpointUpdateManyMutationInput> = z.object({
-  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  OrgName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  EHRVendor: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  FHIRVersion: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  Endpoint: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-}).strict();
-
-export const OrganizationEndpointUncheckedUpdateManyInputSchema: z.ZodType<Prisma.OrganizationEndpointUncheckedUpdateManyInput> = z.object({
-  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  OrgName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  EHRVendor: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  FHIRVersion: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  Endpoint: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-}).strict();
-
 export const PatientCreateInputSchema: z.ZodType<Prisma.PatientCreateInput> = z.object({
   Id: z.string().optional(),
   FirstName: z.string().optional().nullable(),
@@ -8283,7 +9247,8 @@ export const PatientCreateInputSchema: z.ZodType<Prisma.PatientCreateInput> = z.
   Mobile: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable(),
-  LabOrder: z.lazy(() => LabOrderCreateNestedManyWithoutPatientInputSchema).optional()
+  LabOrder: z.lazy(() => LabOrderCreateNestedManyWithoutPatientInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationCreateNestedManyWithoutPatientInputSchema).optional()
 }).strict();
 
 export const PatientUncheckedCreateInputSchema: z.ZodType<Prisma.PatientUncheckedCreateInput> = z.object({
@@ -8296,7 +9261,8 @@ export const PatientUncheckedCreateInputSchema: z.ZodType<Prisma.PatientUnchecke
   Mobile: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable(),
-  LabOrder: z.lazy(() => LabOrderUncheckedCreateNestedManyWithoutPatientInputSchema).optional()
+  LabOrder: z.lazy(() => LabOrderUncheckedCreateNestedManyWithoutPatientInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUncheckedCreateNestedManyWithoutPatientInputSchema).optional()
 }).strict();
 
 export const PatientUpdateInputSchema: z.ZodType<Prisma.PatientUpdateInput> = z.object({
@@ -8309,7 +9275,8 @@ export const PatientUpdateInputSchema: z.ZodType<Prisma.PatientUpdateInput> = z.
   Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  LabOrder: z.lazy(() => LabOrderUpdateManyWithoutPatientNestedInputSchema).optional()
+  LabOrder: z.lazy(() => LabOrderUpdateManyWithoutPatientNestedInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUpdateManyWithoutPatientNestedInputSchema).optional()
 }).strict();
 
 export const PatientUncheckedUpdateInputSchema: z.ZodType<Prisma.PatientUncheckedUpdateInput> = z.object({
@@ -8322,7 +9289,8 @@ export const PatientUncheckedUpdateInputSchema: z.ZodType<Prisma.PatientUnchecke
   Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  LabOrder: z.lazy(() => LabOrderUncheckedUpdateManyWithoutPatientNestedInputSchema).optional()
+  LabOrder: z.lazy(() => LabOrderUncheckedUpdateManyWithoutPatientNestedInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUncheckedUpdateManyWithoutPatientNestedInputSchema).optional()
 }).strict();
 
 export const PatientCreateManyInputSchema: z.ZodType<Prisma.PatientCreateManyInput> = z.object({
@@ -8359,6 +9327,67 @@ export const PatientUncheckedUpdateManyInputSchema: z.ZodType<Prisma.PatientUnch
   Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const PatientOrganizationCreateInputSchema: z.ZodType<Prisma.PatientOrganizationCreateInput> = z.object({
+  Id: z.string().optional(),
+  MRN: z.string().optional().nullable(),
+  Mobile: z.string().optional().nullable(),
+  Email: z.string().optional().nullable(),
+  Organization: z.lazy(() => OrganizationCreateNestedOneWithoutPatientOrganizationInputSchema),
+  Patient: z.lazy(() => PatientCreateNestedOneWithoutPatientOrganizationInputSchema)
+}).strict();
+
+export const PatientOrganizationUncheckedCreateInputSchema: z.ZodType<Prisma.PatientOrganizationUncheckedCreateInput> = z.object({
+  Id: z.string().optional(),
+  PatientId: z.string(),
+  OrganizationId: z.string(),
+  MRN: z.string().optional().nullable(),
+  Mobile: z.string().optional().nullable(),
+  Email: z.string().optional().nullable()
+}).strict();
+
+export const PatientOrganizationUpdateInputSchema: z.ZodType<Prisma.PatientOrganizationUpdateInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  MRN: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Organization: z.lazy(() => OrganizationUpdateOneRequiredWithoutPatientOrganizationNestedInputSchema).optional(),
+  Patient: z.lazy(() => PatientUpdateOneRequiredWithoutPatientOrganizationNestedInputSchema).optional()
+}).strict();
+
+export const PatientOrganizationUncheckedUpdateInputSchema: z.ZodType<Prisma.PatientOrganizationUncheckedUpdateInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  PatientId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  OrganizationId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  MRN: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const PatientOrganizationCreateManyInputSchema: z.ZodType<Prisma.PatientOrganizationCreateManyInput> = z.object({
+  Id: z.string().optional(),
+  PatientId: z.string(),
+  OrganizationId: z.string(),
+  MRN: z.string().optional().nullable(),
+  Mobile: z.string().optional().nullable(),
+  Email: z.string().optional().nullable()
+}).strict();
+
+export const PatientOrganizationUpdateManyMutationInputSchema: z.ZodType<Prisma.PatientOrganizationUpdateManyMutationInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  MRN: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const PatientOrganizationUncheckedUpdateManyInputSchema: z.ZodType<Prisma.PatientOrganizationUncheckedUpdateManyInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  PatientId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  OrganizationId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  MRN: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const PostCreateInputSchema: z.ZodType<Prisma.PostCreateInput> = z.object({
@@ -8699,14 +9728,14 @@ export const ProviderOrganizationCreateInputSchema: z.ZodType<Prisma.ProviderOrg
   OrgCity: z.string().optional().nullable(),
   OrgState: z.string().optional().nullable(),
   OrgZip: z.string().optional().nullable(),
-  Organization: z.lazy(() => OrganizationCreateNestedOneWithoutProviderOrganizationInputSchema).optional(),
+  Organization: z.lazy(() => OrganizationCreateNestedOneWithoutProviderOrganizationInputSchema),
   Provider: z.lazy(() => ProviderCreateNestedOneWithoutProviderOrganizationInputSchema)
 }).strict();
 
 export const ProviderOrganizationUncheckedCreateInputSchema: z.ZodType<Prisma.ProviderOrganizationUncheckedCreateInput> = z.object({
   Id: z.string().optional(),
   ProviderId: z.string(),
-  OrganizationId: z.string().optional().nullable(),
+  OrganizationId: z.string(),
   ProviderNPI: z.string().optional().nullable(),
   Name: z.string().optional().nullable(),
   ParentOrgName: z.string().optional().nullable(),
@@ -8727,14 +9756,14 @@ export const ProviderOrganizationUpdateInputSchema: z.ZodType<Prisma.ProviderOrg
   OrgCity: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   OrgState: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   OrgZip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  Organization: z.lazy(() => OrganizationUpdateOneWithoutProviderOrganizationNestedInputSchema).optional(),
+  Organization: z.lazy(() => OrganizationUpdateOneRequiredWithoutProviderOrganizationNestedInputSchema).optional(),
   Provider: z.lazy(() => ProviderUpdateOneRequiredWithoutProviderOrganizationNestedInputSchema).optional()
 }).strict();
 
 export const ProviderOrganizationUncheckedUpdateInputSchema: z.ZodType<Prisma.ProviderOrganizationUncheckedUpdateInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   ProviderId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  OrganizationId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrganizationId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   ProviderNPI: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Name: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ParentOrgName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -8748,7 +9777,7 @@ export const ProviderOrganizationUncheckedUpdateInputSchema: z.ZodType<Prisma.Pr
 export const ProviderOrganizationCreateManyInputSchema: z.ZodType<Prisma.ProviderOrganizationCreateManyInput> = z.object({
   Id: z.string().optional(),
   ProviderId: z.string(),
-  OrganizationId: z.string().optional().nullable(),
+  OrganizationId: z.string(),
   ProviderNPI: z.string().optional().nullable(),
   Name: z.string().optional().nullable(),
   ParentOrgName: z.string().optional().nullable(),
@@ -8774,7 +9803,7 @@ export const ProviderOrganizationUpdateManyMutationInputSchema: z.ZodType<Prisma
 export const ProviderOrganizationUncheckedUpdateManyInputSchema: z.ZodType<Prisma.ProviderOrganizationUncheckedUpdateManyInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   ProviderId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  OrganizationId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrganizationId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   ProviderNPI: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Name: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ParentOrgName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -8786,14 +9815,14 @@ export const ProviderOrganizationUncheckedUpdateManyInputSchema: z.ZodType<Prism
 }).strict();
 
 export const SessionCreateInputSchema: z.ZodType<Prisma.SessionCreateInput> = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   sessionToken: z.string(),
   expires: z.date(),
-  user: z.lazy(() => UserCreateNestedOneWithoutSessionInputSchema)
+  User: z.lazy(() => UserCreateNestedOneWithoutSessionInputSchema)
 }).strict();
 
 export const SessionUncheckedCreateInputSchema: z.ZodType<Prisma.SessionUncheckedCreateInput> = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   sessionToken: z.string(),
   userId: z.string(),
   expires: z.date()
@@ -8803,7 +9832,7 @@ export const SessionUpdateInputSchema: z.ZodType<Prisma.SessionUpdateInput> = z.
   id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   sessionToken: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   expires: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  user: z.lazy(() => UserUpdateOneRequiredWithoutSessionNestedInputSchema).optional()
+  User: z.lazy(() => UserUpdateOneRequiredWithoutSessionNestedInputSchema).optional()
 }).strict();
 
 export const SessionUncheckedUpdateInputSchema: z.ZodType<Prisma.SessionUncheckedUpdateInput> = z.object({
@@ -8814,7 +9843,7 @@ export const SessionUncheckedUpdateInputSchema: z.ZodType<Prisma.SessionUnchecke
 }).strict();
 
 export const SessionCreateManyInputSchema: z.ZodType<Prisma.SessionCreateManyInput> = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   sessionToken: z.string(),
   userId: z.string(),
   expires: z.date()
@@ -8833,8 +9862,266 @@ export const SessionUncheckedUpdateManyInputSchema: z.ZodType<Prisma.SessionUnch
   expires: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
+export const SponsorCreateInputSchema: z.ZodType<Prisma.SponsorCreateInput> = z.object({
+  SponsorName: z.string().optional().nullable(),
+  SponsorCode: z.string().optional().nullable(),
+  SponsorWebsite: z.string().optional().nullable(),
+  SponsorType: z.string().optional().nullable(),
+  Address: z.string().optional().nullable(),
+  City: z.string().optional().nullable(),
+  State: z.string().optional().nullable(),
+  Zip: z.string().optional().nullable(),
+  SponsoredProgram: z.lazy(() => SponsoredProgramCreateNestedManyWithoutSponsorInputSchema).optional()
+}).strict();
+
+export const SponsorUncheckedCreateInputSchema: z.ZodType<Prisma.SponsorUncheckedCreateInput> = z.object({
+  SponsorId: z.number().optional(),
+  SponsorName: z.string().optional().nullable(),
+  SponsorCode: z.string().optional().nullable(),
+  SponsorWebsite: z.string().optional().nullable(),
+  SponsorType: z.string().optional().nullable(),
+  Address: z.string().optional().nullable(),
+  City: z.string().optional().nullable(),
+  State: z.string().optional().nullable(),
+  Zip: z.string().optional().nullable(),
+  SponsoredProgram: z.lazy(() => SponsoredProgramUncheckedCreateNestedManyWithoutSponsorInputSchema).optional()
+}).strict();
+
+export const SponsorUpdateInputSchema: z.ZodType<Prisma.SponsorUpdateInput> = z.object({
+  SponsorName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsorCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsorWebsite: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsorType: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Address: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  City: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  State: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Zip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsoredProgram: z.lazy(() => SponsoredProgramUpdateManyWithoutSponsorNestedInputSchema).optional()
+}).strict();
+
+export const SponsorUncheckedUpdateInputSchema: z.ZodType<Prisma.SponsorUncheckedUpdateInput> = z.object({
+  SponsorId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  SponsorName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsorCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsorWebsite: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsorType: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Address: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  City: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  State: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Zip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsoredProgram: z.lazy(() => SponsoredProgramUncheckedUpdateManyWithoutSponsorNestedInputSchema).optional()
+}).strict();
+
+export const SponsorCreateManyInputSchema: z.ZodType<Prisma.SponsorCreateManyInput> = z.object({
+  SponsorId: z.number().optional(),
+  SponsorName: z.string().optional().nullable(),
+  SponsorCode: z.string().optional().nullable(),
+  SponsorWebsite: z.string().optional().nullable(),
+  SponsorType: z.string().optional().nullable(),
+  Address: z.string().optional().nullable(),
+  City: z.string().optional().nullable(),
+  State: z.string().optional().nullable(),
+  Zip: z.string().optional().nullable()
+}).strict();
+
+export const SponsorUpdateManyMutationInputSchema: z.ZodType<Prisma.SponsorUpdateManyMutationInput> = z.object({
+  SponsorName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsorCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsorWebsite: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsorType: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Address: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  City: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  State: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Zip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const SponsorUncheckedUpdateManyInputSchema: z.ZodType<Prisma.SponsorUncheckedUpdateManyInput> = z.object({
+  SponsorId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  SponsorName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsorCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsorWebsite: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsorType: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Address: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  City: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  State: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Zip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const SponsoredProgramCreateInputSchema: z.ZodType<Prisma.SponsoredProgramCreateInput> = z.object({
+  TherapeuticArea: z.string().optional().nullable(),
+  ProgramName: z.string().optional().nullable(),
+  ProgramUrl: z.string().optional().nullable(),
+  ProgramLabUrl: z.string().optional().nullable(),
+  SponosoredTestingUrl: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable(),
+  Sponsor: z.lazy(() => SponsorCreateNestedOneWithoutSponsoredProgramInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestCreateNestedManyWithoutSponsoredProgramInputSchema).optional()
+}).strict();
+
+export const SponsoredProgramUncheckedCreateInputSchema: z.ZodType<Prisma.SponsoredProgramUncheckedCreateInput> = z.object({
+  ProgramId: z.number().optional(),
+  SponsorId: z.number().optional().nullable(),
+  TherapeuticArea: z.string().optional().nullable(),
+  ProgramName: z.string().optional().nullable(),
+  ProgramUrl: z.string().optional().nullable(),
+  ProgramLabUrl: z.string().optional().nullable(),
+  SponosoredTestingUrl: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedCreateNestedManyWithoutSponsoredProgramInputSchema).optional()
+}).strict();
+
+export const SponsoredProgramUpdateInputSchema: z.ZodType<Prisma.SponsoredProgramUpdateInput> = z.object({
+  TherapeuticArea: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramLabUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponosoredTestingUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Sponsor: z.lazy(() => SponsorUpdateOneWithoutSponsoredProgramNestedInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUpdateManyWithoutSponsoredProgramNestedInputSchema).optional()
+}).strict();
+
+export const SponsoredProgramUncheckedUpdateInputSchema: z.ZodType<Prisma.SponsoredProgramUncheckedUpdateInput> = z.object({
+  ProgramId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  SponsorId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TherapeuticArea: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramLabUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponosoredTestingUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedUpdateManyWithoutSponsoredProgramNestedInputSchema).optional()
+}).strict();
+
+export const SponsoredProgramCreateManyInputSchema: z.ZodType<Prisma.SponsoredProgramCreateManyInput> = z.object({
+  ProgramId: z.number().optional(),
+  SponsorId: z.number().optional().nullable(),
+  TherapeuticArea: z.string().optional().nullable(),
+  ProgramName: z.string().optional().nullable(),
+  ProgramUrl: z.string().optional().nullable(),
+  ProgramLabUrl: z.string().optional().nullable(),
+  SponosoredTestingUrl: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable()
+}).strict();
+
+export const SponsoredProgramUpdateManyMutationInputSchema: z.ZodType<Prisma.SponsoredProgramUpdateManyMutationInput> = z.object({
+  TherapeuticArea: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramLabUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponosoredTestingUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const SponsoredProgramUncheckedUpdateManyInputSchema: z.ZodType<Prisma.SponsoredProgramUncheckedUpdateManyInput> = z.object({
+  ProgramId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  SponsorId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TherapeuticArea: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramLabUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponosoredTestingUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const SponsoredTestCreateInputSchema: z.ZodType<Prisma.SponsoredTestCreateInput> = z.object({
+  Id: z.string().optional(),
+  LabTestId: z.string().optional().nullable(),
+  CasandraTestId: z.string(),
+  Category: z.string(),
+  SubCategory: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable(),
+  Lab: z.lazy(() => LabCreateNestedOneWithoutSponsoredTestInputSchema).optional(),
+  SponsoredProgram: z.lazy(() => SponsoredProgramCreateNestedOneWithoutSponsoredTestInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogCreateNestedOneWithoutSponsoredTestInputSchema)
+}).strict();
+
+export const SponsoredTestUncheckedCreateInputSchema: z.ZodType<Prisma.SponsoredTestUncheckedCreateInput> = z.object({
+  Id: z.string().optional(),
+  TestId: z.number(),
+  LabTestId: z.string().optional().nullable(),
+  SponsoredProgramId: z.number().optional().nullable(),
+  LabId: z.number().optional().nullable(),
+  CasandraTestId: z.string(),
+  Category: z.string(),
+  SubCategory: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable()
+}).strict();
+
+export const SponsoredTestUpdateInputSchema: z.ZodType<Prisma.SponsoredTestUpdateInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CasandraTestId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  Category: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  SubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Lab: z.lazy(() => LabUpdateOneWithoutSponsoredTestNestedInputSchema).optional(),
+  SponsoredProgram: z.lazy(() => SponsoredProgramUpdateOneWithoutSponsoredTestNestedInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogUpdateOneRequiredWithoutSponsoredTestNestedInputSchema).optional()
+}).strict();
+
+export const SponsoredTestUncheckedUpdateInputSchema: z.ZodType<Prisma.SponsoredTestUncheckedUpdateInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  TestId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsoredProgramId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LabId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CasandraTestId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  Category: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  SubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const SponsoredTestCreateManyInputSchema: z.ZodType<Prisma.SponsoredTestCreateManyInput> = z.object({
+  Id: z.string().optional(),
+  TestId: z.number(),
+  LabTestId: z.string().optional().nullable(),
+  SponsoredProgramId: z.number().optional().nullable(),
+  LabId: z.number().optional().nullable(),
+  CasandraTestId: z.string(),
+  Category: z.string(),
+  SubCategory: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable()
+}).strict();
+
+export const SponsoredTestUpdateManyMutationInputSchema: z.ZodType<Prisma.SponsoredTestUpdateManyMutationInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CasandraTestId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  Category: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  SubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const SponsoredTestUncheckedUpdateManyInputSchema: z.ZodType<Prisma.SponsoredTestUncheckedUpdateManyInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  TestId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsoredProgramId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LabId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CasandraTestId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  Category: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  SubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
 export const TestBiomarkerCreateInputSchema: z.ZodType<Prisma.TestBiomarkerCreateInput> = z.object({
   LabTestId: z.string().optional().nullable(),
+  TranscriptReference: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional(),
   BIOMARKER: z.lazy(() => BIOMARKERCreateNestedOneWithoutTestBiomarkerInputSchema),
@@ -8846,12 +10133,14 @@ export const TestBiomarkerUncheckedCreateInputSchema: z.ZodType<Prisma.TestBioma
   TestId: z.number(),
   LabTestId: z.string().optional().nullable(),
   HGNCId: z.string(),
+  TranscriptReference: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional()
 }).strict();
 
 export const TestBiomarkerUpdateInputSchema: z.ZodType<Prisma.TestBiomarkerUpdateInput> = z.object({
   LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TranscriptReference: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   BIOMARKER: z.lazy(() => BIOMARKERUpdateOneRequiredWithoutTestBiomarkerNestedInputSchema).optional(),
@@ -8863,6 +10152,7 @@ export const TestBiomarkerUncheckedUpdateInputSchema: z.ZodType<Prisma.TestBioma
   TestId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   HGNCId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  TranscriptReference: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -8872,12 +10162,14 @@ export const TestBiomarkerCreateManyInputSchema: z.ZodType<Prisma.TestBiomarkerC
   TestId: z.number(),
   LabTestId: z.string().optional().nullable(),
   HGNCId: z.string(),
+  TranscriptReference: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional()
 }).strict();
 
 export const TestBiomarkerUpdateManyMutationInputSchema: z.ZodType<Prisma.TestBiomarkerUpdateManyMutationInput> = z.object({
   LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TranscriptReference: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -8887,6 +10179,7 @@ export const TestBiomarkerUncheckedUpdateManyInputSchema: z.ZodType<Prisma.TestB
   TestId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   HGNCId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  TranscriptReference: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -8931,14 +10224,18 @@ export const TestCatalogCreateInputSchema: z.ZodType<Prisma.TestCatalogCreateInp
   AlternativeSpecimen: z.string().optional().nullable(),
   LoincCodesText: z.string().optional().nullable(),
   LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional(),
   LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   Lab: z.lazy(() => LabCreateNestedOneWithoutTestCatalogInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincCreateNestedManyWithoutTestCatalogInputSchema).optional()
 }).strict();
@@ -8985,13 +10282,17 @@ export const TestCatalogUncheckedCreateInputSchema: z.ZodType<Prisma.TestCatalog
   AlternativeSpecimen: z.string().optional().nullable(),
   LoincCodesText: z.string().optional().nullable(),
   LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional()
 }).strict();
@@ -9036,14 +10337,18 @@ export const TestCatalogUpdateInputSchema: z.ZodType<Prisma.TestCatalogUpdateInp
   AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   Lab: z.lazy(() => LabUpdateOneWithoutTestCatalogNestedInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUpdateManyWithoutTestCatalogNestedInputSchema).optional()
 }).strict();
@@ -9090,13 +10395,17 @@ export const TestCatalogUncheckedUpdateInputSchema: z.ZodType<Prisma.TestCatalog
   AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional()
 }).strict();
@@ -9143,6 +10452,8 @@ export const TestCatalogCreateManyInputSchema: z.ZodType<Prisma.TestCatalogCreat
   AlternativeSpecimen: z.string().optional().nullable(),
   LoincCodesText: z.string().optional().nullable(),
   LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional()
 }).strict();
@@ -9187,6 +10498,8 @@ export const TestCatalogUpdateManyMutationInputSchema: z.ZodType<Prisma.TestCata
   AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -9233,6 +10546,8 @@ export const TestCatalogUncheckedUpdateManyInputSchema: z.ZodType<Prisma.TestCat
   AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -9306,6 +10621,72 @@ export const TestCptCodeUncheckedUpdateManyInputSchema: z.ZodType<Prisma.TestCpt
   CptCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Modifier: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Comments: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+}).strict();
+
+export const TestGeneCreateInputSchema: z.ZodType<Prisma.TestGeneCreateInput> = z.object({
+  LabTestId: z.string().optional().nullable(),
+  Gene: z.string(),
+  TranscriptReference: z.string().optional().nullable(),
+  CreatedAt: z.date().optional(),
+  UpdatedAt: z.date().optional(),
+  TestCatalog: z.lazy(() => TestCatalogCreateNestedOneWithoutTestGeneInputSchema)
+}).strict();
+
+export const TestGeneUncheckedCreateInputSchema: z.ZodType<Prisma.TestGeneUncheckedCreateInput> = z.object({
+  Id: z.number().optional(),
+  TestId: z.number(),
+  LabTestId: z.string().optional().nullable(),
+  Gene: z.string(),
+  TranscriptReference: z.string().optional().nullable(),
+  CreatedAt: z.date().optional(),
+  UpdatedAt: z.date().optional()
+}).strict();
+
+export const TestGeneUpdateInputSchema: z.ZodType<Prisma.TestGeneUpdateInput> = z.object({
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Gene: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  TranscriptReference: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  TestCatalog: z.lazy(() => TestCatalogUpdateOneRequiredWithoutTestGeneNestedInputSchema).optional()
+}).strict();
+
+export const TestGeneUncheckedUpdateInputSchema: z.ZodType<Prisma.TestGeneUncheckedUpdateInput> = z.object({
+  Id: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  TestId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Gene: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  TranscriptReference: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+}).strict();
+
+export const TestGeneCreateManyInputSchema: z.ZodType<Prisma.TestGeneCreateManyInput> = z.object({
+  Id: z.number().optional(),
+  TestId: z.number(),
+  LabTestId: z.string().optional().nullable(),
+  Gene: z.string(),
+  TranscriptReference: z.string().optional().nullable(),
+  CreatedAt: z.date().optional(),
+  UpdatedAt: z.date().optional()
+}).strict();
+
+export const TestGeneUpdateManyMutationInputSchema: z.ZodType<Prisma.TestGeneUpdateManyMutationInput> = z.object({
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Gene: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  TranscriptReference: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+}).strict();
+
+export const TestGeneUncheckedUpdateManyInputSchema: z.ZodType<Prisma.TestGeneUncheckedUpdateManyInput> = z.object({
+  Id: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  TestId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Gene: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  TranscriptReference: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -9448,26 +10829,26 @@ export const TestResultLoincUncheckedUpdateManyInputSchema: z.ZodType<Prisma.Tes
 }).strict();
 
 export const UserCreateInputSchema: z.ZodType<Prisma.UserCreateInput> = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   name: z.string().optional().nullable(),
   email: z.string().optional().nullable(),
   password: z.string().optional().nullable(),
   emailVerified: z.date().optional().nullable(),
   image: z.string().optional().nullable(),
-  Session: z.lazy(() => SessionCreateNestedManyWithoutUserInputSchema).optional(),
   Account: z.lazy(() => AccountCreateNestedOneWithoutUserInputSchema).optional(),
+  Session: z.lazy(() => SessionCreateNestedManyWithoutUserInputSchema).optional(),
   UserAttribute: z.lazy(() => UserAttributeCreateNestedOneWithoutUserInputSchema).optional()
 }).strict();
 
 export const UserUncheckedCreateInputSchema: z.ZodType<Prisma.UserUncheckedCreateInput> = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   name: z.string().optional().nullable(),
   email: z.string().optional().nullable(),
   password: z.string().optional().nullable(),
   emailVerified: z.date().optional().nullable(),
   image: z.string().optional().nullable(),
-  Session: z.lazy(() => SessionUncheckedCreateNestedManyWithoutUserInputSchema).optional(),
   Account: z.lazy(() => AccountUncheckedCreateNestedOneWithoutUserInputSchema).optional(),
+  Session: z.lazy(() => SessionUncheckedCreateNestedManyWithoutUserInputSchema).optional(),
   UserAttribute: z.lazy(() => UserAttributeUncheckedCreateNestedOneWithoutUserInputSchema).optional()
 }).strict();
 
@@ -9478,8 +10859,8 @@ export const UserUpdateInputSchema: z.ZodType<Prisma.UserUpdateInput> = z.object
   password: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   emailVerified: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   image: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  Session: z.lazy(() => SessionUpdateManyWithoutUserNestedInputSchema).optional(),
   Account: z.lazy(() => AccountUpdateOneWithoutUserNestedInputSchema).optional(),
+  Session: z.lazy(() => SessionUpdateManyWithoutUserNestedInputSchema).optional(),
   UserAttribute: z.lazy(() => UserAttributeUpdateOneWithoutUserNestedInputSchema).optional()
 }).strict();
 
@@ -9490,13 +10871,13 @@ export const UserUncheckedUpdateInputSchema: z.ZodType<Prisma.UserUncheckedUpdat
   password: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   emailVerified: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   image: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  Session: z.lazy(() => SessionUncheckedUpdateManyWithoutUserNestedInputSchema).optional(),
   Account: z.lazy(() => AccountUncheckedUpdateOneWithoutUserNestedInputSchema).optional(),
+  Session: z.lazy(() => SessionUncheckedUpdateManyWithoutUserNestedInputSchema).optional(),
   UserAttribute: z.lazy(() => UserAttributeUncheckedUpdateOneWithoutUserNestedInputSchema).optional()
 }).strict();
 
 export const UserCreateManyInputSchema: z.ZodType<Prisma.UserCreateManyInput> = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   name: z.string().optional().nullable(),
   email: z.string().optional().nullable(),
   password: z.string().optional().nullable(),
@@ -9654,20 +11035,20 @@ export const IntNullableFilterSchema: z.ZodType<Prisma.IntNullableFilter> = z.ob
   not: z.union([ z.number(),z.lazy(() => NestedIntNullableFilterSchema) ]).optional().nullable(),
 }).strict();
 
-export const DateTimeFilterSchema: z.ZodType<Prisma.DateTimeFilter> = z.object({
-  equals: z.date().optional(),
-  in: z.date().array().optional(),
-  notIn: z.date().array().optional(),
+export const DateTimeNullableFilterSchema: z.ZodType<Prisma.DateTimeNullableFilter> = z.object({
+  equals: z.date().optional().nullable(),
+  in: z.date().array().optional().nullable(),
+  notIn: z.date().array().optional().nullable(),
   lt: z.date().optional(),
   lte: z.date().optional(),
   gt: z.date().optional(),
   gte: z.date().optional(),
-  not: z.union([ z.date(),z.lazy(() => NestedDateTimeFilterSchema) ]).optional(),
+  not: z.union([ z.date(),z.lazy(() => NestedDateTimeNullableFilterSchema) ]).optional().nullable(),
 }).strict();
 
-export const UserNullableRelationFilterSchema: z.ZodType<Prisma.UserNullableRelationFilter> = z.object({
-  is: z.lazy(() => UserWhereInputSchema).optional().nullable(),
-  isNot: z.lazy(() => UserWhereInputSchema).optional().nullable()
+export const UserRelationFilterSchema: z.ZodType<Prisma.UserRelationFilter> = z.object({
+  is: z.lazy(() => UserWhereInputSchema).optional(),
+  isNot: z.lazy(() => UserWhereInputSchema).optional()
 }).strict();
 
 export const SortOrderInputSchema: z.ZodType<Prisma.SortOrderInput> = z.object({
@@ -9838,18 +11219,18 @@ export const IntNullableWithAggregatesFilterSchema: z.ZodType<Prisma.IntNullable
   _max: z.lazy(() => NestedIntNullableFilterSchema).optional()
 }).strict();
 
-export const DateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.DateTimeWithAggregatesFilter> = z.object({
-  equals: z.date().optional(),
-  in: z.date().array().optional(),
-  notIn: z.date().array().optional(),
+export const DateTimeNullableWithAggregatesFilterSchema: z.ZodType<Prisma.DateTimeNullableWithAggregatesFilter> = z.object({
+  equals: z.date().optional().nullable(),
+  in: z.date().array().optional().nullable(),
+  notIn: z.date().array().optional().nullable(),
   lt: z.date().optional(),
   lte: z.date().optional(),
   gt: z.date().optional(),
   gte: z.date().optional(),
-  not: z.union([ z.date(),z.lazy(() => NestedDateTimeWithAggregatesFilterSchema) ]).optional(),
-  _count: z.lazy(() => NestedIntFilterSchema).optional(),
-  _min: z.lazy(() => NestedDateTimeFilterSchema).optional(),
-  _max: z.lazy(() => NestedDateTimeFilterSchema).optional()
+  not: z.union([ z.date(),z.lazy(() => NestedDateTimeNullableWithAggregatesFilterSchema) ]).optional().nullable(),
+  _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
+  _min: z.lazy(() => NestedDateTimeNullableFilterSchema).optional(),
+  _max: z.lazy(() => NestedDateTimeNullableFilterSchema).optional()
 }).strict();
 
 export const UserAttributeRelationFilterSchema: z.ZodType<Prisma.UserAttributeRelationFilter> = z.object({
@@ -9882,17 +11263,6 @@ export const AdminMinOrderByAggregateInputSchema: z.ZodType<Prisma.AdminMinOrder
   Name: z.lazy(() => SortOrderSchema).optional(),
   Email: z.lazy(() => SortOrderSchema).optional(),
   UserAttributeId: z.lazy(() => SortOrderSchema).optional()
-}).strict();
-
-export const DateTimeNullableFilterSchema: z.ZodType<Prisma.DateTimeNullableFilter> = z.object({
-  equals: z.date().optional().nullable(),
-  in: z.date().array().optional().nullable(),
-  notIn: z.date().array().optional().nullable(),
-  lt: z.date().optional(),
-  lte: z.date().optional(),
-  gt: z.date().optional(),
-  gte: z.date().optional(),
-  not: z.union([ z.date(),z.lazy(() => NestedDateTimeNullableFilterSchema) ]).optional().nullable(),
 }).strict();
 
 export const LabOrderAttachmentListRelationFilterSchema: z.ZodType<Prisma.LabOrderAttachmentListRelationFilter> = z.object({
@@ -9933,20 +11303,6 @@ export const AttachmentMinOrderByAggregateInputSchema: z.ZodType<Prisma.Attachme
   AttachmentUrl: z.lazy(() => SortOrderSchema).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional()
-}).strict();
-
-export const DateTimeNullableWithAggregatesFilterSchema: z.ZodType<Prisma.DateTimeNullableWithAggregatesFilter> = z.object({
-  equals: z.date().optional().nullable(),
-  in: z.date().array().optional().nullable(),
-  notIn: z.date().array().optional().nullable(),
-  lt: z.date().optional(),
-  lte: z.date().optional(),
-  gt: z.date().optional(),
-  gte: z.date().optional(),
-  not: z.union([ z.date(),z.lazy(() => NestedDateTimeNullableWithAggregatesFilterSchema) ]).optional().nullable(),
-  _count: z.lazy(() => NestedIntNullableFilterSchema).optional(),
-  _min: z.lazy(() => NestedDateTimeNullableFilterSchema).optional(),
-  _max: z.lazy(() => NestedDateTimeNullableFilterSchema).optional()
 }).strict();
 
 export const TestBiomarkerListRelationFilterSchema: z.ZodType<Prisma.TestBiomarkerListRelationFilter> = z.object({
@@ -10204,10 +11560,20 @@ export const IntFilterSchema: z.ZodType<Prisma.IntFilter> = z.object({
   not: z.union([ z.number(),z.lazy(() => NestedIntFilterSchema) ]).optional(),
 }).strict();
 
+export const SponsoredTestListRelationFilterSchema: z.ZodType<Prisma.SponsoredTestListRelationFilter> = z.object({
+  every: z.lazy(() => SponsoredTestWhereInputSchema).optional(),
+  some: z.lazy(() => SponsoredTestWhereInputSchema).optional(),
+  none: z.lazy(() => SponsoredTestWhereInputSchema).optional()
+}).strict();
+
 export const TestCatalogListRelationFilterSchema: z.ZodType<Prisma.TestCatalogListRelationFilter> = z.object({
   every: z.lazy(() => TestCatalogWhereInputSchema).optional(),
   some: z.lazy(() => TestCatalogWhereInputSchema).optional(),
   none: z.lazy(() => TestCatalogWhereInputSchema).optional()
+}).strict();
+
+export const SponsoredTestOrderByRelationAggregateInputSchema: z.ZodType<Prisma.SponsoredTestOrderByRelationAggregateInput> = z.object({
+  _count: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const TestCatalogOrderByRelationAggregateInputSchema: z.ZodType<Prisma.TestCatalogOrderByRelationAggregateInput> = z.object({
@@ -10822,6 +12188,12 @@ export const OrganizationFavoriteTestListRelationFilterSchema: z.ZodType<Prisma.
   none: z.lazy(() => OrganizationFavoriteTestWhereInputSchema).optional()
 }).strict();
 
+export const PatientOrganizationListRelationFilterSchema: z.ZodType<Prisma.PatientOrganizationListRelationFilter> = z.object({
+  every: z.lazy(() => PatientOrganizationWhereInputSchema).optional(),
+  some: z.lazy(() => PatientOrganizationWhereInputSchema).optional(),
+  none: z.lazy(() => PatientOrganizationWhereInputSchema).optional()
+}).strict();
+
 export const ProviderOrganizationListRelationFilterSchema: z.ZodType<Prisma.ProviderOrganizationListRelationFilter> = z.object({
   every: z.lazy(() => ProviderOrganizationWhereInputSchema).optional(),
   some: z.lazy(() => ProviderOrganizationWhereInputSchema).optional(),
@@ -10837,6 +12209,10 @@ export const OrganizationOrderByRelationAggregateInputSchema: z.ZodType<Prisma.O
 }).strict();
 
 export const OrganizationFavoriteTestOrderByRelationAggregateInputSchema: z.ZodType<Prisma.OrganizationFavoriteTestOrderByRelationAggregateInput> = z.object({
+  _count: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const PatientOrganizationOrderByRelationAggregateInputSchema: z.ZodType<Prisma.PatientOrganizationOrderByRelationAggregateInput> = z.object({
   _count: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
@@ -10903,6 +12279,36 @@ export const OrganizationSumOrderByAggregateInputSchema: z.ZodType<Prisma.Organi
   Level: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
+export const OrganizationEndpointOrderByRelevanceInputSchema: z.ZodType<Prisma.OrganizationEndpointOrderByRelevanceInput> = z.object({
+  fields: z.union([ z.lazy(() => OrganizationEndpointOrderByRelevanceFieldEnumSchema),z.lazy(() => OrganizationEndpointOrderByRelevanceFieldEnumSchema).array() ]),
+  sort: z.lazy(() => SortOrderSchema),
+  search: z.string()
+}).strict();
+
+export const OrganizationEndpointCountOrderByAggregateInputSchema: z.ZodType<Prisma.OrganizationEndpointCountOrderByAggregateInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  OrgName: z.lazy(() => SortOrderSchema).optional(),
+  EHRVendor: z.lazy(() => SortOrderSchema).optional(),
+  FHIRVersion: z.lazy(() => SortOrderSchema).optional(),
+  Endpoint: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const OrganizationEndpointMaxOrderByAggregateInputSchema: z.ZodType<Prisma.OrganizationEndpointMaxOrderByAggregateInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  OrgName: z.lazy(() => SortOrderSchema).optional(),
+  EHRVendor: z.lazy(() => SortOrderSchema).optional(),
+  FHIRVersion: z.lazy(() => SortOrderSchema).optional(),
+  Endpoint: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const OrganizationEndpointMinOrderByAggregateInputSchema: z.ZodType<Prisma.OrganizationEndpointMinOrderByAggregateInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  OrgName: z.lazy(() => SortOrderSchema).optional(),
+  EHRVendor: z.lazy(() => SortOrderSchema).optional(),
+  FHIRVersion: z.lazy(() => SortOrderSchema).optional(),
+  Endpoint: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
 export const OrganizationFavoriteTestOrderByRelevanceInputSchema: z.ZodType<Prisma.OrganizationFavoriteTestOrderByRelevanceInput> = z.object({
   fields: z.union([ z.lazy(() => OrganizationFavoriteTestOrderByRelevanceFieldEnumSchema),z.lazy(() => OrganizationFavoriteTestOrderByRelevanceFieldEnumSchema).array() ]),
   sort: z.lazy(() => SortOrderSchema),
@@ -10952,36 +12358,6 @@ export const OrganizationFavoriteTestSumOrderByAggregateInputSchema: z.ZodType<P
   TestId: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
-export const OrganizationEndpointOrderByRelevanceInputSchema: z.ZodType<Prisma.OrganizationEndpointOrderByRelevanceInput> = z.object({
-  fields: z.union([ z.lazy(() => OrganizationEndpointOrderByRelevanceFieldEnumSchema),z.lazy(() => OrganizationEndpointOrderByRelevanceFieldEnumSchema).array() ]),
-  sort: z.lazy(() => SortOrderSchema),
-  search: z.string()
-}).strict();
-
-export const OrganizationEndpointCountOrderByAggregateInputSchema: z.ZodType<Prisma.OrganizationEndpointCountOrderByAggregateInput> = z.object({
-  Id: z.lazy(() => SortOrderSchema).optional(),
-  OrgName: z.lazy(() => SortOrderSchema).optional(),
-  EHRVendor: z.lazy(() => SortOrderSchema).optional(),
-  FHIRVersion: z.lazy(() => SortOrderSchema).optional(),
-  Endpoint: z.lazy(() => SortOrderSchema).optional()
-}).strict();
-
-export const OrganizationEndpointMaxOrderByAggregateInputSchema: z.ZodType<Prisma.OrganizationEndpointMaxOrderByAggregateInput> = z.object({
-  Id: z.lazy(() => SortOrderSchema).optional(),
-  OrgName: z.lazy(() => SortOrderSchema).optional(),
-  EHRVendor: z.lazy(() => SortOrderSchema).optional(),
-  FHIRVersion: z.lazy(() => SortOrderSchema).optional(),
-  Endpoint: z.lazy(() => SortOrderSchema).optional()
-}).strict();
-
-export const OrganizationEndpointMinOrderByAggregateInputSchema: z.ZodType<Prisma.OrganizationEndpointMinOrderByAggregateInput> = z.object({
-  Id: z.lazy(() => SortOrderSchema).optional(),
-  OrgName: z.lazy(() => SortOrderSchema).optional(),
-  EHRVendor: z.lazy(() => SortOrderSchema).optional(),
-  FHIRVersion: z.lazy(() => SortOrderSchema).optional(),
-  Endpoint: z.lazy(() => SortOrderSchema).optional()
-}).strict();
-
 export const PatientOrderByRelevanceInputSchema: z.ZodType<Prisma.PatientOrderByRelevanceInput> = z.object({
   fields: z.union([ z.lazy(() => PatientOrderByRelevanceFieldEnumSchema),z.lazy(() => PatientOrderByRelevanceFieldEnumSchema).array() ]),
   sort: z.lazy(() => SortOrderSchema),
@@ -11024,6 +12400,60 @@ export const PatientMinOrderByAggregateInputSchema: z.ZodType<Prisma.PatientMinO
   UpdatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
+export const OrganizationRelationFilterSchema: z.ZodType<Prisma.OrganizationRelationFilter> = z.object({
+  is: z.lazy(() => OrganizationWhereInputSchema).optional(),
+  isNot: z.lazy(() => OrganizationWhereInputSchema).optional()
+}).strict();
+
+export const PatientRelationFilterSchema: z.ZodType<Prisma.PatientRelationFilter> = z.object({
+  is: z.lazy(() => PatientWhereInputSchema).optional(),
+  isNot: z.lazy(() => PatientWhereInputSchema).optional()
+}).strict();
+
+export const PatientOrganizationOrderByRelevanceInputSchema: z.ZodType<Prisma.PatientOrganizationOrderByRelevanceInput> = z.object({
+  fields: z.union([ z.lazy(() => PatientOrganizationOrderByRelevanceFieldEnumSchema),z.lazy(() => PatientOrganizationOrderByRelevanceFieldEnumSchema).array() ]),
+  sort: z.lazy(() => SortOrderSchema),
+  search: z.string()
+}).strict();
+
+export const PatientOrganizationCountOrderByAggregateInputSchema: z.ZodType<Prisma.PatientOrganizationCountOrderByAggregateInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  PatientId: z.lazy(() => SortOrderSchema).optional(),
+  OrganizationId: z.lazy(() => SortOrderSchema).optional(),
+  MRN: z.lazy(() => SortOrderSchema).optional(),
+  Mobile: z.lazy(() => SortOrderSchema).optional(),
+  Email: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const PatientOrganizationMaxOrderByAggregateInputSchema: z.ZodType<Prisma.PatientOrganizationMaxOrderByAggregateInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  PatientId: z.lazy(() => SortOrderSchema).optional(),
+  OrganizationId: z.lazy(() => SortOrderSchema).optional(),
+  MRN: z.lazy(() => SortOrderSchema).optional(),
+  Mobile: z.lazy(() => SortOrderSchema).optional(),
+  Email: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const PatientOrganizationMinOrderByAggregateInputSchema: z.ZodType<Prisma.PatientOrganizationMinOrderByAggregateInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  PatientId: z.lazy(() => SortOrderSchema).optional(),
+  OrganizationId: z.lazy(() => SortOrderSchema).optional(),
+  MRN: z.lazy(() => SortOrderSchema).optional(),
+  Mobile: z.lazy(() => SortOrderSchema).optional(),
+  Email: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const DateTimeFilterSchema: z.ZodType<Prisma.DateTimeFilter> = z.object({
+  equals: z.date().optional(),
+  in: z.date().array().optional(),
+  notIn: z.date().array().optional(),
+  lt: z.date().optional(),
+  lte: z.date().optional(),
+  gt: z.date().optional(),
+  gte: z.date().optional(),
+  not: z.union([ z.date(),z.lazy(() => NestedDateTimeFilterSchema) ]).optional(),
+}).strict();
+
 export const PostOrderByRelevanceInputSchema: z.ZodType<Prisma.PostOrderByRelevanceInput> = z.object({
   fields: z.union([ z.lazy(() => PostOrderByRelevanceFieldEnumSchema),z.lazy(() => PostOrderByRelevanceFieldEnumSchema).array() ]),
   sort: z.lazy(() => SortOrderSchema),
@@ -11057,6 +12487,20 @@ export const PostMinOrderByAggregateInputSchema: z.ZodType<Prisma.PostMinOrderBy
 
 export const PostSumOrderByAggregateInputSchema: z.ZodType<Prisma.PostSumOrderByAggregateInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const DateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.DateTimeWithAggregatesFilter> = z.object({
+  equals: z.date().optional(),
+  in: z.date().array().optional(),
+  notIn: z.date().array().optional(),
+  lt: z.date().optional(),
+  lte: z.date().optional(),
+  gt: z.date().optional(),
+  gte: z.date().optional(),
+  not: z.union([ z.date(),z.lazy(() => NestedDateTimeWithAggregatesFilterSchema) ]).optional(),
+  _count: z.lazy(() => NestedIntFilterSchema).optional(),
+  _min: z.lazy(() => NestedDateTimeFilterSchema).optional(),
+  _max: z.lazy(() => NestedDateTimeFilterSchema).optional()
 }).strict();
 
 export const UserAttributeNullableRelationFilterSchema: z.ZodType<Prisma.UserAttributeNullableRelationFilter> = z.object({
@@ -11279,11 +12723,6 @@ export const ProviderOrganizationMinOrderByAggregateInputSchema: z.ZodType<Prism
   OrgZip: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
-export const UserRelationFilterSchema: z.ZodType<Prisma.UserRelationFilter> = z.object({
-  is: z.lazy(() => UserWhereInputSchema).optional(),
-  isNot: z.lazy(() => UserWhereInputSchema).optional()
-}).strict();
-
 export const SessionOrderByRelevanceInputSchema: z.ZodType<Prisma.SessionOrderByRelevanceInput> = z.object({
   fields: z.union([ z.lazy(() => SessionOrderByRelevanceFieldEnumSchema),z.lazy(() => SessionOrderByRelevanceFieldEnumSchema).array() ]),
   sort: z.lazy(() => SortOrderSchema),
@@ -11311,14 +12750,198 @@ export const SessionMinOrderByAggregateInputSchema: z.ZodType<Prisma.SessionMinO
   expires: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
-export const BIOMARKERRelationFilterSchema: z.ZodType<Prisma.BIOMARKERRelationFilter> = z.object({
-  is: z.lazy(() => BIOMARKERWhereInputSchema).optional(),
-  isNot: z.lazy(() => BIOMARKERWhereInputSchema).optional()
+export const SponsoredProgramListRelationFilterSchema: z.ZodType<Prisma.SponsoredProgramListRelationFilter> = z.object({
+  every: z.lazy(() => SponsoredProgramWhereInputSchema).optional(),
+  some: z.lazy(() => SponsoredProgramWhereInputSchema).optional(),
+  none: z.lazy(() => SponsoredProgramWhereInputSchema).optional()
+}).strict();
+
+export const SponsoredProgramOrderByRelationAggregateInputSchema: z.ZodType<Prisma.SponsoredProgramOrderByRelationAggregateInput> = z.object({
+  _count: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const SponsorOrderByRelevanceInputSchema: z.ZodType<Prisma.SponsorOrderByRelevanceInput> = z.object({
+  fields: z.union([ z.lazy(() => SponsorOrderByRelevanceFieldEnumSchema),z.lazy(() => SponsorOrderByRelevanceFieldEnumSchema).array() ]),
+  sort: z.lazy(() => SortOrderSchema),
+  search: z.string()
+}).strict();
+
+export const SponsorCountOrderByAggregateInputSchema: z.ZodType<Prisma.SponsorCountOrderByAggregateInput> = z.object({
+  SponsorId: z.lazy(() => SortOrderSchema).optional(),
+  SponsorName: z.lazy(() => SortOrderSchema).optional(),
+  SponsorCode: z.lazy(() => SortOrderSchema).optional(),
+  SponsorWebsite: z.lazy(() => SortOrderSchema).optional(),
+  SponsorType: z.lazy(() => SortOrderSchema).optional(),
+  Address: z.lazy(() => SortOrderSchema).optional(),
+  City: z.lazy(() => SortOrderSchema).optional(),
+  State: z.lazy(() => SortOrderSchema).optional(),
+  Zip: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const SponsorAvgOrderByAggregateInputSchema: z.ZodType<Prisma.SponsorAvgOrderByAggregateInput> = z.object({
+  SponsorId: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const SponsorMaxOrderByAggregateInputSchema: z.ZodType<Prisma.SponsorMaxOrderByAggregateInput> = z.object({
+  SponsorId: z.lazy(() => SortOrderSchema).optional(),
+  SponsorName: z.lazy(() => SortOrderSchema).optional(),
+  SponsorCode: z.lazy(() => SortOrderSchema).optional(),
+  SponsorWebsite: z.lazy(() => SortOrderSchema).optional(),
+  SponsorType: z.lazy(() => SortOrderSchema).optional(),
+  Address: z.lazy(() => SortOrderSchema).optional(),
+  City: z.lazy(() => SortOrderSchema).optional(),
+  State: z.lazy(() => SortOrderSchema).optional(),
+  Zip: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const SponsorMinOrderByAggregateInputSchema: z.ZodType<Prisma.SponsorMinOrderByAggregateInput> = z.object({
+  SponsorId: z.lazy(() => SortOrderSchema).optional(),
+  SponsorName: z.lazy(() => SortOrderSchema).optional(),
+  SponsorCode: z.lazy(() => SortOrderSchema).optional(),
+  SponsorWebsite: z.lazy(() => SortOrderSchema).optional(),
+  SponsorType: z.lazy(() => SortOrderSchema).optional(),
+  Address: z.lazy(() => SortOrderSchema).optional(),
+  City: z.lazy(() => SortOrderSchema).optional(),
+  State: z.lazy(() => SortOrderSchema).optional(),
+  Zip: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const SponsorSumOrderByAggregateInputSchema: z.ZodType<Prisma.SponsorSumOrderByAggregateInput> = z.object({
+  SponsorId: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const SponsorNullableRelationFilterSchema: z.ZodType<Prisma.SponsorNullableRelationFilter> = z.object({
+  is: z.lazy(() => SponsorWhereInputSchema).optional().nullable(),
+  isNot: z.lazy(() => SponsorWhereInputSchema).optional().nullable()
+}).strict();
+
+export const SponsoredProgramOrderByRelevanceInputSchema: z.ZodType<Prisma.SponsoredProgramOrderByRelevanceInput> = z.object({
+  fields: z.union([ z.lazy(() => SponsoredProgramOrderByRelevanceFieldEnumSchema),z.lazy(() => SponsoredProgramOrderByRelevanceFieldEnumSchema).array() ]),
+  sort: z.lazy(() => SortOrderSchema),
+  search: z.string()
+}).strict();
+
+export const SponsoredProgramCountOrderByAggregateInputSchema: z.ZodType<Prisma.SponsoredProgramCountOrderByAggregateInput> = z.object({
+  ProgramId: z.lazy(() => SortOrderSchema).optional(),
+  SponsorId: z.lazy(() => SortOrderSchema).optional(),
+  TherapeuticArea: z.lazy(() => SortOrderSchema).optional(),
+  ProgramName: z.lazy(() => SortOrderSchema).optional(),
+  ProgramUrl: z.lazy(() => SortOrderSchema).optional(),
+  ProgramLabUrl: z.lazy(() => SortOrderSchema).optional(),
+  SponosoredTestingUrl: z.lazy(() => SortOrderSchema).optional(),
+  CreatedAt: z.lazy(() => SortOrderSchema).optional(),
+  UpdatedAt: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const SponsoredProgramAvgOrderByAggregateInputSchema: z.ZodType<Prisma.SponsoredProgramAvgOrderByAggregateInput> = z.object({
+  ProgramId: z.lazy(() => SortOrderSchema).optional(),
+  SponsorId: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const SponsoredProgramMaxOrderByAggregateInputSchema: z.ZodType<Prisma.SponsoredProgramMaxOrderByAggregateInput> = z.object({
+  ProgramId: z.lazy(() => SortOrderSchema).optional(),
+  SponsorId: z.lazy(() => SortOrderSchema).optional(),
+  TherapeuticArea: z.lazy(() => SortOrderSchema).optional(),
+  ProgramName: z.lazy(() => SortOrderSchema).optional(),
+  ProgramUrl: z.lazy(() => SortOrderSchema).optional(),
+  ProgramLabUrl: z.lazy(() => SortOrderSchema).optional(),
+  SponosoredTestingUrl: z.lazy(() => SortOrderSchema).optional(),
+  CreatedAt: z.lazy(() => SortOrderSchema).optional(),
+  UpdatedAt: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const SponsoredProgramMinOrderByAggregateInputSchema: z.ZodType<Prisma.SponsoredProgramMinOrderByAggregateInput> = z.object({
+  ProgramId: z.lazy(() => SortOrderSchema).optional(),
+  SponsorId: z.lazy(() => SortOrderSchema).optional(),
+  TherapeuticArea: z.lazy(() => SortOrderSchema).optional(),
+  ProgramName: z.lazy(() => SortOrderSchema).optional(),
+  ProgramUrl: z.lazy(() => SortOrderSchema).optional(),
+  ProgramLabUrl: z.lazy(() => SortOrderSchema).optional(),
+  SponosoredTestingUrl: z.lazy(() => SortOrderSchema).optional(),
+  CreatedAt: z.lazy(() => SortOrderSchema).optional(),
+  UpdatedAt: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const SponsoredProgramSumOrderByAggregateInputSchema: z.ZodType<Prisma.SponsoredProgramSumOrderByAggregateInput> = z.object({
+  ProgramId: z.lazy(() => SortOrderSchema).optional(),
+  SponsorId: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const LabNullableRelationFilterSchema: z.ZodType<Prisma.LabNullableRelationFilter> = z.object({
+  is: z.lazy(() => LabWhereInputSchema).optional().nullable(),
+  isNot: z.lazy(() => LabWhereInputSchema).optional().nullable()
+}).strict();
+
+export const SponsoredProgramNullableRelationFilterSchema: z.ZodType<Prisma.SponsoredProgramNullableRelationFilter> = z.object({
+  is: z.lazy(() => SponsoredProgramWhereInputSchema).optional().nullable(),
+  isNot: z.lazy(() => SponsoredProgramWhereInputSchema).optional().nullable()
 }).strict();
 
 export const TestCatalogRelationFilterSchema: z.ZodType<Prisma.TestCatalogRelationFilter> = z.object({
   is: z.lazy(() => TestCatalogWhereInputSchema).optional(),
   isNot: z.lazy(() => TestCatalogWhereInputSchema).optional()
+}).strict();
+
+export const SponsoredTestOrderByRelevanceInputSchema: z.ZodType<Prisma.SponsoredTestOrderByRelevanceInput> = z.object({
+  fields: z.union([ z.lazy(() => SponsoredTestOrderByRelevanceFieldEnumSchema),z.lazy(() => SponsoredTestOrderByRelevanceFieldEnumSchema).array() ]),
+  sort: z.lazy(() => SortOrderSchema),
+  search: z.string()
+}).strict();
+
+export const SponsoredTestCountOrderByAggregateInputSchema: z.ZodType<Prisma.SponsoredTestCountOrderByAggregateInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  TestId: z.lazy(() => SortOrderSchema).optional(),
+  LabTestId: z.lazy(() => SortOrderSchema).optional(),
+  SponsoredProgramId: z.lazy(() => SortOrderSchema).optional(),
+  LabId: z.lazy(() => SortOrderSchema).optional(),
+  CasandraTestId: z.lazy(() => SortOrderSchema).optional(),
+  Category: z.lazy(() => SortOrderSchema).optional(),
+  SubCategory: z.lazy(() => SortOrderSchema).optional(),
+  CreatedAt: z.lazy(() => SortOrderSchema).optional(),
+  UpdatedAt: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const SponsoredTestAvgOrderByAggregateInputSchema: z.ZodType<Prisma.SponsoredTestAvgOrderByAggregateInput> = z.object({
+  TestId: z.lazy(() => SortOrderSchema).optional(),
+  SponsoredProgramId: z.lazy(() => SortOrderSchema).optional(),
+  LabId: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const SponsoredTestMaxOrderByAggregateInputSchema: z.ZodType<Prisma.SponsoredTestMaxOrderByAggregateInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  TestId: z.lazy(() => SortOrderSchema).optional(),
+  LabTestId: z.lazy(() => SortOrderSchema).optional(),
+  SponsoredProgramId: z.lazy(() => SortOrderSchema).optional(),
+  LabId: z.lazy(() => SortOrderSchema).optional(),
+  CasandraTestId: z.lazy(() => SortOrderSchema).optional(),
+  Category: z.lazy(() => SortOrderSchema).optional(),
+  SubCategory: z.lazy(() => SortOrderSchema).optional(),
+  CreatedAt: z.lazy(() => SortOrderSchema).optional(),
+  UpdatedAt: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const SponsoredTestMinOrderByAggregateInputSchema: z.ZodType<Prisma.SponsoredTestMinOrderByAggregateInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  TestId: z.lazy(() => SortOrderSchema).optional(),
+  LabTestId: z.lazy(() => SortOrderSchema).optional(),
+  SponsoredProgramId: z.lazy(() => SortOrderSchema).optional(),
+  LabId: z.lazy(() => SortOrderSchema).optional(),
+  CasandraTestId: z.lazy(() => SortOrderSchema).optional(),
+  Category: z.lazy(() => SortOrderSchema).optional(),
+  SubCategory: z.lazy(() => SortOrderSchema).optional(),
+  CreatedAt: z.lazy(() => SortOrderSchema).optional(),
+  UpdatedAt: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const SponsoredTestSumOrderByAggregateInputSchema: z.ZodType<Prisma.SponsoredTestSumOrderByAggregateInput> = z.object({
+  TestId: z.lazy(() => SortOrderSchema).optional(),
+  SponsoredProgramId: z.lazy(() => SortOrderSchema).optional(),
+  LabId: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const BIOMARKERRelationFilterSchema: z.ZodType<Prisma.BIOMARKERRelationFilter> = z.object({
+  is: z.lazy(() => BIOMARKERWhereInputSchema).optional(),
+  isNot: z.lazy(() => BIOMARKERWhereInputSchema).optional()
 }).strict();
 
 export const TestBiomarkerOrderByRelevanceInputSchema: z.ZodType<Prisma.TestBiomarkerOrderByRelevanceInput> = z.object({
@@ -11337,6 +12960,7 @@ export const TestBiomarkerCountOrderByAggregateInputSchema: z.ZodType<Prisma.Tes
   TestId: z.lazy(() => SortOrderSchema).optional(),
   LabTestId: z.lazy(() => SortOrderSchema).optional(),
   HGNCId: z.lazy(() => SortOrderSchema).optional(),
+  TranscriptReference: z.lazy(() => SortOrderSchema).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -11351,6 +12975,7 @@ export const TestBiomarkerMaxOrderByAggregateInputSchema: z.ZodType<Prisma.TestB
   TestId: z.lazy(() => SortOrderSchema).optional(),
   LabTestId: z.lazy(() => SortOrderSchema).optional(),
   HGNCId: z.lazy(() => SortOrderSchema).optional(),
+  TranscriptReference: z.lazy(() => SortOrderSchema).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -11360,6 +12985,7 @@ export const TestBiomarkerMinOrderByAggregateInputSchema: z.ZodType<Prisma.TestB
   TestId: z.lazy(() => SortOrderSchema).optional(),
   LabTestId: z.lazy(() => SortOrderSchema).optional(),
   HGNCId: z.lazy(() => SortOrderSchema).optional(),
+  TranscriptReference: z.lazy(() => SortOrderSchema).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -11369,18 +12995,23 @@ export const TestBiomarkerSumOrderByAggregateInputSchema: z.ZodType<Prisma.TestB
   TestId: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
-export const LabNullableRelationFilterSchema: z.ZodType<Prisma.LabNullableRelationFilter> = z.object({
-  is: z.lazy(() => LabWhereInputSchema).optional().nullable(),
-  isNot: z.lazy(() => LabWhereInputSchema).optional().nullable()
-}).strict();
-
 export const TestCptCodeListRelationFilterSchema: z.ZodType<Prisma.TestCptCodeListRelationFilter> = z.object({
   every: z.lazy(() => TestCptCodeWhereInputSchema).optional(),
   some: z.lazy(() => TestCptCodeWhereInputSchema).optional(),
   none: z.lazy(() => TestCptCodeWhereInputSchema).optional()
 }).strict();
 
+export const TestGeneListRelationFilterSchema: z.ZodType<Prisma.TestGeneListRelationFilter> = z.object({
+  every: z.lazy(() => TestGeneWhereInputSchema).optional(),
+  some: z.lazy(() => TestGeneWhereInputSchema).optional(),
+  none: z.lazy(() => TestGeneWhereInputSchema).optional()
+}).strict();
+
 export const TestCptCodeOrderByRelationAggregateInputSchema: z.ZodType<Prisma.TestCptCodeOrderByRelationAggregateInput> = z.object({
+  _count: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const TestGeneOrderByRelationAggregateInputSchema: z.ZodType<Prisma.TestGeneOrderByRelationAggregateInput> = z.object({
   _count: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
@@ -11437,6 +13068,8 @@ export const TestCatalogCountOrderByAggregateInputSchema: z.ZodType<Prisma.TestC
   AlternativeSpecimen: z.lazy(() => SortOrderSchema).optional(),
   LoincCodesText: z.lazy(() => SortOrderSchema).optional(),
   LoincCodesHTML: z.lazy(() => SortOrderSchema).optional(),
+  TestCategory: z.lazy(() => SortOrderSchema).optional(),
+  TestSubCategory: z.lazy(() => SortOrderSchema).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -11488,6 +13121,8 @@ export const TestCatalogMaxOrderByAggregateInputSchema: z.ZodType<Prisma.TestCat
   AlternativeSpecimen: z.lazy(() => SortOrderSchema).optional(),
   LoincCodesText: z.lazy(() => SortOrderSchema).optional(),
   LoincCodesHTML: z.lazy(() => SortOrderSchema).optional(),
+  TestCategory: z.lazy(() => SortOrderSchema).optional(),
+  TestSubCategory: z.lazy(() => SortOrderSchema).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -11534,6 +13169,8 @@ export const TestCatalogMinOrderByAggregateInputSchema: z.ZodType<Prisma.TestCat
   AlternativeSpecimen: z.lazy(() => SortOrderSchema).optional(),
   LoincCodesText: z.lazy(() => SortOrderSchema).optional(),
   LoincCodesHTML: z.lazy(() => SortOrderSchema).optional(),
+  TestCategory: z.lazy(() => SortOrderSchema).optional(),
+  TestSubCategory: z.lazy(() => SortOrderSchema).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -11588,6 +13225,57 @@ export const TestCptCodeMinOrderByAggregateInputSchema: z.ZodType<Prisma.TestCpt
 }).strict();
 
 export const TestCptCodeSumOrderByAggregateInputSchema: z.ZodType<Prisma.TestCptCodeSumOrderByAggregateInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  TestId: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const TestGeneOrderByRelevanceInputSchema: z.ZodType<Prisma.TestGeneOrderByRelevanceInput> = z.object({
+  fields: z.union([ z.lazy(() => TestGeneOrderByRelevanceFieldEnumSchema),z.lazy(() => TestGeneOrderByRelevanceFieldEnumSchema).array() ]),
+  sort: z.lazy(() => SortOrderSchema),
+  search: z.string()
+}).strict();
+
+export const TestGeneTestIdGeneCompoundUniqueInputSchema: z.ZodType<Prisma.TestGeneTestIdGeneCompoundUniqueInput> = z.object({
+  TestId: z.number(),
+  Gene: z.string()
+}).strict();
+
+export const TestGeneCountOrderByAggregateInputSchema: z.ZodType<Prisma.TestGeneCountOrderByAggregateInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  TestId: z.lazy(() => SortOrderSchema).optional(),
+  LabTestId: z.lazy(() => SortOrderSchema).optional(),
+  Gene: z.lazy(() => SortOrderSchema).optional(),
+  TranscriptReference: z.lazy(() => SortOrderSchema).optional(),
+  CreatedAt: z.lazy(() => SortOrderSchema).optional(),
+  UpdatedAt: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const TestGeneAvgOrderByAggregateInputSchema: z.ZodType<Prisma.TestGeneAvgOrderByAggregateInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  TestId: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const TestGeneMaxOrderByAggregateInputSchema: z.ZodType<Prisma.TestGeneMaxOrderByAggregateInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  TestId: z.lazy(() => SortOrderSchema).optional(),
+  LabTestId: z.lazy(() => SortOrderSchema).optional(),
+  Gene: z.lazy(() => SortOrderSchema).optional(),
+  TranscriptReference: z.lazy(() => SortOrderSchema).optional(),
+  CreatedAt: z.lazy(() => SortOrderSchema).optional(),
+  UpdatedAt: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const TestGeneMinOrderByAggregateInputSchema: z.ZodType<Prisma.TestGeneMinOrderByAggregateInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  TestId: z.lazy(() => SortOrderSchema).optional(),
+  LabTestId: z.lazy(() => SortOrderSchema).optional(),
+  Gene: z.lazy(() => SortOrderSchema).optional(),
+  TranscriptReference: z.lazy(() => SortOrderSchema).optional(),
+  CreatedAt: z.lazy(() => SortOrderSchema).optional(),
+  UpdatedAt: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const TestGeneSumOrderByAggregateInputSchema: z.ZodType<Prisma.TestGeneSumOrderByAggregateInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   TestId: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -11697,15 +13385,15 @@ export const TestResultLoincSumOrderByAggregateInputSchema: z.ZodType<Prisma.Tes
   TestId: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
+export const AccountNullableRelationFilterSchema: z.ZodType<Prisma.AccountNullableRelationFilter> = z.object({
+  is: z.lazy(() => AccountWhereInputSchema).optional().nullable(),
+  isNot: z.lazy(() => AccountWhereInputSchema).optional().nullable()
+}).strict();
+
 export const SessionListRelationFilterSchema: z.ZodType<Prisma.SessionListRelationFilter> = z.object({
   every: z.lazy(() => SessionWhereInputSchema).optional(),
   some: z.lazy(() => SessionWhereInputSchema).optional(),
   none: z.lazy(() => SessionWhereInputSchema).optional()
-}).strict();
-
-export const AccountNullableRelationFilterSchema: z.ZodType<Prisma.AccountNullableRelationFilter> = z.object({
-  is: z.lazy(() => AccountWhereInputSchema).optional().nullable(),
-  isNot: z.lazy(() => AccountWhereInputSchema).optional().nullable()
 }).strict();
 
 export const SessionOrderByRelationAggregateInputSchema: z.ZodType<Prisma.SessionOrderByRelationAggregateInput> = z.object({
@@ -11842,16 +13530,14 @@ export const NullableIntFieldUpdateOperationsInputSchema: z.ZodType<Prisma.Nulla
   divide: z.number().optional()
 }).strict();
 
-export const DateTimeFieldUpdateOperationsInputSchema: z.ZodType<Prisma.DateTimeFieldUpdateOperationsInput> = z.object({
-  set: z.date().optional()
+export const NullableDateTimeFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableDateTimeFieldUpdateOperationsInput> = z.object({
+  set: z.date().optional().nullable()
 }).strict();
 
-export const UserUpdateOneWithoutAccountNestedInputSchema: z.ZodType<Prisma.UserUpdateOneWithoutAccountNestedInput> = z.object({
+export const UserUpdateOneRequiredWithoutAccountNestedInputSchema: z.ZodType<Prisma.UserUpdateOneRequiredWithoutAccountNestedInput> = z.object({
   create: z.union([ z.lazy(() => UserCreateWithoutAccountInputSchema),z.lazy(() => UserUncheckedCreateWithoutAccountInputSchema) ]).optional(),
   connectOrCreate: z.lazy(() => UserCreateOrConnectWithoutAccountInputSchema).optional(),
   upsert: z.lazy(() => UserUpsertWithoutAccountInputSchema).optional(),
-  disconnect: z.union([ z.boolean(),z.lazy(() => UserWhereInputSchema) ]).optional(),
-  delete: z.union([ z.boolean(),z.lazy(() => UserWhereInputSchema) ]).optional(),
   connect: z.lazy(() => UserWhereUniqueInputSchema).optional(),
   update: z.union([ z.lazy(() => UserUpdateToOneWithWhereWithoutAccountInputSchema),z.lazy(() => UserUpdateWithoutAccountInputSchema),z.lazy(() => UserUncheckedUpdateWithoutAccountInputSchema) ]).optional(),
 }).strict();
@@ -11882,10 +13568,6 @@ export const LabOrderAttachmentUncheckedCreateNestedManyWithoutAttachmentInputSc
   connectOrCreate: z.union([ z.lazy(() => LabOrderAttachmentCreateOrConnectWithoutAttachmentInputSchema),z.lazy(() => LabOrderAttachmentCreateOrConnectWithoutAttachmentInputSchema).array() ]).optional(),
   createMany: z.lazy(() => LabOrderAttachmentCreateManyAttachmentInputEnvelopeSchema).optional(),
   connect: z.union([ z.lazy(() => LabOrderAttachmentWhereUniqueInputSchema),z.lazy(() => LabOrderAttachmentWhereUniqueInputSchema).array() ]).optional(),
-}).strict();
-
-export const NullableDateTimeFieldUpdateOperationsInputSchema: z.ZodType<Prisma.NullableDateTimeFieldUpdateOperationsInput> = z.object({
-  set: z.date().optional().nullable()
 }).strict();
 
 export const LabOrderAttachmentUpdateManyWithoutAttachmentNestedInputSchema: z.ZodType<Prisma.LabOrderAttachmentUpdateManyWithoutAttachmentNestedInput> = z.object({
@@ -12084,6 +13766,13 @@ export const TestResultLoincUncheckedUpdateManyWithoutLOINCNestedInputSchema: z.
   deleteMany: z.union([ z.lazy(() => TestResultLoincScalarWhereInputSchema),z.lazy(() => TestResultLoincScalarWhereInputSchema).array() ]).optional(),
 }).strict();
 
+export const SponsoredTestCreateNestedManyWithoutLabInputSchema: z.ZodType<Prisma.SponsoredTestCreateNestedManyWithoutLabInput> = z.object({
+  create: z.union([ z.lazy(() => SponsoredTestCreateWithoutLabInputSchema),z.lazy(() => SponsoredTestCreateWithoutLabInputSchema).array(),z.lazy(() => SponsoredTestUncheckedCreateWithoutLabInputSchema),z.lazy(() => SponsoredTestUncheckedCreateWithoutLabInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => SponsoredTestCreateOrConnectWithoutLabInputSchema),z.lazy(() => SponsoredTestCreateOrConnectWithoutLabInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => SponsoredTestCreateManyLabInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+}).strict();
+
 export const TestCatalogCreateNestedManyWithoutLabInputSchema: z.ZodType<Prisma.TestCatalogCreateNestedManyWithoutLabInput> = z.object({
   create: z.union([ z.lazy(() => TestCatalogCreateWithoutLabInputSchema),z.lazy(() => TestCatalogCreateWithoutLabInputSchema).array(),z.lazy(() => TestCatalogUncheckedCreateWithoutLabInputSchema),z.lazy(() => TestCatalogUncheckedCreateWithoutLabInputSchema).array() ]).optional(),
   connectOrCreate: z.union([ z.lazy(() => TestCatalogCreateOrConnectWithoutLabInputSchema),z.lazy(() => TestCatalogCreateOrConnectWithoutLabInputSchema).array() ]).optional(),
@@ -12091,11 +13780,32 @@ export const TestCatalogCreateNestedManyWithoutLabInputSchema: z.ZodType<Prisma.
   connect: z.union([ z.lazy(() => TestCatalogWhereUniqueInputSchema),z.lazy(() => TestCatalogWhereUniqueInputSchema).array() ]).optional(),
 }).strict();
 
+export const SponsoredTestUncheckedCreateNestedManyWithoutLabInputSchema: z.ZodType<Prisma.SponsoredTestUncheckedCreateNestedManyWithoutLabInput> = z.object({
+  create: z.union([ z.lazy(() => SponsoredTestCreateWithoutLabInputSchema),z.lazy(() => SponsoredTestCreateWithoutLabInputSchema).array(),z.lazy(() => SponsoredTestUncheckedCreateWithoutLabInputSchema),z.lazy(() => SponsoredTestUncheckedCreateWithoutLabInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => SponsoredTestCreateOrConnectWithoutLabInputSchema),z.lazy(() => SponsoredTestCreateOrConnectWithoutLabInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => SponsoredTestCreateManyLabInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+}).strict();
+
 export const TestCatalogUncheckedCreateNestedManyWithoutLabInputSchema: z.ZodType<Prisma.TestCatalogUncheckedCreateNestedManyWithoutLabInput> = z.object({
   create: z.union([ z.lazy(() => TestCatalogCreateWithoutLabInputSchema),z.lazy(() => TestCatalogCreateWithoutLabInputSchema).array(),z.lazy(() => TestCatalogUncheckedCreateWithoutLabInputSchema),z.lazy(() => TestCatalogUncheckedCreateWithoutLabInputSchema).array() ]).optional(),
   connectOrCreate: z.union([ z.lazy(() => TestCatalogCreateOrConnectWithoutLabInputSchema),z.lazy(() => TestCatalogCreateOrConnectWithoutLabInputSchema).array() ]).optional(),
   createMany: z.lazy(() => TestCatalogCreateManyLabInputEnvelopeSchema).optional(),
   connect: z.union([ z.lazy(() => TestCatalogWhereUniqueInputSchema),z.lazy(() => TestCatalogWhereUniqueInputSchema).array() ]).optional(),
+}).strict();
+
+export const SponsoredTestUpdateManyWithoutLabNestedInputSchema: z.ZodType<Prisma.SponsoredTestUpdateManyWithoutLabNestedInput> = z.object({
+  create: z.union([ z.lazy(() => SponsoredTestCreateWithoutLabInputSchema),z.lazy(() => SponsoredTestCreateWithoutLabInputSchema).array(),z.lazy(() => SponsoredTestUncheckedCreateWithoutLabInputSchema),z.lazy(() => SponsoredTestUncheckedCreateWithoutLabInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => SponsoredTestCreateOrConnectWithoutLabInputSchema),z.lazy(() => SponsoredTestCreateOrConnectWithoutLabInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => SponsoredTestUpsertWithWhereUniqueWithoutLabInputSchema),z.lazy(() => SponsoredTestUpsertWithWhereUniqueWithoutLabInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => SponsoredTestCreateManyLabInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => SponsoredTestUpdateWithWhereUniqueWithoutLabInputSchema),z.lazy(() => SponsoredTestUpdateWithWhereUniqueWithoutLabInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => SponsoredTestUpdateManyWithWhereWithoutLabInputSchema),z.lazy(() => SponsoredTestUpdateManyWithWhereWithoutLabInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => SponsoredTestScalarWhereInputSchema),z.lazy(() => SponsoredTestScalarWhereInputSchema).array() ]).optional(),
 }).strict();
 
 export const TestCatalogUpdateManyWithoutLabNestedInputSchema: z.ZodType<Prisma.TestCatalogUpdateManyWithoutLabNestedInput> = z.object({
@@ -12118,6 +13828,20 @@ export const IntFieldUpdateOperationsInputSchema: z.ZodType<Prisma.IntFieldUpdat
   decrement: z.number().optional(),
   multiply: z.number().optional(),
   divide: z.number().optional()
+}).strict();
+
+export const SponsoredTestUncheckedUpdateManyWithoutLabNestedInputSchema: z.ZodType<Prisma.SponsoredTestUncheckedUpdateManyWithoutLabNestedInput> = z.object({
+  create: z.union([ z.lazy(() => SponsoredTestCreateWithoutLabInputSchema),z.lazy(() => SponsoredTestCreateWithoutLabInputSchema).array(),z.lazy(() => SponsoredTestUncheckedCreateWithoutLabInputSchema),z.lazy(() => SponsoredTestUncheckedCreateWithoutLabInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => SponsoredTestCreateOrConnectWithoutLabInputSchema),z.lazy(() => SponsoredTestCreateOrConnectWithoutLabInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => SponsoredTestUpsertWithWhereUniqueWithoutLabInputSchema),z.lazy(() => SponsoredTestUpsertWithWhereUniqueWithoutLabInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => SponsoredTestCreateManyLabInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => SponsoredTestUpdateWithWhereUniqueWithoutLabInputSchema),z.lazy(() => SponsoredTestUpdateWithWhereUniqueWithoutLabInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => SponsoredTestUpdateManyWithWhereWithoutLabInputSchema),z.lazy(() => SponsoredTestUpdateManyWithWhereWithoutLabInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => SponsoredTestScalarWhereInputSchema),z.lazy(() => SponsoredTestScalarWhereInputSchema).array() ]).optional(),
 }).strict();
 
 export const TestCatalogUncheckedUpdateManyWithoutLabNestedInputSchema: z.ZodType<Prisma.TestCatalogUncheckedUpdateManyWithoutLabNestedInput> = z.object({
@@ -12629,6 +14353,13 @@ export const OrganizationFavoriteTestCreateNestedManyWithoutOrganizationInputSch
   connect: z.union([ z.lazy(() => OrganizationFavoriteTestWhereUniqueInputSchema),z.lazy(() => OrganizationFavoriteTestWhereUniqueInputSchema).array() ]).optional(),
 }).strict();
 
+export const PatientOrganizationCreateNestedManyWithoutOrganizationInputSchema: z.ZodType<Prisma.PatientOrganizationCreateNestedManyWithoutOrganizationInput> = z.object({
+  create: z.union([ z.lazy(() => PatientOrganizationCreateWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationCreateWithoutOrganizationInputSchema).array(),z.lazy(() => PatientOrganizationUncheckedCreateWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationUncheckedCreateWithoutOrganizationInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => PatientOrganizationCreateOrConnectWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationCreateOrConnectWithoutOrganizationInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => PatientOrganizationCreateManyOrganizationInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => PatientOrganizationWhereUniqueInputSchema),z.lazy(() => PatientOrganizationWhereUniqueInputSchema).array() ]).optional(),
+}).strict();
+
 export const ProviderOrganizationCreateNestedManyWithoutOrganizationInputSchema: z.ZodType<Prisma.ProviderOrganizationCreateNestedManyWithoutOrganizationInput> = z.object({
   create: z.union([ z.lazy(() => ProviderOrganizationCreateWithoutOrganizationInputSchema),z.lazy(() => ProviderOrganizationCreateWithoutOrganizationInputSchema).array(),z.lazy(() => ProviderOrganizationUncheckedCreateWithoutOrganizationInputSchema),z.lazy(() => ProviderOrganizationUncheckedCreateWithoutOrganizationInputSchema).array() ]).optional(),
   connectOrCreate: z.union([ z.lazy(() => ProviderOrganizationCreateOrConnectWithoutOrganizationInputSchema),z.lazy(() => ProviderOrganizationCreateOrConnectWithoutOrganizationInputSchema).array() ]).optional(),
@@ -12655,6 +14386,13 @@ export const OrganizationFavoriteTestUncheckedCreateNestedManyWithoutOrganizatio
   connectOrCreate: z.union([ z.lazy(() => OrganizationFavoriteTestCreateOrConnectWithoutOrganizationInputSchema),z.lazy(() => OrganizationFavoriteTestCreateOrConnectWithoutOrganizationInputSchema).array() ]).optional(),
   createMany: z.lazy(() => OrganizationFavoriteTestCreateManyOrganizationInputEnvelopeSchema).optional(),
   connect: z.union([ z.lazy(() => OrganizationFavoriteTestWhereUniqueInputSchema),z.lazy(() => OrganizationFavoriteTestWhereUniqueInputSchema).array() ]).optional(),
+}).strict();
+
+export const PatientOrganizationUncheckedCreateNestedManyWithoutOrganizationInputSchema: z.ZodType<Prisma.PatientOrganizationUncheckedCreateNestedManyWithoutOrganizationInput> = z.object({
+  create: z.union([ z.lazy(() => PatientOrganizationCreateWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationCreateWithoutOrganizationInputSchema).array(),z.lazy(() => PatientOrganizationUncheckedCreateWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationUncheckedCreateWithoutOrganizationInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => PatientOrganizationCreateOrConnectWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationCreateOrConnectWithoutOrganizationInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => PatientOrganizationCreateManyOrganizationInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => PatientOrganizationWhereUniqueInputSchema),z.lazy(() => PatientOrganizationWhereUniqueInputSchema).array() ]).optional(),
 }).strict();
 
 export const ProviderOrganizationUncheckedCreateNestedManyWithoutOrganizationInputSchema: z.ZodType<Prisma.ProviderOrganizationUncheckedCreateNestedManyWithoutOrganizationInput> = z.object({
@@ -12716,6 +14454,20 @@ export const OrganizationFavoriteTestUpdateManyWithoutOrganizationNestedInputSch
   deleteMany: z.union([ z.lazy(() => OrganizationFavoriteTestScalarWhereInputSchema),z.lazy(() => OrganizationFavoriteTestScalarWhereInputSchema).array() ]).optional(),
 }).strict();
 
+export const PatientOrganizationUpdateManyWithoutOrganizationNestedInputSchema: z.ZodType<Prisma.PatientOrganizationUpdateManyWithoutOrganizationNestedInput> = z.object({
+  create: z.union([ z.lazy(() => PatientOrganizationCreateWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationCreateWithoutOrganizationInputSchema).array(),z.lazy(() => PatientOrganizationUncheckedCreateWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationUncheckedCreateWithoutOrganizationInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => PatientOrganizationCreateOrConnectWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationCreateOrConnectWithoutOrganizationInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => PatientOrganizationUpsertWithWhereUniqueWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationUpsertWithWhereUniqueWithoutOrganizationInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => PatientOrganizationCreateManyOrganizationInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => PatientOrganizationWhereUniqueInputSchema),z.lazy(() => PatientOrganizationWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => PatientOrganizationWhereUniqueInputSchema),z.lazy(() => PatientOrganizationWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => PatientOrganizationWhereUniqueInputSchema),z.lazy(() => PatientOrganizationWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => PatientOrganizationWhereUniqueInputSchema),z.lazy(() => PatientOrganizationWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => PatientOrganizationUpdateWithWhereUniqueWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationUpdateWithWhereUniqueWithoutOrganizationInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => PatientOrganizationUpdateManyWithWhereWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationUpdateManyWithWhereWithoutOrganizationInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => PatientOrganizationScalarWhereInputSchema),z.lazy(() => PatientOrganizationScalarWhereInputSchema).array() ]).optional(),
+}).strict();
+
 export const ProviderOrganizationUpdateManyWithoutOrganizationNestedInputSchema: z.ZodType<Prisma.ProviderOrganizationUpdateManyWithoutOrganizationNestedInput> = z.object({
   create: z.union([ z.lazy(() => ProviderOrganizationCreateWithoutOrganizationInputSchema),z.lazy(() => ProviderOrganizationCreateWithoutOrganizationInputSchema).array(),z.lazy(() => ProviderOrganizationUncheckedCreateWithoutOrganizationInputSchema),z.lazy(() => ProviderOrganizationUncheckedCreateWithoutOrganizationInputSchema).array() ]).optional(),
   connectOrCreate: z.union([ z.lazy(() => ProviderOrganizationCreateOrConnectWithoutOrganizationInputSchema),z.lazy(() => ProviderOrganizationCreateOrConnectWithoutOrganizationInputSchema).array() ]).optional(),
@@ -12772,6 +14524,20 @@ export const OrganizationFavoriteTestUncheckedUpdateManyWithoutOrganizationNeste
   deleteMany: z.union([ z.lazy(() => OrganizationFavoriteTestScalarWhereInputSchema),z.lazy(() => OrganizationFavoriteTestScalarWhereInputSchema).array() ]).optional(),
 }).strict();
 
+export const PatientOrganizationUncheckedUpdateManyWithoutOrganizationNestedInputSchema: z.ZodType<Prisma.PatientOrganizationUncheckedUpdateManyWithoutOrganizationNestedInput> = z.object({
+  create: z.union([ z.lazy(() => PatientOrganizationCreateWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationCreateWithoutOrganizationInputSchema).array(),z.lazy(() => PatientOrganizationUncheckedCreateWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationUncheckedCreateWithoutOrganizationInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => PatientOrganizationCreateOrConnectWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationCreateOrConnectWithoutOrganizationInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => PatientOrganizationUpsertWithWhereUniqueWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationUpsertWithWhereUniqueWithoutOrganizationInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => PatientOrganizationCreateManyOrganizationInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => PatientOrganizationWhereUniqueInputSchema),z.lazy(() => PatientOrganizationWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => PatientOrganizationWhereUniqueInputSchema),z.lazy(() => PatientOrganizationWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => PatientOrganizationWhereUniqueInputSchema),z.lazy(() => PatientOrganizationWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => PatientOrganizationWhereUniqueInputSchema),z.lazy(() => PatientOrganizationWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => PatientOrganizationUpdateWithWhereUniqueWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationUpdateWithWhereUniqueWithoutOrganizationInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => PatientOrganizationUpdateManyWithWhereWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationUpdateManyWithWhereWithoutOrganizationInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => PatientOrganizationScalarWhereInputSchema),z.lazy(() => PatientOrganizationScalarWhereInputSchema).array() ]).optional(),
+}).strict();
+
 export const ProviderOrganizationUncheckedUpdateManyWithoutOrganizationNestedInputSchema: z.ZodType<Prisma.ProviderOrganizationUncheckedUpdateManyWithoutOrganizationNestedInput> = z.object({
   create: z.union([ z.lazy(() => ProviderOrganizationCreateWithoutOrganizationInputSchema),z.lazy(() => ProviderOrganizationCreateWithoutOrganizationInputSchema).array(),z.lazy(() => ProviderOrganizationUncheckedCreateWithoutOrganizationInputSchema),z.lazy(() => ProviderOrganizationUncheckedCreateWithoutOrganizationInputSchema).array() ]).optional(),
   connectOrCreate: z.union([ z.lazy(() => ProviderOrganizationCreateOrConnectWithoutOrganizationInputSchema),z.lazy(() => ProviderOrganizationCreateOrConnectWithoutOrganizationInputSchema).array() ]).optional(),
@@ -12825,11 +14591,25 @@ export const LabOrderCreateNestedManyWithoutPatientInputSchema: z.ZodType<Prisma
   connect: z.union([ z.lazy(() => LabOrderWhereUniqueInputSchema),z.lazy(() => LabOrderWhereUniqueInputSchema).array() ]).optional(),
 }).strict();
 
+export const PatientOrganizationCreateNestedManyWithoutPatientInputSchema: z.ZodType<Prisma.PatientOrganizationCreateNestedManyWithoutPatientInput> = z.object({
+  create: z.union([ z.lazy(() => PatientOrganizationCreateWithoutPatientInputSchema),z.lazy(() => PatientOrganizationCreateWithoutPatientInputSchema).array(),z.lazy(() => PatientOrganizationUncheckedCreateWithoutPatientInputSchema),z.lazy(() => PatientOrganizationUncheckedCreateWithoutPatientInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => PatientOrganizationCreateOrConnectWithoutPatientInputSchema),z.lazy(() => PatientOrganizationCreateOrConnectWithoutPatientInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => PatientOrganizationCreateManyPatientInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => PatientOrganizationWhereUniqueInputSchema),z.lazy(() => PatientOrganizationWhereUniqueInputSchema).array() ]).optional(),
+}).strict();
+
 export const LabOrderUncheckedCreateNestedManyWithoutPatientInputSchema: z.ZodType<Prisma.LabOrderUncheckedCreateNestedManyWithoutPatientInput> = z.object({
   create: z.union([ z.lazy(() => LabOrderCreateWithoutPatientInputSchema),z.lazy(() => LabOrderCreateWithoutPatientInputSchema).array(),z.lazy(() => LabOrderUncheckedCreateWithoutPatientInputSchema),z.lazy(() => LabOrderUncheckedCreateWithoutPatientInputSchema).array() ]).optional(),
   connectOrCreate: z.union([ z.lazy(() => LabOrderCreateOrConnectWithoutPatientInputSchema),z.lazy(() => LabOrderCreateOrConnectWithoutPatientInputSchema).array() ]).optional(),
   createMany: z.lazy(() => LabOrderCreateManyPatientInputEnvelopeSchema).optional(),
   connect: z.union([ z.lazy(() => LabOrderWhereUniqueInputSchema),z.lazy(() => LabOrderWhereUniqueInputSchema).array() ]).optional(),
+}).strict();
+
+export const PatientOrganizationUncheckedCreateNestedManyWithoutPatientInputSchema: z.ZodType<Prisma.PatientOrganizationUncheckedCreateNestedManyWithoutPatientInput> = z.object({
+  create: z.union([ z.lazy(() => PatientOrganizationCreateWithoutPatientInputSchema),z.lazy(() => PatientOrganizationCreateWithoutPatientInputSchema).array(),z.lazy(() => PatientOrganizationUncheckedCreateWithoutPatientInputSchema),z.lazy(() => PatientOrganizationUncheckedCreateWithoutPatientInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => PatientOrganizationCreateOrConnectWithoutPatientInputSchema),z.lazy(() => PatientOrganizationCreateOrConnectWithoutPatientInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => PatientOrganizationCreateManyPatientInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => PatientOrganizationWhereUniqueInputSchema),z.lazy(() => PatientOrganizationWhereUniqueInputSchema).array() ]).optional(),
 }).strict();
 
 export const LabOrderUpdateManyWithoutPatientNestedInputSchema: z.ZodType<Prisma.LabOrderUpdateManyWithoutPatientNestedInput> = z.object({
@@ -12846,6 +14626,20 @@ export const LabOrderUpdateManyWithoutPatientNestedInputSchema: z.ZodType<Prisma
   deleteMany: z.union([ z.lazy(() => LabOrderScalarWhereInputSchema),z.lazy(() => LabOrderScalarWhereInputSchema).array() ]).optional(),
 }).strict();
 
+export const PatientOrganizationUpdateManyWithoutPatientNestedInputSchema: z.ZodType<Prisma.PatientOrganizationUpdateManyWithoutPatientNestedInput> = z.object({
+  create: z.union([ z.lazy(() => PatientOrganizationCreateWithoutPatientInputSchema),z.lazy(() => PatientOrganizationCreateWithoutPatientInputSchema).array(),z.lazy(() => PatientOrganizationUncheckedCreateWithoutPatientInputSchema),z.lazy(() => PatientOrganizationUncheckedCreateWithoutPatientInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => PatientOrganizationCreateOrConnectWithoutPatientInputSchema),z.lazy(() => PatientOrganizationCreateOrConnectWithoutPatientInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => PatientOrganizationUpsertWithWhereUniqueWithoutPatientInputSchema),z.lazy(() => PatientOrganizationUpsertWithWhereUniqueWithoutPatientInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => PatientOrganizationCreateManyPatientInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => PatientOrganizationWhereUniqueInputSchema),z.lazy(() => PatientOrganizationWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => PatientOrganizationWhereUniqueInputSchema),z.lazy(() => PatientOrganizationWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => PatientOrganizationWhereUniqueInputSchema),z.lazy(() => PatientOrganizationWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => PatientOrganizationWhereUniqueInputSchema),z.lazy(() => PatientOrganizationWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => PatientOrganizationUpdateWithWhereUniqueWithoutPatientInputSchema),z.lazy(() => PatientOrganizationUpdateWithWhereUniqueWithoutPatientInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => PatientOrganizationUpdateManyWithWhereWithoutPatientInputSchema),z.lazy(() => PatientOrganizationUpdateManyWithWhereWithoutPatientInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => PatientOrganizationScalarWhereInputSchema),z.lazy(() => PatientOrganizationScalarWhereInputSchema).array() ]).optional(),
+}).strict();
+
 export const LabOrderUncheckedUpdateManyWithoutPatientNestedInputSchema: z.ZodType<Prisma.LabOrderUncheckedUpdateManyWithoutPatientNestedInput> = z.object({
   create: z.union([ z.lazy(() => LabOrderCreateWithoutPatientInputSchema),z.lazy(() => LabOrderCreateWithoutPatientInputSchema).array(),z.lazy(() => LabOrderUncheckedCreateWithoutPatientInputSchema),z.lazy(() => LabOrderUncheckedCreateWithoutPatientInputSchema).array() ]).optional(),
   connectOrCreate: z.union([ z.lazy(() => LabOrderCreateOrConnectWithoutPatientInputSchema),z.lazy(() => LabOrderCreateOrConnectWithoutPatientInputSchema).array() ]).optional(),
@@ -12858,6 +14652,52 @@ export const LabOrderUncheckedUpdateManyWithoutPatientNestedInputSchema: z.ZodTy
   update: z.union([ z.lazy(() => LabOrderUpdateWithWhereUniqueWithoutPatientInputSchema),z.lazy(() => LabOrderUpdateWithWhereUniqueWithoutPatientInputSchema).array() ]).optional(),
   updateMany: z.union([ z.lazy(() => LabOrderUpdateManyWithWhereWithoutPatientInputSchema),z.lazy(() => LabOrderUpdateManyWithWhereWithoutPatientInputSchema).array() ]).optional(),
   deleteMany: z.union([ z.lazy(() => LabOrderScalarWhereInputSchema),z.lazy(() => LabOrderScalarWhereInputSchema).array() ]).optional(),
+}).strict();
+
+export const PatientOrganizationUncheckedUpdateManyWithoutPatientNestedInputSchema: z.ZodType<Prisma.PatientOrganizationUncheckedUpdateManyWithoutPatientNestedInput> = z.object({
+  create: z.union([ z.lazy(() => PatientOrganizationCreateWithoutPatientInputSchema),z.lazy(() => PatientOrganizationCreateWithoutPatientInputSchema).array(),z.lazy(() => PatientOrganizationUncheckedCreateWithoutPatientInputSchema),z.lazy(() => PatientOrganizationUncheckedCreateWithoutPatientInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => PatientOrganizationCreateOrConnectWithoutPatientInputSchema),z.lazy(() => PatientOrganizationCreateOrConnectWithoutPatientInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => PatientOrganizationUpsertWithWhereUniqueWithoutPatientInputSchema),z.lazy(() => PatientOrganizationUpsertWithWhereUniqueWithoutPatientInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => PatientOrganizationCreateManyPatientInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => PatientOrganizationWhereUniqueInputSchema),z.lazy(() => PatientOrganizationWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => PatientOrganizationWhereUniqueInputSchema),z.lazy(() => PatientOrganizationWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => PatientOrganizationWhereUniqueInputSchema),z.lazy(() => PatientOrganizationWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => PatientOrganizationWhereUniqueInputSchema),z.lazy(() => PatientOrganizationWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => PatientOrganizationUpdateWithWhereUniqueWithoutPatientInputSchema),z.lazy(() => PatientOrganizationUpdateWithWhereUniqueWithoutPatientInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => PatientOrganizationUpdateManyWithWhereWithoutPatientInputSchema),z.lazy(() => PatientOrganizationUpdateManyWithWhereWithoutPatientInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => PatientOrganizationScalarWhereInputSchema),z.lazy(() => PatientOrganizationScalarWhereInputSchema).array() ]).optional(),
+}).strict();
+
+export const OrganizationCreateNestedOneWithoutPatientOrganizationInputSchema: z.ZodType<Prisma.OrganizationCreateNestedOneWithoutPatientOrganizationInput> = z.object({
+  create: z.union([ z.lazy(() => OrganizationCreateWithoutPatientOrganizationInputSchema),z.lazy(() => OrganizationUncheckedCreateWithoutPatientOrganizationInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => OrganizationCreateOrConnectWithoutPatientOrganizationInputSchema).optional(),
+  connect: z.lazy(() => OrganizationWhereUniqueInputSchema).optional()
+}).strict();
+
+export const PatientCreateNestedOneWithoutPatientOrganizationInputSchema: z.ZodType<Prisma.PatientCreateNestedOneWithoutPatientOrganizationInput> = z.object({
+  create: z.union([ z.lazy(() => PatientCreateWithoutPatientOrganizationInputSchema),z.lazy(() => PatientUncheckedCreateWithoutPatientOrganizationInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => PatientCreateOrConnectWithoutPatientOrganizationInputSchema).optional(),
+  connect: z.lazy(() => PatientWhereUniqueInputSchema).optional()
+}).strict();
+
+export const OrganizationUpdateOneRequiredWithoutPatientOrganizationNestedInputSchema: z.ZodType<Prisma.OrganizationUpdateOneRequiredWithoutPatientOrganizationNestedInput> = z.object({
+  create: z.union([ z.lazy(() => OrganizationCreateWithoutPatientOrganizationInputSchema),z.lazy(() => OrganizationUncheckedCreateWithoutPatientOrganizationInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => OrganizationCreateOrConnectWithoutPatientOrganizationInputSchema).optional(),
+  upsert: z.lazy(() => OrganizationUpsertWithoutPatientOrganizationInputSchema).optional(),
+  connect: z.lazy(() => OrganizationWhereUniqueInputSchema).optional(),
+  update: z.union([ z.lazy(() => OrganizationUpdateToOneWithWhereWithoutPatientOrganizationInputSchema),z.lazy(() => OrganizationUpdateWithoutPatientOrganizationInputSchema),z.lazy(() => OrganizationUncheckedUpdateWithoutPatientOrganizationInputSchema) ]).optional(),
+}).strict();
+
+export const PatientUpdateOneRequiredWithoutPatientOrganizationNestedInputSchema: z.ZodType<Prisma.PatientUpdateOneRequiredWithoutPatientOrganizationNestedInput> = z.object({
+  create: z.union([ z.lazy(() => PatientCreateWithoutPatientOrganizationInputSchema),z.lazy(() => PatientUncheckedCreateWithoutPatientOrganizationInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => PatientCreateOrConnectWithoutPatientOrganizationInputSchema).optional(),
+  upsert: z.lazy(() => PatientUpsertWithoutPatientOrganizationInputSchema).optional(),
+  connect: z.lazy(() => PatientWhereUniqueInputSchema).optional(),
+  update: z.union([ z.lazy(() => PatientUpdateToOneWithWhereWithoutPatientOrganizationInputSchema),z.lazy(() => PatientUpdateWithoutPatientOrganizationInputSchema),z.lazy(() => PatientUncheckedUpdateWithoutPatientOrganizationInputSchema) ]).optional(),
+}).strict();
+
+export const DateTimeFieldUpdateOperationsInputSchema: z.ZodType<Prisma.DateTimeFieldUpdateOperationsInput> = z.object({
+  set: z.date().optional()
 }).strict();
 
 export const LabOrderCreateNestedManyWithoutOrderingProviderInputSchema: z.ZodType<Prisma.LabOrderCreateNestedManyWithoutOrderingProviderInput> = z.object({
@@ -13144,12 +14984,10 @@ export const ProviderCreateNestedOneWithoutProviderOrganizationInputSchema: z.Zo
   connect: z.lazy(() => ProviderWhereUniqueInputSchema).optional()
 }).strict();
 
-export const OrganizationUpdateOneWithoutProviderOrganizationNestedInputSchema: z.ZodType<Prisma.OrganizationUpdateOneWithoutProviderOrganizationNestedInput> = z.object({
+export const OrganizationUpdateOneRequiredWithoutProviderOrganizationNestedInputSchema: z.ZodType<Prisma.OrganizationUpdateOneRequiredWithoutProviderOrganizationNestedInput> = z.object({
   create: z.union([ z.lazy(() => OrganizationCreateWithoutProviderOrganizationInputSchema),z.lazy(() => OrganizationUncheckedCreateWithoutProviderOrganizationInputSchema) ]).optional(),
   connectOrCreate: z.lazy(() => OrganizationCreateOrConnectWithoutProviderOrganizationInputSchema).optional(),
   upsert: z.lazy(() => OrganizationUpsertWithoutProviderOrganizationInputSchema).optional(),
-  disconnect: z.union([ z.boolean(),z.lazy(() => OrganizationWhereInputSchema) ]).optional(),
-  delete: z.union([ z.boolean(),z.lazy(() => OrganizationWhereInputSchema) ]).optional(),
   connect: z.lazy(() => OrganizationWhereUniqueInputSchema).optional(),
   update: z.union([ z.lazy(() => OrganizationUpdateToOneWithWhereWithoutProviderOrganizationInputSchema),z.lazy(() => OrganizationUpdateWithoutProviderOrganizationInputSchema),z.lazy(() => OrganizationUncheckedUpdateWithoutProviderOrganizationInputSchema) ]).optional(),
 }).strict();
@@ -13174,6 +15012,152 @@ export const UserUpdateOneRequiredWithoutSessionNestedInputSchema: z.ZodType<Pri
   upsert: z.lazy(() => UserUpsertWithoutSessionInputSchema).optional(),
   connect: z.lazy(() => UserWhereUniqueInputSchema).optional(),
   update: z.union([ z.lazy(() => UserUpdateToOneWithWhereWithoutSessionInputSchema),z.lazy(() => UserUpdateWithoutSessionInputSchema),z.lazy(() => UserUncheckedUpdateWithoutSessionInputSchema) ]).optional(),
+}).strict();
+
+export const SponsoredProgramCreateNestedManyWithoutSponsorInputSchema: z.ZodType<Prisma.SponsoredProgramCreateNestedManyWithoutSponsorInput> = z.object({
+  create: z.union([ z.lazy(() => SponsoredProgramCreateWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramCreateWithoutSponsorInputSchema).array(),z.lazy(() => SponsoredProgramUncheckedCreateWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramUncheckedCreateWithoutSponsorInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => SponsoredProgramCreateOrConnectWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramCreateOrConnectWithoutSponsorInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => SponsoredProgramCreateManySponsorInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => SponsoredProgramWhereUniqueInputSchema),z.lazy(() => SponsoredProgramWhereUniqueInputSchema).array() ]).optional(),
+}).strict();
+
+export const SponsoredProgramUncheckedCreateNestedManyWithoutSponsorInputSchema: z.ZodType<Prisma.SponsoredProgramUncheckedCreateNestedManyWithoutSponsorInput> = z.object({
+  create: z.union([ z.lazy(() => SponsoredProgramCreateWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramCreateWithoutSponsorInputSchema).array(),z.lazy(() => SponsoredProgramUncheckedCreateWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramUncheckedCreateWithoutSponsorInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => SponsoredProgramCreateOrConnectWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramCreateOrConnectWithoutSponsorInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => SponsoredProgramCreateManySponsorInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => SponsoredProgramWhereUniqueInputSchema),z.lazy(() => SponsoredProgramWhereUniqueInputSchema).array() ]).optional(),
+}).strict();
+
+export const SponsoredProgramUpdateManyWithoutSponsorNestedInputSchema: z.ZodType<Prisma.SponsoredProgramUpdateManyWithoutSponsorNestedInput> = z.object({
+  create: z.union([ z.lazy(() => SponsoredProgramCreateWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramCreateWithoutSponsorInputSchema).array(),z.lazy(() => SponsoredProgramUncheckedCreateWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramUncheckedCreateWithoutSponsorInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => SponsoredProgramCreateOrConnectWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramCreateOrConnectWithoutSponsorInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => SponsoredProgramUpsertWithWhereUniqueWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramUpsertWithWhereUniqueWithoutSponsorInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => SponsoredProgramCreateManySponsorInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => SponsoredProgramWhereUniqueInputSchema),z.lazy(() => SponsoredProgramWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => SponsoredProgramWhereUniqueInputSchema),z.lazy(() => SponsoredProgramWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => SponsoredProgramWhereUniqueInputSchema),z.lazy(() => SponsoredProgramWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => SponsoredProgramWhereUniqueInputSchema),z.lazy(() => SponsoredProgramWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => SponsoredProgramUpdateWithWhereUniqueWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramUpdateWithWhereUniqueWithoutSponsorInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => SponsoredProgramUpdateManyWithWhereWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramUpdateManyWithWhereWithoutSponsorInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => SponsoredProgramScalarWhereInputSchema),z.lazy(() => SponsoredProgramScalarWhereInputSchema).array() ]).optional(),
+}).strict();
+
+export const SponsoredProgramUncheckedUpdateManyWithoutSponsorNestedInputSchema: z.ZodType<Prisma.SponsoredProgramUncheckedUpdateManyWithoutSponsorNestedInput> = z.object({
+  create: z.union([ z.lazy(() => SponsoredProgramCreateWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramCreateWithoutSponsorInputSchema).array(),z.lazy(() => SponsoredProgramUncheckedCreateWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramUncheckedCreateWithoutSponsorInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => SponsoredProgramCreateOrConnectWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramCreateOrConnectWithoutSponsorInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => SponsoredProgramUpsertWithWhereUniqueWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramUpsertWithWhereUniqueWithoutSponsorInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => SponsoredProgramCreateManySponsorInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => SponsoredProgramWhereUniqueInputSchema),z.lazy(() => SponsoredProgramWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => SponsoredProgramWhereUniqueInputSchema),z.lazy(() => SponsoredProgramWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => SponsoredProgramWhereUniqueInputSchema),z.lazy(() => SponsoredProgramWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => SponsoredProgramWhereUniqueInputSchema),z.lazy(() => SponsoredProgramWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => SponsoredProgramUpdateWithWhereUniqueWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramUpdateWithWhereUniqueWithoutSponsorInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => SponsoredProgramUpdateManyWithWhereWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramUpdateManyWithWhereWithoutSponsorInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => SponsoredProgramScalarWhereInputSchema),z.lazy(() => SponsoredProgramScalarWhereInputSchema).array() ]).optional(),
+}).strict();
+
+export const SponsorCreateNestedOneWithoutSponsoredProgramInputSchema: z.ZodType<Prisma.SponsorCreateNestedOneWithoutSponsoredProgramInput> = z.object({
+  create: z.union([ z.lazy(() => SponsorCreateWithoutSponsoredProgramInputSchema),z.lazy(() => SponsorUncheckedCreateWithoutSponsoredProgramInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => SponsorCreateOrConnectWithoutSponsoredProgramInputSchema).optional(),
+  connect: z.lazy(() => SponsorWhereUniqueInputSchema).optional()
+}).strict();
+
+export const SponsoredTestCreateNestedManyWithoutSponsoredProgramInputSchema: z.ZodType<Prisma.SponsoredTestCreateNestedManyWithoutSponsoredProgramInput> = z.object({
+  create: z.union([ z.lazy(() => SponsoredTestCreateWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestCreateWithoutSponsoredProgramInputSchema).array(),z.lazy(() => SponsoredTestUncheckedCreateWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestUncheckedCreateWithoutSponsoredProgramInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => SponsoredTestCreateOrConnectWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestCreateOrConnectWithoutSponsoredProgramInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => SponsoredTestCreateManySponsoredProgramInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+}).strict();
+
+export const SponsoredTestUncheckedCreateNestedManyWithoutSponsoredProgramInputSchema: z.ZodType<Prisma.SponsoredTestUncheckedCreateNestedManyWithoutSponsoredProgramInput> = z.object({
+  create: z.union([ z.lazy(() => SponsoredTestCreateWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestCreateWithoutSponsoredProgramInputSchema).array(),z.lazy(() => SponsoredTestUncheckedCreateWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestUncheckedCreateWithoutSponsoredProgramInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => SponsoredTestCreateOrConnectWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestCreateOrConnectWithoutSponsoredProgramInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => SponsoredTestCreateManySponsoredProgramInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+}).strict();
+
+export const SponsorUpdateOneWithoutSponsoredProgramNestedInputSchema: z.ZodType<Prisma.SponsorUpdateOneWithoutSponsoredProgramNestedInput> = z.object({
+  create: z.union([ z.lazy(() => SponsorCreateWithoutSponsoredProgramInputSchema),z.lazy(() => SponsorUncheckedCreateWithoutSponsoredProgramInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => SponsorCreateOrConnectWithoutSponsoredProgramInputSchema).optional(),
+  upsert: z.lazy(() => SponsorUpsertWithoutSponsoredProgramInputSchema).optional(),
+  disconnect: z.union([ z.boolean(),z.lazy(() => SponsorWhereInputSchema) ]).optional(),
+  delete: z.union([ z.boolean(),z.lazy(() => SponsorWhereInputSchema) ]).optional(),
+  connect: z.lazy(() => SponsorWhereUniqueInputSchema).optional(),
+  update: z.union([ z.lazy(() => SponsorUpdateToOneWithWhereWithoutSponsoredProgramInputSchema),z.lazy(() => SponsorUpdateWithoutSponsoredProgramInputSchema),z.lazy(() => SponsorUncheckedUpdateWithoutSponsoredProgramInputSchema) ]).optional(),
+}).strict();
+
+export const SponsoredTestUpdateManyWithoutSponsoredProgramNestedInputSchema: z.ZodType<Prisma.SponsoredTestUpdateManyWithoutSponsoredProgramNestedInput> = z.object({
+  create: z.union([ z.lazy(() => SponsoredTestCreateWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestCreateWithoutSponsoredProgramInputSchema).array(),z.lazy(() => SponsoredTestUncheckedCreateWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestUncheckedCreateWithoutSponsoredProgramInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => SponsoredTestCreateOrConnectWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestCreateOrConnectWithoutSponsoredProgramInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => SponsoredTestUpsertWithWhereUniqueWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestUpsertWithWhereUniqueWithoutSponsoredProgramInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => SponsoredTestCreateManySponsoredProgramInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => SponsoredTestUpdateWithWhereUniqueWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestUpdateWithWhereUniqueWithoutSponsoredProgramInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => SponsoredTestUpdateManyWithWhereWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestUpdateManyWithWhereWithoutSponsoredProgramInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => SponsoredTestScalarWhereInputSchema),z.lazy(() => SponsoredTestScalarWhereInputSchema).array() ]).optional(),
+}).strict();
+
+export const SponsoredTestUncheckedUpdateManyWithoutSponsoredProgramNestedInputSchema: z.ZodType<Prisma.SponsoredTestUncheckedUpdateManyWithoutSponsoredProgramNestedInput> = z.object({
+  create: z.union([ z.lazy(() => SponsoredTestCreateWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestCreateWithoutSponsoredProgramInputSchema).array(),z.lazy(() => SponsoredTestUncheckedCreateWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestUncheckedCreateWithoutSponsoredProgramInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => SponsoredTestCreateOrConnectWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestCreateOrConnectWithoutSponsoredProgramInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => SponsoredTestUpsertWithWhereUniqueWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestUpsertWithWhereUniqueWithoutSponsoredProgramInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => SponsoredTestCreateManySponsoredProgramInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => SponsoredTestUpdateWithWhereUniqueWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestUpdateWithWhereUniqueWithoutSponsoredProgramInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => SponsoredTestUpdateManyWithWhereWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestUpdateManyWithWhereWithoutSponsoredProgramInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => SponsoredTestScalarWhereInputSchema),z.lazy(() => SponsoredTestScalarWhereInputSchema).array() ]).optional(),
+}).strict();
+
+export const LabCreateNestedOneWithoutSponsoredTestInputSchema: z.ZodType<Prisma.LabCreateNestedOneWithoutSponsoredTestInput> = z.object({
+  create: z.union([ z.lazy(() => LabCreateWithoutSponsoredTestInputSchema),z.lazy(() => LabUncheckedCreateWithoutSponsoredTestInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => LabCreateOrConnectWithoutSponsoredTestInputSchema).optional(),
+  connect: z.lazy(() => LabWhereUniqueInputSchema).optional()
+}).strict();
+
+export const SponsoredProgramCreateNestedOneWithoutSponsoredTestInputSchema: z.ZodType<Prisma.SponsoredProgramCreateNestedOneWithoutSponsoredTestInput> = z.object({
+  create: z.union([ z.lazy(() => SponsoredProgramCreateWithoutSponsoredTestInputSchema),z.lazy(() => SponsoredProgramUncheckedCreateWithoutSponsoredTestInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => SponsoredProgramCreateOrConnectWithoutSponsoredTestInputSchema).optional(),
+  connect: z.lazy(() => SponsoredProgramWhereUniqueInputSchema).optional()
+}).strict();
+
+export const TestCatalogCreateNestedOneWithoutSponsoredTestInputSchema: z.ZodType<Prisma.TestCatalogCreateNestedOneWithoutSponsoredTestInput> = z.object({
+  create: z.union([ z.lazy(() => TestCatalogCreateWithoutSponsoredTestInputSchema),z.lazy(() => TestCatalogUncheckedCreateWithoutSponsoredTestInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => TestCatalogCreateOrConnectWithoutSponsoredTestInputSchema).optional(),
+  connect: z.lazy(() => TestCatalogWhereUniqueInputSchema).optional()
+}).strict();
+
+export const LabUpdateOneWithoutSponsoredTestNestedInputSchema: z.ZodType<Prisma.LabUpdateOneWithoutSponsoredTestNestedInput> = z.object({
+  create: z.union([ z.lazy(() => LabCreateWithoutSponsoredTestInputSchema),z.lazy(() => LabUncheckedCreateWithoutSponsoredTestInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => LabCreateOrConnectWithoutSponsoredTestInputSchema).optional(),
+  upsert: z.lazy(() => LabUpsertWithoutSponsoredTestInputSchema).optional(),
+  disconnect: z.union([ z.boolean(),z.lazy(() => LabWhereInputSchema) ]).optional(),
+  delete: z.union([ z.boolean(),z.lazy(() => LabWhereInputSchema) ]).optional(),
+  connect: z.lazy(() => LabWhereUniqueInputSchema).optional(),
+  update: z.union([ z.lazy(() => LabUpdateToOneWithWhereWithoutSponsoredTestInputSchema),z.lazy(() => LabUpdateWithoutSponsoredTestInputSchema),z.lazy(() => LabUncheckedUpdateWithoutSponsoredTestInputSchema) ]).optional(),
+}).strict();
+
+export const SponsoredProgramUpdateOneWithoutSponsoredTestNestedInputSchema: z.ZodType<Prisma.SponsoredProgramUpdateOneWithoutSponsoredTestNestedInput> = z.object({
+  create: z.union([ z.lazy(() => SponsoredProgramCreateWithoutSponsoredTestInputSchema),z.lazy(() => SponsoredProgramUncheckedCreateWithoutSponsoredTestInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => SponsoredProgramCreateOrConnectWithoutSponsoredTestInputSchema).optional(),
+  upsert: z.lazy(() => SponsoredProgramUpsertWithoutSponsoredTestInputSchema).optional(),
+  disconnect: z.union([ z.boolean(),z.lazy(() => SponsoredProgramWhereInputSchema) ]).optional(),
+  delete: z.union([ z.boolean(),z.lazy(() => SponsoredProgramWhereInputSchema) ]).optional(),
+  connect: z.lazy(() => SponsoredProgramWhereUniqueInputSchema).optional(),
+  update: z.union([ z.lazy(() => SponsoredProgramUpdateToOneWithWhereWithoutSponsoredTestInputSchema),z.lazy(() => SponsoredProgramUpdateWithoutSponsoredTestInputSchema),z.lazy(() => SponsoredProgramUncheckedUpdateWithoutSponsoredTestInputSchema) ]).optional(),
+}).strict();
+
+export const TestCatalogUpdateOneRequiredWithoutSponsoredTestNestedInputSchema: z.ZodType<Prisma.TestCatalogUpdateOneRequiredWithoutSponsoredTestNestedInput> = z.object({
+  create: z.union([ z.lazy(() => TestCatalogCreateWithoutSponsoredTestInputSchema),z.lazy(() => TestCatalogUncheckedCreateWithoutSponsoredTestInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => TestCatalogCreateOrConnectWithoutSponsoredTestInputSchema).optional(),
+  upsert: z.lazy(() => TestCatalogUpsertWithoutSponsoredTestInputSchema).optional(),
+  connect: z.lazy(() => TestCatalogWhereUniqueInputSchema).optional(),
+  update: z.union([ z.lazy(() => TestCatalogUpdateToOneWithWhereWithoutSponsoredTestInputSchema),z.lazy(() => TestCatalogUpdateWithoutSponsoredTestInputSchema),z.lazy(() => TestCatalogUncheckedUpdateWithoutSponsoredTestInputSchema) ]).optional(),
 }).strict();
 
 export const BIOMARKERCreateNestedOneWithoutTestBiomarkerInputSchema: z.ZodType<Prisma.BIOMARKERCreateNestedOneWithoutTestBiomarkerInput> = z.object({
@@ -13225,6 +15209,13 @@ export const ProviderFavoriteTestCreateNestedManyWithoutTestCatalogInputSchema: 
   connect: z.union([ z.lazy(() => ProviderFavoriteTestWhereUniqueInputSchema),z.lazy(() => ProviderFavoriteTestWhereUniqueInputSchema).array() ]).optional(),
 }).strict();
 
+export const SponsoredTestCreateNestedManyWithoutTestCatalogInputSchema: z.ZodType<Prisma.SponsoredTestCreateNestedManyWithoutTestCatalogInput> = z.object({
+  create: z.union([ z.lazy(() => SponsoredTestCreateWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestCreateWithoutTestCatalogInputSchema).array(),z.lazy(() => SponsoredTestUncheckedCreateWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestUncheckedCreateWithoutTestCatalogInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => SponsoredTestCreateOrConnectWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestCreateOrConnectWithoutTestCatalogInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => SponsoredTestCreateManyTestCatalogInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+}).strict();
+
 export const TestBiomarkerCreateNestedManyWithoutTestCatalogInputSchema: z.ZodType<Prisma.TestBiomarkerCreateNestedManyWithoutTestCatalogInput> = z.object({
   create: z.union([ z.lazy(() => TestBiomarkerCreateWithoutTestCatalogInputSchema),z.lazy(() => TestBiomarkerCreateWithoutTestCatalogInputSchema).array(),z.lazy(() => TestBiomarkerUncheckedCreateWithoutTestCatalogInputSchema),z.lazy(() => TestBiomarkerUncheckedCreateWithoutTestCatalogInputSchema).array() ]).optional(),
   connectOrCreate: z.union([ z.lazy(() => TestBiomarkerCreateOrConnectWithoutTestCatalogInputSchema),z.lazy(() => TestBiomarkerCreateOrConnectWithoutTestCatalogInputSchema).array() ]).optional(),
@@ -13243,6 +15234,13 @@ export const TestCptCodeCreateNestedManyWithoutTestCatalogInputSchema: z.ZodType
   connectOrCreate: z.union([ z.lazy(() => TestCptCodeCreateOrConnectWithoutTestCatalogInputSchema),z.lazy(() => TestCptCodeCreateOrConnectWithoutTestCatalogInputSchema).array() ]).optional(),
   createMany: z.lazy(() => TestCptCodeCreateManyTestCatalogInputEnvelopeSchema).optional(),
   connect: z.union([ z.lazy(() => TestCptCodeWhereUniqueInputSchema),z.lazy(() => TestCptCodeWhereUniqueInputSchema).array() ]).optional(),
+}).strict();
+
+export const TestGeneCreateNestedManyWithoutTestCatalogInputSchema: z.ZodType<Prisma.TestGeneCreateNestedManyWithoutTestCatalogInput> = z.object({
+  create: z.union([ z.lazy(() => TestGeneCreateWithoutTestCatalogInputSchema),z.lazy(() => TestGeneCreateWithoutTestCatalogInputSchema).array(),z.lazy(() => TestGeneUncheckedCreateWithoutTestCatalogInputSchema),z.lazy(() => TestGeneUncheckedCreateWithoutTestCatalogInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => TestGeneCreateOrConnectWithoutTestCatalogInputSchema),z.lazy(() => TestGeneCreateOrConnectWithoutTestCatalogInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => TestGeneCreateManyTestCatalogInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => TestGeneWhereUniqueInputSchema),z.lazy(() => TestGeneWhereUniqueInputSchema).array() ]).optional(),
 }).strict();
 
 export const TestOrderLoincCreateNestedManyWithoutTestCatalogInputSchema: z.ZodType<Prisma.TestOrderLoincCreateNestedManyWithoutTestCatalogInput> = z.object({
@@ -13280,6 +15278,13 @@ export const ProviderFavoriteTestUncheckedCreateNestedManyWithoutTestCatalogInpu
   connect: z.union([ z.lazy(() => ProviderFavoriteTestWhereUniqueInputSchema),z.lazy(() => ProviderFavoriteTestWhereUniqueInputSchema).array() ]).optional(),
 }).strict();
 
+export const SponsoredTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema: z.ZodType<Prisma.SponsoredTestUncheckedCreateNestedManyWithoutTestCatalogInput> = z.object({
+  create: z.union([ z.lazy(() => SponsoredTestCreateWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestCreateWithoutTestCatalogInputSchema).array(),z.lazy(() => SponsoredTestUncheckedCreateWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestUncheckedCreateWithoutTestCatalogInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => SponsoredTestCreateOrConnectWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestCreateOrConnectWithoutTestCatalogInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => SponsoredTestCreateManyTestCatalogInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+}).strict();
+
 export const TestBiomarkerUncheckedCreateNestedManyWithoutTestCatalogInputSchema: z.ZodType<Prisma.TestBiomarkerUncheckedCreateNestedManyWithoutTestCatalogInput> = z.object({
   create: z.union([ z.lazy(() => TestBiomarkerCreateWithoutTestCatalogInputSchema),z.lazy(() => TestBiomarkerCreateWithoutTestCatalogInputSchema).array(),z.lazy(() => TestBiomarkerUncheckedCreateWithoutTestCatalogInputSchema),z.lazy(() => TestBiomarkerUncheckedCreateWithoutTestCatalogInputSchema).array() ]).optional(),
   connectOrCreate: z.union([ z.lazy(() => TestBiomarkerCreateOrConnectWithoutTestCatalogInputSchema),z.lazy(() => TestBiomarkerCreateOrConnectWithoutTestCatalogInputSchema).array() ]).optional(),
@@ -13292,6 +15297,13 @@ export const TestCptCodeUncheckedCreateNestedManyWithoutTestCatalogInputSchema: 
   connectOrCreate: z.union([ z.lazy(() => TestCptCodeCreateOrConnectWithoutTestCatalogInputSchema),z.lazy(() => TestCptCodeCreateOrConnectWithoutTestCatalogInputSchema).array() ]).optional(),
   createMany: z.lazy(() => TestCptCodeCreateManyTestCatalogInputEnvelopeSchema).optional(),
   connect: z.union([ z.lazy(() => TestCptCodeWhereUniqueInputSchema),z.lazy(() => TestCptCodeWhereUniqueInputSchema).array() ]).optional(),
+}).strict();
+
+export const TestGeneUncheckedCreateNestedManyWithoutTestCatalogInputSchema: z.ZodType<Prisma.TestGeneUncheckedCreateNestedManyWithoutTestCatalogInput> = z.object({
+  create: z.union([ z.lazy(() => TestGeneCreateWithoutTestCatalogInputSchema),z.lazy(() => TestGeneCreateWithoutTestCatalogInputSchema).array(),z.lazy(() => TestGeneUncheckedCreateWithoutTestCatalogInputSchema),z.lazy(() => TestGeneUncheckedCreateWithoutTestCatalogInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => TestGeneCreateOrConnectWithoutTestCatalogInputSchema),z.lazy(() => TestGeneCreateOrConnectWithoutTestCatalogInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => TestGeneCreateManyTestCatalogInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => TestGeneWhereUniqueInputSchema),z.lazy(() => TestGeneWhereUniqueInputSchema).array() ]).optional(),
 }).strict();
 
 export const TestOrderLoincUncheckedCreateNestedManyWithoutTestCatalogInputSchema: z.ZodType<Prisma.TestOrderLoincUncheckedCreateNestedManyWithoutTestCatalogInput> = z.object({
@@ -13350,6 +15362,20 @@ export const ProviderFavoriteTestUpdateManyWithoutTestCatalogNestedInputSchema: 
   deleteMany: z.union([ z.lazy(() => ProviderFavoriteTestScalarWhereInputSchema),z.lazy(() => ProviderFavoriteTestScalarWhereInputSchema).array() ]).optional(),
 }).strict();
 
+export const SponsoredTestUpdateManyWithoutTestCatalogNestedInputSchema: z.ZodType<Prisma.SponsoredTestUpdateManyWithoutTestCatalogNestedInput> = z.object({
+  create: z.union([ z.lazy(() => SponsoredTestCreateWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestCreateWithoutTestCatalogInputSchema).array(),z.lazy(() => SponsoredTestUncheckedCreateWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestUncheckedCreateWithoutTestCatalogInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => SponsoredTestCreateOrConnectWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestCreateOrConnectWithoutTestCatalogInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => SponsoredTestUpsertWithWhereUniqueWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestUpsertWithWhereUniqueWithoutTestCatalogInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => SponsoredTestCreateManyTestCatalogInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => SponsoredTestUpdateWithWhereUniqueWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestUpdateWithWhereUniqueWithoutTestCatalogInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => SponsoredTestUpdateManyWithWhereWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestUpdateManyWithWhereWithoutTestCatalogInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => SponsoredTestScalarWhereInputSchema),z.lazy(() => SponsoredTestScalarWhereInputSchema).array() ]).optional(),
+}).strict();
+
 export const TestBiomarkerUpdateManyWithoutTestCatalogNestedInputSchema: z.ZodType<Prisma.TestBiomarkerUpdateManyWithoutTestCatalogNestedInput> = z.object({
   create: z.union([ z.lazy(() => TestBiomarkerCreateWithoutTestCatalogInputSchema),z.lazy(() => TestBiomarkerCreateWithoutTestCatalogInputSchema).array(),z.lazy(() => TestBiomarkerUncheckedCreateWithoutTestCatalogInputSchema),z.lazy(() => TestBiomarkerUncheckedCreateWithoutTestCatalogInputSchema).array() ]).optional(),
   connectOrCreate: z.union([ z.lazy(() => TestBiomarkerCreateOrConnectWithoutTestCatalogInputSchema),z.lazy(() => TestBiomarkerCreateOrConnectWithoutTestCatalogInputSchema).array() ]).optional(),
@@ -13386,6 +15412,20 @@ export const TestCptCodeUpdateManyWithoutTestCatalogNestedInputSchema: z.ZodType
   update: z.union([ z.lazy(() => TestCptCodeUpdateWithWhereUniqueWithoutTestCatalogInputSchema),z.lazy(() => TestCptCodeUpdateWithWhereUniqueWithoutTestCatalogInputSchema).array() ]).optional(),
   updateMany: z.union([ z.lazy(() => TestCptCodeUpdateManyWithWhereWithoutTestCatalogInputSchema),z.lazy(() => TestCptCodeUpdateManyWithWhereWithoutTestCatalogInputSchema).array() ]).optional(),
   deleteMany: z.union([ z.lazy(() => TestCptCodeScalarWhereInputSchema),z.lazy(() => TestCptCodeScalarWhereInputSchema).array() ]).optional(),
+}).strict();
+
+export const TestGeneUpdateManyWithoutTestCatalogNestedInputSchema: z.ZodType<Prisma.TestGeneUpdateManyWithoutTestCatalogNestedInput> = z.object({
+  create: z.union([ z.lazy(() => TestGeneCreateWithoutTestCatalogInputSchema),z.lazy(() => TestGeneCreateWithoutTestCatalogInputSchema).array(),z.lazy(() => TestGeneUncheckedCreateWithoutTestCatalogInputSchema),z.lazy(() => TestGeneUncheckedCreateWithoutTestCatalogInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => TestGeneCreateOrConnectWithoutTestCatalogInputSchema),z.lazy(() => TestGeneCreateOrConnectWithoutTestCatalogInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => TestGeneUpsertWithWhereUniqueWithoutTestCatalogInputSchema),z.lazy(() => TestGeneUpsertWithWhereUniqueWithoutTestCatalogInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => TestGeneCreateManyTestCatalogInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => TestGeneWhereUniqueInputSchema),z.lazy(() => TestGeneWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => TestGeneWhereUniqueInputSchema),z.lazy(() => TestGeneWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => TestGeneWhereUniqueInputSchema),z.lazy(() => TestGeneWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => TestGeneWhereUniqueInputSchema),z.lazy(() => TestGeneWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => TestGeneUpdateWithWhereUniqueWithoutTestCatalogInputSchema),z.lazy(() => TestGeneUpdateWithWhereUniqueWithoutTestCatalogInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => TestGeneUpdateManyWithWhereWithoutTestCatalogInputSchema),z.lazy(() => TestGeneUpdateManyWithWhereWithoutTestCatalogInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => TestGeneScalarWhereInputSchema),z.lazy(() => TestGeneScalarWhereInputSchema).array() ]).optional(),
 }).strict();
 
 export const TestOrderLoincUpdateManyWithoutTestCatalogNestedInputSchema: z.ZodType<Prisma.TestOrderLoincUpdateManyWithoutTestCatalogNestedInput> = z.object({
@@ -13458,6 +15498,20 @@ export const ProviderFavoriteTestUncheckedUpdateManyWithoutTestCatalogNestedInpu
   deleteMany: z.union([ z.lazy(() => ProviderFavoriteTestScalarWhereInputSchema),z.lazy(() => ProviderFavoriteTestScalarWhereInputSchema).array() ]).optional(),
 }).strict();
 
+export const SponsoredTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema: z.ZodType<Prisma.SponsoredTestUncheckedUpdateManyWithoutTestCatalogNestedInput> = z.object({
+  create: z.union([ z.lazy(() => SponsoredTestCreateWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestCreateWithoutTestCatalogInputSchema).array(),z.lazy(() => SponsoredTestUncheckedCreateWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestUncheckedCreateWithoutTestCatalogInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => SponsoredTestCreateOrConnectWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestCreateOrConnectWithoutTestCatalogInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => SponsoredTestUpsertWithWhereUniqueWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestUpsertWithWhereUniqueWithoutTestCatalogInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => SponsoredTestCreateManyTestCatalogInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => SponsoredTestWhereUniqueInputSchema),z.lazy(() => SponsoredTestWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => SponsoredTestUpdateWithWhereUniqueWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestUpdateWithWhereUniqueWithoutTestCatalogInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => SponsoredTestUpdateManyWithWhereWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestUpdateManyWithWhereWithoutTestCatalogInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => SponsoredTestScalarWhereInputSchema),z.lazy(() => SponsoredTestScalarWhereInputSchema).array() ]).optional(),
+}).strict();
+
 export const TestBiomarkerUncheckedUpdateManyWithoutTestCatalogNestedInputSchema: z.ZodType<Prisma.TestBiomarkerUncheckedUpdateManyWithoutTestCatalogNestedInput> = z.object({
   create: z.union([ z.lazy(() => TestBiomarkerCreateWithoutTestCatalogInputSchema),z.lazy(() => TestBiomarkerCreateWithoutTestCatalogInputSchema).array(),z.lazy(() => TestBiomarkerUncheckedCreateWithoutTestCatalogInputSchema),z.lazy(() => TestBiomarkerUncheckedCreateWithoutTestCatalogInputSchema).array() ]).optional(),
   connectOrCreate: z.union([ z.lazy(() => TestBiomarkerCreateOrConnectWithoutTestCatalogInputSchema),z.lazy(() => TestBiomarkerCreateOrConnectWithoutTestCatalogInputSchema).array() ]).optional(),
@@ -13484,6 +15538,20 @@ export const TestCptCodeUncheckedUpdateManyWithoutTestCatalogNestedInputSchema: 
   update: z.union([ z.lazy(() => TestCptCodeUpdateWithWhereUniqueWithoutTestCatalogInputSchema),z.lazy(() => TestCptCodeUpdateWithWhereUniqueWithoutTestCatalogInputSchema).array() ]).optional(),
   updateMany: z.union([ z.lazy(() => TestCptCodeUpdateManyWithWhereWithoutTestCatalogInputSchema),z.lazy(() => TestCptCodeUpdateManyWithWhereWithoutTestCatalogInputSchema).array() ]).optional(),
   deleteMany: z.union([ z.lazy(() => TestCptCodeScalarWhereInputSchema),z.lazy(() => TestCptCodeScalarWhereInputSchema).array() ]).optional(),
+}).strict();
+
+export const TestGeneUncheckedUpdateManyWithoutTestCatalogNestedInputSchema: z.ZodType<Prisma.TestGeneUncheckedUpdateManyWithoutTestCatalogNestedInput> = z.object({
+  create: z.union([ z.lazy(() => TestGeneCreateWithoutTestCatalogInputSchema),z.lazy(() => TestGeneCreateWithoutTestCatalogInputSchema).array(),z.lazy(() => TestGeneUncheckedCreateWithoutTestCatalogInputSchema),z.lazy(() => TestGeneUncheckedCreateWithoutTestCatalogInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => TestGeneCreateOrConnectWithoutTestCatalogInputSchema),z.lazy(() => TestGeneCreateOrConnectWithoutTestCatalogInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => TestGeneUpsertWithWhereUniqueWithoutTestCatalogInputSchema),z.lazy(() => TestGeneUpsertWithWhereUniqueWithoutTestCatalogInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => TestGeneCreateManyTestCatalogInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => TestGeneWhereUniqueInputSchema),z.lazy(() => TestGeneWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => TestGeneWhereUniqueInputSchema),z.lazy(() => TestGeneWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => TestGeneWhereUniqueInputSchema),z.lazy(() => TestGeneWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => TestGeneWhereUniqueInputSchema),z.lazy(() => TestGeneWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => TestGeneUpdateWithWhereUniqueWithoutTestCatalogInputSchema),z.lazy(() => TestGeneUpdateWithWhereUniqueWithoutTestCatalogInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => TestGeneUpdateManyWithWhereWithoutTestCatalogInputSchema),z.lazy(() => TestGeneUpdateManyWithWhereWithoutTestCatalogInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => TestGeneScalarWhereInputSchema),z.lazy(() => TestGeneScalarWhereInputSchema).array() ]).optional(),
 }).strict();
 
 export const TestOrderLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema: z.ZodType<Prisma.TestOrderLoincUncheckedUpdateManyWithoutTestCatalogNestedInput> = z.object({
@@ -13526,6 +15594,20 @@ export const TestCatalogUpdateOneRequiredWithoutTestCptCodeNestedInputSchema: z.
   upsert: z.lazy(() => TestCatalogUpsertWithoutTestCptCodeInputSchema).optional(),
   connect: z.lazy(() => TestCatalogWhereUniqueInputSchema).optional(),
   update: z.union([ z.lazy(() => TestCatalogUpdateToOneWithWhereWithoutTestCptCodeInputSchema),z.lazy(() => TestCatalogUpdateWithoutTestCptCodeInputSchema),z.lazy(() => TestCatalogUncheckedUpdateWithoutTestCptCodeInputSchema) ]).optional(),
+}).strict();
+
+export const TestCatalogCreateNestedOneWithoutTestGeneInputSchema: z.ZodType<Prisma.TestCatalogCreateNestedOneWithoutTestGeneInput> = z.object({
+  create: z.union([ z.lazy(() => TestCatalogCreateWithoutTestGeneInputSchema),z.lazy(() => TestCatalogUncheckedCreateWithoutTestGeneInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => TestCatalogCreateOrConnectWithoutTestGeneInputSchema).optional(),
+  connect: z.lazy(() => TestCatalogWhereUniqueInputSchema).optional()
+}).strict();
+
+export const TestCatalogUpdateOneRequiredWithoutTestGeneNestedInputSchema: z.ZodType<Prisma.TestCatalogUpdateOneRequiredWithoutTestGeneNestedInput> = z.object({
+  create: z.union([ z.lazy(() => TestCatalogCreateWithoutTestGeneInputSchema),z.lazy(() => TestCatalogUncheckedCreateWithoutTestGeneInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => TestCatalogCreateOrConnectWithoutTestGeneInputSchema).optional(),
+  upsert: z.lazy(() => TestCatalogUpsertWithoutTestGeneInputSchema).optional(),
+  connect: z.lazy(() => TestCatalogWhereUniqueInputSchema).optional(),
+  update: z.union([ z.lazy(() => TestCatalogUpdateToOneWithWhereWithoutTestGeneInputSchema),z.lazy(() => TestCatalogUpdateWithoutTestGeneInputSchema),z.lazy(() => TestCatalogUncheckedUpdateWithoutTestGeneInputSchema) ]).optional(),
 }).strict();
 
 export const LOINCCreateNestedOneWithoutTestOrderLoincInputSchema: z.ZodType<Prisma.LOINCCreateNestedOneWithoutTestOrderLoincInput> = z.object({
@@ -13588,6 +15670,12 @@ export const TestCatalogUpdateOneRequiredWithoutTestResultLoincNestedInputSchema
   update: z.union([ z.lazy(() => TestCatalogUpdateToOneWithWhereWithoutTestResultLoincInputSchema),z.lazy(() => TestCatalogUpdateWithoutTestResultLoincInputSchema),z.lazy(() => TestCatalogUncheckedUpdateWithoutTestResultLoincInputSchema) ]).optional(),
 }).strict();
 
+export const AccountCreateNestedOneWithoutUserInputSchema: z.ZodType<Prisma.AccountCreateNestedOneWithoutUserInput> = z.object({
+  create: z.union([ z.lazy(() => AccountCreateWithoutUserInputSchema),z.lazy(() => AccountUncheckedCreateWithoutUserInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => AccountCreateOrConnectWithoutUserInputSchema).optional(),
+  connect: z.lazy(() => AccountWhereUniqueInputSchema).optional()
+}).strict();
+
 export const SessionCreateNestedManyWithoutUserInputSchema: z.ZodType<Prisma.SessionCreateNestedManyWithoutUserInput> = z.object({
   create: z.union([ z.lazy(() => SessionCreateWithoutUserInputSchema),z.lazy(() => SessionCreateWithoutUserInputSchema).array(),z.lazy(() => SessionUncheckedCreateWithoutUserInputSchema),z.lazy(() => SessionUncheckedCreateWithoutUserInputSchema).array() ]).optional(),
   connectOrCreate: z.union([ z.lazy(() => SessionCreateOrConnectWithoutUserInputSchema),z.lazy(() => SessionCreateOrConnectWithoutUserInputSchema).array() ]).optional(),
@@ -13595,16 +15683,16 @@ export const SessionCreateNestedManyWithoutUserInputSchema: z.ZodType<Prisma.Ses
   connect: z.union([ z.lazy(() => SessionWhereUniqueInputSchema),z.lazy(() => SessionWhereUniqueInputSchema).array() ]).optional(),
 }).strict();
 
-export const AccountCreateNestedOneWithoutUserInputSchema: z.ZodType<Prisma.AccountCreateNestedOneWithoutUserInput> = z.object({
-  create: z.union([ z.lazy(() => AccountCreateWithoutUserInputSchema),z.lazy(() => AccountUncheckedCreateWithoutUserInputSchema) ]).optional(),
-  connectOrCreate: z.lazy(() => AccountCreateOrConnectWithoutUserInputSchema).optional(),
-  connect: z.lazy(() => AccountWhereUniqueInputSchema).optional()
-}).strict();
-
 export const UserAttributeCreateNestedOneWithoutUserInputSchema: z.ZodType<Prisma.UserAttributeCreateNestedOneWithoutUserInput> = z.object({
   create: z.union([ z.lazy(() => UserAttributeCreateWithoutUserInputSchema),z.lazy(() => UserAttributeUncheckedCreateWithoutUserInputSchema) ]).optional(),
   connectOrCreate: z.lazy(() => UserAttributeCreateOrConnectWithoutUserInputSchema).optional(),
   connect: z.lazy(() => UserAttributeWhereUniqueInputSchema).optional()
+}).strict();
+
+export const AccountUncheckedCreateNestedOneWithoutUserInputSchema: z.ZodType<Prisma.AccountUncheckedCreateNestedOneWithoutUserInput> = z.object({
+  create: z.union([ z.lazy(() => AccountCreateWithoutUserInputSchema),z.lazy(() => AccountUncheckedCreateWithoutUserInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => AccountCreateOrConnectWithoutUserInputSchema).optional(),
+  connect: z.lazy(() => AccountWhereUniqueInputSchema).optional()
 }).strict();
 
 export const SessionUncheckedCreateNestedManyWithoutUserInputSchema: z.ZodType<Prisma.SessionUncheckedCreateNestedManyWithoutUserInput> = z.object({
@@ -13614,16 +15702,20 @@ export const SessionUncheckedCreateNestedManyWithoutUserInputSchema: z.ZodType<P
   connect: z.union([ z.lazy(() => SessionWhereUniqueInputSchema),z.lazy(() => SessionWhereUniqueInputSchema).array() ]).optional(),
 }).strict();
 
-export const AccountUncheckedCreateNestedOneWithoutUserInputSchema: z.ZodType<Prisma.AccountUncheckedCreateNestedOneWithoutUserInput> = z.object({
-  create: z.union([ z.lazy(() => AccountCreateWithoutUserInputSchema),z.lazy(() => AccountUncheckedCreateWithoutUserInputSchema) ]).optional(),
-  connectOrCreate: z.lazy(() => AccountCreateOrConnectWithoutUserInputSchema).optional(),
-  connect: z.lazy(() => AccountWhereUniqueInputSchema).optional()
-}).strict();
-
 export const UserAttributeUncheckedCreateNestedOneWithoutUserInputSchema: z.ZodType<Prisma.UserAttributeUncheckedCreateNestedOneWithoutUserInput> = z.object({
   create: z.union([ z.lazy(() => UserAttributeCreateWithoutUserInputSchema),z.lazy(() => UserAttributeUncheckedCreateWithoutUserInputSchema) ]).optional(),
   connectOrCreate: z.lazy(() => UserAttributeCreateOrConnectWithoutUserInputSchema).optional(),
   connect: z.lazy(() => UserAttributeWhereUniqueInputSchema).optional()
+}).strict();
+
+export const AccountUpdateOneWithoutUserNestedInputSchema: z.ZodType<Prisma.AccountUpdateOneWithoutUserNestedInput> = z.object({
+  create: z.union([ z.lazy(() => AccountCreateWithoutUserInputSchema),z.lazy(() => AccountUncheckedCreateWithoutUserInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => AccountCreateOrConnectWithoutUserInputSchema).optional(),
+  upsert: z.lazy(() => AccountUpsertWithoutUserInputSchema).optional(),
+  disconnect: z.union([ z.boolean(),z.lazy(() => AccountWhereInputSchema) ]).optional(),
+  delete: z.union([ z.boolean(),z.lazy(() => AccountWhereInputSchema) ]).optional(),
+  connect: z.lazy(() => AccountWhereUniqueInputSchema).optional(),
+  update: z.union([ z.lazy(() => AccountUpdateToOneWithWhereWithoutUserInputSchema),z.lazy(() => AccountUpdateWithoutUserInputSchema),z.lazy(() => AccountUncheckedUpdateWithoutUserInputSchema) ]).optional(),
 }).strict();
 
 export const SessionUpdateManyWithoutUserNestedInputSchema: z.ZodType<Prisma.SessionUpdateManyWithoutUserNestedInput> = z.object({
@@ -13640,16 +15732,6 @@ export const SessionUpdateManyWithoutUserNestedInputSchema: z.ZodType<Prisma.Ses
   deleteMany: z.union([ z.lazy(() => SessionScalarWhereInputSchema),z.lazy(() => SessionScalarWhereInputSchema).array() ]).optional(),
 }).strict();
 
-export const AccountUpdateOneWithoutUserNestedInputSchema: z.ZodType<Prisma.AccountUpdateOneWithoutUserNestedInput> = z.object({
-  create: z.union([ z.lazy(() => AccountCreateWithoutUserInputSchema),z.lazy(() => AccountUncheckedCreateWithoutUserInputSchema) ]).optional(),
-  connectOrCreate: z.lazy(() => AccountCreateOrConnectWithoutUserInputSchema).optional(),
-  upsert: z.lazy(() => AccountUpsertWithoutUserInputSchema).optional(),
-  disconnect: z.union([ z.boolean(),z.lazy(() => AccountWhereInputSchema) ]).optional(),
-  delete: z.union([ z.boolean(),z.lazy(() => AccountWhereInputSchema) ]).optional(),
-  connect: z.lazy(() => AccountWhereUniqueInputSchema).optional(),
-  update: z.union([ z.lazy(() => AccountUpdateToOneWithWhereWithoutUserInputSchema),z.lazy(() => AccountUpdateWithoutUserInputSchema),z.lazy(() => AccountUncheckedUpdateWithoutUserInputSchema) ]).optional(),
-}).strict();
-
 export const UserAttributeUpdateOneWithoutUserNestedInputSchema: z.ZodType<Prisma.UserAttributeUpdateOneWithoutUserNestedInput> = z.object({
   create: z.union([ z.lazy(() => UserAttributeCreateWithoutUserInputSchema),z.lazy(() => UserAttributeUncheckedCreateWithoutUserInputSchema) ]).optional(),
   connectOrCreate: z.lazy(() => UserAttributeCreateOrConnectWithoutUserInputSchema).optional(),
@@ -13658,6 +15740,16 @@ export const UserAttributeUpdateOneWithoutUserNestedInputSchema: z.ZodType<Prism
   delete: z.union([ z.boolean(),z.lazy(() => UserAttributeWhereInputSchema) ]).optional(),
   connect: z.lazy(() => UserAttributeWhereUniqueInputSchema).optional(),
   update: z.union([ z.lazy(() => UserAttributeUpdateToOneWithWhereWithoutUserInputSchema),z.lazy(() => UserAttributeUpdateWithoutUserInputSchema),z.lazy(() => UserAttributeUncheckedUpdateWithoutUserInputSchema) ]).optional(),
+}).strict();
+
+export const AccountUncheckedUpdateOneWithoutUserNestedInputSchema: z.ZodType<Prisma.AccountUncheckedUpdateOneWithoutUserNestedInput> = z.object({
+  create: z.union([ z.lazy(() => AccountCreateWithoutUserInputSchema),z.lazy(() => AccountUncheckedCreateWithoutUserInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => AccountCreateOrConnectWithoutUserInputSchema).optional(),
+  upsert: z.lazy(() => AccountUpsertWithoutUserInputSchema).optional(),
+  disconnect: z.union([ z.boolean(),z.lazy(() => AccountWhereInputSchema) ]).optional(),
+  delete: z.union([ z.boolean(),z.lazy(() => AccountWhereInputSchema) ]).optional(),
+  connect: z.lazy(() => AccountWhereUniqueInputSchema).optional(),
+  update: z.union([ z.lazy(() => AccountUpdateToOneWithWhereWithoutUserInputSchema),z.lazy(() => AccountUpdateWithoutUserInputSchema),z.lazy(() => AccountUncheckedUpdateWithoutUserInputSchema) ]).optional(),
 }).strict();
 
 export const SessionUncheckedUpdateManyWithoutUserNestedInputSchema: z.ZodType<Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput> = z.object({
@@ -13672,16 +15764,6 @@ export const SessionUncheckedUpdateManyWithoutUserNestedInputSchema: z.ZodType<P
   update: z.union([ z.lazy(() => SessionUpdateWithWhereUniqueWithoutUserInputSchema),z.lazy(() => SessionUpdateWithWhereUniqueWithoutUserInputSchema).array() ]).optional(),
   updateMany: z.union([ z.lazy(() => SessionUpdateManyWithWhereWithoutUserInputSchema),z.lazy(() => SessionUpdateManyWithWhereWithoutUserInputSchema).array() ]).optional(),
   deleteMany: z.union([ z.lazy(() => SessionScalarWhereInputSchema),z.lazy(() => SessionScalarWhereInputSchema).array() ]).optional(),
-}).strict();
-
-export const AccountUncheckedUpdateOneWithoutUserNestedInputSchema: z.ZodType<Prisma.AccountUncheckedUpdateOneWithoutUserNestedInput> = z.object({
-  create: z.union([ z.lazy(() => AccountCreateWithoutUserInputSchema),z.lazy(() => AccountUncheckedCreateWithoutUserInputSchema) ]).optional(),
-  connectOrCreate: z.lazy(() => AccountCreateOrConnectWithoutUserInputSchema).optional(),
-  upsert: z.lazy(() => AccountUpsertWithoutUserInputSchema).optional(),
-  disconnect: z.union([ z.boolean(),z.lazy(() => AccountWhereInputSchema) ]).optional(),
-  delete: z.union([ z.boolean(),z.lazy(() => AccountWhereInputSchema) ]).optional(),
-  connect: z.lazy(() => AccountWhereUniqueInputSchema).optional(),
-  update: z.union([ z.lazy(() => AccountUpdateToOneWithWhereWithoutUserInputSchema),z.lazy(() => AccountUpdateWithoutUserInputSchema),z.lazy(() => AccountUncheckedUpdateWithoutUserInputSchema) ]).optional(),
 }).strict();
 
 export const UserAttributeUncheckedUpdateOneWithoutUserNestedInputSchema: z.ZodType<Prisma.UserAttributeUncheckedUpdateOneWithoutUserNestedInput> = z.object({
@@ -13817,15 +15899,15 @@ export const NestedIntNullableFilterSchema: z.ZodType<Prisma.NestedIntNullableFi
   not: z.union([ z.number(),z.lazy(() => NestedIntNullableFilterSchema) ]).optional().nullable(),
 }).strict();
 
-export const NestedDateTimeFilterSchema: z.ZodType<Prisma.NestedDateTimeFilter> = z.object({
-  equals: z.date().optional(),
-  in: z.date().array().optional(),
-  notIn: z.date().array().optional(),
+export const NestedDateTimeNullableFilterSchema: z.ZodType<Prisma.NestedDateTimeNullableFilter> = z.object({
+  equals: z.date().optional().nullable(),
+  in: z.date().array().optional().nullable(),
+  notIn: z.date().array().optional().nullable(),
   lt: z.date().optional(),
   lte: z.date().optional(),
   gt: z.date().optional(),
   gte: z.date().optional(),
-  not: z.union([ z.date(),z.lazy(() => NestedDateTimeFilterSchema) ]).optional(),
+  not: z.union([ z.date(),z.lazy(() => NestedDateTimeNullableFilterSchema) ]).optional().nullable(),
 }).strict();
 
 export const NestedStringWithAggregatesFilterSchema: z.ZodType<Prisma.NestedStringWithAggregatesFilter> = z.object({
@@ -13902,31 +15984,6 @@ export const NestedFloatNullableFilterSchema: z.ZodType<Prisma.NestedFloatNullab
   not: z.union([ z.number(),z.lazy(() => NestedFloatNullableFilterSchema) ]).optional().nullable(),
 }).strict();
 
-export const NestedDateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.NestedDateTimeWithAggregatesFilter> = z.object({
-  equals: z.date().optional(),
-  in: z.date().array().optional(),
-  notIn: z.date().array().optional(),
-  lt: z.date().optional(),
-  lte: z.date().optional(),
-  gt: z.date().optional(),
-  gte: z.date().optional(),
-  not: z.union([ z.date(),z.lazy(() => NestedDateTimeWithAggregatesFilterSchema) ]).optional(),
-  _count: z.lazy(() => NestedIntFilterSchema).optional(),
-  _min: z.lazy(() => NestedDateTimeFilterSchema).optional(),
-  _max: z.lazy(() => NestedDateTimeFilterSchema).optional()
-}).strict();
-
-export const NestedDateTimeNullableFilterSchema: z.ZodType<Prisma.NestedDateTimeNullableFilter> = z.object({
-  equals: z.date().optional().nullable(),
-  in: z.date().array().optional().nullable(),
-  notIn: z.date().array().optional().nullable(),
-  lt: z.date().optional(),
-  lte: z.date().optional(),
-  gt: z.date().optional(),
-  gte: z.date().optional(),
-  not: z.union([ z.date(),z.lazy(() => NestedDateTimeNullableFilterSchema) ]).optional().nullable(),
-}).strict();
-
 export const NestedDateTimeNullableWithAggregatesFilterSchema: z.ZodType<Prisma.NestedDateTimeNullableWithAggregatesFilter> = z.object({
   equals: z.date().optional().nullable(),
   in: z.date().array().optional().nullable(),
@@ -13995,6 +16052,31 @@ export const NestedBigIntWithAggregatesFilterSchema: z.ZodType<Prisma.NestedBigI
   _max: z.lazy(() => NestedBigIntFilterSchema).optional()
 }).strict();
 
+export const NestedDateTimeFilterSchema: z.ZodType<Prisma.NestedDateTimeFilter> = z.object({
+  equals: z.date().optional(),
+  in: z.date().array().optional(),
+  notIn: z.date().array().optional(),
+  lt: z.date().optional(),
+  lte: z.date().optional(),
+  gt: z.date().optional(),
+  gte: z.date().optional(),
+  not: z.union([ z.date(),z.lazy(() => NestedDateTimeFilterSchema) ]).optional(),
+}).strict();
+
+export const NestedDateTimeWithAggregatesFilterSchema: z.ZodType<Prisma.NestedDateTimeWithAggregatesFilter> = z.object({
+  equals: z.date().optional(),
+  in: z.date().array().optional(),
+  notIn: z.date().array().optional(),
+  lt: z.date().optional(),
+  lte: z.date().optional(),
+  gt: z.date().optional(),
+  gte: z.date().optional(),
+  not: z.union([ z.date(),z.lazy(() => NestedDateTimeWithAggregatesFilterSchema) ]).optional(),
+  _count: z.lazy(() => NestedIntFilterSchema).optional(),
+  _min: z.lazy(() => NestedDateTimeFilterSchema).optional(),
+  _max: z.lazy(() => NestedDateTimeFilterSchema).optional()
+}).strict();
+
 export const NestedEnumUserAttribute_UserTypeNullableFilterSchema: z.ZodType<Prisma.NestedEnumUserAttribute_UserTypeNullableFilter> = z.object({
   equals: z.lazy(() => UserAttribute_UserTypeSchema).optional().nullable(),
   in: z.lazy(() => UserAttribute_UserTypeSchema).array().optional().nullable(),
@@ -14013,7 +16095,7 @@ export const NestedEnumUserAttribute_UserTypeNullableWithAggregatesFilterSchema:
 }).strict();
 
 export const UserCreateWithoutAccountInputSchema: z.ZodType<Prisma.UserCreateWithoutAccountInput> = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   name: z.string().optional().nullable(),
   email: z.string().optional().nullable(),
   password: z.string().optional().nullable(),
@@ -14024,7 +16106,7 @@ export const UserCreateWithoutAccountInputSchema: z.ZodType<Prisma.UserCreateWit
 }).strict();
 
 export const UserUncheckedCreateWithoutAccountInputSchema: z.ZodType<Prisma.UserUncheckedCreateWithoutAccountInput> = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   name: z.string().optional().nullable(),
   email: z.string().optional().nullable(),
   password: z.string().optional().nullable(),
@@ -14169,6 +16251,7 @@ export const LabOrderAttachmentScalarWhereInputSchema: z.ZodType<Prisma.LabOrder
 
 export const TestBiomarkerCreateWithoutBIOMARKERInputSchema: z.ZodType<Prisma.TestBiomarkerCreateWithoutBIOMARKERInput> = z.object({
   LabTestId: z.string().optional().nullable(),
+  TranscriptReference: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional(),
   TestCatalog: z.lazy(() => TestCatalogCreateNestedOneWithoutTestBiomarkerInputSchema)
@@ -14178,6 +16261,7 @@ export const TestBiomarkerUncheckedCreateWithoutBIOMARKERInputSchema: z.ZodType<
   Id: z.number().optional(),
   TestId: z.number(),
   LabTestId: z.string().optional().nullable(),
+  TranscriptReference: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional()
 }).strict();
@@ -14216,6 +16300,7 @@ export const TestBiomarkerScalarWhereInputSchema: z.ZodType<Prisma.TestBiomarker
   TestId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   LabTestId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   HGNCId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  TranscriptReference: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
 }).strict();
@@ -14386,6 +16471,40 @@ export const TestResultLoincScalarWhereInputSchema: z.ZodType<Prisma.TestResultL
   UpdatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
 }).strict();
 
+export const SponsoredTestCreateWithoutLabInputSchema: z.ZodType<Prisma.SponsoredTestCreateWithoutLabInput> = z.object({
+  Id: z.string().optional(),
+  LabTestId: z.string().optional().nullable(),
+  CasandraTestId: z.string(),
+  Category: z.string(),
+  SubCategory: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable(),
+  SponsoredProgram: z.lazy(() => SponsoredProgramCreateNestedOneWithoutSponsoredTestInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogCreateNestedOneWithoutSponsoredTestInputSchema)
+}).strict();
+
+export const SponsoredTestUncheckedCreateWithoutLabInputSchema: z.ZodType<Prisma.SponsoredTestUncheckedCreateWithoutLabInput> = z.object({
+  Id: z.string().optional(),
+  TestId: z.number(),
+  LabTestId: z.string().optional().nullable(),
+  SponsoredProgramId: z.number().optional().nullable(),
+  CasandraTestId: z.string(),
+  Category: z.string(),
+  SubCategory: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable()
+}).strict();
+
+export const SponsoredTestCreateOrConnectWithoutLabInputSchema: z.ZodType<Prisma.SponsoredTestCreateOrConnectWithoutLabInput> = z.object({
+  where: z.lazy(() => SponsoredTestWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => SponsoredTestCreateWithoutLabInputSchema),z.lazy(() => SponsoredTestUncheckedCreateWithoutLabInputSchema) ]),
+}).strict();
+
+export const SponsoredTestCreateManyLabInputEnvelopeSchema: z.ZodType<Prisma.SponsoredTestCreateManyLabInputEnvelope> = z.object({
+  data: z.union([ z.lazy(() => SponsoredTestCreateManyLabInputSchema),z.lazy(() => SponsoredTestCreateManyLabInputSchema).array() ]),
+  skipDuplicates: z.boolean().optional()
+}).strict();
+
 export const TestCatalogCreateWithoutLabInputSchema: z.ZodType<Prisma.TestCatalogCreateWithoutLabInput> = z.object({
   href: z.string().optional().nullable(),
   CasandraTestId: z.string(),
@@ -14426,13 +16545,17 @@ export const TestCatalogCreateWithoutLabInputSchema: z.ZodType<Prisma.TestCatalo
   AlternativeSpecimen: z.string().optional().nullable(),
   LoincCodesText: z.string().optional().nullable(),
   LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional(),
   LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincCreateNestedManyWithoutTestCatalogInputSchema).optional()
 }).strict();
@@ -14478,13 +16601,17 @@ export const TestCatalogUncheckedCreateWithoutLabInputSchema: z.ZodType<Prisma.T
   AlternativeSpecimen: z.string().optional().nullable(),
   LoincCodesText: z.string().optional().nullable(),
   LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional()
 }).strict();
@@ -14497,6 +16624,38 @@ export const TestCatalogCreateOrConnectWithoutLabInputSchema: z.ZodType<Prisma.T
 export const TestCatalogCreateManyLabInputEnvelopeSchema: z.ZodType<Prisma.TestCatalogCreateManyLabInputEnvelope> = z.object({
   data: z.union([ z.lazy(() => TestCatalogCreateManyLabInputSchema),z.lazy(() => TestCatalogCreateManyLabInputSchema).array() ]),
   skipDuplicates: z.boolean().optional()
+}).strict();
+
+export const SponsoredTestUpsertWithWhereUniqueWithoutLabInputSchema: z.ZodType<Prisma.SponsoredTestUpsertWithWhereUniqueWithoutLabInput> = z.object({
+  where: z.lazy(() => SponsoredTestWhereUniqueInputSchema),
+  update: z.union([ z.lazy(() => SponsoredTestUpdateWithoutLabInputSchema),z.lazy(() => SponsoredTestUncheckedUpdateWithoutLabInputSchema) ]),
+  create: z.union([ z.lazy(() => SponsoredTestCreateWithoutLabInputSchema),z.lazy(() => SponsoredTestUncheckedCreateWithoutLabInputSchema) ]),
+}).strict();
+
+export const SponsoredTestUpdateWithWhereUniqueWithoutLabInputSchema: z.ZodType<Prisma.SponsoredTestUpdateWithWhereUniqueWithoutLabInput> = z.object({
+  where: z.lazy(() => SponsoredTestWhereUniqueInputSchema),
+  data: z.union([ z.lazy(() => SponsoredTestUpdateWithoutLabInputSchema),z.lazy(() => SponsoredTestUncheckedUpdateWithoutLabInputSchema) ]),
+}).strict();
+
+export const SponsoredTestUpdateManyWithWhereWithoutLabInputSchema: z.ZodType<Prisma.SponsoredTestUpdateManyWithWhereWithoutLabInput> = z.object({
+  where: z.lazy(() => SponsoredTestScalarWhereInputSchema),
+  data: z.union([ z.lazy(() => SponsoredTestUpdateManyMutationInputSchema),z.lazy(() => SponsoredTestUncheckedUpdateManyWithoutLabInputSchema) ]),
+}).strict();
+
+export const SponsoredTestScalarWhereInputSchema: z.ZodType<Prisma.SponsoredTestScalarWhereInput> = z.object({
+  AND: z.union([ z.lazy(() => SponsoredTestScalarWhereInputSchema),z.lazy(() => SponsoredTestScalarWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => SponsoredTestScalarWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => SponsoredTestScalarWhereInputSchema),z.lazy(() => SponsoredTestScalarWhereInputSchema).array() ]).optional(),
+  Id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  TestId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
+  LabTestId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  SponsoredProgramId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
+  LabId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
+  CasandraTestId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  Category: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  SubCategory: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
 }).strict();
 
 export const TestCatalogUpsertWithWhereUniqueWithoutLabInputSchema: z.ZodType<Prisma.TestCatalogUpsertWithWhereUniqueWithoutLabInput> = z.object({
@@ -14560,6 +16719,8 @@ export const TestCatalogScalarWhereInputSchema: z.ZodType<Prisma.TestCatalogScal
   AlternativeSpecimen: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   LoincCodesText: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  TestCategory: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  TestSubCategory: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
 }).strict();
@@ -14667,7 +16828,8 @@ export const PatientCreateWithoutLabOrderInputSchema: z.ZodType<Prisma.PatientCr
   Email: z.string().optional().nullable(),
   Mobile: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
-  UpdatedAt: z.date().optional().nullable()
+  UpdatedAt: z.date().optional().nullable(),
+  PatientOrganization: z.lazy(() => PatientOrganizationCreateNestedManyWithoutPatientInputSchema).optional()
 }).strict();
 
 export const PatientUncheckedCreateWithoutLabOrderInputSchema: z.ZodType<Prisma.PatientUncheckedCreateWithoutLabOrderInput> = z.object({
@@ -14679,7 +16841,8 @@ export const PatientUncheckedCreateWithoutLabOrderInputSchema: z.ZodType<Prisma.
   Email: z.string().optional().nullable(),
   Mobile: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
-  UpdatedAt: z.date().optional().nullable()
+  UpdatedAt: z.date().optional().nullable(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUncheckedCreateNestedManyWithoutPatientInputSchema).optional()
 }).strict();
 
 export const PatientCreateOrConnectWithoutLabOrderInputSchema: z.ZodType<Prisma.PatientCreateOrConnectWithoutLabOrderInput> = z.object({
@@ -14688,7 +16851,7 @@ export const PatientCreateOrConnectWithoutLabOrderInputSchema: z.ZodType<Prisma.
 }).strict();
 
 export const OrganizationCreateWithoutLabOrderInputSchema: z.ZodType<Prisma.OrganizationCreateWithoutLabOrderInput> = z.object({
-  Id: z.string().optional(),
+  Id: z.string(),
   href: z.string().optional().nullable(),
   Level: z.number().optional().nullable(),
   ParentOrgName: z.string().optional().nullable(),
@@ -14702,11 +16865,12 @@ export const OrganizationCreateWithoutLabOrderInputSchema: z.ZodType<Prisma.Orga
   Organization: z.lazy(() => OrganizationCreateNestedOneWithoutChildOrganizationInputSchema).optional(),
   ChildOrganization: z.lazy(() => OrganizationCreateNestedManyWithoutOrganizationInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestCreateNestedManyWithoutOrganizationInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationCreateNestedManyWithoutOrganizationInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationCreateNestedManyWithoutOrganizationInputSchema).optional()
 }).strict();
 
 export const OrganizationUncheckedCreateWithoutLabOrderInputSchema: z.ZodType<Prisma.OrganizationUncheckedCreateWithoutLabOrderInput> = z.object({
-  Id: z.string().optional(),
+  Id: z.string(),
   href: z.string().optional().nullable(),
   ParentId: z.string().optional().nullable(),
   Level: z.number().optional().nullable(),
@@ -14720,6 +16884,7 @@ export const OrganizationUncheckedCreateWithoutLabOrderInputSchema: z.ZodType<Pr
   OrgZip: z.string().optional().nullable(),
   ChildOrganization: z.lazy(() => OrganizationUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional()
 }).strict();
 
@@ -15025,6 +17190,7 @@ export const PatientUpdateWithoutLabOrderInputSchema: z.ZodType<Prisma.PatientUp
   Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUpdateManyWithoutPatientNestedInputSchema).optional()
 }).strict();
 
 export const PatientUncheckedUpdateWithoutLabOrderInputSchema: z.ZodType<Prisma.PatientUncheckedUpdateWithoutLabOrderInput> = z.object({
@@ -15037,6 +17203,7 @@ export const PatientUncheckedUpdateWithoutLabOrderInputSchema: z.ZodType<Prisma.
   Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUncheckedUpdateManyWithoutPatientNestedInputSchema).optional()
 }).strict();
 
 export const OrganizationUpsertWithoutLabOrderInputSchema: z.ZodType<Prisma.OrganizationUpsertWithoutLabOrderInput> = z.object({
@@ -15065,6 +17232,7 @@ export const OrganizationUpdateWithoutLabOrderInputSchema: z.ZodType<Prisma.Orga
   Organization: z.lazy(() => OrganizationUpdateOneWithoutChildOrganizationNestedInputSchema).optional(),
   ChildOrganization: z.lazy(() => OrganizationUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUpdateManyWithoutOrganizationNestedInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationUpdateManyWithoutOrganizationNestedInputSchema).optional()
 }).strict();
 
@@ -15083,6 +17251,7 @@ export const OrganizationUncheckedUpdateWithoutLabOrderInputSchema: z.ZodType<Pr
   OrgZip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ChildOrganization: z.lazy(() => OrganizationUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional()
 }).strict();
 
@@ -15944,13 +18113,17 @@ export const TestCatalogCreateWithoutLabOrderTestInputSchema: z.ZodType<Prisma.T
   AlternativeSpecimen: z.string().optional().nullable(),
   LoincCodesText: z.string().optional().nullable(),
   LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   Lab: z.lazy(() => LabCreateNestedOneWithoutTestCatalogInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincCreateNestedManyWithoutTestCatalogInputSchema).optional()
 }).strict();
@@ -15997,12 +18170,16 @@ export const TestCatalogUncheckedCreateWithoutLabOrderTestInputSchema: z.ZodType
   AlternativeSpecimen: z.string().optional().nullable(),
   LoincCodesText: z.string().optional().nullable(),
   LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional()
 }).strict();
@@ -16118,13 +18295,17 @@ export const TestCatalogUpdateWithoutLabOrderTestInputSchema: z.ZodType<Prisma.T
   AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   Lab: z.lazy(() => LabUpdateOneWithoutTestCatalogNestedInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUpdateManyWithoutTestCatalogNestedInputSchema).optional()
 }).strict();
@@ -16171,12 +18352,16 @@ export const TestCatalogUncheckedUpdateWithoutLabOrderTestInputSchema: z.ZodType
   AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional()
 }).strict();
@@ -16236,7 +18421,7 @@ export const LabOrderCreateManyOrganizationInputEnvelopeSchema: z.ZodType<Prisma
 }).strict();
 
 export const OrganizationCreateWithoutChildOrganizationInputSchema: z.ZodType<Prisma.OrganizationCreateWithoutChildOrganizationInput> = z.object({
-  Id: z.string().optional(),
+  Id: z.string(),
   href: z.string().optional().nullable(),
   Level: z.number().optional().nullable(),
   ParentOrgName: z.string().optional().nullable(),
@@ -16250,11 +18435,12 @@ export const OrganizationCreateWithoutChildOrganizationInputSchema: z.ZodType<Pr
   LabOrder: z.lazy(() => LabOrderCreateNestedManyWithoutOrganizationInputSchema).optional(),
   Organization: z.lazy(() => OrganizationCreateNestedOneWithoutChildOrganizationInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestCreateNestedManyWithoutOrganizationInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationCreateNestedManyWithoutOrganizationInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationCreateNestedManyWithoutOrganizationInputSchema).optional()
 }).strict();
 
 export const OrganizationUncheckedCreateWithoutChildOrganizationInputSchema: z.ZodType<Prisma.OrganizationUncheckedCreateWithoutChildOrganizationInput> = z.object({
-  Id: z.string().optional(),
+  Id: z.string(),
   href: z.string().optional().nullable(),
   ParentId: z.string().optional().nullable(),
   Level: z.number().optional().nullable(),
@@ -16268,6 +18454,7 @@ export const OrganizationUncheckedCreateWithoutChildOrganizationInputSchema: z.Z
   OrgZip: z.string().optional().nullable(),
   LabOrder: z.lazy(() => LabOrderUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional()
 }).strict();
 
@@ -16277,7 +18464,7 @@ export const OrganizationCreateOrConnectWithoutChildOrganizationInputSchema: z.Z
 }).strict();
 
 export const OrganizationCreateWithoutOrganizationInputSchema: z.ZodType<Prisma.OrganizationCreateWithoutOrganizationInput> = z.object({
-  Id: z.string().optional(),
+  Id: z.string(),
   href: z.string().optional().nullable(),
   Level: z.number().optional().nullable(),
   ParentOrgName: z.string().optional().nullable(),
@@ -16291,11 +18478,12 @@ export const OrganizationCreateWithoutOrganizationInputSchema: z.ZodType<Prisma.
   LabOrder: z.lazy(() => LabOrderCreateNestedManyWithoutOrganizationInputSchema).optional(),
   ChildOrganization: z.lazy(() => OrganizationCreateNestedManyWithoutOrganizationInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestCreateNestedManyWithoutOrganizationInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationCreateNestedManyWithoutOrganizationInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationCreateNestedManyWithoutOrganizationInputSchema).optional()
 }).strict();
 
 export const OrganizationUncheckedCreateWithoutOrganizationInputSchema: z.ZodType<Prisma.OrganizationUncheckedCreateWithoutOrganizationInput> = z.object({
-  Id: z.string().optional(),
+  Id: z.string(),
   href: z.string().optional().nullable(),
   Level: z.number().optional().nullable(),
   ParentOrgName: z.string().optional().nullable(),
@@ -16309,6 +18497,7 @@ export const OrganizationUncheckedCreateWithoutOrganizationInputSchema: z.ZodTyp
   LabOrder: z.lazy(() => LabOrderUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
   ChildOrganization: z.lazy(() => OrganizationUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional()
 }).strict();
 
@@ -16349,6 +18538,32 @@ export const OrganizationFavoriteTestCreateOrConnectWithoutOrganizationInputSche
 
 export const OrganizationFavoriteTestCreateManyOrganizationInputEnvelopeSchema: z.ZodType<Prisma.OrganizationFavoriteTestCreateManyOrganizationInputEnvelope> = z.object({
   data: z.union([ z.lazy(() => OrganizationFavoriteTestCreateManyOrganizationInputSchema),z.lazy(() => OrganizationFavoriteTestCreateManyOrganizationInputSchema).array() ]),
+  skipDuplicates: z.boolean().optional()
+}).strict();
+
+export const PatientOrganizationCreateWithoutOrganizationInputSchema: z.ZodType<Prisma.PatientOrganizationCreateWithoutOrganizationInput> = z.object({
+  Id: z.string().optional(),
+  MRN: z.string().optional().nullable(),
+  Mobile: z.string().optional().nullable(),
+  Email: z.string().optional().nullable(),
+  Patient: z.lazy(() => PatientCreateNestedOneWithoutPatientOrganizationInputSchema)
+}).strict();
+
+export const PatientOrganizationUncheckedCreateWithoutOrganizationInputSchema: z.ZodType<Prisma.PatientOrganizationUncheckedCreateWithoutOrganizationInput> = z.object({
+  Id: z.string().optional(),
+  PatientId: z.string(),
+  MRN: z.string().optional().nullable(),
+  Mobile: z.string().optional().nullable(),
+  Email: z.string().optional().nullable()
+}).strict();
+
+export const PatientOrganizationCreateOrConnectWithoutOrganizationInputSchema: z.ZodType<Prisma.PatientOrganizationCreateOrConnectWithoutOrganizationInput> = z.object({
+  where: z.lazy(() => PatientOrganizationWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => PatientOrganizationCreateWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationUncheckedCreateWithoutOrganizationInputSchema) ]),
+}).strict();
+
+export const PatientOrganizationCreateManyOrganizationInputEnvelopeSchema: z.ZodType<Prisma.PatientOrganizationCreateManyOrganizationInputEnvelope> = z.object({
+  data: z.union([ z.lazy(() => PatientOrganizationCreateManyOrganizationInputSchema),z.lazy(() => PatientOrganizationCreateManyOrganizationInputSchema).array() ]),
   skipDuplicates: z.boolean().optional()
 }).strict();
 
@@ -16450,6 +18665,7 @@ export const OrganizationUpdateWithoutChildOrganizationInputSchema: z.ZodType<Pr
   LabOrder: z.lazy(() => LabOrderUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   Organization: z.lazy(() => OrganizationUpdateOneWithoutChildOrganizationNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUpdateManyWithoutOrganizationNestedInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationUpdateManyWithoutOrganizationNestedInputSchema).optional()
 }).strict();
 
@@ -16468,6 +18684,7 @@ export const OrganizationUncheckedUpdateWithoutChildOrganizationInputSchema: z.Z
   OrgZip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LabOrder: z.lazy(() => LabOrderUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional()
 }).strict();
 
@@ -16535,6 +18752,34 @@ export const OrganizationFavoriteTestScalarWhereInputSchema: z.ZodType<Prisma.Or
   UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
 }).strict();
 
+export const PatientOrganizationUpsertWithWhereUniqueWithoutOrganizationInputSchema: z.ZodType<Prisma.PatientOrganizationUpsertWithWhereUniqueWithoutOrganizationInput> = z.object({
+  where: z.lazy(() => PatientOrganizationWhereUniqueInputSchema),
+  update: z.union([ z.lazy(() => PatientOrganizationUpdateWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationUncheckedUpdateWithoutOrganizationInputSchema) ]),
+  create: z.union([ z.lazy(() => PatientOrganizationCreateWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationUncheckedCreateWithoutOrganizationInputSchema) ]),
+}).strict();
+
+export const PatientOrganizationUpdateWithWhereUniqueWithoutOrganizationInputSchema: z.ZodType<Prisma.PatientOrganizationUpdateWithWhereUniqueWithoutOrganizationInput> = z.object({
+  where: z.lazy(() => PatientOrganizationWhereUniqueInputSchema),
+  data: z.union([ z.lazy(() => PatientOrganizationUpdateWithoutOrganizationInputSchema),z.lazy(() => PatientOrganizationUncheckedUpdateWithoutOrganizationInputSchema) ]),
+}).strict();
+
+export const PatientOrganizationUpdateManyWithWhereWithoutOrganizationInputSchema: z.ZodType<Prisma.PatientOrganizationUpdateManyWithWhereWithoutOrganizationInput> = z.object({
+  where: z.lazy(() => PatientOrganizationScalarWhereInputSchema),
+  data: z.union([ z.lazy(() => PatientOrganizationUpdateManyMutationInputSchema),z.lazy(() => PatientOrganizationUncheckedUpdateManyWithoutOrganizationInputSchema) ]),
+}).strict();
+
+export const PatientOrganizationScalarWhereInputSchema: z.ZodType<Prisma.PatientOrganizationScalarWhereInput> = z.object({
+  AND: z.union([ z.lazy(() => PatientOrganizationScalarWhereInputSchema),z.lazy(() => PatientOrganizationScalarWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => PatientOrganizationScalarWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => PatientOrganizationScalarWhereInputSchema),z.lazy(() => PatientOrganizationScalarWhereInputSchema).array() ]).optional(),
+  Id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  PatientId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  OrganizationId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  MRN: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Mobile: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Email: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+}).strict();
+
 export const ProviderOrganizationUpsertWithWhereUniqueWithoutOrganizationInputSchema: z.ZodType<Prisma.ProviderOrganizationUpsertWithWhereUniqueWithoutOrganizationInput> = z.object({
   where: z.lazy(() => ProviderOrganizationWhereUniqueInputSchema),
   update: z.union([ z.lazy(() => ProviderOrganizationUpdateWithoutOrganizationInputSchema),z.lazy(() => ProviderOrganizationUncheckedUpdateWithoutOrganizationInputSchema) ]),
@@ -16557,7 +18802,7 @@ export const ProviderOrganizationScalarWhereInputSchema: z.ZodType<Prisma.Provid
   NOT: z.union([ z.lazy(() => ProviderOrganizationScalarWhereInputSchema),z.lazy(() => ProviderOrganizationScalarWhereInputSchema).array() ]).optional(),
   Id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   ProviderId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  OrganizationId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  OrganizationId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   ProviderNPI: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   Name: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   ParentOrgName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
@@ -16569,7 +18814,7 @@ export const ProviderOrganizationScalarWhereInputSchema: z.ZodType<Prisma.Provid
 }).strict();
 
 export const OrganizationCreateWithoutOrganizationFavoriteTestInputSchema: z.ZodType<Prisma.OrganizationCreateWithoutOrganizationFavoriteTestInput> = z.object({
-  Id: z.string().optional(),
+  Id: z.string(),
   href: z.string().optional().nullable(),
   Level: z.number().optional().nullable(),
   ParentOrgName: z.string().optional().nullable(),
@@ -16583,11 +18828,12 @@ export const OrganizationCreateWithoutOrganizationFavoriteTestInputSchema: z.Zod
   LabOrder: z.lazy(() => LabOrderCreateNestedManyWithoutOrganizationInputSchema).optional(),
   Organization: z.lazy(() => OrganizationCreateNestedOneWithoutChildOrganizationInputSchema).optional(),
   ChildOrganization: z.lazy(() => OrganizationCreateNestedManyWithoutOrganizationInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationCreateNestedManyWithoutOrganizationInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationCreateNestedManyWithoutOrganizationInputSchema).optional()
 }).strict();
 
 export const OrganizationUncheckedCreateWithoutOrganizationFavoriteTestInputSchema: z.ZodType<Prisma.OrganizationUncheckedCreateWithoutOrganizationFavoriteTestInput> = z.object({
-  Id: z.string().optional(),
+  Id: z.string(),
   href: z.string().optional().nullable(),
   ParentId: z.string().optional().nullable(),
   Level: z.number().optional().nullable(),
@@ -16601,6 +18847,7 @@ export const OrganizationUncheckedCreateWithoutOrganizationFavoriteTestInputSche
   OrgZip: z.string().optional().nullable(),
   LabOrder: z.lazy(() => LabOrderUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
   ChildOrganization: z.lazy(() => OrganizationUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional()
 }).strict();
 
@@ -16649,13 +18896,17 @@ export const TestCatalogCreateWithoutOrganizationFavoriteTestInputSchema: z.ZodT
   AlternativeSpecimen: z.string().optional().nullable(),
   LoincCodesText: z.string().optional().nullable(),
   LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional(),
   LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   Lab: z.lazy(() => LabCreateNestedOneWithoutTestCatalogInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincCreateNestedManyWithoutTestCatalogInputSchema).optional()
 }).strict();
@@ -16702,12 +18953,16 @@ export const TestCatalogUncheckedCreateWithoutOrganizationFavoriteTestInputSchem
   AlternativeSpecimen: z.string().optional().nullable(),
   LoincCodesText: z.string().optional().nullable(),
   LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional()
 }).strict();
@@ -16743,6 +18998,7 @@ export const OrganizationUpdateWithoutOrganizationFavoriteTestInputSchema: z.Zod
   LabOrder: z.lazy(() => LabOrderUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   Organization: z.lazy(() => OrganizationUpdateOneWithoutChildOrganizationNestedInputSchema).optional(),
   ChildOrganization: z.lazy(() => OrganizationUpdateManyWithoutOrganizationNestedInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationUpdateManyWithoutOrganizationNestedInputSchema).optional()
 }).strict();
 
@@ -16761,6 +19017,7 @@ export const OrganizationUncheckedUpdateWithoutOrganizationFavoriteTestInputSche
   OrgZip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LabOrder: z.lazy(() => LabOrderUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   ChildOrganization: z.lazy(() => OrganizationUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional()
 }).strict();
 
@@ -16815,13 +19072,17 @@ export const TestCatalogUpdateWithoutOrganizationFavoriteTestInputSchema: z.ZodT
   AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   Lab: z.lazy(() => LabUpdateOneWithoutTestCatalogNestedInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUpdateManyWithoutTestCatalogNestedInputSchema).optional()
 }).strict();
@@ -16868,12 +19129,16 @@ export const TestCatalogUncheckedUpdateWithoutOrganizationFavoriteTestInputSchem
   AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional()
 }).strict();
@@ -16932,6 +19197,32 @@ export const LabOrderCreateManyPatientInputEnvelopeSchema: z.ZodType<Prisma.LabO
   skipDuplicates: z.boolean().optional()
 }).strict();
 
+export const PatientOrganizationCreateWithoutPatientInputSchema: z.ZodType<Prisma.PatientOrganizationCreateWithoutPatientInput> = z.object({
+  Id: z.string().optional(),
+  MRN: z.string().optional().nullable(),
+  Mobile: z.string().optional().nullable(),
+  Email: z.string().optional().nullable(),
+  Organization: z.lazy(() => OrganizationCreateNestedOneWithoutPatientOrganizationInputSchema)
+}).strict();
+
+export const PatientOrganizationUncheckedCreateWithoutPatientInputSchema: z.ZodType<Prisma.PatientOrganizationUncheckedCreateWithoutPatientInput> = z.object({
+  Id: z.string().optional(),
+  OrganizationId: z.string(),
+  MRN: z.string().optional().nullable(),
+  Mobile: z.string().optional().nullable(),
+  Email: z.string().optional().nullable()
+}).strict();
+
+export const PatientOrganizationCreateOrConnectWithoutPatientInputSchema: z.ZodType<Prisma.PatientOrganizationCreateOrConnectWithoutPatientInput> = z.object({
+  where: z.lazy(() => PatientOrganizationWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => PatientOrganizationCreateWithoutPatientInputSchema),z.lazy(() => PatientOrganizationUncheckedCreateWithoutPatientInputSchema) ]),
+}).strict();
+
+export const PatientOrganizationCreateManyPatientInputEnvelopeSchema: z.ZodType<Prisma.PatientOrganizationCreateManyPatientInputEnvelope> = z.object({
+  data: z.union([ z.lazy(() => PatientOrganizationCreateManyPatientInputSchema),z.lazy(() => PatientOrganizationCreateManyPatientInputSchema).array() ]),
+  skipDuplicates: z.boolean().optional()
+}).strict();
+
 export const LabOrderUpsertWithWhereUniqueWithoutPatientInputSchema: z.ZodType<Prisma.LabOrderUpsertWithWhereUniqueWithoutPatientInput> = z.object({
   where: z.lazy(() => LabOrderWhereUniqueInputSchema),
   update: z.union([ z.lazy(() => LabOrderUpdateWithoutPatientInputSchema),z.lazy(() => LabOrderUncheckedUpdateWithoutPatientInputSchema) ]),
@@ -16946,6 +19237,182 @@ export const LabOrderUpdateWithWhereUniqueWithoutPatientInputSchema: z.ZodType<P
 export const LabOrderUpdateManyWithWhereWithoutPatientInputSchema: z.ZodType<Prisma.LabOrderUpdateManyWithWhereWithoutPatientInput> = z.object({
   where: z.lazy(() => LabOrderScalarWhereInputSchema),
   data: z.union([ z.lazy(() => LabOrderUpdateManyMutationInputSchema),z.lazy(() => LabOrderUncheckedUpdateManyWithoutPatientInputSchema) ]),
+}).strict();
+
+export const PatientOrganizationUpsertWithWhereUniqueWithoutPatientInputSchema: z.ZodType<Prisma.PatientOrganizationUpsertWithWhereUniqueWithoutPatientInput> = z.object({
+  where: z.lazy(() => PatientOrganizationWhereUniqueInputSchema),
+  update: z.union([ z.lazy(() => PatientOrganizationUpdateWithoutPatientInputSchema),z.lazy(() => PatientOrganizationUncheckedUpdateWithoutPatientInputSchema) ]),
+  create: z.union([ z.lazy(() => PatientOrganizationCreateWithoutPatientInputSchema),z.lazy(() => PatientOrganizationUncheckedCreateWithoutPatientInputSchema) ]),
+}).strict();
+
+export const PatientOrganizationUpdateWithWhereUniqueWithoutPatientInputSchema: z.ZodType<Prisma.PatientOrganizationUpdateWithWhereUniqueWithoutPatientInput> = z.object({
+  where: z.lazy(() => PatientOrganizationWhereUniqueInputSchema),
+  data: z.union([ z.lazy(() => PatientOrganizationUpdateWithoutPatientInputSchema),z.lazy(() => PatientOrganizationUncheckedUpdateWithoutPatientInputSchema) ]),
+}).strict();
+
+export const PatientOrganizationUpdateManyWithWhereWithoutPatientInputSchema: z.ZodType<Prisma.PatientOrganizationUpdateManyWithWhereWithoutPatientInput> = z.object({
+  where: z.lazy(() => PatientOrganizationScalarWhereInputSchema),
+  data: z.union([ z.lazy(() => PatientOrganizationUpdateManyMutationInputSchema),z.lazy(() => PatientOrganizationUncheckedUpdateManyWithoutPatientInputSchema) ]),
+}).strict();
+
+export const OrganizationCreateWithoutPatientOrganizationInputSchema: z.ZodType<Prisma.OrganizationCreateWithoutPatientOrganizationInput> = z.object({
+  Id: z.string(),
+  href: z.string().optional().nullable(),
+  Level: z.number().optional().nullable(),
+  ParentOrgName: z.string().optional().nullable(),
+  OrgName: z.string().optional().nullable(),
+  OrgType: z.string().optional().nullable(),
+  OrgSpecialty: z.string().optional().nullable(),
+  OrgAddress: z.string().optional().nullable(),
+  OrgCity: z.string().optional().nullable(),
+  OrgState: z.string().optional().nullable(),
+  OrgZip: z.string().optional().nullable(),
+  LabOrder: z.lazy(() => LabOrderCreateNestedManyWithoutOrganizationInputSchema).optional(),
+  Organization: z.lazy(() => OrganizationCreateNestedOneWithoutChildOrganizationInputSchema).optional(),
+  ChildOrganization: z.lazy(() => OrganizationCreateNestedManyWithoutOrganizationInputSchema).optional(),
+  OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestCreateNestedManyWithoutOrganizationInputSchema).optional(),
+  ProviderOrganization: z.lazy(() => ProviderOrganizationCreateNestedManyWithoutOrganizationInputSchema).optional()
+}).strict();
+
+export const OrganizationUncheckedCreateWithoutPatientOrganizationInputSchema: z.ZodType<Prisma.OrganizationUncheckedCreateWithoutPatientOrganizationInput> = z.object({
+  Id: z.string(),
+  href: z.string().optional().nullable(),
+  ParentId: z.string().optional().nullable(),
+  Level: z.number().optional().nullable(),
+  ParentOrgName: z.string().optional().nullable(),
+  OrgName: z.string().optional().nullable(),
+  OrgType: z.string().optional().nullable(),
+  OrgSpecialty: z.string().optional().nullable(),
+  OrgAddress: z.string().optional().nullable(),
+  OrgCity: z.string().optional().nullable(),
+  OrgState: z.string().optional().nullable(),
+  OrgZip: z.string().optional().nullable(),
+  LabOrder: z.lazy(() => LabOrderUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
+  ChildOrganization: z.lazy(() => OrganizationUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
+  OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
+  ProviderOrganization: z.lazy(() => ProviderOrganizationUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional()
+}).strict();
+
+export const OrganizationCreateOrConnectWithoutPatientOrganizationInputSchema: z.ZodType<Prisma.OrganizationCreateOrConnectWithoutPatientOrganizationInput> = z.object({
+  where: z.lazy(() => OrganizationWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => OrganizationCreateWithoutPatientOrganizationInputSchema),z.lazy(() => OrganizationUncheckedCreateWithoutPatientOrganizationInputSchema) ]),
+}).strict();
+
+export const PatientCreateWithoutPatientOrganizationInputSchema: z.ZodType<Prisma.PatientCreateWithoutPatientOrganizationInput> = z.object({
+  Id: z.string().optional(),
+  FirstName: z.string().optional().nullable(),
+  LastName: z.string().optional().nullable(),
+  DateOfBirth: z.date().optional().nullable(),
+  Gender: z.string().optional().nullable(),
+  Email: z.string().optional().nullable(),
+  Mobile: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable(),
+  LabOrder: z.lazy(() => LabOrderCreateNestedManyWithoutPatientInputSchema).optional()
+}).strict();
+
+export const PatientUncheckedCreateWithoutPatientOrganizationInputSchema: z.ZodType<Prisma.PatientUncheckedCreateWithoutPatientOrganizationInput> = z.object({
+  Id: z.string().optional(),
+  FirstName: z.string().optional().nullable(),
+  LastName: z.string().optional().nullable(),
+  DateOfBirth: z.date().optional().nullable(),
+  Gender: z.string().optional().nullable(),
+  Email: z.string().optional().nullable(),
+  Mobile: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable(),
+  LabOrder: z.lazy(() => LabOrderUncheckedCreateNestedManyWithoutPatientInputSchema).optional()
+}).strict();
+
+export const PatientCreateOrConnectWithoutPatientOrganizationInputSchema: z.ZodType<Prisma.PatientCreateOrConnectWithoutPatientOrganizationInput> = z.object({
+  where: z.lazy(() => PatientWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => PatientCreateWithoutPatientOrganizationInputSchema),z.lazy(() => PatientUncheckedCreateWithoutPatientOrganizationInputSchema) ]),
+}).strict();
+
+export const OrganizationUpsertWithoutPatientOrganizationInputSchema: z.ZodType<Prisma.OrganizationUpsertWithoutPatientOrganizationInput> = z.object({
+  update: z.union([ z.lazy(() => OrganizationUpdateWithoutPatientOrganizationInputSchema),z.lazy(() => OrganizationUncheckedUpdateWithoutPatientOrganizationInputSchema) ]),
+  create: z.union([ z.lazy(() => OrganizationCreateWithoutPatientOrganizationInputSchema),z.lazy(() => OrganizationUncheckedCreateWithoutPatientOrganizationInputSchema) ]),
+  where: z.lazy(() => OrganizationWhereInputSchema).optional()
+}).strict();
+
+export const OrganizationUpdateToOneWithWhereWithoutPatientOrganizationInputSchema: z.ZodType<Prisma.OrganizationUpdateToOneWithWhereWithoutPatientOrganizationInput> = z.object({
+  where: z.lazy(() => OrganizationWhereInputSchema).optional(),
+  data: z.union([ z.lazy(() => OrganizationUpdateWithoutPatientOrganizationInputSchema),z.lazy(() => OrganizationUncheckedUpdateWithoutPatientOrganizationInputSchema) ]),
+}).strict();
+
+export const OrganizationUpdateWithoutPatientOrganizationInputSchema: z.ZodType<Prisma.OrganizationUpdateWithoutPatientOrganizationInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  href: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Level: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ParentOrgName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrgName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrgType: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrgSpecialty: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrgAddress: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrgCity: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrgState: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrgZip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LabOrder: z.lazy(() => LabOrderUpdateManyWithoutOrganizationNestedInputSchema).optional(),
+  Organization: z.lazy(() => OrganizationUpdateOneWithoutChildOrganizationNestedInputSchema).optional(),
+  ChildOrganization: z.lazy(() => OrganizationUpdateManyWithoutOrganizationNestedInputSchema).optional(),
+  OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUpdateManyWithoutOrganizationNestedInputSchema).optional(),
+  ProviderOrganization: z.lazy(() => ProviderOrganizationUpdateManyWithoutOrganizationNestedInputSchema).optional()
+}).strict();
+
+export const OrganizationUncheckedUpdateWithoutPatientOrganizationInputSchema: z.ZodType<Prisma.OrganizationUncheckedUpdateWithoutPatientOrganizationInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  href: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ParentId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Level: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ParentOrgName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrgName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrgType: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrgSpecialty: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrgAddress: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrgCity: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrgState: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrgZip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LabOrder: z.lazy(() => LabOrderUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
+  ChildOrganization: z.lazy(() => OrganizationUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
+  OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
+  ProviderOrganization: z.lazy(() => ProviderOrganizationUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional()
+}).strict();
+
+export const PatientUpsertWithoutPatientOrganizationInputSchema: z.ZodType<Prisma.PatientUpsertWithoutPatientOrganizationInput> = z.object({
+  update: z.union([ z.lazy(() => PatientUpdateWithoutPatientOrganizationInputSchema),z.lazy(() => PatientUncheckedUpdateWithoutPatientOrganizationInputSchema) ]),
+  create: z.union([ z.lazy(() => PatientCreateWithoutPatientOrganizationInputSchema),z.lazy(() => PatientUncheckedCreateWithoutPatientOrganizationInputSchema) ]),
+  where: z.lazy(() => PatientWhereInputSchema).optional()
+}).strict();
+
+export const PatientUpdateToOneWithWhereWithoutPatientOrganizationInputSchema: z.ZodType<Prisma.PatientUpdateToOneWithWhereWithoutPatientOrganizationInput> = z.object({
+  where: z.lazy(() => PatientWhereInputSchema).optional(),
+  data: z.union([ z.lazy(() => PatientUpdateWithoutPatientOrganizationInputSchema),z.lazy(() => PatientUncheckedUpdateWithoutPatientOrganizationInputSchema) ]),
+}).strict();
+
+export const PatientUpdateWithoutPatientOrganizationInputSchema: z.ZodType<Prisma.PatientUpdateWithoutPatientOrganizationInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  FirstName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LastName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  DateOfBirth: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Gender: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LabOrder: z.lazy(() => LabOrderUpdateManyWithoutPatientNestedInputSchema).optional()
+}).strict();
+
+export const PatientUncheckedUpdateWithoutPatientOrganizationInputSchema: z.ZodType<Prisma.PatientUncheckedUpdateWithoutPatientOrganizationInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  FirstName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LastName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  DateOfBirth: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Gender: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LabOrder: z.lazy(() => LabOrderUncheckedUpdateManyWithoutPatientNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderCreateWithoutOrderingProviderInputSchema: z.ZodType<Prisma.LabOrderCreateWithoutOrderingProviderInput> = z.object({
@@ -17143,12 +19610,12 @@ export const ProviderOrganizationCreateWithoutProviderInputSchema: z.ZodType<Pri
   OrgCity: z.string().optional().nullable(),
   OrgState: z.string().optional().nullable(),
   OrgZip: z.string().optional().nullable(),
-  Organization: z.lazy(() => OrganizationCreateNestedOneWithoutProviderOrganizationInputSchema).optional()
+  Organization: z.lazy(() => OrganizationCreateNestedOneWithoutProviderOrganizationInputSchema)
 }).strict();
 
 export const ProviderOrganizationUncheckedCreateWithoutProviderInputSchema: z.ZodType<Prisma.ProviderOrganizationUncheckedCreateWithoutProviderInput> = z.object({
   Id: z.string().optional(),
-  OrganizationId: z.string().optional().nullable(),
+  OrganizationId: z.string(),
   ProviderNPI: z.string().optional().nullable(),
   Name: z.string().optional().nullable(),
   ParentOrgName: z.string().optional().nullable(),
@@ -17488,13 +19955,17 @@ export const TestCatalogCreateWithoutProviderFavoriteTestInputSchema: z.ZodType<
   AlternativeSpecimen: z.string().optional().nullable(),
   LoincCodesText: z.string().optional().nullable(),
   LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional(),
   LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   Lab: z.lazy(() => LabCreateNestedOneWithoutTestCatalogInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincCreateNestedManyWithoutTestCatalogInputSchema).optional()
 }).strict();
@@ -17541,12 +20012,16 @@ export const TestCatalogUncheckedCreateWithoutProviderFavoriteTestInputSchema: z
   AlternativeSpecimen: z.string().optional().nullable(),
   LoincCodesText: z.string().optional().nullable(),
   LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional()
 }).strict();
@@ -17660,13 +20135,17 @@ export const TestCatalogUpdateWithoutProviderFavoriteTestInputSchema: z.ZodType<
   AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   Lab: z.lazy(() => LabUpdateOneWithoutTestCatalogNestedInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUpdateManyWithoutTestCatalogNestedInputSchema).optional()
 }).strict();
@@ -17713,18 +20192,22 @@ export const TestCatalogUncheckedUpdateWithoutProviderFavoriteTestInputSchema: z
   AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional()
 }).strict();
 
 export const OrganizationCreateWithoutProviderOrganizationInputSchema: z.ZodType<Prisma.OrganizationCreateWithoutProviderOrganizationInput> = z.object({
-  Id: z.string().optional(),
+  Id: z.string(),
   href: z.string().optional().nullable(),
   Level: z.number().optional().nullable(),
   ParentOrgName: z.string().optional().nullable(),
@@ -17738,11 +20221,12 @@ export const OrganizationCreateWithoutProviderOrganizationInputSchema: z.ZodType
   LabOrder: z.lazy(() => LabOrderCreateNestedManyWithoutOrganizationInputSchema).optional(),
   Organization: z.lazy(() => OrganizationCreateNestedOneWithoutChildOrganizationInputSchema).optional(),
   ChildOrganization: z.lazy(() => OrganizationCreateNestedManyWithoutOrganizationInputSchema).optional(),
-  OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestCreateNestedManyWithoutOrganizationInputSchema).optional()
+  OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestCreateNestedManyWithoutOrganizationInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationCreateNestedManyWithoutOrganizationInputSchema).optional()
 }).strict();
 
 export const OrganizationUncheckedCreateWithoutProviderOrganizationInputSchema: z.ZodType<Prisma.OrganizationUncheckedCreateWithoutProviderOrganizationInput> = z.object({
-  Id: z.string().optional(),
+  Id: z.string(),
   href: z.string().optional().nullable(),
   ParentId: z.string().optional().nullable(),
   Level: z.number().optional().nullable(),
@@ -17756,7 +20240,8 @@ export const OrganizationUncheckedCreateWithoutProviderOrganizationInputSchema: 
   OrgZip: z.string().optional().nullable(),
   LabOrder: z.lazy(() => LabOrderUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
   ChildOrganization: z.lazy(() => OrganizationUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
-  OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional()
+  OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUncheckedCreateNestedManyWithoutOrganizationInputSchema).optional()
 }).strict();
 
 export const OrganizationCreateOrConnectWithoutProviderOrganizationInputSchema: z.ZodType<Prisma.OrganizationCreateOrConnectWithoutProviderOrganizationInput> = z.object({
@@ -17837,7 +20322,8 @@ export const OrganizationUpdateWithoutProviderOrganizationInputSchema: z.ZodType
   LabOrder: z.lazy(() => LabOrderUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   Organization: z.lazy(() => OrganizationUpdateOneWithoutChildOrganizationNestedInputSchema).optional(),
   ChildOrganization: z.lazy(() => OrganizationUpdateManyWithoutOrganizationNestedInputSchema).optional(),
-  OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUpdateManyWithoutOrganizationNestedInputSchema).optional()
+  OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUpdateManyWithoutOrganizationNestedInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUpdateManyWithoutOrganizationNestedInputSchema).optional()
 }).strict();
 
 export const OrganizationUncheckedUpdateWithoutProviderOrganizationInputSchema: z.ZodType<Prisma.OrganizationUncheckedUpdateWithoutProviderOrganizationInput> = z.object({
@@ -17855,7 +20341,8 @@ export const OrganizationUncheckedUpdateWithoutProviderOrganizationInputSchema: 
   OrgZip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LabOrder: z.lazy(() => LabOrderUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   ChildOrganization: z.lazy(() => OrganizationUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
-  OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional()
+  OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional()
 }).strict();
 
 export const ProviderUpsertWithoutProviderOrganizationInputSchema: z.ZodType<Prisma.ProviderUpsertWithoutProviderOrganizationInput> = z.object({
@@ -17912,7 +20399,7 @@ export const ProviderUncheckedUpdateWithoutProviderOrganizationInputSchema: z.Zo
 }).strict();
 
 export const UserCreateWithoutSessionInputSchema: z.ZodType<Prisma.UserCreateWithoutSessionInput> = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   name: z.string().optional().nullable(),
   email: z.string().optional().nullable(),
   password: z.string().optional().nullable(),
@@ -17923,7 +20410,7 @@ export const UserCreateWithoutSessionInputSchema: z.ZodType<Prisma.UserCreateWit
 }).strict();
 
 export const UserUncheckedCreateWithoutSessionInputSchema: z.ZodType<Prisma.UserUncheckedCreateWithoutSessionInput> = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   name: z.string().optional().nullable(),
   email: z.string().optional().nullable(),
   password: z.string().optional().nullable(),
@@ -17969,6 +20456,540 @@ export const UserUncheckedUpdateWithoutSessionInputSchema: z.ZodType<Prisma.User
   image: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Account: z.lazy(() => AccountUncheckedUpdateOneWithoutUserNestedInputSchema).optional(),
   UserAttribute: z.lazy(() => UserAttributeUncheckedUpdateOneWithoutUserNestedInputSchema).optional()
+}).strict();
+
+export const SponsoredProgramCreateWithoutSponsorInputSchema: z.ZodType<Prisma.SponsoredProgramCreateWithoutSponsorInput> = z.object({
+  TherapeuticArea: z.string().optional().nullable(),
+  ProgramName: z.string().optional().nullable(),
+  ProgramUrl: z.string().optional().nullable(),
+  ProgramLabUrl: z.string().optional().nullable(),
+  SponosoredTestingUrl: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable(),
+  SponsoredTest: z.lazy(() => SponsoredTestCreateNestedManyWithoutSponsoredProgramInputSchema).optional()
+}).strict();
+
+export const SponsoredProgramUncheckedCreateWithoutSponsorInputSchema: z.ZodType<Prisma.SponsoredProgramUncheckedCreateWithoutSponsorInput> = z.object({
+  ProgramId: z.number().optional(),
+  TherapeuticArea: z.string().optional().nullable(),
+  ProgramName: z.string().optional().nullable(),
+  ProgramUrl: z.string().optional().nullable(),
+  ProgramLabUrl: z.string().optional().nullable(),
+  SponosoredTestingUrl: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedCreateNestedManyWithoutSponsoredProgramInputSchema).optional()
+}).strict();
+
+export const SponsoredProgramCreateOrConnectWithoutSponsorInputSchema: z.ZodType<Prisma.SponsoredProgramCreateOrConnectWithoutSponsorInput> = z.object({
+  where: z.lazy(() => SponsoredProgramWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => SponsoredProgramCreateWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramUncheckedCreateWithoutSponsorInputSchema) ]),
+}).strict();
+
+export const SponsoredProgramCreateManySponsorInputEnvelopeSchema: z.ZodType<Prisma.SponsoredProgramCreateManySponsorInputEnvelope> = z.object({
+  data: z.union([ z.lazy(() => SponsoredProgramCreateManySponsorInputSchema),z.lazy(() => SponsoredProgramCreateManySponsorInputSchema).array() ]),
+  skipDuplicates: z.boolean().optional()
+}).strict();
+
+export const SponsoredProgramUpsertWithWhereUniqueWithoutSponsorInputSchema: z.ZodType<Prisma.SponsoredProgramUpsertWithWhereUniqueWithoutSponsorInput> = z.object({
+  where: z.lazy(() => SponsoredProgramWhereUniqueInputSchema),
+  update: z.union([ z.lazy(() => SponsoredProgramUpdateWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramUncheckedUpdateWithoutSponsorInputSchema) ]),
+  create: z.union([ z.lazy(() => SponsoredProgramCreateWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramUncheckedCreateWithoutSponsorInputSchema) ]),
+}).strict();
+
+export const SponsoredProgramUpdateWithWhereUniqueWithoutSponsorInputSchema: z.ZodType<Prisma.SponsoredProgramUpdateWithWhereUniqueWithoutSponsorInput> = z.object({
+  where: z.lazy(() => SponsoredProgramWhereUniqueInputSchema),
+  data: z.union([ z.lazy(() => SponsoredProgramUpdateWithoutSponsorInputSchema),z.lazy(() => SponsoredProgramUncheckedUpdateWithoutSponsorInputSchema) ]),
+}).strict();
+
+export const SponsoredProgramUpdateManyWithWhereWithoutSponsorInputSchema: z.ZodType<Prisma.SponsoredProgramUpdateManyWithWhereWithoutSponsorInput> = z.object({
+  where: z.lazy(() => SponsoredProgramScalarWhereInputSchema),
+  data: z.union([ z.lazy(() => SponsoredProgramUpdateManyMutationInputSchema),z.lazy(() => SponsoredProgramUncheckedUpdateManyWithoutSponsorInputSchema) ]),
+}).strict();
+
+export const SponsoredProgramScalarWhereInputSchema: z.ZodType<Prisma.SponsoredProgramScalarWhereInput> = z.object({
+  AND: z.union([ z.lazy(() => SponsoredProgramScalarWhereInputSchema),z.lazy(() => SponsoredProgramScalarWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => SponsoredProgramScalarWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => SponsoredProgramScalarWhereInputSchema),z.lazy(() => SponsoredProgramScalarWhereInputSchema).array() ]).optional(),
+  ProgramId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
+  SponsorId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
+  TherapeuticArea: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  ProgramName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  ProgramUrl: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  ProgramLabUrl: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  SponosoredTestingUrl: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+}).strict();
+
+export const SponsorCreateWithoutSponsoredProgramInputSchema: z.ZodType<Prisma.SponsorCreateWithoutSponsoredProgramInput> = z.object({
+  SponsorName: z.string().optional().nullable(),
+  SponsorCode: z.string().optional().nullable(),
+  SponsorWebsite: z.string().optional().nullable(),
+  SponsorType: z.string().optional().nullable(),
+  Address: z.string().optional().nullable(),
+  City: z.string().optional().nullable(),
+  State: z.string().optional().nullable(),
+  Zip: z.string().optional().nullable()
+}).strict();
+
+export const SponsorUncheckedCreateWithoutSponsoredProgramInputSchema: z.ZodType<Prisma.SponsorUncheckedCreateWithoutSponsoredProgramInput> = z.object({
+  SponsorId: z.number().optional(),
+  SponsorName: z.string().optional().nullable(),
+  SponsorCode: z.string().optional().nullable(),
+  SponsorWebsite: z.string().optional().nullable(),
+  SponsorType: z.string().optional().nullable(),
+  Address: z.string().optional().nullable(),
+  City: z.string().optional().nullable(),
+  State: z.string().optional().nullable(),
+  Zip: z.string().optional().nullable()
+}).strict();
+
+export const SponsorCreateOrConnectWithoutSponsoredProgramInputSchema: z.ZodType<Prisma.SponsorCreateOrConnectWithoutSponsoredProgramInput> = z.object({
+  where: z.lazy(() => SponsorWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => SponsorCreateWithoutSponsoredProgramInputSchema),z.lazy(() => SponsorUncheckedCreateWithoutSponsoredProgramInputSchema) ]),
+}).strict();
+
+export const SponsoredTestCreateWithoutSponsoredProgramInputSchema: z.ZodType<Prisma.SponsoredTestCreateWithoutSponsoredProgramInput> = z.object({
+  Id: z.string().optional(),
+  LabTestId: z.string().optional().nullable(),
+  CasandraTestId: z.string(),
+  Category: z.string(),
+  SubCategory: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable(),
+  Lab: z.lazy(() => LabCreateNestedOneWithoutSponsoredTestInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogCreateNestedOneWithoutSponsoredTestInputSchema)
+}).strict();
+
+export const SponsoredTestUncheckedCreateWithoutSponsoredProgramInputSchema: z.ZodType<Prisma.SponsoredTestUncheckedCreateWithoutSponsoredProgramInput> = z.object({
+  Id: z.string().optional(),
+  TestId: z.number(),
+  LabTestId: z.string().optional().nullable(),
+  LabId: z.number().optional().nullable(),
+  CasandraTestId: z.string(),
+  Category: z.string(),
+  SubCategory: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable()
+}).strict();
+
+export const SponsoredTestCreateOrConnectWithoutSponsoredProgramInputSchema: z.ZodType<Prisma.SponsoredTestCreateOrConnectWithoutSponsoredProgramInput> = z.object({
+  where: z.lazy(() => SponsoredTestWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => SponsoredTestCreateWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestUncheckedCreateWithoutSponsoredProgramInputSchema) ]),
+}).strict();
+
+export const SponsoredTestCreateManySponsoredProgramInputEnvelopeSchema: z.ZodType<Prisma.SponsoredTestCreateManySponsoredProgramInputEnvelope> = z.object({
+  data: z.union([ z.lazy(() => SponsoredTestCreateManySponsoredProgramInputSchema),z.lazy(() => SponsoredTestCreateManySponsoredProgramInputSchema).array() ]),
+  skipDuplicates: z.boolean().optional()
+}).strict();
+
+export const SponsorUpsertWithoutSponsoredProgramInputSchema: z.ZodType<Prisma.SponsorUpsertWithoutSponsoredProgramInput> = z.object({
+  update: z.union([ z.lazy(() => SponsorUpdateWithoutSponsoredProgramInputSchema),z.lazy(() => SponsorUncheckedUpdateWithoutSponsoredProgramInputSchema) ]),
+  create: z.union([ z.lazy(() => SponsorCreateWithoutSponsoredProgramInputSchema),z.lazy(() => SponsorUncheckedCreateWithoutSponsoredProgramInputSchema) ]),
+  where: z.lazy(() => SponsorWhereInputSchema).optional()
+}).strict();
+
+export const SponsorUpdateToOneWithWhereWithoutSponsoredProgramInputSchema: z.ZodType<Prisma.SponsorUpdateToOneWithWhereWithoutSponsoredProgramInput> = z.object({
+  where: z.lazy(() => SponsorWhereInputSchema).optional(),
+  data: z.union([ z.lazy(() => SponsorUpdateWithoutSponsoredProgramInputSchema),z.lazy(() => SponsorUncheckedUpdateWithoutSponsoredProgramInputSchema) ]),
+}).strict();
+
+export const SponsorUpdateWithoutSponsoredProgramInputSchema: z.ZodType<Prisma.SponsorUpdateWithoutSponsoredProgramInput> = z.object({
+  SponsorName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsorCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsorWebsite: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsorType: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Address: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  City: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  State: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Zip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const SponsorUncheckedUpdateWithoutSponsoredProgramInputSchema: z.ZodType<Prisma.SponsorUncheckedUpdateWithoutSponsoredProgramInput> = z.object({
+  SponsorId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  SponsorName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsorCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsorWebsite: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsorType: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Address: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  City: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  State: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Zip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const SponsoredTestUpsertWithWhereUniqueWithoutSponsoredProgramInputSchema: z.ZodType<Prisma.SponsoredTestUpsertWithWhereUniqueWithoutSponsoredProgramInput> = z.object({
+  where: z.lazy(() => SponsoredTestWhereUniqueInputSchema),
+  update: z.union([ z.lazy(() => SponsoredTestUpdateWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestUncheckedUpdateWithoutSponsoredProgramInputSchema) ]),
+  create: z.union([ z.lazy(() => SponsoredTestCreateWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestUncheckedCreateWithoutSponsoredProgramInputSchema) ]),
+}).strict();
+
+export const SponsoredTestUpdateWithWhereUniqueWithoutSponsoredProgramInputSchema: z.ZodType<Prisma.SponsoredTestUpdateWithWhereUniqueWithoutSponsoredProgramInput> = z.object({
+  where: z.lazy(() => SponsoredTestWhereUniqueInputSchema),
+  data: z.union([ z.lazy(() => SponsoredTestUpdateWithoutSponsoredProgramInputSchema),z.lazy(() => SponsoredTestUncheckedUpdateWithoutSponsoredProgramInputSchema) ]),
+}).strict();
+
+export const SponsoredTestUpdateManyWithWhereWithoutSponsoredProgramInputSchema: z.ZodType<Prisma.SponsoredTestUpdateManyWithWhereWithoutSponsoredProgramInput> = z.object({
+  where: z.lazy(() => SponsoredTestScalarWhereInputSchema),
+  data: z.union([ z.lazy(() => SponsoredTestUpdateManyMutationInputSchema),z.lazy(() => SponsoredTestUncheckedUpdateManyWithoutSponsoredProgramInputSchema) ]),
+}).strict();
+
+export const LabCreateWithoutSponsoredTestInputSchema: z.ZodType<Prisma.LabCreateWithoutSponsoredTestInput> = z.object({
+  LabName: z.string().optional().nullable(),
+  LabCode: z.string().optional().nullable(),
+  Address: z.string().optional().nullable(),
+  City: z.string().optional().nullable(),
+  State: z.string().optional().nullable(),
+  Zip: z.string().optional().nullable(),
+  TestCatalog: z.lazy(() => TestCatalogCreateNestedManyWithoutLabInputSchema).optional()
+}).strict();
+
+export const LabUncheckedCreateWithoutSponsoredTestInputSchema: z.ZodType<Prisma.LabUncheckedCreateWithoutSponsoredTestInput> = z.object({
+  LabId: z.number().optional(),
+  LabName: z.string().optional().nullable(),
+  LabCode: z.string().optional().nullable(),
+  Address: z.string().optional().nullable(),
+  City: z.string().optional().nullable(),
+  State: z.string().optional().nullable(),
+  Zip: z.string().optional().nullable(),
+  TestCatalog: z.lazy(() => TestCatalogUncheckedCreateNestedManyWithoutLabInputSchema).optional()
+}).strict();
+
+export const LabCreateOrConnectWithoutSponsoredTestInputSchema: z.ZodType<Prisma.LabCreateOrConnectWithoutSponsoredTestInput> = z.object({
+  where: z.lazy(() => LabWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => LabCreateWithoutSponsoredTestInputSchema),z.lazy(() => LabUncheckedCreateWithoutSponsoredTestInputSchema) ]),
+}).strict();
+
+export const SponsoredProgramCreateWithoutSponsoredTestInputSchema: z.ZodType<Prisma.SponsoredProgramCreateWithoutSponsoredTestInput> = z.object({
+  TherapeuticArea: z.string().optional().nullable(),
+  ProgramName: z.string().optional().nullable(),
+  ProgramUrl: z.string().optional().nullable(),
+  ProgramLabUrl: z.string().optional().nullable(),
+  SponosoredTestingUrl: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable(),
+  Sponsor: z.lazy(() => SponsorCreateNestedOneWithoutSponsoredProgramInputSchema).optional()
+}).strict();
+
+export const SponsoredProgramUncheckedCreateWithoutSponsoredTestInputSchema: z.ZodType<Prisma.SponsoredProgramUncheckedCreateWithoutSponsoredTestInput> = z.object({
+  ProgramId: z.number().optional(),
+  SponsorId: z.number().optional().nullable(),
+  TherapeuticArea: z.string().optional().nullable(),
+  ProgramName: z.string().optional().nullable(),
+  ProgramUrl: z.string().optional().nullable(),
+  ProgramLabUrl: z.string().optional().nullable(),
+  SponosoredTestingUrl: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable()
+}).strict();
+
+export const SponsoredProgramCreateOrConnectWithoutSponsoredTestInputSchema: z.ZodType<Prisma.SponsoredProgramCreateOrConnectWithoutSponsoredTestInput> = z.object({
+  where: z.lazy(() => SponsoredProgramWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => SponsoredProgramCreateWithoutSponsoredTestInputSchema),z.lazy(() => SponsoredProgramUncheckedCreateWithoutSponsoredTestInputSchema) ]),
+}).strict();
+
+export const TestCatalogCreateWithoutSponsoredTestInputSchema: z.ZodType<Prisma.TestCatalogCreateWithoutSponsoredTestInput> = z.object({
+  href: z.string().optional().nullable(),
+  CasandraTestId: z.string(),
+  LabTestId: z.string().optional().nullable(),
+  TestName: z.string().optional().nullable(),
+  AlternativeName: z.string().optional().nullable(),
+  AlternativeName1: z.string().optional().nullable(),
+  AlternativeName2: z.string().optional().nullable(),
+  AlternativeName3: z.string().optional().nullable(),
+  AlternativeName4: z.string().optional().nullable(),
+  AlternativeName5: z.string().optional().nullable(),
+  TestIncludes: z.string().optional().nullable(),
+  SpecimenType: z.string().optional().nullable(),
+  SpecialInstructions: z.string().optional().nullable(),
+  Methodology: z.string().optional().nullable(),
+  TestDescription: z.string().optional().nullable(),
+  Diseases: z.string().optional().nullable(),
+  Probes: z.string().optional().nullable(),
+  ClinicalSignificance: z.string().optional().nullable(),
+  SpecimenRequirements: z.string().optional().nullable(),
+  Volume: z.string().optional().nullable(),
+  MinimumVolume: z.string().optional().nullable(),
+  Container: z.string().optional().nullable(),
+  Collection: z.string().optional().nullable(),
+  StabilityRequirements: z.string().optional().nullable(),
+  StorageTransportation: z.string().optional().nullable(),
+  PatientPreparation: z.string().optional().nullable(),
+  CausesForRejection: z.string().optional().nullable(),
+  TestUsage: z.string().optional().nullable(),
+  TestLimitations: z.string().optional().nullable(),
+  CPTCodes: z.string().optional().nullable(),
+  NewYorkApproved: z.string().optional().nullable(),
+  LevelOfService: z.string().optional().nullable(),
+  TurnAroundTime: z.string().optional().nullable(),
+  AssayCategory: z.string().optional().nullable(),
+  ReferenceRanges: z.string().optional().nullable(),
+  SetupSchedule: z.string().optional().nullable(),
+  AlternativeSpecimen: z.string().optional().nullable(),
+  LoincCodesText: z.string().optional().nullable(),
+  LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
+  CreatedAt: z.date().optional(),
+  UpdatedAt: z.date().optional(),
+  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestBiomarker: z.lazy(() => TestBiomarkerCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  Lab: z.lazy(() => LabCreateNestedOneWithoutTestCatalogInputSchema).optional(),
+  TestCptCode: z.lazy(() => TestCptCodeCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestOrderLoinc: z.lazy(() => TestOrderLoincCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestResultLoinc: z.lazy(() => TestResultLoincCreateNestedManyWithoutTestCatalogInputSchema).optional()
+}).strict();
+
+export const TestCatalogUncheckedCreateWithoutSponsoredTestInputSchema: z.ZodType<Prisma.TestCatalogUncheckedCreateWithoutSponsoredTestInput> = z.object({
+  TestId: z.number().optional(),
+  LabId: z.number().optional().nullable(),
+  href: z.string().optional().nullable(),
+  CasandraTestId: z.string(),
+  LabTestId: z.string().optional().nullable(),
+  TestName: z.string().optional().nullable(),
+  AlternativeName: z.string().optional().nullable(),
+  AlternativeName1: z.string().optional().nullable(),
+  AlternativeName2: z.string().optional().nullable(),
+  AlternativeName3: z.string().optional().nullable(),
+  AlternativeName4: z.string().optional().nullable(),
+  AlternativeName5: z.string().optional().nullable(),
+  TestIncludes: z.string().optional().nullable(),
+  SpecimenType: z.string().optional().nullable(),
+  SpecialInstructions: z.string().optional().nullable(),
+  Methodology: z.string().optional().nullable(),
+  TestDescription: z.string().optional().nullable(),
+  Diseases: z.string().optional().nullable(),
+  Probes: z.string().optional().nullable(),
+  ClinicalSignificance: z.string().optional().nullable(),
+  SpecimenRequirements: z.string().optional().nullable(),
+  Volume: z.string().optional().nullable(),
+  MinimumVolume: z.string().optional().nullable(),
+  Container: z.string().optional().nullable(),
+  Collection: z.string().optional().nullable(),
+  StabilityRequirements: z.string().optional().nullable(),
+  StorageTransportation: z.string().optional().nullable(),
+  PatientPreparation: z.string().optional().nullable(),
+  CausesForRejection: z.string().optional().nullable(),
+  TestUsage: z.string().optional().nullable(),
+  TestLimitations: z.string().optional().nullable(),
+  CPTCodes: z.string().optional().nullable(),
+  NewYorkApproved: z.string().optional().nullable(),
+  LevelOfService: z.string().optional().nullable(),
+  TurnAroundTime: z.string().optional().nullable(),
+  AssayCategory: z.string().optional().nullable(),
+  ReferenceRanges: z.string().optional().nullable(),
+  SetupSchedule: z.string().optional().nullable(),
+  AlternativeSpecimen: z.string().optional().nullable(),
+  LoincCodesText: z.string().optional().nullable(),
+  LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
+  CreatedAt: z.date().optional(),
+  UpdatedAt: z.date().optional(),
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestBiomarker: z.lazy(() => TestBiomarkerUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestCptCode: z.lazy(() => TestCptCodeUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestOrderLoinc: z.lazy(() => TestOrderLoincUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestResultLoinc: z.lazy(() => TestResultLoincUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional()
+}).strict();
+
+export const TestCatalogCreateOrConnectWithoutSponsoredTestInputSchema: z.ZodType<Prisma.TestCatalogCreateOrConnectWithoutSponsoredTestInput> = z.object({
+  where: z.lazy(() => TestCatalogWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => TestCatalogCreateWithoutSponsoredTestInputSchema),z.lazy(() => TestCatalogUncheckedCreateWithoutSponsoredTestInputSchema) ]),
+}).strict();
+
+export const LabUpsertWithoutSponsoredTestInputSchema: z.ZodType<Prisma.LabUpsertWithoutSponsoredTestInput> = z.object({
+  update: z.union([ z.lazy(() => LabUpdateWithoutSponsoredTestInputSchema),z.lazy(() => LabUncheckedUpdateWithoutSponsoredTestInputSchema) ]),
+  create: z.union([ z.lazy(() => LabCreateWithoutSponsoredTestInputSchema),z.lazy(() => LabUncheckedCreateWithoutSponsoredTestInputSchema) ]),
+  where: z.lazy(() => LabWhereInputSchema).optional()
+}).strict();
+
+export const LabUpdateToOneWithWhereWithoutSponsoredTestInputSchema: z.ZodType<Prisma.LabUpdateToOneWithWhereWithoutSponsoredTestInput> = z.object({
+  where: z.lazy(() => LabWhereInputSchema).optional(),
+  data: z.union([ z.lazy(() => LabUpdateWithoutSponsoredTestInputSchema),z.lazy(() => LabUncheckedUpdateWithoutSponsoredTestInputSchema) ]),
+}).strict();
+
+export const LabUpdateWithoutSponsoredTestInputSchema: z.ZodType<Prisma.LabUpdateWithoutSponsoredTestInput> = z.object({
+  LabName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LabCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Address: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  City: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  State: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Zip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCatalog: z.lazy(() => TestCatalogUpdateManyWithoutLabNestedInputSchema).optional()
+}).strict();
+
+export const LabUncheckedUpdateWithoutSponsoredTestInputSchema: z.ZodType<Prisma.LabUncheckedUpdateWithoutSponsoredTestInput> = z.object({
+  LabId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  LabName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LabCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Address: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  City: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  State: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Zip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCatalog: z.lazy(() => TestCatalogUncheckedUpdateManyWithoutLabNestedInputSchema).optional()
+}).strict();
+
+export const SponsoredProgramUpsertWithoutSponsoredTestInputSchema: z.ZodType<Prisma.SponsoredProgramUpsertWithoutSponsoredTestInput> = z.object({
+  update: z.union([ z.lazy(() => SponsoredProgramUpdateWithoutSponsoredTestInputSchema),z.lazy(() => SponsoredProgramUncheckedUpdateWithoutSponsoredTestInputSchema) ]),
+  create: z.union([ z.lazy(() => SponsoredProgramCreateWithoutSponsoredTestInputSchema),z.lazy(() => SponsoredProgramUncheckedCreateWithoutSponsoredTestInputSchema) ]),
+  where: z.lazy(() => SponsoredProgramWhereInputSchema).optional()
+}).strict();
+
+export const SponsoredProgramUpdateToOneWithWhereWithoutSponsoredTestInputSchema: z.ZodType<Prisma.SponsoredProgramUpdateToOneWithWhereWithoutSponsoredTestInput> = z.object({
+  where: z.lazy(() => SponsoredProgramWhereInputSchema).optional(),
+  data: z.union([ z.lazy(() => SponsoredProgramUpdateWithoutSponsoredTestInputSchema),z.lazy(() => SponsoredProgramUncheckedUpdateWithoutSponsoredTestInputSchema) ]),
+}).strict();
+
+export const SponsoredProgramUpdateWithoutSponsoredTestInputSchema: z.ZodType<Prisma.SponsoredProgramUpdateWithoutSponsoredTestInput> = z.object({
+  TherapeuticArea: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramLabUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponosoredTestingUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Sponsor: z.lazy(() => SponsorUpdateOneWithoutSponsoredProgramNestedInputSchema).optional()
+}).strict();
+
+export const SponsoredProgramUncheckedUpdateWithoutSponsoredTestInputSchema: z.ZodType<Prisma.SponsoredProgramUncheckedUpdateWithoutSponsoredTestInput> = z.object({
+  ProgramId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  SponsorId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TherapeuticArea: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramLabUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponosoredTestingUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const TestCatalogUpsertWithoutSponsoredTestInputSchema: z.ZodType<Prisma.TestCatalogUpsertWithoutSponsoredTestInput> = z.object({
+  update: z.union([ z.lazy(() => TestCatalogUpdateWithoutSponsoredTestInputSchema),z.lazy(() => TestCatalogUncheckedUpdateWithoutSponsoredTestInputSchema) ]),
+  create: z.union([ z.lazy(() => TestCatalogCreateWithoutSponsoredTestInputSchema),z.lazy(() => TestCatalogUncheckedCreateWithoutSponsoredTestInputSchema) ]),
+  where: z.lazy(() => TestCatalogWhereInputSchema).optional()
+}).strict();
+
+export const TestCatalogUpdateToOneWithWhereWithoutSponsoredTestInputSchema: z.ZodType<Prisma.TestCatalogUpdateToOneWithWhereWithoutSponsoredTestInput> = z.object({
+  where: z.lazy(() => TestCatalogWhereInputSchema).optional(),
+  data: z.union([ z.lazy(() => TestCatalogUpdateWithoutSponsoredTestInputSchema),z.lazy(() => TestCatalogUncheckedUpdateWithoutSponsoredTestInputSchema) ]),
+}).strict();
+
+export const TestCatalogUpdateWithoutSponsoredTestInputSchema: z.ZodType<Prisma.TestCatalogUpdateWithoutSponsoredTestInput> = z.object({
+  href: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CasandraTestId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName1: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName2: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName3: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName4: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName5: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestIncludes: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SpecimenType: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SpecialInstructions: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Methodology: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestDescription: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Diseases: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Probes: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ClinicalSignificance: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SpecimenRequirements: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Volume: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  MinimumVolume: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Container: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Collection: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  StabilityRequirements: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  StorageTransportation: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PatientPreparation: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CausesForRejection: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestUsage: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestLimitations: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CPTCodes: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  NewYorkApproved: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LevelOfService: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TurnAroundTime: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AssayCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ReferenceRanges: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SetupSchedule: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestBiomarker: z.lazy(() => TestBiomarkerUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  Lab: z.lazy(() => LabUpdateOneWithoutTestCatalogNestedInputSchema).optional(),
+  TestCptCode: z.lazy(() => TestCptCodeUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestOrderLoinc: z.lazy(() => TestOrderLoincUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestResultLoinc: z.lazy(() => TestResultLoincUpdateManyWithoutTestCatalogNestedInputSchema).optional()
+}).strict();
+
+export const TestCatalogUncheckedUpdateWithoutSponsoredTestInputSchema: z.ZodType<Prisma.TestCatalogUncheckedUpdateWithoutSponsoredTestInput> = z.object({
+  TestId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  LabId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  href: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CasandraTestId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName1: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName2: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName3: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName4: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName5: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestIncludes: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SpecimenType: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SpecialInstructions: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Methodology: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestDescription: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Diseases: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Probes: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ClinicalSignificance: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SpecimenRequirements: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Volume: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  MinimumVolume: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Container: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Collection: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  StabilityRequirements: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  StorageTransportation: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PatientPreparation: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CausesForRejection: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestUsage: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestLimitations: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CPTCodes: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  NewYorkApproved: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LevelOfService: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TurnAroundTime: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AssayCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ReferenceRanges: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SetupSchedule: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestBiomarker: z.lazy(() => TestBiomarkerUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestCptCode: z.lazy(() => TestCptCodeUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestOrderLoinc: z.lazy(() => TestOrderLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestResultLoinc: z.lazy(() => TestResultLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional()
 }).strict();
 
 export const BIOMARKERCreateWithoutTestBiomarkerInputSchema: z.ZodType<Prisma.BIOMARKERCreateWithoutTestBiomarkerInput> = z.object({
@@ -18030,13 +21051,17 @@ export const TestCatalogCreateWithoutTestBiomarkerInputSchema: z.ZodType<Prisma.
   AlternativeSpecimen: z.string().optional().nullable(),
   LoincCodesText: z.string().optional().nullable(),
   LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional(),
   LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   Lab: z.lazy(() => LabCreateNestedOneWithoutTestCatalogInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincCreateNestedManyWithoutTestCatalogInputSchema).optional()
 }).strict();
@@ -18083,12 +21108,16 @@ export const TestCatalogUncheckedCreateWithoutTestBiomarkerInputSchema: z.ZodTyp
   AlternativeSpecimen: z.string().optional().nullable(),
   LoincCodesText: z.string().optional().nullable(),
   LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional()
 }).strict();
@@ -18174,13 +21203,17 @@ export const TestCatalogUpdateWithoutTestBiomarkerInputSchema: z.ZodType<Prisma.
   AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   Lab: z.lazy(() => LabUpdateOneWithoutTestCatalogNestedInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUpdateManyWithoutTestCatalogNestedInputSchema).optional()
 }).strict();
@@ -18227,12 +21260,16 @@ export const TestCatalogUncheckedUpdateWithoutTestBiomarkerInputSchema: z.ZodTyp
   AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional()
 }).strict();
@@ -18321,8 +21358,43 @@ export const ProviderFavoriteTestCreateManyTestCatalogInputEnvelopeSchema: z.Zod
   skipDuplicates: z.boolean().optional()
 }).strict();
 
+export const SponsoredTestCreateWithoutTestCatalogInputSchema: z.ZodType<Prisma.SponsoredTestCreateWithoutTestCatalogInput> = z.object({
+  Id: z.string().optional(),
+  LabTestId: z.string().optional().nullable(),
+  CasandraTestId: z.string(),
+  Category: z.string(),
+  SubCategory: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable(),
+  Lab: z.lazy(() => LabCreateNestedOneWithoutSponsoredTestInputSchema).optional(),
+  SponsoredProgram: z.lazy(() => SponsoredProgramCreateNestedOneWithoutSponsoredTestInputSchema).optional()
+}).strict();
+
+export const SponsoredTestUncheckedCreateWithoutTestCatalogInputSchema: z.ZodType<Prisma.SponsoredTestUncheckedCreateWithoutTestCatalogInput> = z.object({
+  Id: z.string().optional(),
+  LabTestId: z.string().optional().nullable(),
+  SponsoredProgramId: z.number().optional().nullable(),
+  LabId: z.number().optional().nullable(),
+  CasandraTestId: z.string(),
+  Category: z.string(),
+  SubCategory: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable()
+}).strict();
+
+export const SponsoredTestCreateOrConnectWithoutTestCatalogInputSchema: z.ZodType<Prisma.SponsoredTestCreateOrConnectWithoutTestCatalogInput> = z.object({
+  where: z.lazy(() => SponsoredTestWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => SponsoredTestCreateWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestUncheckedCreateWithoutTestCatalogInputSchema) ]),
+}).strict();
+
+export const SponsoredTestCreateManyTestCatalogInputEnvelopeSchema: z.ZodType<Prisma.SponsoredTestCreateManyTestCatalogInputEnvelope> = z.object({
+  data: z.union([ z.lazy(() => SponsoredTestCreateManyTestCatalogInputSchema),z.lazy(() => SponsoredTestCreateManyTestCatalogInputSchema).array() ]),
+  skipDuplicates: z.boolean().optional()
+}).strict();
+
 export const TestBiomarkerCreateWithoutTestCatalogInputSchema: z.ZodType<Prisma.TestBiomarkerCreateWithoutTestCatalogInput> = z.object({
   LabTestId: z.string().optional().nullable(),
+  TranscriptReference: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional(),
   BIOMARKER: z.lazy(() => BIOMARKERCreateNestedOneWithoutTestBiomarkerInputSchema)
@@ -18332,6 +21404,7 @@ export const TestBiomarkerUncheckedCreateWithoutTestCatalogInputSchema: z.ZodTyp
   Id: z.number().optional(),
   LabTestId: z.string().optional().nullable(),
   HGNCId: z.string(),
+  TranscriptReference: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional()
 }).strict();
@@ -18352,7 +21425,8 @@ export const LabCreateWithoutTestCatalogInputSchema: z.ZodType<Prisma.LabCreateW
   Address: z.string().optional().nullable(),
   City: z.string().optional().nullable(),
   State: z.string().optional().nullable(),
-  Zip: z.string().optional().nullable()
+  Zip: z.string().optional().nullable(),
+  SponsoredTest: z.lazy(() => SponsoredTestCreateNestedManyWithoutLabInputSchema).optional()
 }).strict();
 
 export const LabUncheckedCreateWithoutTestCatalogInputSchema: z.ZodType<Prisma.LabUncheckedCreateWithoutTestCatalogInput> = z.object({
@@ -18362,7 +21436,8 @@ export const LabUncheckedCreateWithoutTestCatalogInputSchema: z.ZodType<Prisma.L
   Address: z.string().optional().nullable(),
   City: z.string().optional().nullable(),
   State: z.string().optional().nullable(),
-  Zip: z.string().optional().nullable()
+  Zip: z.string().optional().nullable(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedCreateNestedManyWithoutLabInputSchema).optional()
 }).strict();
 
 export const LabCreateOrConnectWithoutTestCatalogInputSchema: z.ZodType<Prisma.LabCreateOrConnectWithoutTestCatalogInput> = z.object({
@@ -18396,6 +21471,33 @@ export const TestCptCodeCreateOrConnectWithoutTestCatalogInputSchema: z.ZodType<
 
 export const TestCptCodeCreateManyTestCatalogInputEnvelopeSchema: z.ZodType<Prisma.TestCptCodeCreateManyTestCatalogInputEnvelope> = z.object({
   data: z.union([ z.lazy(() => TestCptCodeCreateManyTestCatalogInputSchema),z.lazy(() => TestCptCodeCreateManyTestCatalogInputSchema).array() ]),
+  skipDuplicates: z.boolean().optional()
+}).strict();
+
+export const TestGeneCreateWithoutTestCatalogInputSchema: z.ZodType<Prisma.TestGeneCreateWithoutTestCatalogInput> = z.object({
+  LabTestId: z.string().optional().nullable(),
+  Gene: z.string(),
+  TranscriptReference: z.string().optional().nullable(),
+  CreatedAt: z.date().optional(),
+  UpdatedAt: z.date().optional()
+}).strict();
+
+export const TestGeneUncheckedCreateWithoutTestCatalogInputSchema: z.ZodType<Prisma.TestGeneUncheckedCreateWithoutTestCatalogInput> = z.object({
+  Id: z.number().optional(),
+  LabTestId: z.string().optional().nullable(),
+  Gene: z.string(),
+  TranscriptReference: z.string().optional().nullable(),
+  CreatedAt: z.date().optional(),
+  UpdatedAt: z.date().optional()
+}).strict();
+
+export const TestGeneCreateOrConnectWithoutTestCatalogInputSchema: z.ZodType<Prisma.TestGeneCreateOrConnectWithoutTestCatalogInput> = z.object({
+  where: z.lazy(() => TestGeneWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => TestGeneCreateWithoutTestCatalogInputSchema),z.lazy(() => TestGeneUncheckedCreateWithoutTestCatalogInputSchema) ]),
+}).strict();
+
+export const TestGeneCreateManyTestCatalogInputEnvelopeSchema: z.ZodType<Prisma.TestGeneCreateManyTestCatalogInputEnvelope> = z.object({
+  data: z.union([ z.lazy(() => TestGeneCreateManyTestCatalogInputSchema),z.lazy(() => TestGeneCreateManyTestCatalogInputSchema).array() ]),
   skipDuplicates: z.boolean().optional()
 }).strict();
 
@@ -18503,6 +21605,22 @@ export const ProviderFavoriteTestUpdateManyWithWhereWithoutTestCatalogInputSchem
   data: z.union([ z.lazy(() => ProviderFavoriteTestUpdateManyMutationInputSchema),z.lazy(() => ProviderFavoriteTestUncheckedUpdateManyWithoutTestCatalogInputSchema) ]),
 }).strict();
 
+export const SponsoredTestUpsertWithWhereUniqueWithoutTestCatalogInputSchema: z.ZodType<Prisma.SponsoredTestUpsertWithWhereUniqueWithoutTestCatalogInput> = z.object({
+  where: z.lazy(() => SponsoredTestWhereUniqueInputSchema),
+  update: z.union([ z.lazy(() => SponsoredTestUpdateWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestUncheckedUpdateWithoutTestCatalogInputSchema) ]),
+  create: z.union([ z.lazy(() => SponsoredTestCreateWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestUncheckedCreateWithoutTestCatalogInputSchema) ]),
+}).strict();
+
+export const SponsoredTestUpdateWithWhereUniqueWithoutTestCatalogInputSchema: z.ZodType<Prisma.SponsoredTestUpdateWithWhereUniqueWithoutTestCatalogInput> = z.object({
+  where: z.lazy(() => SponsoredTestWhereUniqueInputSchema),
+  data: z.union([ z.lazy(() => SponsoredTestUpdateWithoutTestCatalogInputSchema),z.lazy(() => SponsoredTestUncheckedUpdateWithoutTestCatalogInputSchema) ]),
+}).strict();
+
+export const SponsoredTestUpdateManyWithWhereWithoutTestCatalogInputSchema: z.ZodType<Prisma.SponsoredTestUpdateManyWithWhereWithoutTestCatalogInput> = z.object({
+  where: z.lazy(() => SponsoredTestScalarWhereInputSchema),
+  data: z.union([ z.lazy(() => SponsoredTestUpdateManyMutationInputSchema),z.lazy(() => SponsoredTestUncheckedUpdateManyWithoutTestCatalogInputSchema) ]),
+}).strict();
+
 export const TestBiomarkerUpsertWithWhereUniqueWithoutTestCatalogInputSchema: z.ZodType<Prisma.TestBiomarkerUpsertWithWhereUniqueWithoutTestCatalogInput> = z.object({
   where: z.lazy(() => TestBiomarkerWhereUniqueInputSchema),
   update: z.union([ z.lazy(() => TestBiomarkerUpdateWithoutTestCatalogInputSchema),z.lazy(() => TestBiomarkerUncheckedUpdateWithoutTestCatalogInputSchema) ]),
@@ -18537,6 +21655,7 @@ export const LabUpdateWithoutTestCatalogInputSchema: z.ZodType<Prisma.LabUpdateW
   City: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   State: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Zip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsoredTest: z.lazy(() => SponsoredTestUpdateManyWithoutLabNestedInputSchema).optional()
 }).strict();
 
 export const LabUncheckedUpdateWithoutTestCatalogInputSchema: z.ZodType<Prisma.LabUncheckedUpdateWithoutTestCatalogInput> = z.object({
@@ -18547,6 +21666,7 @@ export const LabUncheckedUpdateWithoutTestCatalogInputSchema: z.ZodType<Prisma.L
   City: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   State: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Zip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedUpdateManyWithoutLabNestedInputSchema).optional()
 }).strict();
 
 export const TestCptCodeUpsertWithWhereUniqueWithoutTestCatalogInputSchema: z.ZodType<Prisma.TestCptCodeUpsertWithWhereUniqueWithoutTestCatalogInput> = z.object({
@@ -18575,6 +21695,35 @@ export const TestCptCodeScalarWhereInputSchema: z.ZodType<Prisma.TestCptCodeScal
   CptCode: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   Modifier: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   Comments: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  CreatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
+  UpdatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
+}).strict();
+
+export const TestGeneUpsertWithWhereUniqueWithoutTestCatalogInputSchema: z.ZodType<Prisma.TestGeneUpsertWithWhereUniqueWithoutTestCatalogInput> = z.object({
+  where: z.lazy(() => TestGeneWhereUniqueInputSchema),
+  update: z.union([ z.lazy(() => TestGeneUpdateWithoutTestCatalogInputSchema),z.lazy(() => TestGeneUncheckedUpdateWithoutTestCatalogInputSchema) ]),
+  create: z.union([ z.lazy(() => TestGeneCreateWithoutTestCatalogInputSchema),z.lazy(() => TestGeneUncheckedCreateWithoutTestCatalogInputSchema) ]),
+}).strict();
+
+export const TestGeneUpdateWithWhereUniqueWithoutTestCatalogInputSchema: z.ZodType<Prisma.TestGeneUpdateWithWhereUniqueWithoutTestCatalogInput> = z.object({
+  where: z.lazy(() => TestGeneWhereUniqueInputSchema),
+  data: z.union([ z.lazy(() => TestGeneUpdateWithoutTestCatalogInputSchema),z.lazy(() => TestGeneUncheckedUpdateWithoutTestCatalogInputSchema) ]),
+}).strict();
+
+export const TestGeneUpdateManyWithWhereWithoutTestCatalogInputSchema: z.ZodType<Prisma.TestGeneUpdateManyWithWhereWithoutTestCatalogInput> = z.object({
+  where: z.lazy(() => TestGeneScalarWhereInputSchema),
+  data: z.union([ z.lazy(() => TestGeneUpdateManyMutationInputSchema),z.lazy(() => TestGeneUncheckedUpdateManyWithoutTestCatalogInputSchema) ]),
+}).strict();
+
+export const TestGeneScalarWhereInputSchema: z.ZodType<Prisma.TestGeneScalarWhereInput> = z.object({
+  AND: z.union([ z.lazy(() => TestGeneScalarWhereInputSchema),z.lazy(() => TestGeneScalarWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => TestGeneScalarWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => TestGeneScalarWhereInputSchema),z.lazy(() => TestGeneScalarWhereInputSchema).array() ]).optional(),
+  Id: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
+  TestId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
+  LabTestId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Gene: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  TranscriptReference: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
 }).strict();
@@ -18651,13 +21800,17 @@ export const TestCatalogCreateWithoutTestCptCodeInputSchema: z.ZodType<Prisma.Te
   AlternativeSpecimen: z.string().optional().nullable(),
   LoincCodesText: z.string().optional().nullable(),
   LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional(),
   LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   Lab: z.lazy(() => LabCreateNestedOneWithoutTestCatalogInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincCreateNestedManyWithoutTestCatalogInputSchema).optional()
 }).strict();
@@ -18704,12 +21857,16 @@ export const TestCatalogUncheckedCreateWithoutTestCptCodeInputSchema: z.ZodType<
   AlternativeSpecimen: z.string().optional().nullable(),
   LoincCodesText: z.string().optional().nullable(),
   LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional()
 }).strict();
@@ -18770,13 +21927,17 @@ export const TestCatalogUpdateWithoutTestCptCodeInputSchema: z.ZodType<Prisma.Te
   AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   Lab: z.lazy(() => LabUpdateOneWithoutTestCatalogNestedInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUpdateManyWithoutTestCatalogNestedInputSchema).optional()
 }).strict();
@@ -18823,12 +21984,254 @@ export const TestCatalogUncheckedUpdateWithoutTestCptCodeInputSchema: z.ZodType<
   AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestOrderLoinc: z.lazy(() => TestOrderLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestResultLoinc: z.lazy(() => TestResultLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional()
+}).strict();
+
+export const TestCatalogCreateWithoutTestGeneInputSchema: z.ZodType<Prisma.TestCatalogCreateWithoutTestGeneInput> = z.object({
+  href: z.string().optional().nullable(),
+  CasandraTestId: z.string(),
+  LabTestId: z.string().optional().nullable(),
+  TestName: z.string().optional().nullable(),
+  AlternativeName: z.string().optional().nullable(),
+  AlternativeName1: z.string().optional().nullable(),
+  AlternativeName2: z.string().optional().nullable(),
+  AlternativeName3: z.string().optional().nullable(),
+  AlternativeName4: z.string().optional().nullable(),
+  AlternativeName5: z.string().optional().nullable(),
+  TestIncludes: z.string().optional().nullable(),
+  SpecimenType: z.string().optional().nullable(),
+  SpecialInstructions: z.string().optional().nullable(),
+  Methodology: z.string().optional().nullable(),
+  TestDescription: z.string().optional().nullable(),
+  Diseases: z.string().optional().nullable(),
+  Probes: z.string().optional().nullable(),
+  ClinicalSignificance: z.string().optional().nullable(),
+  SpecimenRequirements: z.string().optional().nullable(),
+  Volume: z.string().optional().nullable(),
+  MinimumVolume: z.string().optional().nullable(),
+  Container: z.string().optional().nullable(),
+  Collection: z.string().optional().nullable(),
+  StabilityRequirements: z.string().optional().nullable(),
+  StorageTransportation: z.string().optional().nullable(),
+  PatientPreparation: z.string().optional().nullable(),
+  CausesForRejection: z.string().optional().nullable(),
+  TestUsage: z.string().optional().nullable(),
+  TestLimitations: z.string().optional().nullable(),
+  CPTCodes: z.string().optional().nullable(),
+  NewYorkApproved: z.string().optional().nullable(),
+  LevelOfService: z.string().optional().nullable(),
+  TurnAroundTime: z.string().optional().nullable(),
+  AssayCategory: z.string().optional().nullable(),
+  ReferenceRanges: z.string().optional().nullable(),
+  SetupSchedule: z.string().optional().nullable(),
+  AlternativeSpecimen: z.string().optional().nullable(),
+  LoincCodesText: z.string().optional().nullable(),
+  LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
+  CreatedAt: z.date().optional(),
+  UpdatedAt: z.date().optional(),
+  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestBiomarker: z.lazy(() => TestBiomarkerCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  Lab: z.lazy(() => LabCreateNestedOneWithoutTestCatalogInputSchema).optional(),
+  TestCptCode: z.lazy(() => TestCptCodeCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestOrderLoinc: z.lazy(() => TestOrderLoincCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestResultLoinc: z.lazy(() => TestResultLoincCreateNestedManyWithoutTestCatalogInputSchema).optional()
+}).strict();
+
+export const TestCatalogUncheckedCreateWithoutTestGeneInputSchema: z.ZodType<Prisma.TestCatalogUncheckedCreateWithoutTestGeneInput> = z.object({
+  TestId: z.number().optional(),
+  LabId: z.number().optional().nullable(),
+  href: z.string().optional().nullable(),
+  CasandraTestId: z.string(),
+  LabTestId: z.string().optional().nullable(),
+  TestName: z.string().optional().nullable(),
+  AlternativeName: z.string().optional().nullable(),
+  AlternativeName1: z.string().optional().nullable(),
+  AlternativeName2: z.string().optional().nullable(),
+  AlternativeName3: z.string().optional().nullable(),
+  AlternativeName4: z.string().optional().nullable(),
+  AlternativeName5: z.string().optional().nullable(),
+  TestIncludes: z.string().optional().nullable(),
+  SpecimenType: z.string().optional().nullable(),
+  SpecialInstructions: z.string().optional().nullable(),
+  Methodology: z.string().optional().nullable(),
+  TestDescription: z.string().optional().nullable(),
+  Diseases: z.string().optional().nullable(),
+  Probes: z.string().optional().nullable(),
+  ClinicalSignificance: z.string().optional().nullable(),
+  SpecimenRequirements: z.string().optional().nullable(),
+  Volume: z.string().optional().nullable(),
+  MinimumVolume: z.string().optional().nullable(),
+  Container: z.string().optional().nullable(),
+  Collection: z.string().optional().nullable(),
+  StabilityRequirements: z.string().optional().nullable(),
+  StorageTransportation: z.string().optional().nullable(),
+  PatientPreparation: z.string().optional().nullable(),
+  CausesForRejection: z.string().optional().nullable(),
+  TestUsage: z.string().optional().nullable(),
+  TestLimitations: z.string().optional().nullable(),
+  CPTCodes: z.string().optional().nullable(),
+  NewYorkApproved: z.string().optional().nullable(),
+  LevelOfService: z.string().optional().nullable(),
+  TurnAroundTime: z.string().optional().nullable(),
+  AssayCategory: z.string().optional().nullable(),
+  ReferenceRanges: z.string().optional().nullable(),
+  SetupSchedule: z.string().optional().nullable(),
+  AlternativeSpecimen: z.string().optional().nullable(),
+  LoincCodesText: z.string().optional().nullable(),
+  LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
+  CreatedAt: z.date().optional(),
+  UpdatedAt: z.date().optional(),
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestBiomarker: z.lazy(() => TestBiomarkerUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestCptCode: z.lazy(() => TestCptCodeUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestOrderLoinc: z.lazy(() => TestOrderLoincUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestResultLoinc: z.lazy(() => TestResultLoincUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional()
+}).strict();
+
+export const TestCatalogCreateOrConnectWithoutTestGeneInputSchema: z.ZodType<Prisma.TestCatalogCreateOrConnectWithoutTestGeneInput> = z.object({
+  where: z.lazy(() => TestCatalogWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => TestCatalogCreateWithoutTestGeneInputSchema),z.lazy(() => TestCatalogUncheckedCreateWithoutTestGeneInputSchema) ]),
+}).strict();
+
+export const TestCatalogUpsertWithoutTestGeneInputSchema: z.ZodType<Prisma.TestCatalogUpsertWithoutTestGeneInput> = z.object({
+  update: z.union([ z.lazy(() => TestCatalogUpdateWithoutTestGeneInputSchema),z.lazy(() => TestCatalogUncheckedUpdateWithoutTestGeneInputSchema) ]),
+  create: z.union([ z.lazy(() => TestCatalogCreateWithoutTestGeneInputSchema),z.lazy(() => TestCatalogUncheckedCreateWithoutTestGeneInputSchema) ]),
+  where: z.lazy(() => TestCatalogWhereInputSchema).optional()
+}).strict();
+
+export const TestCatalogUpdateToOneWithWhereWithoutTestGeneInputSchema: z.ZodType<Prisma.TestCatalogUpdateToOneWithWhereWithoutTestGeneInput> = z.object({
+  where: z.lazy(() => TestCatalogWhereInputSchema).optional(),
+  data: z.union([ z.lazy(() => TestCatalogUpdateWithoutTestGeneInputSchema),z.lazy(() => TestCatalogUncheckedUpdateWithoutTestGeneInputSchema) ]),
+}).strict();
+
+export const TestCatalogUpdateWithoutTestGeneInputSchema: z.ZodType<Prisma.TestCatalogUpdateWithoutTestGeneInput> = z.object({
+  href: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CasandraTestId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName1: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName2: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName3: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName4: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName5: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestIncludes: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SpecimenType: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SpecialInstructions: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Methodology: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestDescription: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Diseases: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Probes: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ClinicalSignificance: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SpecimenRequirements: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Volume: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  MinimumVolume: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Container: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Collection: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  StabilityRequirements: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  StorageTransportation: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PatientPreparation: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CausesForRejection: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestUsage: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestLimitations: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CPTCodes: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  NewYorkApproved: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LevelOfService: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TurnAroundTime: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AssayCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ReferenceRanges: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SetupSchedule: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestBiomarker: z.lazy(() => TestBiomarkerUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  Lab: z.lazy(() => LabUpdateOneWithoutTestCatalogNestedInputSchema).optional(),
+  TestCptCode: z.lazy(() => TestCptCodeUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestOrderLoinc: z.lazy(() => TestOrderLoincUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestResultLoinc: z.lazy(() => TestResultLoincUpdateManyWithoutTestCatalogNestedInputSchema).optional()
+}).strict();
+
+export const TestCatalogUncheckedUpdateWithoutTestGeneInputSchema: z.ZodType<Prisma.TestCatalogUncheckedUpdateWithoutTestGeneInput> = z.object({
+  TestId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  LabId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  href: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CasandraTestId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName1: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName2: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName3: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName4: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeName5: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestIncludes: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SpecimenType: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SpecialInstructions: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Methodology: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestDescription: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Diseases: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Probes: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ClinicalSignificance: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SpecimenRequirements: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Volume: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  MinimumVolume: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Container: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Collection: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  StabilityRequirements: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  StorageTransportation: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PatientPreparation: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CausesForRejection: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestUsage: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestLimitations: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CPTCodes: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  NewYorkApproved: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LevelOfService: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TurnAroundTime: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AssayCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ReferenceRanges: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SetupSchedule: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestBiomarker: z.lazy(() => TestBiomarkerUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestCptCode: z.lazy(() => TestCptCodeUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional()
 }).strict();
@@ -18966,14 +22369,18 @@ export const TestCatalogCreateWithoutTestOrderLoincInputSchema: z.ZodType<Prisma
   AlternativeSpecimen: z.string().optional().nullable(),
   LoincCodesText: z.string().optional().nullable(),
   LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional(),
   LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   Lab: z.lazy(() => LabCreateNestedOneWithoutTestCatalogInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincCreateNestedManyWithoutTestCatalogInputSchema).optional()
 }).strict();
 
@@ -19019,13 +22426,17 @@ export const TestCatalogUncheckedCreateWithoutTestOrderLoincInputSchema: z.ZodTy
   AlternativeSpecimen: z.string().optional().nullable(),
   LoincCodesText: z.string().optional().nullable(),
   LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional()
 }).strict();
 
@@ -19184,14 +22595,18 @@ export const TestCatalogUpdateWithoutTestOrderLoincInputSchema: z.ZodType<Prisma
   AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   Lab: z.lazy(() => LabUpdateOneWithoutTestCatalogNestedInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUpdateManyWithoutTestCatalogNestedInputSchema).optional()
 }).strict();
 
@@ -19237,13 +22652,17 @@ export const TestCatalogUncheckedUpdateWithoutTestOrderLoincInputSchema: z.ZodTy
   AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional()
 }).strict();
 
@@ -19380,14 +22799,18 @@ export const TestCatalogCreateWithoutTestResultLoincInputSchema: z.ZodType<Prism
   AlternativeSpecimen: z.string().optional().nullable(),
   LoincCodesText: z.string().optional().nullable(),
   LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional(),
   LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   Lab: z.lazy(() => LabCreateNestedOneWithoutTestCatalogInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincCreateNestedManyWithoutTestCatalogInputSchema).optional()
 }).strict();
 
@@ -19433,13 +22856,17 @@ export const TestCatalogUncheckedCreateWithoutTestResultLoincInputSchema: z.ZodT
   AlternativeSpecimen: z.string().optional().nullable(),
   LoincCodesText: z.string().optional().nullable(),
   LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUncheckedCreateNestedManyWithoutTestCatalogInputSchema).optional()
 }).strict();
 
@@ -19598,14 +23025,18 @@ export const TestCatalogUpdateWithoutTestResultLoincInputSchema: z.ZodType<Prism
   AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   Lab: z.lazy(() => LabUpdateOneWithoutTestCatalogNestedInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUpdateManyWithoutTestCatalogNestedInputSchema).optional()
 }).strict();
 
@@ -19651,24 +23082,91 @@ export const TestCatalogUncheckedUpdateWithoutTestResultLoincInputSchema: z.ZodT
   AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional()
 }).strict();
 
+export const AccountCreateWithoutUserInputSchema: z.ZodType<Prisma.AccountCreateWithoutUserInput> = z.object({
+  id: z.string(),
+  type: z.string(),
+  provider: z.string(),
+  providerAccountId: z.string(),
+  refresh_token: z.string().optional().nullable(),
+  access_token: z.string().optional().nullable(),
+  expires_at: z.number().optional().nullable(),
+  token_type: z.string().optional().nullable(),
+  scope: z.string().optional().nullable(),
+  state: z.string().optional().nullable(),
+  id_token: z.string().optional().nullable(),
+  session_state: z.string().optional().nullable(),
+  refresh_token_expires_in: z.number().optional().nullable(),
+  epic_dstu2_patient: z.string().optional().nullable(),
+  appointment: z.string().optional().nullable(),
+  dob: z.string().optional().nullable(),
+  encounter: z.string().optional().nullable(),
+  location: z.string().optional().nullable(),
+  loginDepartment: z.string().optional().nullable(),
+  need_patient_banner: z.string().optional().nullable(),
+  patient: z.string().optional().nullable(),
+  smart_style_url: z.string().optional().nullable(),
+  unconfirmed_status: z.string().optional().nullable(),
+  user_email: z.string().optional().nullable(),
+  createdAt: z.date().optional().nullable(),
+  updatedAt: z.date().optional().nullable()
+}).strict();
+
+export const AccountUncheckedCreateWithoutUserInputSchema: z.ZodType<Prisma.AccountUncheckedCreateWithoutUserInput> = z.object({
+  id: z.string(),
+  type: z.string(),
+  provider: z.string(),
+  providerAccountId: z.string(),
+  refresh_token: z.string().optional().nullable(),
+  access_token: z.string().optional().nullable(),
+  expires_at: z.number().optional().nullable(),
+  token_type: z.string().optional().nullable(),
+  scope: z.string().optional().nullable(),
+  state: z.string().optional().nullable(),
+  id_token: z.string().optional().nullable(),
+  session_state: z.string().optional().nullable(),
+  refresh_token_expires_in: z.number().optional().nullable(),
+  epic_dstu2_patient: z.string().optional().nullable(),
+  appointment: z.string().optional().nullable(),
+  dob: z.string().optional().nullable(),
+  encounter: z.string().optional().nullable(),
+  location: z.string().optional().nullable(),
+  loginDepartment: z.string().optional().nullable(),
+  need_patient_banner: z.string().optional().nullable(),
+  patient: z.string().optional().nullable(),
+  smart_style_url: z.string().optional().nullable(),
+  unconfirmed_status: z.string().optional().nullable(),
+  user_email: z.string().optional().nullable(),
+  createdAt: z.date().optional().nullable(),
+  updatedAt: z.date().optional().nullable()
+}).strict();
+
+export const AccountCreateOrConnectWithoutUserInputSchema: z.ZodType<Prisma.AccountCreateOrConnectWithoutUserInput> = z.object({
+  where: z.lazy(() => AccountWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => AccountCreateWithoutUserInputSchema),z.lazy(() => AccountUncheckedCreateWithoutUserInputSchema) ]),
+}).strict();
+
 export const SessionCreateWithoutUserInputSchema: z.ZodType<Prisma.SessionCreateWithoutUserInput> = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   sessionToken: z.string(),
   expires: z.date()
 }).strict();
 
 export const SessionUncheckedCreateWithoutUserInputSchema: z.ZodType<Prisma.SessionUncheckedCreateWithoutUserInput> = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   sessionToken: z.string(),
   expires: z.date()
 }).strict();
@@ -19681,69 +23179,6 @@ export const SessionCreateOrConnectWithoutUserInputSchema: z.ZodType<Prisma.Sess
 export const SessionCreateManyUserInputEnvelopeSchema: z.ZodType<Prisma.SessionCreateManyUserInputEnvelope> = z.object({
   data: z.union([ z.lazy(() => SessionCreateManyUserInputSchema),z.lazy(() => SessionCreateManyUserInputSchema).array() ]),
   skipDuplicates: z.boolean().optional()
-}).strict();
-
-export const AccountCreateWithoutUserInputSchema: z.ZodType<Prisma.AccountCreateWithoutUserInput> = z.object({
-  id: z.string().optional(),
-  type: z.string(),
-  provider: z.string(),
-  providerAccountId: z.string(),
-  refresh_token: z.string().optional().nullable(),
-  access_token: z.string().optional().nullable(),
-  expires_at: z.number().optional().nullable(),
-  token_type: z.string().optional().nullable(),
-  scope: z.string().optional().nullable(),
-  state: z.string().optional().nullable(),
-  id_token: z.string().optional().nullable(),
-  session_state: z.string().optional().nullable(),
-  refresh_token_expires_in: z.number().optional().nullable(),
-  epic_dstu2_patient: z.string().optional().nullable(),
-  appointment: z.string().optional().nullable(),
-  dob: z.string().optional().nullable(),
-  encounter: z.string().optional().nullable(),
-  location: z.string().optional().nullable(),
-  loginDepartment: z.string().optional().nullable(),
-  need_patient_banner: z.string().optional().nullable(),
-  patient: z.string().optional().nullable(),
-  smart_style_url: z.string().optional().nullable(),
-  unconfirmed_status: z.string().optional().nullable(),
-  user_email: z.string().optional().nullable(),
-  createdAt: z.date().optional(),
-  updatedAt: z.date().optional()
-}).strict();
-
-export const AccountUncheckedCreateWithoutUserInputSchema: z.ZodType<Prisma.AccountUncheckedCreateWithoutUserInput> = z.object({
-  id: z.string().optional(),
-  type: z.string(),
-  provider: z.string(),
-  providerAccountId: z.string(),
-  refresh_token: z.string().optional().nullable(),
-  access_token: z.string().optional().nullable(),
-  expires_at: z.number().optional().nullable(),
-  token_type: z.string().optional().nullable(),
-  scope: z.string().optional().nullable(),
-  state: z.string().optional().nullable(),
-  id_token: z.string().optional().nullable(),
-  session_state: z.string().optional().nullable(),
-  refresh_token_expires_in: z.number().optional().nullable(),
-  epic_dstu2_patient: z.string().optional().nullable(),
-  appointment: z.string().optional().nullable(),
-  dob: z.string().optional().nullable(),
-  encounter: z.string().optional().nullable(),
-  location: z.string().optional().nullable(),
-  loginDepartment: z.string().optional().nullable(),
-  need_patient_banner: z.string().optional().nullable(),
-  patient: z.string().optional().nullable(),
-  smart_style_url: z.string().optional().nullable(),
-  unconfirmed_status: z.string().optional().nullable(),
-  user_email: z.string().optional().nullable(),
-  createdAt: z.date().optional(),
-  updatedAt: z.date().optional()
-}).strict();
-
-export const AccountCreateOrConnectWithoutUserInputSchema: z.ZodType<Prisma.AccountCreateOrConnectWithoutUserInput> = z.object({
-  where: z.lazy(() => AccountWhereUniqueInputSchema),
-  create: z.union([ z.lazy(() => AccountCreateWithoutUserInputSchema),z.lazy(() => AccountUncheckedCreateWithoutUserInputSchema) ]),
 }).strict();
 
 export const UserAttributeCreateWithoutUserInputSchema: z.ZodType<Prisma.UserAttributeCreateWithoutUserInput> = z.object({
@@ -19763,32 +23198,6 @@ export const UserAttributeUncheckedCreateWithoutUserInputSchema: z.ZodType<Prism
 export const UserAttributeCreateOrConnectWithoutUserInputSchema: z.ZodType<Prisma.UserAttributeCreateOrConnectWithoutUserInput> = z.object({
   where: z.lazy(() => UserAttributeWhereUniqueInputSchema),
   create: z.union([ z.lazy(() => UserAttributeCreateWithoutUserInputSchema),z.lazy(() => UserAttributeUncheckedCreateWithoutUserInputSchema) ]),
-}).strict();
-
-export const SessionUpsertWithWhereUniqueWithoutUserInputSchema: z.ZodType<Prisma.SessionUpsertWithWhereUniqueWithoutUserInput> = z.object({
-  where: z.lazy(() => SessionWhereUniqueInputSchema),
-  update: z.union([ z.lazy(() => SessionUpdateWithoutUserInputSchema),z.lazy(() => SessionUncheckedUpdateWithoutUserInputSchema) ]),
-  create: z.union([ z.lazy(() => SessionCreateWithoutUserInputSchema),z.lazy(() => SessionUncheckedCreateWithoutUserInputSchema) ]),
-}).strict();
-
-export const SessionUpdateWithWhereUniqueWithoutUserInputSchema: z.ZodType<Prisma.SessionUpdateWithWhereUniqueWithoutUserInput> = z.object({
-  where: z.lazy(() => SessionWhereUniqueInputSchema),
-  data: z.union([ z.lazy(() => SessionUpdateWithoutUserInputSchema),z.lazy(() => SessionUncheckedUpdateWithoutUserInputSchema) ]),
-}).strict();
-
-export const SessionUpdateManyWithWhereWithoutUserInputSchema: z.ZodType<Prisma.SessionUpdateManyWithWhereWithoutUserInput> = z.object({
-  where: z.lazy(() => SessionScalarWhereInputSchema),
-  data: z.union([ z.lazy(() => SessionUpdateManyMutationInputSchema),z.lazy(() => SessionUncheckedUpdateManyWithoutUserInputSchema) ]),
-}).strict();
-
-export const SessionScalarWhereInputSchema: z.ZodType<Prisma.SessionScalarWhereInput> = z.object({
-  AND: z.union([ z.lazy(() => SessionScalarWhereInputSchema),z.lazy(() => SessionScalarWhereInputSchema).array() ]).optional(),
-  OR: z.lazy(() => SessionScalarWhereInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => SessionScalarWhereInputSchema),z.lazy(() => SessionScalarWhereInputSchema).array() ]).optional(),
-  id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  sessionToken: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  userId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  expires: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
 }).strict();
 
 export const AccountUpsertWithoutUserInputSchema: z.ZodType<Prisma.AccountUpsertWithoutUserInput> = z.object({
@@ -19827,8 +23236,8 @@ export const AccountUpdateWithoutUserInputSchema: z.ZodType<Prisma.AccountUpdate
   smart_style_url: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   unconfirmed_status: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   user_email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  createdAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  updatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  createdAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  updatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const AccountUncheckedUpdateWithoutUserInputSchema: z.ZodType<Prisma.AccountUncheckedUpdateWithoutUserInput> = z.object({
@@ -19856,8 +23265,34 @@ export const AccountUncheckedUpdateWithoutUserInputSchema: z.ZodType<Prisma.Acco
   smart_style_url: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   unconfirmed_status: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   user_email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  createdAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
-  updatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  createdAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  updatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const SessionUpsertWithWhereUniqueWithoutUserInputSchema: z.ZodType<Prisma.SessionUpsertWithWhereUniqueWithoutUserInput> = z.object({
+  where: z.lazy(() => SessionWhereUniqueInputSchema),
+  update: z.union([ z.lazy(() => SessionUpdateWithoutUserInputSchema),z.lazy(() => SessionUncheckedUpdateWithoutUserInputSchema) ]),
+  create: z.union([ z.lazy(() => SessionCreateWithoutUserInputSchema),z.lazy(() => SessionUncheckedCreateWithoutUserInputSchema) ]),
+}).strict();
+
+export const SessionUpdateWithWhereUniqueWithoutUserInputSchema: z.ZodType<Prisma.SessionUpdateWithWhereUniqueWithoutUserInput> = z.object({
+  where: z.lazy(() => SessionWhereUniqueInputSchema),
+  data: z.union([ z.lazy(() => SessionUpdateWithoutUserInputSchema),z.lazy(() => SessionUncheckedUpdateWithoutUserInputSchema) ]),
+}).strict();
+
+export const SessionUpdateManyWithWhereWithoutUserInputSchema: z.ZodType<Prisma.SessionUpdateManyWithWhereWithoutUserInput> = z.object({
+  where: z.lazy(() => SessionScalarWhereInputSchema),
+  data: z.union([ z.lazy(() => SessionUpdateManyMutationInputSchema),z.lazy(() => SessionUncheckedUpdateManyWithoutUserInputSchema) ]),
+}).strict();
+
+export const SessionScalarWhereInputSchema: z.ZodType<Prisma.SessionScalarWhereInput> = z.object({
+  AND: z.union([ z.lazy(() => SessionScalarWhereInputSchema),z.lazy(() => SessionScalarWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => SessionScalarWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => SessionScalarWhereInputSchema),z.lazy(() => SessionScalarWhereInputSchema).array() ]).optional(),
+  id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  sessionToken: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  userId: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  expires: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
 }).strict();
 
 export const UserAttributeUpsertWithoutUserInputSchema: z.ZodType<Prisma.UserAttributeUpsertWithoutUserInput> = z.object({
@@ -19950,25 +23385,25 @@ export const ProviderCreateOrConnectWithoutUserAttributeInputSchema: z.ZodType<P
 }).strict();
 
 export const UserCreateWithoutUserAttributeInputSchema: z.ZodType<Prisma.UserCreateWithoutUserAttributeInput> = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   name: z.string().optional().nullable(),
   email: z.string().optional().nullable(),
   password: z.string().optional().nullable(),
   emailVerified: z.date().optional().nullable(),
   image: z.string().optional().nullable(),
-  Session: z.lazy(() => SessionCreateNestedManyWithoutUserInputSchema).optional(),
-  Account: z.lazy(() => AccountCreateNestedOneWithoutUserInputSchema).optional()
+  Account: z.lazy(() => AccountCreateNestedOneWithoutUserInputSchema).optional(),
+  Session: z.lazy(() => SessionCreateNestedManyWithoutUserInputSchema).optional()
 }).strict();
 
 export const UserUncheckedCreateWithoutUserAttributeInputSchema: z.ZodType<Prisma.UserUncheckedCreateWithoutUserAttributeInput> = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   name: z.string().optional().nullable(),
   email: z.string().optional().nullable(),
   password: z.string().optional().nullable(),
   emailVerified: z.date().optional().nullable(),
   image: z.string().optional().nullable(),
-  Session: z.lazy(() => SessionUncheckedCreateNestedManyWithoutUserInputSchema).optional(),
-  Account: z.lazy(() => AccountUncheckedCreateNestedOneWithoutUserInputSchema).optional()
+  Account: z.lazy(() => AccountUncheckedCreateNestedOneWithoutUserInputSchema).optional(),
+  Session: z.lazy(() => SessionUncheckedCreateNestedManyWithoutUserInputSchema).optional()
 }).strict();
 
 export const UserCreateOrConnectWithoutUserAttributeInputSchema: z.ZodType<Prisma.UserCreateOrConnectWithoutUserAttributeInput> = z.object({
@@ -20070,8 +23505,8 @@ export const UserUpdateWithoutUserAttributeInputSchema: z.ZodType<Prisma.UserUpd
   password: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   emailVerified: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   image: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  Session: z.lazy(() => SessionUpdateManyWithoutUserNestedInputSchema).optional(),
-  Account: z.lazy(() => AccountUpdateOneWithoutUserNestedInputSchema).optional()
+  Account: z.lazy(() => AccountUpdateOneWithoutUserNestedInputSchema).optional(),
+  Session: z.lazy(() => SessionUpdateManyWithoutUserNestedInputSchema).optional()
 }).strict();
 
 export const UserUncheckedUpdateWithoutUserAttributeInputSchema: z.ZodType<Prisma.UserUncheckedUpdateWithoutUserAttributeInput> = z.object({
@@ -20081,8 +23516,8 @@ export const UserUncheckedUpdateWithoutUserAttributeInputSchema: z.ZodType<Prism
   password: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   emailVerified: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   image: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  Session: z.lazy(() => SessionUncheckedUpdateManyWithoutUserNestedInputSchema).optional(),
-  Account: z.lazy(() => AccountUncheckedUpdateOneWithoutUserNestedInputSchema).optional()
+  Account: z.lazy(() => AccountUncheckedUpdateOneWithoutUserNestedInputSchema).optional(),
+  Session: z.lazy(() => SessionUncheckedUpdateManyWithoutUserNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderAttachmentCreateManyAttachmentInputSchema: z.ZodType<Prisma.LabOrderAttachmentCreateManyAttachmentInput> = z.object({
@@ -20117,12 +23552,14 @@ export const TestBiomarkerCreateManyBIOMARKERInputSchema: z.ZodType<Prisma.TestB
   Id: z.number().optional(),
   TestId: z.number(),
   LabTestId: z.string().optional().nullable(),
+  TranscriptReference: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional()
 }).strict();
 
 export const TestBiomarkerUpdateWithoutBIOMARKERInputSchema: z.ZodType<Prisma.TestBiomarkerUpdateWithoutBIOMARKERInput> = z.object({
   LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TranscriptReference: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   TestCatalog: z.lazy(() => TestCatalogUpdateOneRequiredWithoutTestBiomarkerNestedInputSchema).optional()
@@ -20132,6 +23569,7 @@ export const TestBiomarkerUncheckedUpdateWithoutBIOMARKERInputSchema: z.ZodType<
   Id: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   TestId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TranscriptReference: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -20140,6 +23578,7 @@ export const TestBiomarkerUncheckedUpdateManyWithoutBIOMARKERInputSchema: z.ZodT
   Id: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   TestId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TranscriptReference: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -20246,6 +23685,18 @@ export const TestResultLoincUncheckedUpdateManyWithoutLOINCInputSchema: z.ZodTyp
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
+export const SponsoredTestCreateManyLabInputSchema: z.ZodType<Prisma.SponsoredTestCreateManyLabInput> = z.object({
+  Id: z.string().optional(),
+  TestId: z.number(),
+  LabTestId: z.string().optional().nullable(),
+  SponsoredProgramId: z.number().optional().nullable(),
+  CasandraTestId: z.string(),
+  Category: z.string(),
+  SubCategory: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable()
+}).strict();
+
 export const TestCatalogCreateManyLabInputSchema: z.ZodType<Prisma.TestCatalogCreateManyLabInput> = z.object({
   TestId: z.number().optional(),
   href: z.string().optional().nullable(),
@@ -20287,8 +23738,46 @@ export const TestCatalogCreateManyLabInputSchema: z.ZodType<Prisma.TestCatalogCr
   AlternativeSpecimen: z.string().optional().nullable(),
   LoincCodesText: z.string().optional().nullable(),
   LoincCodesHTML: z.string().optional().nullable(),
+  TestCategory: z.string().optional().nullable(),
+  TestSubCategory: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional()
+}).strict();
+
+export const SponsoredTestUpdateWithoutLabInputSchema: z.ZodType<Prisma.SponsoredTestUpdateWithoutLabInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CasandraTestId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  Category: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  SubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsoredProgram: z.lazy(() => SponsoredProgramUpdateOneWithoutSponsoredTestNestedInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogUpdateOneRequiredWithoutSponsoredTestNestedInputSchema).optional()
+}).strict();
+
+export const SponsoredTestUncheckedUpdateWithoutLabInputSchema: z.ZodType<Prisma.SponsoredTestUncheckedUpdateWithoutLabInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  TestId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsoredProgramId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CasandraTestId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  Category: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  SubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const SponsoredTestUncheckedUpdateManyWithoutLabInputSchema: z.ZodType<Prisma.SponsoredTestUncheckedUpdateManyWithoutLabInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  TestId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsoredProgramId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CasandraTestId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  Category: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  SubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const TestCatalogUpdateWithoutLabInputSchema: z.ZodType<Prisma.TestCatalogUpdateWithoutLabInput> = z.object({
@@ -20331,13 +23820,17 @@ export const TestCatalogUpdateWithoutLabInputSchema: z.ZodType<Prisma.TestCatalo
   AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUpdateManyWithoutTestCatalogNestedInputSchema).optional()
 }).strict();
@@ -20383,13 +23876,17 @@ export const TestCatalogUncheckedUpdateWithoutLabInputSchema: z.ZodType<Prisma.T
   AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
+  TestGene: z.lazy(() => TestGeneUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional(),
   TestResultLoinc: z.lazy(() => TestResultLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional()
 }).strict();
@@ -20435,6 +23932,8 @@ export const TestCatalogUncheckedUpdateManyWithoutLabInputSchema: z.ZodType<Pris
   AlternativeSpecimen: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesText: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LoincCodesHTML: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TestSubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -20676,7 +24175,7 @@ export const LabOrderCreateManyOrganizationInputSchema: z.ZodType<Prisma.LabOrde
 }).strict();
 
 export const OrganizationCreateManyOrganizationInputSchema: z.ZodType<Prisma.OrganizationCreateManyOrganizationInput> = z.object({
-  Id: z.string().optional(),
+  Id: z.string(),
   href: z.string().optional().nullable(),
   Level: z.number().optional().nullable(),
   ParentOrgName: z.string().optional().nullable(),
@@ -20697,6 +24196,14 @@ export const OrganizationFavoriteTestCreateManyOrganizationInputSchema: z.ZodTyp
   TestId: z.number().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable()
+}).strict();
+
+export const PatientOrganizationCreateManyOrganizationInputSchema: z.ZodType<Prisma.PatientOrganizationCreateManyOrganizationInput> = z.object({
+  Id: z.string().optional(),
+  PatientId: z.string(),
+  MRN: z.string().optional().nullable(),
+  Mobile: z.string().optional().nullable(),
+  Email: z.string().optional().nullable()
 }).strict();
 
 export const ProviderOrganizationCreateManyOrganizationInputSchema: z.ZodType<Prisma.ProviderOrganizationCreateManyOrganizationInput> = z.object({
@@ -20787,6 +24294,7 @@ export const OrganizationUpdateWithoutOrganizationInputSchema: z.ZodType<Prisma.
   LabOrder: z.lazy(() => LabOrderUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   ChildOrganization: z.lazy(() => OrganizationUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUpdateManyWithoutOrganizationNestedInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationUpdateManyWithoutOrganizationNestedInputSchema).optional()
 }).strict();
 
@@ -20805,6 +24313,7 @@ export const OrganizationUncheckedUpdateWithoutOrganizationInputSchema: z.ZodTyp
   LabOrder: z.lazy(() => LabOrderUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   ChildOrganization: z.lazy(() => OrganizationUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
+  PatientOrganization: z.lazy(() => PatientOrganizationUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationUncheckedUpdateManyWithoutOrganizationNestedInputSchema).optional()
 }).strict();
 
@@ -20850,6 +24359,30 @@ export const OrganizationFavoriteTestUncheckedUpdateManyWithoutOrganizationInput
   TestId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const PatientOrganizationUpdateWithoutOrganizationInputSchema: z.ZodType<Prisma.PatientOrganizationUpdateWithoutOrganizationInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  MRN: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Patient: z.lazy(() => PatientUpdateOneRequiredWithoutPatientOrganizationNestedInputSchema).optional()
+}).strict();
+
+export const PatientOrganizationUncheckedUpdateWithoutOrganizationInputSchema: z.ZodType<Prisma.PatientOrganizationUncheckedUpdateWithoutOrganizationInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  PatientId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  MRN: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const PatientOrganizationUncheckedUpdateManyWithoutOrganizationInputSchema: z.ZodType<Prisma.PatientOrganizationUncheckedUpdateManyWithoutOrganizationInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  PatientId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  MRN: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const ProviderOrganizationUpdateWithoutOrganizationInputSchema: z.ZodType<Prisma.ProviderOrganizationUpdateWithoutOrganizationInput> = z.object({
@@ -20905,6 +24438,14 @@ export const LabOrderCreateManyPatientInputSchema: z.ZodType<Prisma.LabOrderCrea
   OrderNotes: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable()
+}).strict();
+
+export const PatientOrganizationCreateManyPatientInputSchema: z.ZodType<Prisma.PatientOrganizationCreateManyPatientInput> = z.object({
+  Id: z.string().optional(),
+  OrganizationId: z.string(),
+  MRN: z.string().optional().nullable(),
+  Mobile: z.string().optional().nullable(),
+  Email: z.string().optional().nullable()
 }).strict();
 
 export const LabOrderUpdateWithoutPatientInputSchema: z.ZodType<Prisma.LabOrderUpdateWithoutPatientInput> = z.object({
@@ -20967,6 +24508,30 @@ export const LabOrderUncheckedUpdateManyWithoutPatientInputSchema: z.ZodType<Pri
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
+export const PatientOrganizationUpdateWithoutPatientInputSchema: z.ZodType<Prisma.PatientOrganizationUpdateWithoutPatientInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  MRN: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Organization: z.lazy(() => OrganizationUpdateOneRequiredWithoutPatientOrganizationNestedInputSchema).optional()
+}).strict();
+
+export const PatientOrganizationUncheckedUpdateWithoutPatientInputSchema: z.ZodType<Prisma.PatientOrganizationUncheckedUpdateWithoutPatientInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  OrganizationId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  MRN: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const PatientOrganizationUncheckedUpdateManyWithoutPatientInputSchema: z.ZodType<Prisma.PatientOrganizationUncheckedUpdateManyWithoutPatientInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  OrganizationId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  MRN: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
 export const LabOrderCreateManyOrderingProviderInputSchema: z.ZodType<Prisma.LabOrderCreateManyOrderingProviderInput> = z.object({
   Id: z.string().optional(),
   OrderNumber: z.string().optional().nullable(),
@@ -21020,7 +24585,7 @@ export const ProviderFavoriteTestCreateManyProviderInputSchema: z.ZodType<Prisma
 
 export const ProviderOrganizationCreateManyProviderInputSchema: z.ZodType<Prisma.ProviderOrganizationCreateManyProviderInput> = z.object({
   Id: z.string().optional(),
-  OrganizationId: z.string().optional().nullable(),
+  OrganizationId: z.string(),
   ProviderNPI: z.string().optional().nullable(),
   Name: z.string().optional().nullable(),
   ParentOrgName: z.string().optional().nullable(),
@@ -21218,12 +24783,12 @@ export const ProviderOrganizationUpdateWithoutProviderInputSchema: z.ZodType<Pri
   OrgCity: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   OrgState: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   OrgZip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  Organization: z.lazy(() => OrganizationUpdateOneWithoutProviderOrganizationNestedInputSchema).optional()
+  Organization: z.lazy(() => OrganizationUpdateOneRequiredWithoutProviderOrganizationNestedInputSchema).optional()
 }).strict();
 
 export const ProviderOrganizationUncheckedUpdateWithoutProviderInputSchema: z.ZodType<Prisma.ProviderOrganizationUncheckedUpdateWithoutProviderInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  OrganizationId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrganizationId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   ProviderNPI: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Name: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ParentOrgName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -21236,7 +24801,7 @@ export const ProviderOrganizationUncheckedUpdateWithoutProviderInputSchema: z.Zo
 
 export const ProviderOrganizationUncheckedUpdateManyWithoutProviderInputSchema: z.ZodType<Prisma.ProviderOrganizationUncheckedUpdateManyWithoutProviderInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  OrganizationId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrganizationId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   ProviderNPI: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Name: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ParentOrgName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -21245,6 +24810,99 @@ export const ProviderOrganizationUncheckedUpdateManyWithoutProviderInputSchema: 
   OrgCity: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   OrgState: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   OrgZip: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const SponsoredProgramCreateManySponsorInputSchema: z.ZodType<Prisma.SponsoredProgramCreateManySponsorInput> = z.object({
+  ProgramId: z.number().optional(),
+  TherapeuticArea: z.string().optional().nullable(),
+  ProgramName: z.string().optional().nullable(),
+  ProgramUrl: z.string().optional().nullable(),
+  ProgramLabUrl: z.string().optional().nullable(),
+  SponosoredTestingUrl: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable()
+}).strict();
+
+export const SponsoredProgramUpdateWithoutSponsorInputSchema: z.ZodType<Prisma.SponsoredProgramUpdateWithoutSponsorInput> = z.object({
+  TherapeuticArea: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramLabUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponosoredTestingUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsoredTest: z.lazy(() => SponsoredTestUpdateManyWithoutSponsoredProgramNestedInputSchema).optional()
+}).strict();
+
+export const SponsoredProgramUncheckedUpdateWithoutSponsorInputSchema: z.ZodType<Prisma.SponsoredProgramUncheckedUpdateWithoutSponsorInput> = z.object({
+  ProgramId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  TherapeuticArea: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramLabUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponosoredTestingUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsoredTest: z.lazy(() => SponsoredTestUncheckedUpdateManyWithoutSponsoredProgramNestedInputSchema).optional()
+}).strict();
+
+export const SponsoredProgramUncheckedUpdateManyWithoutSponsorInputSchema: z.ZodType<Prisma.SponsoredProgramUncheckedUpdateManyWithoutSponsorInput> = z.object({
+  ProgramId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  TherapeuticArea: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ProgramLabUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponosoredTestingUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const SponsoredTestCreateManySponsoredProgramInputSchema: z.ZodType<Prisma.SponsoredTestCreateManySponsoredProgramInput> = z.object({
+  Id: z.string().optional(),
+  TestId: z.number(),
+  LabTestId: z.string().optional().nullable(),
+  LabId: z.number().optional().nullable(),
+  CasandraTestId: z.string(),
+  Category: z.string(),
+  SubCategory: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable()
+}).strict();
+
+export const SponsoredTestUpdateWithoutSponsoredProgramInputSchema: z.ZodType<Prisma.SponsoredTestUpdateWithoutSponsoredProgramInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CasandraTestId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  Category: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  SubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Lab: z.lazy(() => LabUpdateOneWithoutSponsoredTestNestedInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogUpdateOneRequiredWithoutSponsoredTestNestedInputSchema).optional()
+}).strict();
+
+export const SponsoredTestUncheckedUpdateWithoutSponsoredProgramInputSchema: z.ZodType<Prisma.SponsoredTestUncheckedUpdateWithoutSponsoredProgramInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  TestId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LabId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CasandraTestId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  Category: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  SubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const SponsoredTestUncheckedUpdateManyWithoutSponsoredProgramInputSchema: z.ZodType<Prisma.SponsoredTestUncheckedUpdateManyWithoutSponsoredProgramInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  TestId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LabId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CasandraTestId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  Category: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  SubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const LabOrderTestCreateManyTestCatalogInputSchema: z.ZodType<Prisma.LabOrderTestCreateManyTestCatalogInput> = z.object({
@@ -21274,10 +24932,23 @@ export const ProviderFavoriteTestCreateManyTestCatalogInputSchema: z.ZodType<Pri
   UpdatedAt: z.date().optional().nullable()
 }).strict();
 
+export const SponsoredTestCreateManyTestCatalogInputSchema: z.ZodType<Prisma.SponsoredTestCreateManyTestCatalogInput> = z.object({
+  Id: z.string().optional(),
+  LabTestId: z.string().optional().nullable(),
+  SponsoredProgramId: z.number().optional().nullable(),
+  LabId: z.number().optional().nullable(),
+  CasandraTestId: z.string(),
+  Category: z.string(),
+  SubCategory: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable()
+}).strict();
+
 export const TestBiomarkerCreateManyTestCatalogInputSchema: z.ZodType<Prisma.TestBiomarkerCreateManyTestCatalogInput> = z.object({
   Id: z.number().optional(),
   LabTestId: z.string().optional().nullable(),
   HGNCId: z.string(),
+  TranscriptReference: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional()
 }).strict();
@@ -21288,6 +24959,15 @@ export const TestCptCodeCreateManyTestCatalogInputSchema: z.ZodType<Prisma.TestC
   CptCode: z.string().optional().nullable(),
   Modifier: z.string().optional().nullable(),
   Comments: z.string().optional().nullable(),
+  CreatedAt: z.date().optional(),
+  UpdatedAt: z.date().optional()
+}).strict();
+
+export const TestGeneCreateManyTestCatalogInputSchema: z.ZodType<Prisma.TestGeneCreateManyTestCatalogInput> = z.object({
+  Id: z.number().optional(),
+  LabTestId: z.string().optional().nullable(),
+  Gene: z.string(),
+  TranscriptReference: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
   UpdatedAt: z.date().optional()
 }).strict();
@@ -21392,8 +25072,45 @@ export const ProviderFavoriteTestUncheckedUpdateManyWithoutTestCatalogInputSchem
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
+export const SponsoredTestUpdateWithoutTestCatalogInputSchema: z.ZodType<Prisma.SponsoredTestUpdateWithoutTestCatalogInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CasandraTestId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  Category: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  SubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Lab: z.lazy(() => LabUpdateOneWithoutSponsoredTestNestedInputSchema).optional(),
+  SponsoredProgram: z.lazy(() => SponsoredProgramUpdateOneWithoutSponsoredTestNestedInputSchema).optional()
+}).strict();
+
+export const SponsoredTestUncheckedUpdateWithoutTestCatalogInputSchema: z.ZodType<Prisma.SponsoredTestUncheckedUpdateWithoutTestCatalogInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsoredProgramId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LabId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CasandraTestId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  Category: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  SubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const SponsoredTestUncheckedUpdateManyWithoutTestCatalogInputSchema: z.ZodType<Prisma.SponsoredTestUncheckedUpdateManyWithoutTestCatalogInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  SponsoredProgramId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LabId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CasandraTestId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  Category: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  SubCategory: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
 export const TestBiomarkerUpdateWithoutTestCatalogInputSchema: z.ZodType<Prisma.TestBiomarkerUpdateWithoutTestCatalogInput> = z.object({
   LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TranscriptReference: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   BIOMARKER: z.lazy(() => BIOMARKERUpdateOneRequiredWithoutTestBiomarkerNestedInputSchema).optional()
@@ -21403,6 +25120,7 @@ export const TestBiomarkerUncheckedUpdateWithoutTestCatalogInputSchema: z.ZodTyp
   Id: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   HGNCId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  TranscriptReference: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -21411,6 +25129,7 @@ export const TestBiomarkerUncheckedUpdateManyWithoutTestCatalogInputSchema: z.Zo
   Id: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   HGNCId: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  TranscriptReference: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -21440,6 +25159,32 @@ export const TestCptCodeUncheckedUpdateManyWithoutTestCatalogInputSchema: z.ZodT
   CptCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Modifier: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Comments: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+}).strict();
+
+export const TestGeneUpdateWithoutTestCatalogInputSchema: z.ZodType<Prisma.TestGeneUpdateWithoutTestCatalogInput> = z.object({
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Gene: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  TranscriptReference: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+}).strict();
+
+export const TestGeneUncheckedUpdateWithoutTestCatalogInputSchema: z.ZodType<Prisma.TestGeneUncheckedUpdateWithoutTestCatalogInput> = z.object({
+  Id: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Gene: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  TranscriptReference: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
+}).strict();
+
+export const TestGeneUncheckedUpdateManyWithoutTestCatalogInputSchema: z.ZodType<Prisma.TestGeneUncheckedUpdateManyWithoutTestCatalogInput> = z.object({
+  Id: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
+  LabTestId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Gene: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  TranscriptReference: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
@@ -21500,7 +25245,7 @@ export const TestResultLoincUncheckedUpdateManyWithoutTestCatalogInputSchema: z.
 }).strict();
 
 export const SessionCreateManyUserInputSchema: z.ZodType<Prisma.SessionCreateManyUserInput> = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   sessionToken: z.string(),
   expires: z.date()
 }).strict();
@@ -21531,7 +25276,7 @@ export const AccountFindFirstArgsSchema: z.ZodType<Prisma.AccountFindFirstArgs> 
   select: AccountSelectSchema.optional(),
   include: AccountIncludeSchema.optional(),
   where: AccountWhereInputSchema.optional(),
-  orderBy: z.union([ AccountOrderByWithRelationAndSearchRelevanceInputSchema.array(),AccountOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ AccountOrderByWithRelationInputSchema.array(),AccountOrderByWithRelationInputSchema ]).optional(),
   cursor: AccountWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21542,7 +25287,7 @@ export const AccountFindFirstOrThrowArgsSchema: z.ZodType<Prisma.AccountFindFirs
   select: AccountSelectSchema.optional(),
   include: AccountIncludeSchema.optional(),
   where: AccountWhereInputSchema.optional(),
-  orderBy: z.union([ AccountOrderByWithRelationAndSearchRelevanceInputSchema.array(),AccountOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ AccountOrderByWithRelationInputSchema.array(),AccountOrderByWithRelationInputSchema ]).optional(),
   cursor: AccountWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21553,7 +25298,7 @@ export const AccountFindManyArgsSchema: z.ZodType<Prisma.AccountFindManyArgs> = 
   select: AccountSelectSchema.optional(),
   include: AccountIncludeSchema.optional(),
   where: AccountWhereInputSchema.optional(),
-  orderBy: z.union([ AccountOrderByWithRelationAndSearchRelevanceInputSchema.array(),AccountOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ AccountOrderByWithRelationInputSchema.array(),AccountOrderByWithRelationInputSchema ]).optional(),
   cursor: AccountWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21562,7 +25307,7 @@ export const AccountFindManyArgsSchema: z.ZodType<Prisma.AccountFindManyArgs> = 
 
 export const AccountAggregateArgsSchema: z.ZodType<Prisma.AccountAggregateArgs> = z.object({
   where: AccountWhereInputSchema.optional(),
-  orderBy: z.union([ AccountOrderByWithRelationAndSearchRelevanceInputSchema.array(),AccountOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ AccountOrderByWithRelationInputSchema.array(),AccountOrderByWithRelationInputSchema ]).optional(),
   cursor: AccountWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21593,7 +25338,7 @@ export const AdminFindFirstArgsSchema: z.ZodType<Prisma.AdminFindFirstArgs> = z.
   select: AdminSelectSchema.optional(),
   include: AdminIncludeSchema.optional(),
   where: AdminWhereInputSchema.optional(),
-  orderBy: z.union([ AdminOrderByWithRelationAndSearchRelevanceInputSchema.array(),AdminOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ AdminOrderByWithRelationInputSchema.array(),AdminOrderByWithRelationInputSchema ]).optional(),
   cursor: AdminWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21604,7 +25349,7 @@ export const AdminFindFirstOrThrowArgsSchema: z.ZodType<Prisma.AdminFindFirstOrT
   select: AdminSelectSchema.optional(),
   include: AdminIncludeSchema.optional(),
   where: AdminWhereInputSchema.optional(),
-  orderBy: z.union([ AdminOrderByWithRelationAndSearchRelevanceInputSchema.array(),AdminOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ AdminOrderByWithRelationInputSchema.array(),AdminOrderByWithRelationInputSchema ]).optional(),
   cursor: AdminWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21615,7 +25360,7 @@ export const AdminFindManyArgsSchema: z.ZodType<Prisma.AdminFindManyArgs> = z.ob
   select: AdminSelectSchema.optional(),
   include: AdminIncludeSchema.optional(),
   where: AdminWhereInputSchema.optional(),
-  orderBy: z.union([ AdminOrderByWithRelationAndSearchRelevanceInputSchema.array(),AdminOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ AdminOrderByWithRelationInputSchema.array(),AdminOrderByWithRelationInputSchema ]).optional(),
   cursor: AdminWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21624,7 +25369,7 @@ export const AdminFindManyArgsSchema: z.ZodType<Prisma.AdminFindManyArgs> = z.ob
 
 export const AdminAggregateArgsSchema: z.ZodType<Prisma.AdminAggregateArgs> = z.object({
   where: AdminWhereInputSchema.optional(),
-  orderBy: z.union([ AdminOrderByWithRelationAndSearchRelevanceInputSchema.array(),AdminOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ AdminOrderByWithRelationInputSchema.array(),AdminOrderByWithRelationInputSchema ]).optional(),
   cursor: AdminWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21655,7 +25400,7 @@ export const AttachmentFindFirstArgsSchema: z.ZodType<Prisma.AttachmentFindFirst
   select: AttachmentSelectSchema.optional(),
   include: AttachmentIncludeSchema.optional(),
   where: AttachmentWhereInputSchema.optional(),
-  orderBy: z.union([ AttachmentOrderByWithRelationAndSearchRelevanceInputSchema.array(),AttachmentOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ AttachmentOrderByWithRelationInputSchema.array(),AttachmentOrderByWithRelationInputSchema ]).optional(),
   cursor: AttachmentWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21666,7 +25411,7 @@ export const AttachmentFindFirstOrThrowArgsSchema: z.ZodType<Prisma.AttachmentFi
   select: AttachmentSelectSchema.optional(),
   include: AttachmentIncludeSchema.optional(),
   where: AttachmentWhereInputSchema.optional(),
-  orderBy: z.union([ AttachmentOrderByWithRelationAndSearchRelevanceInputSchema.array(),AttachmentOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ AttachmentOrderByWithRelationInputSchema.array(),AttachmentOrderByWithRelationInputSchema ]).optional(),
   cursor: AttachmentWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21677,7 +25422,7 @@ export const AttachmentFindManyArgsSchema: z.ZodType<Prisma.AttachmentFindManyAr
   select: AttachmentSelectSchema.optional(),
   include: AttachmentIncludeSchema.optional(),
   where: AttachmentWhereInputSchema.optional(),
-  orderBy: z.union([ AttachmentOrderByWithRelationAndSearchRelevanceInputSchema.array(),AttachmentOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ AttachmentOrderByWithRelationInputSchema.array(),AttachmentOrderByWithRelationInputSchema ]).optional(),
   cursor: AttachmentWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21686,7 +25431,7 @@ export const AttachmentFindManyArgsSchema: z.ZodType<Prisma.AttachmentFindManyAr
 
 export const AttachmentAggregateArgsSchema: z.ZodType<Prisma.AttachmentAggregateArgs> = z.object({
   where: AttachmentWhereInputSchema.optional(),
-  orderBy: z.union([ AttachmentOrderByWithRelationAndSearchRelevanceInputSchema.array(),AttachmentOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ AttachmentOrderByWithRelationInputSchema.array(),AttachmentOrderByWithRelationInputSchema ]).optional(),
   cursor: AttachmentWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21717,7 +25462,7 @@ export const BIOMARKERFindFirstArgsSchema: z.ZodType<Prisma.BIOMARKERFindFirstAr
   select: BIOMARKERSelectSchema.optional(),
   include: BIOMARKERIncludeSchema.optional(),
   where: BIOMARKERWhereInputSchema.optional(),
-  orderBy: z.union([ BIOMARKEROrderByWithRelationAndSearchRelevanceInputSchema.array(),BIOMARKEROrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ BIOMARKEROrderByWithRelationInputSchema.array(),BIOMARKEROrderByWithRelationInputSchema ]).optional(),
   cursor: BIOMARKERWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21728,7 +25473,7 @@ export const BIOMARKERFindFirstOrThrowArgsSchema: z.ZodType<Prisma.BIOMARKERFind
   select: BIOMARKERSelectSchema.optional(),
   include: BIOMARKERIncludeSchema.optional(),
   where: BIOMARKERWhereInputSchema.optional(),
-  orderBy: z.union([ BIOMARKEROrderByWithRelationAndSearchRelevanceInputSchema.array(),BIOMARKEROrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ BIOMARKEROrderByWithRelationInputSchema.array(),BIOMARKEROrderByWithRelationInputSchema ]).optional(),
   cursor: BIOMARKERWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21739,7 +25484,7 @@ export const BIOMARKERFindManyArgsSchema: z.ZodType<Prisma.BIOMARKERFindManyArgs
   select: BIOMARKERSelectSchema.optional(),
   include: BIOMARKERIncludeSchema.optional(),
   where: BIOMARKERWhereInputSchema.optional(),
-  orderBy: z.union([ BIOMARKEROrderByWithRelationAndSearchRelevanceInputSchema.array(),BIOMARKEROrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ BIOMARKEROrderByWithRelationInputSchema.array(),BIOMARKEROrderByWithRelationInputSchema ]).optional(),
   cursor: BIOMARKERWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21748,7 +25493,7 @@ export const BIOMARKERFindManyArgsSchema: z.ZodType<Prisma.BIOMARKERFindManyArgs
 
 export const BIOMARKERAggregateArgsSchema: z.ZodType<Prisma.BIOMARKERAggregateArgs> = z.object({
   where: BIOMARKERWhereInputSchema.optional(),
-  orderBy: z.union([ BIOMARKEROrderByWithRelationAndSearchRelevanceInputSchema.array(),BIOMARKEROrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ BIOMARKEROrderByWithRelationInputSchema.array(),BIOMARKEROrderByWithRelationInputSchema ]).optional(),
   cursor: BIOMARKERWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21779,7 +25524,7 @@ export const ICDFindFirstArgsSchema: z.ZodType<Prisma.ICDFindFirstArgs> = z.obje
   select: ICDSelectSchema.optional(),
   include: ICDIncludeSchema.optional(),
   where: ICDWhereInputSchema.optional(),
-  orderBy: z.union([ ICDOrderByWithRelationAndSearchRelevanceInputSchema.array(),ICDOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ ICDOrderByWithRelationInputSchema.array(),ICDOrderByWithRelationInputSchema ]).optional(),
   cursor: ICDWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21790,7 +25535,7 @@ export const ICDFindFirstOrThrowArgsSchema: z.ZodType<Prisma.ICDFindFirstOrThrow
   select: ICDSelectSchema.optional(),
   include: ICDIncludeSchema.optional(),
   where: ICDWhereInputSchema.optional(),
-  orderBy: z.union([ ICDOrderByWithRelationAndSearchRelevanceInputSchema.array(),ICDOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ ICDOrderByWithRelationInputSchema.array(),ICDOrderByWithRelationInputSchema ]).optional(),
   cursor: ICDWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21801,7 +25546,7 @@ export const ICDFindManyArgsSchema: z.ZodType<Prisma.ICDFindManyArgs> = z.object
   select: ICDSelectSchema.optional(),
   include: ICDIncludeSchema.optional(),
   where: ICDWhereInputSchema.optional(),
-  orderBy: z.union([ ICDOrderByWithRelationAndSearchRelevanceInputSchema.array(),ICDOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ ICDOrderByWithRelationInputSchema.array(),ICDOrderByWithRelationInputSchema ]).optional(),
   cursor: ICDWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21810,7 +25555,7 @@ export const ICDFindManyArgsSchema: z.ZodType<Prisma.ICDFindManyArgs> = z.object
 
 export const ICDAggregateArgsSchema: z.ZodType<Prisma.ICDAggregateArgs> = z.object({
   where: ICDWhereInputSchema.optional(),
-  orderBy: z.union([ ICDOrderByWithRelationAndSearchRelevanceInputSchema.array(),ICDOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ ICDOrderByWithRelationInputSchema.array(),ICDOrderByWithRelationInputSchema ]).optional(),
   cursor: ICDWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21841,7 +25586,7 @@ export const LOINCFindFirstArgsSchema: z.ZodType<Prisma.LOINCFindFirstArgs> = z.
   select: LOINCSelectSchema.optional(),
   include: LOINCIncludeSchema.optional(),
   where: LOINCWhereInputSchema.optional(),
-  orderBy: z.union([ LOINCOrderByWithRelationAndSearchRelevanceInputSchema.array(),LOINCOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LOINCOrderByWithRelationInputSchema.array(),LOINCOrderByWithRelationInputSchema ]).optional(),
   cursor: LOINCWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21852,7 +25597,7 @@ export const LOINCFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LOINCFindFirstOrT
   select: LOINCSelectSchema.optional(),
   include: LOINCIncludeSchema.optional(),
   where: LOINCWhereInputSchema.optional(),
-  orderBy: z.union([ LOINCOrderByWithRelationAndSearchRelevanceInputSchema.array(),LOINCOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LOINCOrderByWithRelationInputSchema.array(),LOINCOrderByWithRelationInputSchema ]).optional(),
   cursor: LOINCWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21863,7 +25608,7 @@ export const LOINCFindManyArgsSchema: z.ZodType<Prisma.LOINCFindManyArgs> = z.ob
   select: LOINCSelectSchema.optional(),
   include: LOINCIncludeSchema.optional(),
   where: LOINCWhereInputSchema.optional(),
-  orderBy: z.union([ LOINCOrderByWithRelationAndSearchRelevanceInputSchema.array(),LOINCOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LOINCOrderByWithRelationInputSchema.array(),LOINCOrderByWithRelationInputSchema ]).optional(),
   cursor: LOINCWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21872,7 +25617,7 @@ export const LOINCFindManyArgsSchema: z.ZodType<Prisma.LOINCFindManyArgs> = z.ob
 
 export const LOINCAggregateArgsSchema: z.ZodType<Prisma.LOINCAggregateArgs> = z.object({
   where: LOINCWhereInputSchema.optional(),
-  orderBy: z.union([ LOINCOrderByWithRelationAndSearchRelevanceInputSchema.array(),LOINCOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LOINCOrderByWithRelationInputSchema.array(),LOINCOrderByWithRelationInputSchema ]).optional(),
   cursor: LOINCWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21903,7 +25648,7 @@ export const LabFindFirstArgsSchema: z.ZodType<Prisma.LabFindFirstArgs> = z.obje
   select: LabSelectSchema.optional(),
   include: LabIncludeSchema.optional(),
   where: LabWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderByWithRelationInputSchema.array(),LabOrderByWithRelationInputSchema ]).optional(),
   cursor: LabWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21914,7 +25659,7 @@ export const LabFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LabFindFirstOrThrow
   select: LabSelectSchema.optional(),
   include: LabIncludeSchema.optional(),
   where: LabWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderByWithRelationInputSchema.array(),LabOrderByWithRelationInputSchema ]).optional(),
   cursor: LabWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21925,7 +25670,7 @@ export const LabFindManyArgsSchema: z.ZodType<Prisma.LabFindManyArgs> = z.object
   select: LabSelectSchema.optional(),
   include: LabIncludeSchema.optional(),
   where: LabWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderByWithRelationInputSchema.array(),LabOrderByWithRelationInputSchema ]).optional(),
   cursor: LabWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21934,7 +25679,7 @@ export const LabFindManyArgsSchema: z.ZodType<Prisma.LabFindManyArgs> = z.object
 
 export const LabAggregateArgsSchema: z.ZodType<Prisma.LabAggregateArgs> = z.object({
   where: LabWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderByWithRelationInputSchema.array(),LabOrderByWithRelationInputSchema ]).optional(),
   cursor: LabWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21965,7 +25710,7 @@ export const LabOrderFindFirstArgsSchema: z.ZodType<Prisma.LabOrderFindFirstArgs
   select: LabOrderSelectSchema.optional(),
   include: LabOrderIncludeSchema.optional(),
   where: LabOrderWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderOrderByWithRelationInputSchema.array(),LabOrderOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21976,7 +25721,7 @@ export const LabOrderFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LabOrderFindFi
   select: LabOrderSelectSchema.optional(),
   include: LabOrderIncludeSchema.optional(),
   where: LabOrderWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderOrderByWithRelationInputSchema.array(),LabOrderOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21987,7 +25732,7 @@ export const LabOrderFindManyArgsSchema: z.ZodType<Prisma.LabOrderFindManyArgs> 
   select: LabOrderSelectSchema.optional(),
   include: LabOrderIncludeSchema.optional(),
   where: LabOrderWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderOrderByWithRelationInputSchema.array(),LabOrderOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -21996,7 +25741,7 @@ export const LabOrderFindManyArgsSchema: z.ZodType<Prisma.LabOrderFindManyArgs> 
 
 export const LabOrderAggregateArgsSchema: z.ZodType<Prisma.LabOrderAggregateArgs> = z.object({
   where: LabOrderWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderOrderByWithRelationInputSchema.array(),LabOrderOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22027,7 +25772,7 @@ export const LabOrderAttachmentFindFirstArgsSchema: z.ZodType<Prisma.LabOrderAtt
   select: LabOrderAttachmentSelectSchema.optional(),
   include: LabOrderAttachmentIncludeSchema.optional(),
   where: LabOrderAttachmentWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderAttachmentOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderAttachmentOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderAttachmentOrderByWithRelationInputSchema.array(),LabOrderAttachmentOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderAttachmentWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22038,7 +25783,7 @@ export const LabOrderAttachmentFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LabO
   select: LabOrderAttachmentSelectSchema.optional(),
   include: LabOrderAttachmentIncludeSchema.optional(),
   where: LabOrderAttachmentWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderAttachmentOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderAttachmentOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderAttachmentOrderByWithRelationInputSchema.array(),LabOrderAttachmentOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderAttachmentWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22049,7 +25794,7 @@ export const LabOrderAttachmentFindManyArgsSchema: z.ZodType<Prisma.LabOrderAtta
   select: LabOrderAttachmentSelectSchema.optional(),
   include: LabOrderAttachmentIncludeSchema.optional(),
   where: LabOrderAttachmentWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderAttachmentOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderAttachmentOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderAttachmentOrderByWithRelationInputSchema.array(),LabOrderAttachmentOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderAttachmentWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22058,7 +25803,7 @@ export const LabOrderAttachmentFindManyArgsSchema: z.ZodType<Prisma.LabOrderAtta
 
 export const LabOrderAttachmentAggregateArgsSchema: z.ZodType<Prisma.LabOrderAttachmentAggregateArgs> = z.object({
   where: LabOrderAttachmentWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderAttachmentOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderAttachmentOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderAttachmentOrderByWithRelationInputSchema.array(),LabOrderAttachmentOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderAttachmentWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22089,7 +25834,7 @@ export const LabOrderBillingFindFirstArgsSchema: z.ZodType<Prisma.LabOrderBillin
   select: LabOrderBillingSelectSchema.optional(),
   include: LabOrderBillingIncludeSchema.optional(),
   where: LabOrderBillingWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderBillingOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderBillingOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderBillingOrderByWithRelationInputSchema.array(),LabOrderBillingOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderBillingWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22100,7 +25845,7 @@ export const LabOrderBillingFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LabOrde
   select: LabOrderBillingSelectSchema.optional(),
   include: LabOrderBillingIncludeSchema.optional(),
   where: LabOrderBillingWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderBillingOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderBillingOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderBillingOrderByWithRelationInputSchema.array(),LabOrderBillingOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderBillingWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22111,7 +25856,7 @@ export const LabOrderBillingFindManyArgsSchema: z.ZodType<Prisma.LabOrderBilling
   select: LabOrderBillingSelectSchema.optional(),
   include: LabOrderBillingIncludeSchema.optional(),
   where: LabOrderBillingWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderBillingOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderBillingOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderBillingOrderByWithRelationInputSchema.array(),LabOrderBillingOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderBillingWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22120,7 +25865,7 @@ export const LabOrderBillingFindManyArgsSchema: z.ZodType<Prisma.LabOrderBilling
 
 export const LabOrderBillingAggregateArgsSchema: z.ZodType<Prisma.LabOrderBillingAggregateArgs> = z.object({
   where: LabOrderBillingWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderBillingOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderBillingOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderBillingOrderByWithRelationInputSchema.array(),LabOrderBillingOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderBillingWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22151,7 +25896,7 @@ export const LabOrderIcdFindFirstArgsSchema: z.ZodType<Prisma.LabOrderIcdFindFir
   select: LabOrderIcdSelectSchema.optional(),
   include: LabOrderIcdIncludeSchema.optional(),
   where: LabOrderIcdWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderIcdOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderIcdOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderIcdOrderByWithRelationInputSchema.array(),LabOrderIcdOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderIcdWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22162,7 +25907,7 @@ export const LabOrderIcdFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LabOrderIcd
   select: LabOrderIcdSelectSchema.optional(),
   include: LabOrderIcdIncludeSchema.optional(),
   where: LabOrderIcdWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderIcdOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderIcdOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderIcdOrderByWithRelationInputSchema.array(),LabOrderIcdOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderIcdWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22173,7 +25918,7 @@ export const LabOrderIcdFindManyArgsSchema: z.ZodType<Prisma.LabOrderIcdFindMany
   select: LabOrderIcdSelectSchema.optional(),
   include: LabOrderIcdIncludeSchema.optional(),
   where: LabOrderIcdWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderIcdOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderIcdOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderIcdOrderByWithRelationInputSchema.array(),LabOrderIcdOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderIcdWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22182,7 +25927,7 @@ export const LabOrderIcdFindManyArgsSchema: z.ZodType<Prisma.LabOrderIcdFindMany
 
 export const LabOrderIcdAggregateArgsSchema: z.ZodType<Prisma.LabOrderIcdAggregateArgs> = z.object({
   where: LabOrderIcdWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderIcdOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderIcdOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderIcdOrderByWithRelationInputSchema.array(),LabOrderIcdOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderIcdWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22213,7 +25958,7 @@ export const LabOrderSpecimenFindFirstArgsSchema: z.ZodType<Prisma.LabOrderSpeci
   select: LabOrderSpecimenSelectSchema.optional(),
   include: LabOrderSpecimenIncludeSchema.optional(),
   where: LabOrderSpecimenWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderSpecimenOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderSpecimenOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderSpecimenOrderByWithRelationInputSchema.array(),LabOrderSpecimenOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderSpecimenWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22224,7 +25969,7 @@ export const LabOrderSpecimenFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LabOrd
   select: LabOrderSpecimenSelectSchema.optional(),
   include: LabOrderSpecimenIncludeSchema.optional(),
   where: LabOrderSpecimenWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderSpecimenOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderSpecimenOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderSpecimenOrderByWithRelationInputSchema.array(),LabOrderSpecimenOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderSpecimenWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22235,7 +25980,7 @@ export const LabOrderSpecimenFindManyArgsSchema: z.ZodType<Prisma.LabOrderSpecim
   select: LabOrderSpecimenSelectSchema.optional(),
   include: LabOrderSpecimenIncludeSchema.optional(),
   where: LabOrderSpecimenWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderSpecimenOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderSpecimenOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderSpecimenOrderByWithRelationInputSchema.array(),LabOrderSpecimenOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderSpecimenWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22244,7 +25989,7 @@ export const LabOrderSpecimenFindManyArgsSchema: z.ZodType<Prisma.LabOrderSpecim
 
 export const LabOrderSpecimenAggregateArgsSchema: z.ZodType<Prisma.LabOrderSpecimenAggregateArgs> = z.object({
   where: LabOrderSpecimenWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderSpecimenOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderSpecimenOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderSpecimenOrderByWithRelationInputSchema.array(),LabOrderSpecimenOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderSpecimenWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22275,7 +26020,7 @@ export const LabOrderStatusFindFirstArgsSchema: z.ZodType<Prisma.LabOrderStatusF
   select: LabOrderStatusSelectSchema.optional(),
   include: LabOrderStatusIncludeSchema.optional(),
   where: LabOrderStatusWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderStatusOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderStatusOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderStatusOrderByWithRelationInputSchema.array(),LabOrderStatusOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderStatusWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22286,7 +26031,7 @@ export const LabOrderStatusFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LabOrder
   select: LabOrderStatusSelectSchema.optional(),
   include: LabOrderStatusIncludeSchema.optional(),
   where: LabOrderStatusWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderStatusOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderStatusOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderStatusOrderByWithRelationInputSchema.array(),LabOrderStatusOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderStatusWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22297,7 +26042,7 @@ export const LabOrderStatusFindManyArgsSchema: z.ZodType<Prisma.LabOrderStatusFi
   select: LabOrderStatusSelectSchema.optional(),
   include: LabOrderStatusIncludeSchema.optional(),
   where: LabOrderStatusWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderStatusOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderStatusOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderStatusOrderByWithRelationInputSchema.array(),LabOrderStatusOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderStatusWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22306,7 +26051,7 @@ export const LabOrderStatusFindManyArgsSchema: z.ZodType<Prisma.LabOrderStatusFi
 
 export const LabOrderStatusAggregateArgsSchema: z.ZodType<Prisma.LabOrderStatusAggregateArgs> = z.object({
   where: LabOrderStatusWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderStatusOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderStatusOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderStatusOrderByWithRelationInputSchema.array(),LabOrderStatusOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderStatusWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22337,7 +26082,7 @@ export const LabOrderTestFindFirstArgsSchema: z.ZodType<Prisma.LabOrderTestFindF
   select: LabOrderTestSelectSchema.optional(),
   include: LabOrderTestIncludeSchema.optional(),
   where: LabOrderTestWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderTestOrderByWithRelationInputSchema.array(),LabOrderTestOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22348,7 +26093,7 @@ export const LabOrderTestFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LabOrderTe
   select: LabOrderTestSelectSchema.optional(),
   include: LabOrderTestIncludeSchema.optional(),
   where: LabOrderTestWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderTestOrderByWithRelationInputSchema.array(),LabOrderTestOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22359,7 +26104,7 @@ export const LabOrderTestFindManyArgsSchema: z.ZodType<Prisma.LabOrderTestFindMa
   select: LabOrderTestSelectSchema.optional(),
   include: LabOrderTestIncludeSchema.optional(),
   where: LabOrderTestWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderTestOrderByWithRelationInputSchema.array(),LabOrderTestOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22368,7 +26113,7 @@ export const LabOrderTestFindManyArgsSchema: z.ZodType<Prisma.LabOrderTestFindMa
 
 export const LabOrderTestAggregateArgsSchema: z.ZodType<Prisma.LabOrderTestAggregateArgs> = z.object({
   where: LabOrderTestWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderTestOrderByWithRelationInputSchema.array(),LabOrderTestOrderByWithRelationInputSchema ]).optional(),
   cursor: LabOrderTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22398,7 +26143,7 @@ export const LabOrderTestFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.LabOrderT
 export const LoincComponentHierarchyFindFirstArgsSchema: z.ZodType<Prisma.LoincComponentHierarchyFindFirstArgs> = z.object({
   select: LoincComponentHierarchySelectSchema.optional(),
   where: LoincComponentHierarchyWhereInputSchema.optional(),
-  orderBy: z.union([ LoincComponentHierarchyOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincComponentHierarchyOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LoincComponentHierarchyOrderByWithRelationInputSchema.array(),LoincComponentHierarchyOrderByWithRelationInputSchema ]).optional(),
   cursor: LoincComponentHierarchyWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22408,7 +26153,7 @@ export const LoincComponentHierarchyFindFirstArgsSchema: z.ZodType<Prisma.LoincC
 export const LoincComponentHierarchyFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LoincComponentHierarchyFindFirstOrThrowArgs> = z.object({
   select: LoincComponentHierarchySelectSchema.optional(),
   where: LoincComponentHierarchyWhereInputSchema.optional(),
-  orderBy: z.union([ LoincComponentHierarchyOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincComponentHierarchyOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LoincComponentHierarchyOrderByWithRelationInputSchema.array(),LoincComponentHierarchyOrderByWithRelationInputSchema ]).optional(),
   cursor: LoincComponentHierarchyWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22418,7 +26163,7 @@ export const LoincComponentHierarchyFindFirstOrThrowArgsSchema: z.ZodType<Prisma
 export const LoincComponentHierarchyFindManyArgsSchema: z.ZodType<Prisma.LoincComponentHierarchyFindManyArgs> = z.object({
   select: LoincComponentHierarchySelectSchema.optional(),
   where: LoincComponentHierarchyWhereInputSchema.optional(),
-  orderBy: z.union([ LoincComponentHierarchyOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincComponentHierarchyOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LoincComponentHierarchyOrderByWithRelationInputSchema.array(),LoincComponentHierarchyOrderByWithRelationInputSchema ]).optional(),
   cursor: LoincComponentHierarchyWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22427,7 +26172,7 @@ export const LoincComponentHierarchyFindManyArgsSchema: z.ZodType<Prisma.LoincCo
 
 export const LoincComponentHierarchyAggregateArgsSchema: z.ZodType<Prisma.LoincComponentHierarchyAggregateArgs> = z.object({
   where: LoincComponentHierarchyWhereInputSchema.optional(),
-  orderBy: z.union([ LoincComponentHierarchyOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincComponentHierarchyOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LoincComponentHierarchyOrderByWithRelationInputSchema.array(),LoincComponentHierarchyOrderByWithRelationInputSchema ]).optional(),
   cursor: LoincComponentHierarchyWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22455,7 +26200,7 @@ export const LoincComponentHierarchyFindUniqueOrThrowArgsSchema: z.ZodType<Prism
 export const LoincPanelHierarchyFindFirstArgsSchema: z.ZodType<Prisma.LoincPanelHierarchyFindFirstArgs> = z.object({
   select: LoincPanelHierarchySelectSchema.optional(),
   where: LoincPanelHierarchyWhereInputSchema.optional(),
-  orderBy: z.union([ LoincPanelHierarchyOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincPanelHierarchyOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LoincPanelHierarchyOrderByWithRelationInputSchema.array(),LoincPanelHierarchyOrderByWithRelationInputSchema ]).optional(),
   cursor: LoincPanelHierarchyWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22465,7 +26210,7 @@ export const LoincPanelHierarchyFindFirstArgsSchema: z.ZodType<Prisma.LoincPanel
 export const LoincPanelHierarchyFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LoincPanelHierarchyFindFirstOrThrowArgs> = z.object({
   select: LoincPanelHierarchySelectSchema.optional(),
   where: LoincPanelHierarchyWhereInputSchema.optional(),
-  orderBy: z.union([ LoincPanelHierarchyOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincPanelHierarchyOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LoincPanelHierarchyOrderByWithRelationInputSchema.array(),LoincPanelHierarchyOrderByWithRelationInputSchema ]).optional(),
   cursor: LoincPanelHierarchyWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22475,7 +26220,7 @@ export const LoincPanelHierarchyFindFirstOrThrowArgsSchema: z.ZodType<Prisma.Loi
 export const LoincPanelHierarchyFindManyArgsSchema: z.ZodType<Prisma.LoincPanelHierarchyFindManyArgs> = z.object({
   select: LoincPanelHierarchySelectSchema.optional(),
   where: LoincPanelHierarchyWhereInputSchema.optional(),
-  orderBy: z.union([ LoincPanelHierarchyOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincPanelHierarchyOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LoincPanelHierarchyOrderByWithRelationInputSchema.array(),LoincPanelHierarchyOrderByWithRelationInputSchema ]).optional(),
   cursor: LoincPanelHierarchyWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22484,7 +26229,7 @@ export const LoincPanelHierarchyFindManyArgsSchema: z.ZodType<Prisma.LoincPanelH
 
 export const LoincPanelHierarchyAggregateArgsSchema: z.ZodType<Prisma.LoincPanelHierarchyAggregateArgs> = z.object({
   where: LoincPanelHierarchyWhereInputSchema.optional(),
-  orderBy: z.union([ LoincPanelHierarchyOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincPanelHierarchyOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LoincPanelHierarchyOrderByWithRelationInputSchema.array(),LoincPanelHierarchyOrderByWithRelationInputSchema ]).optional(),
   cursor: LoincPanelHierarchyWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22512,7 +26257,7 @@ export const LoincPanelHierarchyFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.Lo
 export const LoincUniveralLabOrdersFindFirstArgsSchema: z.ZodType<Prisma.LoincUniveralLabOrdersFindFirstArgs> = z.object({
   select: LoincUniveralLabOrdersSelectSchema.optional(),
   where: LoincUniveralLabOrdersWhereInputSchema.optional(),
-  orderBy: z.union([ LoincUniveralLabOrdersOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincUniveralLabOrdersOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LoincUniveralLabOrdersOrderByWithRelationInputSchema.array(),LoincUniveralLabOrdersOrderByWithRelationInputSchema ]).optional(),
   cursor: LoincUniveralLabOrdersWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22522,7 +26267,7 @@ export const LoincUniveralLabOrdersFindFirstArgsSchema: z.ZodType<Prisma.LoincUn
 export const LoincUniveralLabOrdersFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LoincUniveralLabOrdersFindFirstOrThrowArgs> = z.object({
   select: LoincUniveralLabOrdersSelectSchema.optional(),
   where: LoincUniveralLabOrdersWhereInputSchema.optional(),
-  orderBy: z.union([ LoincUniveralLabOrdersOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincUniveralLabOrdersOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LoincUniveralLabOrdersOrderByWithRelationInputSchema.array(),LoincUniveralLabOrdersOrderByWithRelationInputSchema ]).optional(),
   cursor: LoincUniveralLabOrdersWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22532,7 +26277,7 @@ export const LoincUniveralLabOrdersFindFirstOrThrowArgsSchema: z.ZodType<Prisma.
 export const LoincUniveralLabOrdersFindManyArgsSchema: z.ZodType<Prisma.LoincUniveralLabOrdersFindManyArgs> = z.object({
   select: LoincUniveralLabOrdersSelectSchema.optional(),
   where: LoincUniveralLabOrdersWhereInputSchema.optional(),
-  orderBy: z.union([ LoincUniveralLabOrdersOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincUniveralLabOrdersOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LoincUniveralLabOrdersOrderByWithRelationInputSchema.array(),LoincUniveralLabOrdersOrderByWithRelationInputSchema ]).optional(),
   cursor: LoincUniveralLabOrdersWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22541,7 +26286,7 @@ export const LoincUniveralLabOrdersFindManyArgsSchema: z.ZodType<Prisma.LoincUni
 
 export const LoincUniveralLabOrdersAggregateArgsSchema: z.ZodType<Prisma.LoincUniveralLabOrdersAggregateArgs> = z.object({
   where: LoincUniveralLabOrdersWhereInputSchema.optional(),
-  orderBy: z.union([ LoincUniveralLabOrdersOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincUniveralLabOrdersOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ LoincUniveralLabOrdersOrderByWithRelationInputSchema.array(),LoincUniveralLabOrdersOrderByWithRelationInputSchema ]).optional(),
   cursor: LoincUniveralLabOrdersWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22570,7 +26315,7 @@ export const OrganizationFindFirstArgsSchema: z.ZodType<Prisma.OrganizationFindF
   select: OrganizationSelectSchema.optional(),
   include: OrganizationIncludeSchema.optional(),
   where: OrganizationWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ OrganizationOrderByWithRelationInputSchema.array(),OrganizationOrderByWithRelationInputSchema ]).optional(),
   cursor: OrganizationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22581,7 +26326,7 @@ export const OrganizationFindFirstOrThrowArgsSchema: z.ZodType<Prisma.Organizati
   select: OrganizationSelectSchema.optional(),
   include: OrganizationIncludeSchema.optional(),
   where: OrganizationWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ OrganizationOrderByWithRelationInputSchema.array(),OrganizationOrderByWithRelationInputSchema ]).optional(),
   cursor: OrganizationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22592,7 +26337,7 @@ export const OrganizationFindManyArgsSchema: z.ZodType<Prisma.OrganizationFindMa
   select: OrganizationSelectSchema.optional(),
   include: OrganizationIncludeSchema.optional(),
   where: OrganizationWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ OrganizationOrderByWithRelationInputSchema.array(),OrganizationOrderByWithRelationInputSchema ]).optional(),
   cursor: OrganizationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22601,7 +26346,7 @@ export const OrganizationFindManyArgsSchema: z.ZodType<Prisma.OrganizationFindMa
 
 export const OrganizationAggregateArgsSchema: z.ZodType<Prisma.OrganizationAggregateArgs> = z.object({
   where: OrganizationWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ OrganizationOrderByWithRelationInputSchema.array(),OrganizationOrderByWithRelationInputSchema ]).optional(),
   cursor: OrganizationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22628,11 +26373,68 @@ export const OrganizationFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.Organizat
   where: OrganizationWhereUniqueInputSchema,
 }).strict() ;
 
+export const OrganizationEndpointFindFirstArgsSchema: z.ZodType<Prisma.OrganizationEndpointFindFirstArgs> = z.object({
+  select: OrganizationEndpointSelectSchema.optional(),
+  where: OrganizationEndpointWhereInputSchema.optional(),
+  orderBy: z.union([ OrganizationEndpointOrderByWithRelationInputSchema.array(),OrganizationEndpointOrderByWithRelationInputSchema ]).optional(),
+  cursor: OrganizationEndpointWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ OrganizationEndpointScalarFieldEnumSchema,OrganizationEndpointScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const OrganizationEndpointFindFirstOrThrowArgsSchema: z.ZodType<Prisma.OrganizationEndpointFindFirstOrThrowArgs> = z.object({
+  select: OrganizationEndpointSelectSchema.optional(),
+  where: OrganizationEndpointWhereInputSchema.optional(),
+  orderBy: z.union([ OrganizationEndpointOrderByWithRelationInputSchema.array(),OrganizationEndpointOrderByWithRelationInputSchema ]).optional(),
+  cursor: OrganizationEndpointWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ OrganizationEndpointScalarFieldEnumSchema,OrganizationEndpointScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const OrganizationEndpointFindManyArgsSchema: z.ZodType<Prisma.OrganizationEndpointFindManyArgs> = z.object({
+  select: OrganizationEndpointSelectSchema.optional(),
+  where: OrganizationEndpointWhereInputSchema.optional(),
+  orderBy: z.union([ OrganizationEndpointOrderByWithRelationInputSchema.array(),OrganizationEndpointOrderByWithRelationInputSchema ]).optional(),
+  cursor: OrganizationEndpointWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ OrganizationEndpointScalarFieldEnumSchema,OrganizationEndpointScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const OrganizationEndpointAggregateArgsSchema: z.ZodType<Prisma.OrganizationEndpointAggregateArgs> = z.object({
+  where: OrganizationEndpointWhereInputSchema.optional(),
+  orderBy: z.union([ OrganizationEndpointOrderByWithRelationInputSchema.array(),OrganizationEndpointOrderByWithRelationInputSchema ]).optional(),
+  cursor: OrganizationEndpointWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+}).strict() ;
+
+export const OrganizationEndpointGroupByArgsSchema: z.ZodType<Prisma.OrganizationEndpointGroupByArgs> = z.object({
+  where: OrganizationEndpointWhereInputSchema.optional(),
+  orderBy: z.union([ OrganizationEndpointOrderByWithAggregationInputSchema.array(),OrganizationEndpointOrderByWithAggregationInputSchema ]).optional(),
+  by: OrganizationEndpointScalarFieldEnumSchema.array(),
+  having: OrganizationEndpointScalarWhereWithAggregatesInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+}).strict() ;
+
+export const OrganizationEndpointFindUniqueArgsSchema: z.ZodType<Prisma.OrganizationEndpointFindUniqueArgs> = z.object({
+  select: OrganizationEndpointSelectSchema.optional(),
+  where: OrganizationEndpointWhereUniqueInputSchema,
+}).strict() ;
+
+export const OrganizationEndpointFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.OrganizationEndpointFindUniqueOrThrowArgs> = z.object({
+  select: OrganizationEndpointSelectSchema.optional(),
+  where: OrganizationEndpointWhereUniqueInputSchema,
+}).strict() ;
+
 export const OrganizationFavoriteTestFindFirstArgsSchema: z.ZodType<Prisma.OrganizationFavoriteTestFindFirstArgs> = z.object({
   select: OrganizationFavoriteTestSelectSchema.optional(),
   include: OrganizationFavoriteTestIncludeSchema.optional(),
   where: OrganizationFavoriteTestWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ OrganizationFavoriteTestOrderByWithRelationInputSchema.array(),OrganizationFavoriteTestOrderByWithRelationInputSchema ]).optional(),
   cursor: OrganizationFavoriteTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22643,7 +26445,7 @@ export const OrganizationFavoriteTestFindFirstOrThrowArgsSchema: z.ZodType<Prism
   select: OrganizationFavoriteTestSelectSchema.optional(),
   include: OrganizationFavoriteTestIncludeSchema.optional(),
   where: OrganizationFavoriteTestWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ OrganizationFavoriteTestOrderByWithRelationInputSchema.array(),OrganizationFavoriteTestOrderByWithRelationInputSchema ]).optional(),
   cursor: OrganizationFavoriteTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22654,7 +26456,7 @@ export const OrganizationFavoriteTestFindManyArgsSchema: z.ZodType<Prisma.Organi
   select: OrganizationFavoriteTestSelectSchema.optional(),
   include: OrganizationFavoriteTestIncludeSchema.optional(),
   where: OrganizationFavoriteTestWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ OrganizationFavoriteTestOrderByWithRelationInputSchema.array(),OrganizationFavoriteTestOrderByWithRelationInputSchema ]).optional(),
   cursor: OrganizationFavoriteTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22663,7 +26465,7 @@ export const OrganizationFavoriteTestFindManyArgsSchema: z.ZodType<Prisma.Organi
 
 export const OrganizationFavoriteTestAggregateArgsSchema: z.ZodType<Prisma.OrganizationFavoriteTestAggregateArgs> = z.object({
   where: OrganizationFavoriteTestWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ OrganizationFavoriteTestOrderByWithRelationInputSchema.array(),OrganizationFavoriteTestOrderByWithRelationInputSchema ]).optional(),
   cursor: OrganizationFavoriteTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22690,68 +26492,11 @@ export const OrganizationFavoriteTestFindUniqueOrThrowArgsSchema: z.ZodType<Pris
   where: OrganizationFavoriteTestWhereUniqueInputSchema,
 }).strict() ;
 
-export const OrganizationEndpointFindFirstArgsSchema: z.ZodType<Prisma.OrganizationEndpointFindFirstArgs> = z.object({
-  select: OrganizationEndpointSelectSchema.optional(),
-  where: OrganizationEndpointWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationEndpointOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationEndpointOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
-  cursor: OrganizationEndpointWhereUniqueInputSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.union([ OrganizationEndpointScalarFieldEnumSchema,OrganizationEndpointScalarFieldEnumSchema.array() ]).optional(),
-}).strict() ;
-
-export const OrganizationEndpointFindFirstOrThrowArgsSchema: z.ZodType<Prisma.OrganizationEndpointFindFirstOrThrowArgs> = z.object({
-  select: OrganizationEndpointSelectSchema.optional(),
-  where: OrganizationEndpointWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationEndpointOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationEndpointOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
-  cursor: OrganizationEndpointWhereUniqueInputSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.union([ OrganizationEndpointScalarFieldEnumSchema,OrganizationEndpointScalarFieldEnumSchema.array() ]).optional(),
-}).strict() ;
-
-export const OrganizationEndpointFindManyArgsSchema: z.ZodType<Prisma.OrganizationEndpointFindManyArgs> = z.object({
-  select: OrganizationEndpointSelectSchema.optional(),
-  where: OrganizationEndpointWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationEndpointOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationEndpointOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
-  cursor: OrganizationEndpointWhereUniqueInputSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.union([ OrganizationEndpointScalarFieldEnumSchema,OrganizationEndpointScalarFieldEnumSchema.array() ]).optional(),
-}).strict() ;
-
-export const OrganizationEndpointAggregateArgsSchema: z.ZodType<Prisma.OrganizationEndpointAggregateArgs> = z.object({
-  where: OrganizationEndpointWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationEndpointOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationEndpointOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
-  cursor: OrganizationEndpointWhereUniqueInputSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-}).strict() ;
-
-export const OrganizationEndpointGroupByArgsSchema: z.ZodType<Prisma.OrganizationEndpointGroupByArgs> = z.object({
-  where: OrganizationEndpointWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationEndpointOrderByWithAggregationInputSchema.array(),OrganizationEndpointOrderByWithAggregationInputSchema ]).optional(),
-  by: OrganizationEndpointScalarFieldEnumSchema.array(),
-  having: OrganizationEndpointScalarWhereWithAggregatesInputSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-}).strict() ;
-
-export const OrganizationEndpointFindUniqueArgsSchema: z.ZodType<Prisma.OrganizationEndpointFindUniqueArgs> = z.object({
-  select: OrganizationEndpointSelectSchema.optional(),
-  where: OrganizationEndpointWhereUniqueInputSchema,
-}).strict() ;
-
-export const OrganizationEndpointFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.OrganizationEndpointFindUniqueOrThrowArgs> = z.object({
-  select: OrganizationEndpointSelectSchema.optional(),
-  where: OrganizationEndpointWhereUniqueInputSchema,
-}).strict() ;
-
 export const PatientFindFirstArgsSchema: z.ZodType<Prisma.PatientFindFirstArgs> = z.object({
   select: PatientSelectSchema.optional(),
   include: PatientIncludeSchema.optional(),
   where: PatientWhereInputSchema.optional(),
-  orderBy: z.union([ PatientOrderByWithRelationAndSearchRelevanceInputSchema.array(),PatientOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ PatientOrderByWithRelationInputSchema.array(),PatientOrderByWithRelationInputSchema ]).optional(),
   cursor: PatientWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22762,7 +26507,7 @@ export const PatientFindFirstOrThrowArgsSchema: z.ZodType<Prisma.PatientFindFirs
   select: PatientSelectSchema.optional(),
   include: PatientIncludeSchema.optional(),
   where: PatientWhereInputSchema.optional(),
-  orderBy: z.union([ PatientOrderByWithRelationAndSearchRelevanceInputSchema.array(),PatientOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ PatientOrderByWithRelationInputSchema.array(),PatientOrderByWithRelationInputSchema ]).optional(),
   cursor: PatientWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22773,7 +26518,7 @@ export const PatientFindManyArgsSchema: z.ZodType<Prisma.PatientFindManyArgs> = 
   select: PatientSelectSchema.optional(),
   include: PatientIncludeSchema.optional(),
   where: PatientWhereInputSchema.optional(),
-  orderBy: z.union([ PatientOrderByWithRelationAndSearchRelevanceInputSchema.array(),PatientOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ PatientOrderByWithRelationInputSchema.array(),PatientOrderByWithRelationInputSchema ]).optional(),
   cursor: PatientWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22782,7 +26527,7 @@ export const PatientFindManyArgsSchema: z.ZodType<Prisma.PatientFindManyArgs> = 
 
 export const PatientAggregateArgsSchema: z.ZodType<Prisma.PatientAggregateArgs> = z.object({
   where: PatientWhereInputSchema.optional(),
-  orderBy: z.union([ PatientOrderByWithRelationAndSearchRelevanceInputSchema.array(),PatientOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ PatientOrderByWithRelationInputSchema.array(),PatientOrderByWithRelationInputSchema ]).optional(),
   cursor: PatientWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22809,10 +26554,72 @@ export const PatientFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.PatientFindUni
   where: PatientWhereUniqueInputSchema,
 }).strict() ;
 
+export const PatientOrganizationFindFirstArgsSchema: z.ZodType<Prisma.PatientOrganizationFindFirstArgs> = z.object({
+  select: PatientOrganizationSelectSchema.optional(),
+  include: PatientOrganizationIncludeSchema.optional(),
+  where: PatientOrganizationWhereInputSchema.optional(),
+  orderBy: z.union([ PatientOrganizationOrderByWithRelationInputSchema.array(),PatientOrganizationOrderByWithRelationInputSchema ]).optional(),
+  cursor: PatientOrganizationWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ PatientOrganizationScalarFieldEnumSchema,PatientOrganizationScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const PatientOrganizationFindFirstOrThrowArgsSchema: z.ZodType<Prisma.PatientOrganizationFindFirstOrThrowArgs> = z.object({
+  select: PatientOrganizationSelectSchema.optional(),
+  include: PatientOrganizationIncludeSchema.optional(),
+  where: PatientOrganizationWhereInputSchema.optional(),
+  orderBy: z.union([ PatientOrganizationOrderByWithRelationInputSchema.array(),PatientOrganizationOrderByWithRelationInputSchema ]).optional(),
+  cursor: PatientOrganizationWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ PatientOrganizationScalarFieldEnumSchema,PatientOrganizationScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const PatientOrganizationFindManyArgsSchema: z.ZodType<Prisma.PatientOrganizationFindManyArgs> = z.object({
+  select: PatientOrganizationSelectSchema.optional(),
+  include: PatientOrganizationIncludeSchema.optional(),
+  where: PatientOrganizationWhereInputSchema.optional(),
+  orderBy: z.union([ PatientOrganizationOrderByWithRelationInputSchema.array(),PatientOrganizationOrderByWithRelationInputSchema ]).optional(),
+  cursor: PatientOrganizationWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ PatientOrganizationScalarFieldEnumSchema,PatientOrganizationScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const PatientOrganizationAggregateArgsSchema: z.ZodType<Prisma.PatientOrganizationAggregateArgs> = z.object({
+  where: PatientOrganizationWhereInputSchema.optional(),
+  orderBy: z.union([ PatientOrganizationOrderByWithRelationInputSchema.array(),PatientOrganizationOrderByWithRelationInputSchema ]).optional(),
+  cursor: PatientOrganizationWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+}).strict() ;
+
+export const PatientOrganizationGroupByArgsSchema: z.ZodType<Prisma.PatientOrganizationGroupByArgs> = z.object({
+  where: PatientOrganizationWhereInputSchema.optional(),
+  orderBy: z.union([ PatientOrganizationOrderByWithAggregationInputSchema.array(),PatientOrganizationOrderByWithAggregationInputSchema ]).optional(),
+  by: PatientOrganizationScalarFieldEnumSchema.array(),
+  having: PatientOrganizationScalarWhereWithAggregatesInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+}).strict() ;
+
+export const PatientOrganizationFindUniqueArgsSchema: z.ZodType<Prisma.PatientOrganizationFindUniqueArgs> = z.object({
+  select: PatientOrganizationSelectSchema.optional(),
+  include: PatientOrganizationIncludeSchema.optional(),
+  where: PatientOrganizationWhereUniqueInputSchema,
+}).strict() ;
+
+export const PatientOrganizationFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.PatientOrganizationFindUniqueOrThrowArgs> = z.object({
+  select: PatientOrganizationSelectSchema.optional(),
+  include: PatientOrganizationIncludeSchema.optional(),
+  where: PatientOrganizationWhereUniqueInputSchema,
+}).strict() ;
+
 export const PostFindFirstArgsSchema: z.ZodType<Prisma.PostFindFirstArgs> = z.object({
   select: PostSelectSchema.optional(),
   where: PostWhereInputSchema.optional(),
-  orderBy: z.union([ PostOrderByWithRelationAndSearchRelevanceInputSchema.array(),PostOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ PostOrderByWithRelationInputSchema.array(),PostOrderByWithRelationInputSchema ]).optional(),
   cursor: PostWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22822,7 +26629,7 @@ export const PostFindFirstArgsSchema: z.ZodType<Prisma.PostFindFirstArgs> = z.ob
 export const PostFindFirstOrThrowArgsSchema: z.ZodType<Prisma.PostFindFirstOrThrowArgs> = z.object({
   select: PostSelectSchema.optional(),
   where: PostWhereInputSchema.optional(),
-  orderBy: z.union([ PostOrderByWithRelationAndSearchRelevanceInputSchema.array(),PostOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ PostOrderByWithRelationInputSchema.array(),PostOrderByWithRelationInputSchema ]).optional(),
   cursor: PostWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22832,7 +26639,7 @@ export const PostFindFirstOrThrowArgsSchema: z.ZodType<Prisma.PostFindFirstOrThr
 export const PostFindManyArgsSchema: z.ZodType<Prisma.PostFindManyArgs> = z.object({
   select: PostSelectSchema.optional(),
   where: PostWhereInputSchema.optional(),
-  orderBy: z.union([ PostOrderByWithRelationAndSearchRelevanceInputSchema.array(),PostOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ PostOrderByWithRelationInputSchema.array(),PostOrderByWithRelationInputSchema ]).optional(),
   cursor: PostWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22841,7 +26648,7 @@ export const PostFindManyArgsSchema: z.ZodType<Prisma.PostFindManyArgs> = z.obje
 
 export const PostAggregateArgsSchema: z.ZodType<Prisma.PostAggregateArgs> = z.object({
   where: PostWhereInputSchema.optional(),
-  orderBy: z.union([ PostOrderByWithRelationAndSearchRelevanceInputSchema.array(),PostOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ PostOrderByWithRelationInputSchema.array(),PostOrderByWithRelationInputSchema ]).optional(),
   cursor: PostWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22870,7 +26677,7 @@ export const ProviderFindFirstArgsSchema: z.ZodType<Prisma.ProviderFindFirstArgs
   select: ProviderSelectSchema.optional(),
   include: ProviderIncludeSchema.optional(),
   where: ProviderWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ ProviderOrderByWithRelationInputSchema.array(),ProviderOrderByWithRelationInputSchema ]).optional(),
   cursor: ProviderWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22881,7 +26688,7 @@ export const ProviderFindFirstOrThrowArgsSchema: z.ZodType<Prisma.ProviderFindFi
   select: ProviderSelectSchema.optional(),
   include: ProviderIncludeSchema.optional(),
   where: ProviderWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ ProviderOrderByWithRelationInputSchema.array(),ProviderOrderByWithRelationInputSchema ]).optional(),
   cursor: ProviderWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22892,7 +26699,7 @@ export const ProviderFindManyArgsSchema: z.ZodType<Prisma.ProviderFindManyArgs> 
   select: ProviderSelectSchema.optional(),
   include: ProviderIncludeSchema.optional(),
   where: ProviderWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ ProviderOrderByWithRelationInputSchema.array(),ProviderOrderByWithRelationInputSchema ]).optional(),
   cursor: ProviderWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22901,7 +26708,7 @@ export const ProviderFindManyArgsSchema: z.ZodType<Prisma.ProviderFindManyArgs> 
 
 export const ProviderAggregateArgsSchema: z.ZodType<Prisma.ProviderAggregateArgs> = z.object({
   where: ProviderWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ ProviderOrderByWithRelationInputSchema.array(),ProviderOrderByWithRelationInputSchema ]).optional(),
   cursor: ProviderWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22932,7 +26739,7 @@ export const ProviderEducationFindFirstArgsSchema: z.ZodType<Prisma.ProviderEduc
   select: ProviderEducationSelectSchema.optional(),
   include: ProviderEducationIncludeSchema.optional(),
   where: ProviderEducationWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderEducationOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderEducationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ ProviderEducationOrderByWithRelationInputSchema.array(),ProviderEducationOrderByWithRelationInputSchema ]).optional(),
   cursor: ProviderEducationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22943,7 +26750,7 @@ export const ProviderEducationFindFirstOrThrowArgsSchema: z.ZodType<Prisma.Provi
   select: ProviderEducationSelectSchema.optional(),
   include: ProviderEducationIncludeSchema.optional(),
   where: ProviderEducationWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderEducationOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderEducationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ ProviderEducationOrderByWithRelationInputSchema.array(),ProviderEducationOrderByWithRelationInputSchema ]).optional(),
   cursor: ProviderEducationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22954,7 +26761,7 @@ export const ProviderEducationFindManyArgsSchema: z.ZodType<Prisma.ProviderEduca
   select: ProviderEducationSelectSchema.optional(),
   include: ProviderEducationIncludeSchema.optional(),
   where: ProviderEducationWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderEducationOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderEducationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ ProviderEducationOrderByWithRelationInputSchema.array(),ProviderEducationOrderByWithRelationInputSchema ]).optional(),
   cursor: ProviderEducationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22963,7 +26770,7 @@ export const ProviderEducationFindManyArgsSchema: z.ZodType<Prisma.ProviderEduca
 
 export const ProviderEducationAggregateArgsSchema: z.ZodType<Prisma.ProviderEducationAggregateArgs> = z.object({
   where: ProviderEducationWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderEducationOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderEducationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ ProviderEducationOrderByWithRelationInputSchema.array(),ProviderEducationOrderByWithRelationInputSchema ]).optional(),
   cursor: ProviderEducationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -22994,7 +26801,7 @@ export const ProviderFavoriteTestFindFirstArgsSchema: z.ZodType<Prisma.ProviderF
   select: ProviderFavoriteTestSelectSchema.optional(),
   include: ProviderFavoriteTestIncludeSchema.optional(),
   where: ProviderFavoriteTestWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ ProviderFavoriteTestOrderByWithRelationInputSchema.array(),ProviderFavoriteTestOrderByWithRelationInputSchema ]).optional(),
   cursor: ProviderFavoriteTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23005,7 +26812,7 @@ export const ProviderFavoriteTestFindFirstOrThrowArgsSchema: z.ZodType<Prisma.Pr
   select: ProviderFavoriteTestSelectSchema.optional(),
   include: ProviderFavoriteTestIncludeSchema.optional(),
   where: ProviderFavoriteTestWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ ProviderFavoriteTestOrderByWithRelationInputSchema.array(),ProviderFavoriteTestOrderByWithRelationInputSchema ]).optional(),
   cursor: ProviderFavoriteTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23016,7 +26823,7 @@ export const ProviderFavoriteTestFindManyArgsSchema: z.ZodType<Prisma.ProviderFa
   select: ProviderFavoriteTestSelectSchema.optional(),
   include: ProviderFavoriteTestIncludeSchema.optional(),
   where: ProviderFavoriteTestWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ ProviderFavoriteTestOrderByWithRelationInputSchema.array(),ProviderFavoriteTestOrderByWithRelationInputSchema ]).optional(),
   cursor: ProviderFavoriteTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23025,7 +26832,7 @@ export const ProviderFavoriteTestFindManyArgsSchema: z.ZodType<Prisma.ProviderFa
 
 export const ProviderFavoriteTestAggregateArgsSchema: z.ZodType<Prisma.ProviderFavoriteTestAggregateArgs> = z.object({
   where: ProviderFavoriteTestWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ ProviderFavoriteTestOrderByWithRelationInputSchema.array(),ProviderFavoriteTestOrderByWithRelationInputSchema ]).optional(),
   cursor: ProviderFavoriteTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23056,7 +26863,7 @@ export const ProviderOrganizationFindFirstArgsSchema: z.ZodType<Prisma.ProviderO
   select: ProviderOrganizationSelectSchema.optional(),
   include: ProviderOrganizationIncludeSchema.optional(),
   where: ProviderOrganizationWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderOrganizationOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderOrganizationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ ProviderOrganizationOrderByWithRelationInputSchema.array(),ProviderOrganizationOrderByWithRelationInputSchema ]).optional(),
   cursor: ProviderOrganizationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23067,7 +26874,7 @@ export const ProviderOrganizationFindFirstOrThrowArgsSchema: z.ZodType<Prisma.Pr
   select: ProviderOrganizationSelectSchema.optional(),
   include: ProviderOrganizationIncludeSchema.optional(),
   where: ProviderOrganizationWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderOrganizationOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderOrganizationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ ProviderOrganizationOrderByWithRelationInputSchema.array(),ProviderOrganizationOrderByWithRelationInputSchema ]).optional(),
   cursor: ProviderOrganizationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23078,7 +26885,7 @@ export const ProviderOrganizationFindManyArgsSchema: z.ZodType<Prisma.ProviderOr
   select: ProviderOrganizationSelectSchema.optional(),
   include: ProviderOrganizationIncludeSchema.optional(),
   where: ProviderOrganizationWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderOrganizationOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderOrganizationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ ProviderOrganizationOrderByWithRelationInputSchema.array(),ProviderOrganizationOrderByWithRelationInputSchema ]).optional(),
   cursor: ProviderOrganizationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23087,7 +26894,7 @@ export const ProviderOrganizationFindManyArgsSchema: z.ZodType<Prisma.ProviderOr
 
 export const ProviderOrganizationAggregateArgsSchema: z.ZodType<Prisma.ProviderOrganizationAggregateArgs> = z.object({
   where: ProviderOrganizationWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderOrganizationOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderOrganizationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ ProviderOrganizationOrderByWithRelationInputSchema.array(),ProviderOrganizationOrderByWithRelationInputSchema ]).optional(),
   cursor: ProviderOrganizationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23118,7 +26925,7 @@ export const SessionFindFirstArgsSchema: z.ZodType<Prisma.SessionFindFirstArgs> 
   select: SessionSelectSchema.optional(),
   include: SessionIncludeSchema.optional(),
   where: SessionWhereInputSchema.optional(),
-  orderBy: z.union([ SessionOrderByWithRelationAndSearchRelevanceInputSchema.array(),SessionOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ SessionOrderByWithRelationInputSchema.array(),SessionOrderByWithRelationInputSchema ]).optional(),
   cursor: SessionWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23129,7 +26936,7 @@ export const SessionFindFirstOrThrowArgsSchema: z.ZodType<Prisma.SessionFindFirs
   select: SessionSelectSchema.optional(),
   include: SessionIncludeSchema.optional(),
   where: SessionWhereInputSchema.optional(),
-  orderBy: z.union([ SessionOrderByWithRelationAndSearchRelevanceInputSchema.array(),SessionOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ SessionOrderByWithRelationInputSchema.array(),SessionOrderByWithRelationInputSchema ]).optional(),
   cursor: SessionWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23140,7 +26947,7 @@ export const SessionFindManyArgsSchema: z.ZodType<Prisma.SessionFindManyArgs> = 
   select: SessionSelectSchema.optional(),
   include: SessionIncludeSchema.optional(),
   where: SessionWhereInputSchema.optional(),
-  orderBy: z.union([ SessionOrderByWithRelationAndSearchRelevanceInputSchema.array(),SessionOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ SessionOrderByWithRelationInputSchema.array(),SessionOrderByWithRelationInputSchema ]).optional(),
   cursor: SessionWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23149,7 +26956,7 @@ export const SessionFindManyArgsSchema: z.ZodType<Prisma.SessionFindManyArgs> = 
 
 export const SessionAggregateArgsSchema: z.ZodType<Prisma.SessionAggregateArgs> = z.object({
   where: SessionWhereInputSchema.optional(),
-  orderBy: z.union([ SessionOrderByWithRelationAndSearchRelevanceInputSchema.array(),SessionOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ SessionOrderByWithRelationInputSchema.array(),SessionOrderByWithRelationInputSchema ]).optional(),
   cursor: SessionWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23176,11 +26983,197 @@ export const SessionFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.SessionFindUni
   where: SessionWhereUniqueInputSchema,
 }).strict() ;
 
+export const SponsorFindFirstArgsSchema: z.ZodType<Prisma.SponsorFindFirstArgs> = z.object({
+  select: SponsorSelectSchema.optional(),
+  include: SponsorIncludeSchema.optional(),
+  where: SponsorWhereInputSchema.optional(),
+  orderBy: z.union([ SponsorOrderByWithRelationInputSchema.array(),SponsorOrderByWithRelationInputSchema ]).optional(),
+  cursor: SponsorWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ SponsorScalarFieldEnumSchema,SponsorScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const SponsorFindFirstOrThrowArgsSchema: z.ZodType<Prisma.SponsorFindFirstOrThrowArgs> = z.object({
+  select: SponsorSelectSchema.optional(),
+  include: SponsorIncludeSchema.optional(),
+  where: SponsorWhereInputSchema.optional(),
+  orderBy: z.union([ SponsorOrderByWithRelationInputSchema.array(),SponsorOrderByWithRelationInputSchema ]).optional(),
+  cursor: SponsorWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ SponsorScalarFieldEnumSchema,SponsorScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const SponsorFindManyArgsSchema: z.ZodType<Prisma.SponsorFindManyArgs> = z.object({
+  select: SponsorSelectSchema.optional(),
+  include: SponsorIncludeSchema.optional(),
+  where: SponsorWhereInputSchema.optional(),
+  orderBy: z.union([ SponsorOrderByWithRelationInputSchema.array(),SponsorOrderByWithRelationInputSchema ]).optional(),
+  cursor: SponsorWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ SponsorScalarFieldEnumSchema,SponsorScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const SponsorAggregateArgsSchema: z.ZodType<Prisma.SponsorAggregateArgs> = z.object({
+  where: SponsorWhereInputSchema.optional(),
+  orderBy: z.union([ SponsorOrderByWithRelationInputSchema.array(),SponsorOrderByWithRelationInputSchema ]).optional(),
+  cursor: SponsorWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+}).strict() ;
+
+export const SponsorGroupByArgsSchema: z.ZodType<Prisma.SponsorGroupByArgs> = z.object({
+  where: SponsorWhereInputSchema.optional(),
+  orderBy: z.union([ SponsorOrderByWithAggregationInputSchema.array(),SponsorOrderByWithAggregationInputSchema ]).optional(),
+  by: SponsorScalarFieldEnumSchema.array(),
+  having: SponsorScalarWhereWithAggregatesInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+}).strict() ;
+
+export const SponsorFindUniqueArgsSchema: z.ZodType<Prisma.SponsorFindUniqueArgs> = z.object({
+  select: SponsorSelectSchema.optional(),
+  include: SponsorIncludeSchema.optional(),
+  where: SponsorWhereUniqueInputSchema,
+}).strict() ;
+
+export const SponsorFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.SponsorFindUniqueOrThrowArgs> = z.object({
+  select: SponsorSelectSchema.optional(),
+  include: SponsorIncludeSchema.optional(),
+  where: SponsorWhereUniqueInputSchema,
+}).strict() ;
+
+export const SponsoredProgramFindFirstArgsSchema: z.ZodType<Prisma.SponsoredProgramFindFirstArgs> = z.object({
+  select: SponsoredProgramSelectSchema.optional(),
+  include: SponsoredProgramIncludeSchema.optional(),
+  where: SponsoredProgramWhereInputSchema.optional(),
+  orderBy: z.union([ SponsoredProgramOrderByWithRelationInputSchema.array(),SponsoredProgramOrderByWithRelationInputSchema ]).optional(),
+  cursor: SponsoredProgramWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ SponsoredProgramScalarFieldEnumSchema,SponsoredProgramScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const SponsoredProgramFindFirstOrThrowArgsSchema: z.ZodType<Prisma.SponsoredProgramFindFirstOrThrowArgs> = z.object({
+  select: SponsoredProgramSelectSchema.optional(),
+  include: SponsoredProgramIncludeSchema.optional(),
+  where: SponsoredProgramWhereInputSchema.optional(),
+  orderBy: z.union([ SponsoredProgramOrderByWithRelationInputSchema.array(),SponsoredProgramOrderByWithRelationInputSchema ]).optional(),
+  cursor: SponsoredProgramWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ SponsoredProgramScalarFieldEnumSchema,SponsoredProgramScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const SponsoredProgramFindManyArgsSchema: z.ZodType<Prisma.SponsoredProgramFindManyArgs> = z.object({
+  select: SponsoredProgramSelectSchema.optional(),
+  include: SponsoredProgramIncludeSchema.optional(),
+  where: SponsoredProgramWhereInputSchema.optional(),
+  orderBy: z.union([ SponsoredProgramOrderByWithRelationInputSchema.array(),SponsoredProgramOrderByWithRelationInputSchema ]).optional(),
+  cursor: SponsoredProgramWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ SponsoredProgramScalarFieldEnumSchema,SponsoredProgramScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const SponsoredProgramAggregateArgsSchema: z.ZodType<Prisma.SponsoredProgramAggregateArgs> = z.object({
+  where: SponsoredProgramWhereInputSchema.optional(),
+  orderBy: z.union([ SponsoredProgramOrderByWithRelationInputSchema.array(),SponsoredProgramOrderByWithRelationInputSchema ]).optional(),
+  cursor: SponsoredProgramWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+}).strict() ;
+
+export const SponsoredProgramGroupByArgsSchema: z.ZodType<Prisma.SponsoredProgramGroupByArgs> = z.object({
+  where: SponsoredProgramWhereInputSchema.optional(),
+  orderBy: z.union([ SponsoredProgramOrderByWithAggregationInputSchema.array(),SponsoredProgramOrderByWithAggregationInputSchema ]).optional(),
+  by: SponsoredProgramScalarFieldEnumSchema.array(),
+  having: SponsoredProgramScalarWhereWithAggregatesInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+}).strict() ;
+
+export const SponsoredProgramFindUniqueArgsSchema: z.ZodType<Prisma.SponsoredProgramFindUniqueArgs> = z.object({
+  select: SponsoredProgramSelectSchema.optional(),
+  include: SponsoredProgramIncludeSchema.optional(),
+  where: SponsoredProgramWhereUniqueInputSchema,
+}).strict() ;
+
+export const SponsoredProgramFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.SponsoredProgramFindUniqueOrThrowArgs> = z.object({
+  select: SponsoredProgramSelectSchema.optional(),
+  include: SponsoredProgramIncludeSchema.optional(),
+  where: SponsoredProgramWhereUniqueInputSchema,
+}).strict() ;
+
+export const SponsoredTestFindFirstArgsSchema: z.ZodType<Prisma.SponsoredTestFindFirstArgs> = z.object({
+  select: SponsoredTestSelectSchema.optional(),
+  include: SponsoredTestIncludeSchema.optional(),
+  where: SponsoredTestWhereInputSchema.optional(),
+  orderBy: z.union([ SponsoredTestOrderByWithRelationInputSchema.array(),SponsoredTestOrderByWithRelationInputSchema ]).optional(),
+  cursor: SponsoredTestWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ SponsoredTestScalarFieldEnumSchema,SponsoredTestScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const SponsoredTestFindFirstOrThrowArgsSchema: z.ZodType<Prisma.SponsoredTestFindFirstOrThrowArgs> = z.object({
+  select: SponsoredTestSelectSchema.optional(),
+  include: SponsoredTestIncludeSchema.optional(),
+  where: SponsoredTestWhereInputSchema.optional(),
+  orderBy: z.union([ SponsoredTestOrderByWithRelationInputSchema.array(),SponsoredTestOrderByWithRelationInputSchema ]).optional(),
+  cursor: SponsoredTestWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ SponsoredTestScalarFieldEnumSchema,SponsoredTestScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const SponsoredTestFindManyArgsSchema: z.ZodType<Prisma.SponsoredTestFindManyArgs> = z.object({
+  select: SponsoredTestSelectSchema.optional(),
+  include: SponsoredTestIncludeSchema.optional(),
+  where: SponsoredTestWhereInputSchema.optional(),
+  orderBy: z.union([ SponsoredTestOrderByWithRelationInputSchema.array(),SponsoredTestOrderByWithRelationInputSchema ]).optional(),
+  cursor: SponsoredTestWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ SponsoredTestScalarFieldEnumSchema,SponsoredTestScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const SponsoredTestAggregateArgsSchema: z.ZodType<Prisma.SponsoredTestAggregateArgs> = z.object({
+  where: SponsoredTestWhereInputSchema.optional(),
+  orderBy: z.union([ SponsoredTestOrderByWithRelationInputSchema.array(),SponsoredTestOrderByWithRelationInputSchema ]).optional(),
+  cursor: SponsoredTestWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+}).strict() ;
+
+export const SponsoredTestGroupByArgsSchema: z.ZodType<Prisma.SponsoredTestGroupByArgs> = z.object({
+  where: SponsoredTestWhereInputSchema.optional(),
+  orderBy: z.union([ SponsoredTestOrderByWithAggregationInputSchema.array(),SponsoredTestOrderByWithAggregationInputSchema ]).optional(),
+  by: SponsoredTestScalarFieldEnumSchema.array(),
+  having: SponsoredTestScalarWhereWithAggregatesInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+}).strict() ;
+
+export const SponsoredTestFindUniqueArgsSchema: z.ZodType<Prisma.SponsoredTestFindUniqueArgs> = z.object({
+  select: SponsoredTestSelectSchema.optional(),
+  include: SponsoredTestIncludeSchema.optional(),
+  where: SponsoredTestWhereUniqueInputSchema,
+}).strict() ;
+
+export const SponsoredTestFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.SponsoredTestFindUniqueOrThrowArgs> = z.object({
+  select: SponsoredTestSelectSchema.optional(),
+  include: SponsoredTestIncludeSchema.optional(),
+  where: SponsoredTestWhereUniqueInputSchema,
+}).strict() ;
+
 export const TestBiomarkerFindFirstArgsSchema: z.ZodType<Prisma.TestBiomarkerFindFirstArgs> = z.object({
   select: TestBiomarkerSelectSchema.optional(),
   include: TestBiomarkerIncludeSchema.optional(),
   where: TestBiomarkerWhereInputSchema.optional(),
-  orderBy: z.union([ TestBiomarkerOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestBiomarkerOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ TestBiomarkerOrderByWithRelationInputSchema.array(),TestBiomarkerOrderByWithRelationInputSchema ]).optional(),
   cursor: TestBiomarkerWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23191,7 +27184,7 @@ export const TestBiomarkerFindFirstOrThrowArgsSchema: z.ZodType<Prisma.TestBioma
   select: TestBiomarkerSelectSchema.optional(),
   include: TestBiomarkerIncludeSchema.optional(),
   where: TestBiomarkerWhereInputSchema.optional(),
-  orderBy: z.union([ TestBiomarkerOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestBiomarkerOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ TestBiomarkerOrderByWithRelationInputSchema.array(),TestBiomarkerOrderByWithRelationInputSchema ]).optional(),
   cursor: TestBiomarkerWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23202,7 +27195,7 @@ export const TestBiomarkerFindManyArgsSchema: z.ZodType<Prisma.TestBiomarkerFind
   select: TestBiomarkerSelectSchema.optional(),
   include: TestBiomarkerIncludeSchema.optional(),
   where: TestBiomarkerWhereInputSchema.optional(),
-  orderBy: z.union([ TestBiomarkerOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestBiomarkerOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ TestBiomarkerOrderByWithRelationInputSchema.array(),TestBiomarkerOrderByWithRelationInputSchema ]).optional(),
   cursor: TestBiomarkerWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23211,7 +27204,7 @@ export const TestBiomarkerFindManyArgsSchema: z.ZodType<Prisma.TestBiomarkerFind
 
 export const TestBiomarkerAggregateArgsSchema: z.ZodType<Prisma.TestBiomarkerAggregateArgs> = z.object({
   where: TestBiomarkerWhereInputSchema.optional(),
-  orderBy: z.union([ TestBiomarkerOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestBiomarkerOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ TestBiomarkerOrderByWithRelationInputSchema.array(),TestBiomarkerOrderByWithRelationInputSchema ]).optional(),
   cursor: TestBiomarkerWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23242,7 +27235,7 @@ export const TestCatalogFindFirstArgsSchema: z.ZodType<Prisma.TestCatalogFindFir
   select: TestCatalogSelectSchema.optional(),
   include: TestCatalogIncludeSchema.optional(),
   where: TestCatalogWhereInputSchema.optional(),
-  orderBy: z.union([ TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ TestCatalogOrderByWithRelationInputSchema.array(),TestCatalogOrderByWithRelationInputSchema ]).optional(),
   cursor: TestCatalogWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23253,7 +27246,7 @@ export const TestCatalogFindFirstOrThrowArgsSchema: z.ZodType<Prisma.TestCatalog
   select: TestCatalogSelectSchema.optional(),
   include: TestCatalogIncludeSchema.optional(),
   where: TestCatalogWhereInputSchema.optional(),
-  orderBy: z.union([ TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ TestCatalogOrderByWithRelationInputSchema.array(),TestCatalogOrderByWithRelationInputSchema ]).optional(),
   cursor: TestCatalogWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23264,7 +27257,7 @@ export const TestCatalogFindManyArgsSchema: z.ZodType<Prisma.TestCatalogFindMany
   select: TestCatalogSelectSchema.optional(),
   include: TestCatalogIncludeSchema.optional(),
   where: TestCatalogWhereInputSchema.optional(),
-  orderBy: z.union([ TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ TestCatalogOrderByWithRelationInputSchema.array(),TestCatalogOrderByWithRelationInputSchema ]).optional(),
   cursor: TestCatalogWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23273,7 +27266,7 @@ export const TestCatalogFindManyArgsSchema: z.ZodType<Prisma.TestCatalogFindMany
 
 export const TestCatalogAggregateArgsSchema: z.ZodType<Prisma.TestCatalogAggregateArgs> = z.object({
   where: TestCatalogWhereInputSchema.optional(),
-  orderBy: z.union([ TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ TestCatalogOrderByWithRelationInputSchema.array(),TestCatalogOrderByWithRelationInputSchema ]).optional(),
   cursor: TestCatalogWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23304,7 +27297,7 @@ export const TestCptCodeFindFirstArgsSchema: z.ZodType<Prisma.TestCptCodeFindFir
   select: TestCptCodeSelectSchema.optional(),
   include: TestCptCodeIncludeSchema.optional(),
   where: TestCptCodeWhereInputSchema.optional(),
-  orderBy: z.union([ TestCptCodeOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestCptCodeOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ TestCptCodeOrderByWithRelationInputSchema.array(),TestCptCodeOrderByWithRelationInputSchema ]).optional(),
   cursor: TestCptCodeWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23315,7 +27308,7 @@ export const TestCptCodeFindFirstOrThrowArgsSchema: z.ZodType<Prisma.TestCptCode
   select: TestCptCodeSelectSchema.optional(),
   include: TestCptCodeIncludeSchema.optional(),
   where: TestCptCodeWhereInputSchema.optional(),
-  orderBy: z.union([ TestCptCodeOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestCptCodeOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ TestCptCodeOrderByWithRelationInputSchema.array(),TestCptCodeOrderByWithRelationInputSchema ]).optional(),
   cursor: TestCptCodeWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23326,7 +27319,7 @@ export const TestCptCodeFindManyArgsSchema: z.ZodType<Prisma.TestCptCodeFindMany
   select: TestCptCodeSelectSchema.optional(),
   include: TestCptCodeIncludeSchema.optional(),
   where: TestCptCodeWhereInputSchema.optional(),
-  orderBy: z.union([ TestCptCodeOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestCptCodeOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ TestCptCodeOrderByWithRelationInputSchema.array(),TestCptCodeOrderByWithRelationInputSchema ]).optional(),
   cursor: TestCptCodeWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23335,7 +27328,7 @@ export const TestCptCodeFindManyArgsSchema: z.ZodType<Prisma.TestCptCodeFindMany
 
 export const TestCptCodeAggregateArgsSchema: z.ZodType<Prisma.TestCptCodeAggregateArgs> = z.object({
   where: TestCptCodeWhereInputSchema.optional(),
-  orderBy: z.union([ TestCptCodeOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestCptCodeOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ TestCptCodeOrderByWithRelationInputSchema.array(),TestCptCodeOrderByWithRelationInputSchema ]).optional(),
   cursor: TestCptCodeWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23362,11 +27355,73 @@ export const TestCptCodeFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.TestCptCod
   where: TestCptCodeWhereUniqueInputSchema,
 }).strict() ;
 
+export const TestGeneFindFirstArgsSchema: z.ZodType<Prisma.TestGeneFindFirstArgs> = z.object({
+  select: TestGeneSelectSchema.optional(),
+  include: TestGeneIncludeSchema.optional(),
+  where: TestGeneWhereInputSchema.optional(),
+  orderBy: z.union([ TestGeneOrderByWithRelationInputSchema.array(),TestGeneOrderByWithRelationInputSchema ]).optional(),
+  cursor: TestGeneWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ TestGeneScalarFieldEnumSchema,TestGeneScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const TestGeneFindFirstOrThrowArgsSchema: z.ZodType<Prisma.TestGeneFindFirstOrThrowArgs> = z.object({
+  select: TestGeneSelectSchema.optional(),
+  include: TestGeneIncludeSchema.optional(),
+  where: TestGeneWhereInputSchema.optional(),
+  orderBy: z.union([ TestGeneOrderByWithRelationInputSchema.array(),TestGeneOrderByWithRelationInputSchema ]).optional(),
+  cursor: TestGeneWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ TestGeneScalarFieldEnumSchema,TestGeneScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const TestGeneFindManyArgsSchema: z.ZodType<Prisma.TestGeneFindManyArgs> = z.object({
+  select: TestGeneSelectSchema.optional(),
+  include: TestGeneIncludeSchema.optional(),
+  where: TestGeneWhereInputSchema.optional(),
+  orderBy: z.union([ TestGeneOrderByWithRelationInputSchema.array(),TestGeneOrderByWithRelationInputSchema ]).optional(),
+  cursor: TestGeneWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ TestGeneScalarFieldEnumSchema,TestGeneScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const TestGeneAggregateArgsSchema: z.ZodType<Prisma.TestGeneAggregateArgs> = z.object({
+  where: TestGeneWhereInputSchema.optional(),
+  orderBy: z.union([ TestGeneOrderByWithRelationInputSchema.array(),TestGeneOrderByWithRelationInputSchema ]).optional(),
+  cursor: TestGeneWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+}).strict() ;
+
+export const TestGeneGroupByArgsSchema: z.ZodType<Prisma.TestGeneGroupByArgs> = z.object({
+  where: TestGeneWhereInputSchema.optional(),
+  orderBy: z.union([ TestGeneOrderByWithAggregationInputSchema.array(),TestGeneOrderByWithAggregationInputSchema ]).optional(),
+  by: TestGeneScalarFieldEnumSchema.array(),
+  having: TestGeneScalarWhereWithAggregatesInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+}).strict() ;
+
+export const TestGeneFindUniqueArgsSchema: z.ZodType<Prisma.TestGeneFindUniqueArgs> = z.object({
+  select: TestGeneSelectSchema.optional(),
+  include: TestGeneIncludeSchema.optional(),
+  where: TestGeneWhereUniqueInputSchema,
+}).strict() ;
+
+export const TestGeneFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.TestGeneFindUniqueOrThrowArgs> = z.object({
+  select: TestGeneSelectSchema.optional(),
+  include: TestGeneIncludeSchema.optional(),
+  where: TestGeneWhereUniqueInputSchema,
+}).strict() ;
+
 export const TestOrderLoincFindFirstArgsSchema: z.ZodType<Prisma.TestOrderLoincFindFirstArgs> = z.object({
   select: TestOrderLoincSelectSchema.optional(),
   include: TestOrderLoincIncludeSchema.optional(),
   where: TestOrderLoincWhereInputSchema.optional(),
-  orderBy: z.union([ TestOrderLoincOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestOrderLoincOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ TestOrderLoincOrderByWithRelationInputSchema.array(),TestOrderLoincOrderByWithRelationInputSchema ]).optional(),
   cursor: TestOrderLoincWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23377,7 +27432,7 @@ export const TestOrderLoincFindFirstOrThrowArgsSchema: z.ZodType<Prisma.TestOrde
   select: TestOrderLoincSelectSchema.optional(),
   include: TestOrderLoincIncludeSchema.optional(),
   where: TestOrderLoincWhereInputSchema.optional(),
-  orderBy: z.union([ TestOrderLoincOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestOrderLoincOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ TestOrderLoincOrderByWithRelationInputSchema.array(),TestOrderLoincOrderByWithRelationInputSchema ]).optional(),
   cursor: TestOrderLoincWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23388,7 +27443,7 @@ export const TestOrderLoincFindManyArgsSchema: z.ZodType<Prisma.TestOrderLoincFi
   select: TestOrderLoincSelectSchema.optional(),
   include: TestOrderLoincIncludeSchema.optional(),
   where: TestOrderLoincWhereInputSchema.optional(),
-  orderBy: z.union([ TestOrderLoincOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestOrderLoincOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ TestOrderLoincOrderByWithRelationInputSchema.array(),TestOrderLoincOrderByWithRelationInputSchema ]).optional(),
   cursor: TestOrderLoincWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23397,7 +27452,7 @@ export const TestOrderLoincFindManyArgsSchema: z.ZodType<Prisma.TestOrderLoincFi
 
 export const TestOrderLoincAggregateArgsSchema: z.ZodType<Prisma.TestOrderLoincAggregateArgs> = z.object({
   where: TestOrderLoincWhereInputSchema.optional(),
-  orderBy: z.union([ TestOrderLoincOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestOrderLoincOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ TestOrderLoincOrderByWithRelationInputSchema.array(),TestOrderLoincOrderByWithRelationInputSchema ]).optional(),
   cursor: TestOrderLoincWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23428,7 +27483,7 @@ export const TestResultLoincFindFirstArgsSchema: z.ZodType<Prisma.TestResultLoin
   select: TestResultLoincSelectSchema.optional(),
   include: TestResultLoincIncludeSchema.optional(),
   where: TestResultLoincWhereInputSchema.optional(),
-  orderBy: z.union([ TestResultLoincOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestResultLoincOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ TestResultLoincOrderByWithRelationInputSchema.array(),TestResultLoincOrderByWithRelationInputSchema ]).optional(),
   cursor: TestResultLoincWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23439,7 +27494,7 @@ export const TestResultLoincFindFirstOrThrowArgsSchema: z.ZodType<Prisma.TestRes
   select: TestResultLoincSelectSchema.optional(),
   include: TestResultLoincIncludeSchema.optional(),
   where: TestResultLoincWhereInputSchema.optional(),
-  orderBy: z.union([ TestResultLoincOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestResultLoincOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ TestResultLoincOrderByWithRelationInputSchema.array(),TestResultLoincOrderByWithRelationInputSchema ]).optional(),
   cursor: TestResultLoincWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23450,7 +27505,7 @@ export const TestResultLoincFindManyArgsSchema: z.ZodType<Prisma.TestResultLoinc
   select: TestResultLoincSelectSchema.optional(),
   include: TestResultLoincIncludeSchema.optional(),
   where: TestResultLoincWhereInputSchema.optional(),
-  orderBy: z.union([ TestResultLoincOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestResultLoincOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ TestResultLoincOrderByWithRelationInputSchema.array(),TestResultLoincOrderByWithRelationInputSchema ]).optional(),
   cursor: TestResultLoincWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23459,7 +27514,7 @@ export const TestResultLoincFindManyArgsSchema: z.ZodType<Prisma.TestResultLoinc
 
 export const TestResultLoincAggregateArgsSchema: z.ZodType<Prisma.TestResultLoincAggregateArgs> = z.object({
   where: TestResultLoincWhereInputSchema.optional(),
-  orderBy: z.union([ TestResultLoincOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestResultLoincOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ TestResultLoincOrderByWithRelationInputSchema.array(),TestResultLoincOrderByWithRelationInputSchema ]).optional(),
   cursor: TestResultLoincWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23490,7 +27545,7 @@ export const UserFindFirstArgsSchema: z.ZodType<Prisma.UserFindFirstArgs> = z.ob
   select: UserSelectSchema.optional(),
   include: UserIncludeSchema.optional(),
   where: UserWhereInputSchema.optional(),
-  orderBy: z.union([ UserOrderByWithRelationAndSearchRelevanceInputSchema.array(),UserOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ UserOrderByWithRelationInputSchema.array(),UserOrderByWithRelationInputSchema ]).optional(),
   cursor: UserWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23501,7 +27556,7 @@ export const UserFindFirstOrThrowArgsSchema: z.ZodType<Prisma.UserFindFirstOrThr
   select: UserSelectSchema.optional(),
   include: UserIncludeSchema.optional(),
   where: UserWhereInputSchema.optional(),
-  orderBy: z.union([ UserOrderByWithRelationAndSearchRelevanceInputSchema.array(),UserOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ UserOrderByWithRelationInputSchema.array(),UserOrderByWithRelationInputSchema ]).optional(),
   cursor: UserWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23512,7 +27567,7 @@ export const UserFindManyArgsSchema: z.ZodType<Prisma.UserFindManyArgs> = z.obje
   select: UserSelectSchema.optional(),
   include: UserIncludeSchema.optional(),
   where: UserWhereInputSchema.optional(),
-  orderBy: z.union([ UserOrderByWithRelationAndSearchRelevanceInputSchema.array(),UserOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ UserOrderByWithRelationInputSchema.array(),UserOrderByWithRelationInputSchema ]).optional(),
   cursor: UserWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23521,7 +27576,7 @@ export const UserFindManyArgsSchema: z.ZodType<Prisma.UserFindManyArgs> = z.obje
 
 export const UserAggregateArgsSchema: z.ZodType<Prisma.UserAggregateArgs> = z.object({
   where: UserWhereInputSchema.optional(),
-  orderBy: z.union([ UserOrderByWithRelationAndSearchRelevanceInputSchema.array(),UserOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ UserOrderByWithRelationInputSchema.array(),UserOrderByWithRelationInputSchema ]).optional(),
   cursor: UserWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23552,7 +27607,7 @@ export const UserAttributeFindFirstArgsSchema: z.ZodType<Prisma.UserAttributeFin
   select: UserAttributeSelectSchema.optional(),
   include: UserAttributeIncludeSchema.optional(),
   where: UserAttributeWhereInputSchema.optional(),
-  orderBy: z.union([ UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema.array(),UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ UserAttributeOrderByWithRelationInputSchema.array(),UserAttributeOrderByWithRelationInputSchema ]).optional(),
   cursor: UserAttributeWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23563,7 +27618,7 @@ export const UserAttributeFindFirstOrThrowArgsSchema: z.ZodType<Prisma.UserAttri
   select: UserAttributeSelectSchema.optional(),
   include: UserAttributeIncludeSchema.optional(),
   where: UserAttributeWhereInputSchema.optional(),
-  orderBy: z.union([ UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema.array(),UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ UserAttributeOrderByWithRelationInputSchema.array(),UserAttributeOrderByWithRelationInputSchema ]).optional(),
   cursor: UserAttributeWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23574,7 +27629,7 @@ export const UserAttributeFindManyArgsSchema: z.ZodType<Prisma.UserAttributeFind
   select: UserAttributeSelectSchema.optional(),
   include: UserAttributeIncludeSchema.optional(),
   where: UserAttributeWhereInputSchema.optional(),
-  orderBy: z.union([ UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema.array(),UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ UserAttributeOrderByWithRelationInputSchema.array(),UserAttributeOrderByWithRelationInputSchema ]).optional(),
   cursor: UserAttributeWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23583,7 +27638,7 @@ export const UserAttributeFindManyArgsSchema: z.ZodType<Prisma.UserAttributeFind
 
 export const UserAttributeAggregateArgsSchema: z.ZodType<Prisma.UserAttributeAggregateArgs> = z.object({
   where: UserAttributeWhereInputSchema.optional(),
-  orderBy: z.union([ UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema.array(),UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ UserAttributeOrderByWithRelationInputSchema.array(),UserAttributeOrderByWithRelationInputSchema ]).optional(),
   cursor: UserAttributeWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23613,7 +27668,7 @@ export const UserAttributeFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.UserAttr
 export const VerificationTokenFindFirstArgsSchema: z.ZodType<Prisma.VerificationTokenFindFirstArgs> = z.object({
   select: VerificationTokenSelectSchema.optional(),
   where: VerificationTokenWhereInputSchema.optional(),
-  orderBy: z.union([ VerificationTokenOrderByWithRelationAndSearchRelevanceInputSchema.array(),VerificationTokenOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ VerificationTokenOrderByWithRelationInputSchema.array(),VerificationTokenOrderByWithRelationInputSchema ]).optional(),
   cursor: VerificationTokenWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23623,7 +27678,7 @@ export const VerificationTokenFindFirstArgsSchema: z.ZodType<Prisma.Verification
 export const VerificationTokenFindFirstOrThrowArgsSchema: z.ZodType<Prisma.VerificationTokenFindFirstOrThrowArgs> = z.object({
   select: VerificationTokenSelectSchema.optional(),
   where: VerificationTokenWhereInputSchema.optional(),
-  orderBy: z.union([ VerificationTokenOrderByWithRelationAndSearchRelevanceInputSchema.array(),VerificationTokenOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ VerificationTokenOrderByWithRelationInputSchema.array(),VerificationTokenOrderByWithRelationInputSchema ]).optional(),
   cursor: VerificationTokenWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23633,7 +27688,7 @@ export const VerificationTokenFindFirstOrThrowArgsSchema: z.ZodType<Prisma.Verif
 export const VerificationTokenFindManyArgsSchema: z.ZodType<Prisma.VerificationTokenFindManyArgs> = z.object({
   select: VerificationTokenSelectSchema.optional(),
   where: VerificationTokenWhereInputSchema.optional(),
-  orderBy: z.union([ VerificationTokenOrderByWithRelationAndSearchRelevanceInputSchema.array(),VerificationTokenOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ VerificationTokenOrderByWithRelationInputSchema.array(),VerificationTokenOrderByWithRelationInputSchema ]).optional(),
   cursor: VerificationTokenWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -23642,7 +27697,7 @@ export const VerificationTokenFindManyArgsSchema: z.ZodType<Prisma.VerificationT
 
 export const VerificationTokenAggregateArgsSchema: z.ZodType<Prisma.VerificationTokenAggregateArgs> = z.object({
   where: VerificationTokenWhereInputSchema.optional(),
-  orderBy: z.union([ VerificationTokenOrderByWithRelationAndSearchRelevanceInputSchema.array(),VerificationTokenOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  orderBy: z.union([ VerificationTokenOrderByWithRelationInputSchema.array(),VerificationTokenOrderByWithRelationInputSchema ]).optional(),
   cursor: VerificationTokenWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -24355,7 +28410,7 @@ export const LoincUniveralLabOrdersDeleteManyArgsSchema: z.ZodType<Prisma.LoincU
 export const OrganizationCreateArgsSchema: z.ZodType<Prisma.OrganizationCreateArgs> = z.object({
   select: OrganizationSelectSchema.optional(),
   include: OrganizationIncludeSchema.optional(),
-  data: z.union([ OrganizationCreateInputSchema,OrganizationUncheckedCreateInputSchema ]).optional(),
+  data: z.union([ OrganizationCreateInputSchema,OrganizationUncheckedCreateInputSchema ]),
 }).strict() ;
 
 export const OrganizationUpsertArgsSchema: z.ZodType<Prisma.OrganizationUpsertArgs> = z.object({
@@ -24391,6 +28446,43 @@ export const OrganizationUpdateManyArgsSchema: z.ZodType<Prisma.OrganizationUpda
 
 export const OrganizationDeleteManyArgsSchema: z.ZodType<Prisma.OrganizationDeleteManyArgs> = z.object({
   where: OrganizationWhereInputSchema.optional(),
+}).strict() ;
+
+export const OrganizationEndpointCreateArgsSchema: z.ZodType<Prisma.OrganizationEndpointCreateArgs> = z.object({
+  select: OrganizationEndpointSelectSchema.optional(),
+  data: z.union([ OrganizationEndpointCreateInputSchema,OrganizationEndpointUncheckedCreateInputSchema ]).optional(),
+}).strict() ;
+
+export const OrganizationEndpointUpsertArgsSchema: z.ZodType<Prisma.OrganizationEndpointUpsertArgs> = z.object({
+  select: OrganizationEndpointSelectSchema.optional(),
+  where: OrganizationEndpointWhereUniqueInputSchema,
+  create: z.union([ OrganizationEndpointCreateInputSchema,OrganizationEndpointUncheckedCreateInputSchema ]),
+  update: z.union([ OrganizationEndpointUpdateInputSchema,OrganizationEndpointUncheckedUpdateInputSchema ]),
+}).strict() ;
+
+export const OrganizationEndpointCreateManyArgsSchema: z.ZodType<Prisma.OrganizationEndpointCreateManyArgs> = z.object({
+  data: z.union([ OrganizationEndpointCreateManyInputSchema,OrganizationEndpointCreateManyInputSchema.array() ]),
+  skipDuplicates: z.boolean().optional(),
+}).strict() ;
+
+export const OrganizationEndpointDeleteArgsSchema: z.ZodType<Prisma.OrganizationEndpointDeleteArgs> = z.object({
+  select: OrganizationEndpointSelectSchema.optional(),
+  where: OrganizationEndpointWhereUniqueInputSchema,
+}).strict() ;
+
+export const OrganizationEndpointUpdateArgsSchema: z.ZodType<Prisma.OrganizationEndpointUpdateArgs> = z.object({
+  select: OrganizationEndpointSelectSchema.optional(),
+  data: z.union([ OrganizationEndpointUpdateInputSchema,OrganizationEndpointUncheckedUpdateInputSchema ]),
+  where: OrganizationEndpointWhereUniqueInputSchema,
+}).strict() ;
+
+export const OrganizationEndpointUpdateManyArgsSchema: z.ZodType<Prisma.OrganizationEndpointUpdateManyArgs> = z.object({
+  data: z.union([ OrganizationEndpointUpdateManyMutationInputSchema,OrganizationEndpointUncheckedUpdateManyInputSchema ]),
+  where: OrganizationEndpointWhereInputSchema.optional(),
+}).strict() ;
+
+export const OrganizationEndpointDeleteManyArgsSchema: z.ZodType<Prisma.OrganizationEndpointDeleteManyArgs> = z.object({
+  where: OrganizationEndpointWhereInputSchema.optional(),
 }).strict() ;
 
 export const OrganizationFavoriteTestCreateArgsSchema: z.ZodType<Prisma.OrganizationFavoriteTestCreateArgs> = z.object({
@@ -24434,43 +28526,6 @@ export const OrganizationFavoriteTestDeleteManyArgsSchema: z.ZodType<Prisma.Orga
   where: OrganizationFavoriteTestWhereInputSchema.optional(),
 }).strict() ;
 
-export const OrganizationEndpointCreateArgsSchema: z.ZodType<Prisma.OrganizationEndpointCreateArgs> = z.object({
-  select: OrganizationEndpointSelectSchema.optional(),
-  data: z.union([ OrganizationEndpointCreateInputSchema,OrganizationEndpointUncheckedCreateInputSchema ]).optional(),
-}).strict() ;
-
-export const OrganizationEndpointUpsertArgsSchema: z.ZodType<Prisma.OrganizationEndpointUpsertArgs> = z.object({
-  select: OrganizationEndpointSelectSchema.optional(),
-  where: OrganizationEndpointWhereUniqueInputSchema,
-  create: z.union([ OrganizationEndpointCreateInputSchema,OrganizationEndpointUncheckedCreateInputSchema ]),
-  update: z.union([ OrganizationEndpointUpdateInputSchema,OrganizationEndpointUncheckedUpdateInputSchema ]),
-}).strict() ;
-
-export const OrganizationEndpointCreateManyArgsSchema: z.ZodType<Prisma.OrganizationEndpointCreateManyArgs> = z.object({
-  data: z.union([ OrganizationEndpointCreateManyInputSchema,OrganizationEndpointCreateManyInputSchema.array() ]),
-  skipDuplicates: z.boolean().optional(),
-}).strict() ;
-
-export const OrganizationEndpointDeleteArgsSchema: z.ZodType<Prisma.OrganizationEndpointDeleteArgs> = z.object({
-  select: OrganizationEndpointSelectSchema.optional(),
-  where: OrganizationEndpointWhereUniqueInputSchema,
-}).strict() ;
-
-export const OrganizationEndpointUpdateArgsSchema: z.ZodType<Prisma.OrganizationEndpointUpdateArgs> = z.object({
-  select: OrganizationEndpointSelectSchema.optional(),
-  data: z.union([ OrganizationEndpointUpdateInputSchema,OrganizationEndpointUncheckedUpdateInputSchema ]),
-  where: OrganizationEndpointWhereUniqueInputSchema,
-}).strict() ;
-
-export const OrganizationEndpointUpdateManyArgsSchema: z.ZodType<Prisma.OrganizationEndpointUpdateManyArgs> = z.object({
-  data: z.union([ OrganizationEndpointUpdateManyMutationInputSchema,OrganizationEndpointUncheckedUpdateManyInputSchema ]),
-  where: OrganizationEndpointWhereInputSchema.optional(),
-}).strict() ;
-
-export const OrganizationEndpointDeleteManyArgsSchema: z.ZodType<Prisma.OrganizationEndpointDeleteManyArgs> = z.object({
-  where: OrganizationEndpointWhereInputSchema.optional(),
-}).strict() ;
-
 export const PatientCreateArgsSchema: z.ZodType<Prisma.PatientCreateArgs> = z.object({
   select: PatientSelectSchema.optional(),
   include: PatientIncludeSchema.optional(),
@@ -24510,6 +28565,47 @@ export const PatientUpdateManyArgsSchema: z.ZodType<Prisma.PatientUpdateManyArgs
 
 export const PatientDeleteManyArgsSchema: z.ZodType<Prisma.PatientDeleteManyArgs> = z.object({
   where: PatientWhereInputSchema.optional(),
+}).strict() ;
+
+export const PatientOrganizationCreateArgsSchema: z.ZodType<Prisma.PatientOrganizationCreateArgs> = z.object({
+  select: PatientOrganizationSelectSchema.optional(),
+  include: PatientOrganizationIncludeSchema.optional(),
+  data: z.union([ PatientOrganizationCreateInputSchema,PatientOrganizationUncheckedCreateInputSchema ]),
+}).strict() ;
+
+export const PatientOrganizationUpsertArgsSchema: z.ZodType<Prisma.PatientOrganizationUpsertArgs> = z.object({
+  select: PatientOrganizationSelectSchema.optional(),
+  include: PatientOrganizationIncludeSchema.optional(),
+  where: PatientOrganizationWhereUniqueInputSchema,
+  create: z.union([ PatientOrganizationCreateInputSchema,PatientOrganizationUncheckedCreateInputSchema ]),
+  update: z.union([ PatientOrganizationUpdateInputSchema,PatientOrganizationUncheckedUpdateInputSchema ]),
+}).strict() ;
+
+export const PatientOrganizationCreateManyArgsSchema: z.ZodType<Prisma.PatientOrganizationCreateManyArgs> = z.object({
+  data: z.union([ PatientOrganizationCreateManyInputSchema,PatientOrganizationCreateManyInputSchema.array() ]),
+  skipDuplicates: z.boolean().optional(),
+}).strict() ;
+
+export const PatientOrganizationDeleteArgsSchema: z.ZodType<Prisma.PatientOrganizationDeleteArgs> = z.object({
+  select: PatientOrganizationSelectSchema.optional(),
+  include: PatientOrganizationIncludeSchema.optional(),
+  where: PatientOrganizationWhereUniqueInputSchema,
+}).strict() ;
+
+export const PatientOrganizationUpdateArgsSchema: z.ZodType<Prisma.PatientOrganizationUpdateArgs> = z.object({
+  select: PatientOrganizationSelectSchema.optional(),
+  include: PatientOrganizationIncludeSchema.optional(),
+  data: z.union([ PatientOrganizationUpdateInputSchema,PatientOrganizationUncheckedUpdateInputSchema ]),
+  where: PatientOrganizationWhereUniqueInputSchema,
+}).strict() ;
+
+export const PatientOrganizationUpdateManyArgsSchema: z.ZodType<Prisma.PatientOrganizationUpdateManyArgs> = z.object({
+  data: z.union([ PatientOrganizationUpdateManyMutationInputSchema,PatientOrganizationUncheckedUpdateManyInputSchema ]),
+  where: PatientOrganizationWhereInputSchema.optional(),
+}).strict() ;
+
+export const PatientOrganizationDeleteManyArgsSchema: z.ZodType<Prisma.PatientOrganizationDeleteManyArgs> = z.object({
+  where: PatientOrganizationWhereInputSchema.optional(),
 }).strict() ;
 
 export const PostCreateArgsSchema: z.ZodType<Prisma.PostCreateArgs> = z.object({
@@ -24754,6 +28850,129 @@ export const SessionDeleteManyArgsSchema: z.ZodType<Prisma.SessionDeleteManyArgs
   where: SessionWhereInputSchema.optional(),
 }).strict() ;
 
+export const SponsorCreateArgsSchema: z.ZodType<Prisma.SponsorCreateArgs> = z.object({
+  select: SponsorSelectSchema.optional(),
+  include: SponsorIncludeSchema.optional(),
+  data: z.union([ SponsorCreateInputSchema,SponsorUncheckedCreateInputSchema ]).optional(),
+}).strict() ;
+
+export const SponsorUpsertArgsSchema: z.ZodType<Prisma.SponsorUpsertArgs> = z.object({
+  select: SponsorSelectSchema.optional(),
+  include: SponsorIncludeSchema.optional(),
+  where: SponsorWhereUniqueInputSchema,
+  create: z.union([ SponsorCreateInputSchema,SponsorUncheckedCreateInputSchema ]),
+  update: z.union([ SponsorUpdateInputSchema,SponsorUncheckedUpdateInputSchema ]),
+}).strict() ;
+
+export const SponsorCreateManyArgsSchema: z.ZodType<Prisma.SponsorCreateManyArgs> = z.object({
+  data: z.union([ SponsorCreateManyInputSchema,SponsorCreateManyInputSchema.array() ]),
+  skipDuplicates: z.boolean().optional(),
+}).strict() ;
+
+export const SponsorDeleteArgsSchema: z.ZodType<Prisma.SponsorDeleteArgs> = z.object({
+  select: SponsorSelectSchema.optional(),
+  include: SponsorIncludeSchema.optional(),
+  where: SponsorWhereUniqueInputSchema,
+}).strict() ;
+
+export const SponsorUpdateArgsSchema: z.ZodType<Prisma.SponsorUpdateArgs> = z.object({
+  select: SponsorSelectSchema.optional(),
+  include: SponsorIncludeSchema.optional(),
+  data: z.union([ SponsorUpdateInputSchema,SponsorUncheckedUpdateInputSchema ]),
+  where: SponsorWhereUniqueInputSchema,
+}).strict() ;
+
+export const SponsorUpdateManyArgsSchema: z.ZodType<Prisma.SponsorUpdateManyArgs> = z.object({
+  data: z.union([ SponsorUpdateManyMutationInputSchema,SponsorUncheckedUpdateManyInputSchema ]),
+  where: SponsorWhereInputSchema.optional(),
+}).strict() ;
+
+export const SponsorDeleteManyArgsSchema: z.ZodType<Prisma.SponsorDeleteManyArgs> = z.object({
+  where: SponsorWhereInputSchema.optional(),
+}).strict() ;
+
+export const SponsoredProgramCreateArgsSchema: z.ZodType<Prisma.SponsoredProgramCreateArgs> = z.object({
+  select: SponsoredProgramSelectSchema.optional(),
+  include: SponsoredProgramIncludeSchema.optional(),
+  data: z.union([ SponsoredProgramCreateInputSchema,SponsoredProgramUncheckedCreateInputSchema ]).optional(),
+}).strict() ;
+
+export const SponsoredProgramUpsertArgsSchema: z.ZodType<Prisma.SponsoredProgramUpsertArgs> = z.object({
+  select: SponsoredProgramSelectSchema.optional(),
+  include: SponsoredProgramIncludeSchema.optional(),
+  where: SponsoredProgramWhereUniqueInputSchema,
+  create: z.union([ SponsoredProgramCreateInputSchema,SponsoredProgramUncheckedCreateInputSchema ]),
+  update: z.union([ SponsoredProgramUpdateInputSchema,SponsoredProgramUncheckedUpdateInputSchema ]),
+}).strict() ;
+
+export const SponsoredProgramCreateManyArgsSchema: z.ZodType<Prisma.SponsoredProgramCreateManyArgs> = z.object({
+  data: z.union([ SponsoredProgramCreateManyInputSchema,SponsoredProgramCreateManyInputSchema.array() ]),
+  skipDuplicates: z.boolean().optional(),
+}).strict() ;
+
+export const SponsoredProgramDeleteArgsSchema: z.ZodType<Prisma.SponsoredProgramDeleteArgs> = z.object({
+  select: SponsoredProgramSelectSchema.optional(),
+  include: SponsoredProgramIncludeSchema.optional(),
+  where: SponsoredProgramWhereUniqueInputSchema,
+}).strict() ;
+
+export const SponsoredProgramUpdateArgsSchema: z.ZodType<Prisma.SponsoredProgramUpdateArgs> = z.object({
+  select: SponsoredProgramSelectSchema.optional(),
+  include: SponsoredProgramIncludeSchema.optional(),
+  data: z.union([ SponsoredProgramUpdateInputSchema,SponsoredProgramUncheckedUpdateInputSchema ]),
+  where: SponsoredProgramWhereUniqueInputSchema,
+}).strict() ;
+
+export const SponsoredProgramUpdateManyArgsSchema: z.ZodType<Prisma.SponsoredProgramUpdateManyArgs> = z.object({
+  data: z.union([ SponsoredProgramUpdateManyMutationInputSchema,SponsoredProgramUncheckedUpdateManyInputSchema ]),
+  where: SponsoredProgramWhereInputSchema.optional(),
+}).strict() ;
+
+export const SponsoredProgramDeleteManyArgsSchema: z.ZodType<Prisma.SponsoredProgramDeleteManyArgs> = z.object({
+  where: SponsoredProgramWhereInputSchema.optional(),
+}).strict() ;
+
+export const SponsoredTestCreateArgsSchema: z.ZodType<Prisma.SponsoredTestCreateArgs> = z.object({
+  select: SponsoredTestSelectSchema.optional(),
+  include: SponsoredTestIncludeSchema.optional(),
+  data: z.union([ SponsoredTestCreateInputSchema,SponsoredTestUncheckedCreateInputSchema ]),
+}).strict() ;
+
+export const SponsoredTestUpsertArgsSchema: z.ZodType<Prisma.SponsoredTestUpsertArgs> = z.object({
+  select: SponsoredTestSelectSchema.optional(),
+  include: SponsoredTestIncludeSchema.optional(),
+  where: SponsoredTestWhereUniqueInputSchema,
+  create: z.union([ SponsoredTestCreateInputSchema,SponsoredTestUncheckedCreateInputSchema ]),
+  update: z.union([ SponsoredTestUpdateInputSchema,SponsoredTestUncheckedUpdateInputSchema ]),
+}).strict() ;
+
+export const SponsoredTestCreateManyArgsSchema: z.ZodType<Prisma.SponsoredTestCreateManyArgs> = z.object({
+  data: z.union([ SponsoredTestCreateManyInputSchema,SponsoredTestCreateManyInputSchema.array() ]),
+  skipDuplicates: z.boolean().optional(),
+}).strict() ;
+
+export const SponsoredTestDeleteArgsSchema: z.ZodType<Prisma.SponsoredTestDeleteArgs> = z.object({
+  select: SponsoredTestSelectSchema.optional(),
+  include: SponsoredTestIncludeSchema.optional(),
+  where: SponsoredTestWhereUniqueInputSchema,
+}).strict() ;
+
+export const SponsoredTestUpdateArgsSchema: z.ZodType<Prisma.SponsoredTestUpdateArgs> = z.object({
+  select: SponsoredTestSelectSchema.optional(),
+  include: SponsoredTestIncludeSchema.optional(),
+  data: z.union([ SponsoredTestUpdateInputSchema,SponsoredTestUncheckedUpdateInputSchema ]),
+  where: SponsoredTestWhereUniqueInputSchema,
+}).strict() ;
+
+export const SponsoredTestUpdateManyArgsSchema: z.ZodType<Prisma.SponsoredTestUpdateManyArgs> = z.object({
+  data: z.union([ SponsoredTestUpdateManyMutationInputSchema,SponsoredTestUncheckedUpdateManyInputSchema ]),
+  where: SponsoredTestWhereInputSchema.optional(),
+}).strict() ;
+
+export const SponsoredTestDeleteManyArgsSchema: z.ZodType<Prisma.SponsoredTestDeleteManyArgs> = z.object({
+  where: SponsoredTestWhereInputSchema.optional(),
+}).strict() ;
+
 export const TestBiomarkerCreateArgsSchema: z.ZodType<Prisma.TestBiomarkerCreateArgs> = z.object({
   select: TestBiomarkerSelectSchema.optional(),
   include: TestBiomarkerIncludeSchema.optional(),
@@ -24877,6 +29096,47 @@ export const TestCptCodeDeleteManyArgsSchema: z.ZodType<Prisma.TestCptCodeDelete
   where: TestCptCodeWhereInputSchema.optional(),
 }).strict() ;
 
+export const TestGeneCreateArgsSchema: z.ZodType<Prisma.TestGeneCreateArgs> = z.object({
+  select: TestGeneSelectSchema.optional(),
+  include: TestGeneIncludeSchema.optional(),
+  data: z.union([ TestGeneCreateInputSchema,TestGeneUncheckedCreateInputSchema ]),
+}).strict() ;
+
+export const TestGeneUpsertArgsSchema: z.ZodType<Prisma.TestGeneUpsertArgs> = z.object({
+  select: TestGeneSelectSchema.optional(),
+  include: TestGeneIncludeSchema.optional(),
+  where: TestGeneWhereUniqueInputSchema,
+  create: z.union([ TestGeneCreateInputSchema,TestGeneUncheckedCreateInputSchema ]),
+  update: z.union([ TestGeneUpdateInputSchema,TestGeneUncheckedUpdateInputSchema ]),
+}).strict() ;
+
+export const TestGeneCreateManyArgsSchema: z.ZodType<Prisma.TestGeneCreateManyArgs> = z.object({
+  data: z.union([ TestGeneCreateManyInputSchema,TestGeneCreateManyInputSchema.array() ]),
+  skipDuplicates: z.boolean().optional(),
+}).strict() ;
+
+export const TestGeneDeleteArgsSchema: z.ZodType<Prisma.TestGeneDeleteArgs> = z.object({
+  select: TestGeneSelectSchema.optional(),
+  include: TestGeneIncludeSchema.optional(),
+  where: TestGeneWhereUniqueInputSchema,
+}).strict() ;
+
+export const TestGeneUpdateArgsSchema: z.ZodType<Prisma.TestGeneUpdateArgs> = z.object({
+  select: TestGeneSelectSchema.optional(),
+  include: TestGeneIncludeSchema.optional(),
+  data: z.union([ TestGeneUpdateInputSchema,TestGeneUncheckedUpdateInputSchema ]),
+  where: TestGeneWhereUniqueInputSchema,
+}).strict() ;
+
+export const TestGeneUpdateManyArgsSchema: z.ZodType<Prisma.TestGeneUpdateManyArgs> = z.object({
+  data: z.union([ TestGeneUpdateManyMutationInputSchema,TestGeneUncheckedUpdateManyInputSchema ]),
+  where: TestGeneWhereInputSchema.optional(),
+}).strict() ;
+
+export const TestGeneDeleteManyArgsSchema: z.ZodType<Prisma.TestGeneDeleteManyArgs> = z.object({
+  where: TestGeneWhereInputSchema.optional(),
+}).strict() ;
+
 export const TestOrderLoincCreateArgsSchema: z.ZodType<Prisma.TestOrderLoincCreateArgs> = z.object({
   select: TestOrderLoincSelectSchema.optional(),
   include: TestOrderLoincIncludeSchema.optional(),
@@ -24962,7 +29222,7 @@ export const TestResultLoincDeleteManyArgsSchema: z.ZodType<Prisma.TestResultLoi
 export const UserCreateArgsSchema: z.ZodType<Prisma.UserCreateArgs> = z.object({
   select: UserSelectSchema.optional(),
   include: UserIncludeSchema.optional(),
-  data: z.union([ UserCreateInputSchema,UserUncheckedCreateInputSchema ]).optional(),
+  data: z.union([ UserCreateInputSchema,UserUncheckedCreateInputSchema ]),
 }).strict() ;
 
 export const UserUpsertArgsSchema: z.ZodType<Prisma.UserUpsertArgs> = z.object({

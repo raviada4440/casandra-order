@@ -77,24 +77,7 @@ const Login = ({ mode }: { mode: Mode }) => {
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.down('sm'))
 
-  // const addOrg = api.directory.addOrganization.useMutation();
-
   console.log('mode', mode)
-
-  // const processBundle = () => {
-
-  //   const userAttributeProvider = {"UserId":"clx6luqn10008kbz30pya6bha","UserType":"Provider","Provider":{"connectOrCreate":{"where":{"Id":"epCMXw6sovJTWocENSvHWFg3"},"create":{"Id":"epCMXw6sovJTWocENSvHWFg3","Name":"Fhirtwo Provider","NPI":" FHIRTWO","Credentials":"MD","Gender":"male","ProviderOrganization":{"connectOrCreate":{"where":{"Id":"epCMXw6sovJTWocENSvHWFg3"},"create":{"Organization":{"connectOrCreate":{"where":{"Id":"emJknX0W4O1xDnJueBsOFBgTS6y2hh30C-OvWbJGoFI03"},"create":{"Id":"emJknX0W4O1xDnJueBsOFBgTS6y2hh30C-OvWbJGoFI03","OrgName":"Epic Health Systems","OrgType":"Organization","Level":0,"ParentId":null,"OrgAddress":"123 Anywhere Street","OrgCity":"MADISON","OrgState":"Wisconsin","OrgZip":"53719"}}}}}}}}}} as any
-
-  //   addOrg.mutate(userAttributeProvider, {
-  //     onSuccess: (newData) => {
-  //       console.log('Returned data:', newData);
-  //     },
-  //     onError: (error) => {
-  //       console.log('Failed to create with error: ' + error.message);
-  //     }
-  //   })
-
-  // }
 
   useEffect(() => {
     const fhirUrl = settings.selectedEndpoint?.Endpoint
