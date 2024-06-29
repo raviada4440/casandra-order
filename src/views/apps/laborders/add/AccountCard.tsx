@@ -43,7 +43,7 @@ const AccountCard = () => {
     <Card>
       <CardContent>
         <div className='flex items-center gap-2 mbe-4'>
-          <i className='ri-account-pin-circle-line text-3xl text-primary' />x
+          <i className='ri-account-pin-circle-line text-3xl text-primary' />
           <Typography variant='h5' className='text-primary'>
             Account
           </Typography>

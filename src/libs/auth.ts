@@ -7,7 +7,7 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 // import { PrismaClient } from '@prisma/client'
 import type { NextAuthOptions } from 'next-auth'
 import type { Adapter } from 'next-auth/adapters'
-import type { Bundle, Location, Practitioner, OperationOutcome, Patient, Organization } from "~node_modules/@types/fhir/r4.d";
+import type { Bundle, Location, Practitioner, OperationOutcome, Patient, Organization } from "fhir/r4";
 import dayjs from 'dayjs';
 
 import type { UserAttributePartialRelations } from '~prisma/generated/zod'

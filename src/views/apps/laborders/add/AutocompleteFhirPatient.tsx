@@ -7,12 +7,9 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { CircularProgress, Grid } from '@mui/material';
 
-import type { List } from 'fhir/r4';
-
 import type { Patient, PatientWithRelations } from '~prisma/generated/zod';
 import { api } from '~trpc/react';
 import { LabOrderContext } from '.';
-
 
 const AutocompleteFhirPatient = () => {
 
@@ -27,7 +24,7 @@ const AutocompleteFhirPatient = () => {
 
   const { data, error, isLoading } = api.fhir.getPatientList.useQuery({ accessToken: session?.accessToken as string });
 
-  const onProviderChange = (value: PatientWithRelations) => {
+  const onPatientChange = (value: PatientWithRelations) => {
     console.log('value', value)
 
     // Create a copy of labOrder
@@ -52,33 +49,9 @@ const AutocompleteFhirPatient = () => {
     }
 
     if (data) {
-      const patientList: Patient[] = []
-
-      const list = data.entry?.[0].resource as List
-
-      if (list && list.entry) {
-        list.entry?.forEach((entry) => {
-          const patientItem = entry.item
-
-          const patient: Patient = {
-            Id: patientItem.reference ? patientItem.reference.split('/')[1] : '',
-            FirstName: patientItem.display ? patientItem.display.split(',')[0] : '',
-            LastName: patientItem.display ? patientItem.display.split(',')[1] : '',
-            DateOfBirth: null,
-            Gender: null,
-            Email: null,
-            Mobile: null,
-            CreatedAt: null,
-            UpdatedAt: null
-          }
-
-          patientList.push(patient)
-        })
-      }
-
-      setOptions(patientList);
+      setOptions(data);
     }
-  }, [data, error, isLoading]);
+  }, [data, error, isLoading, session]);
 
   return (
     <Autocomplete
@@ -96,7 +69,7 @@ const AutocompleteFhirPatient = () => {
       //   setInputValue(newInputValue);
       // }}
       onChange={(event, newValue) => {
-        onProviderChange(newValue as PatientWithRelations);
+        onPatientChange(newValue as PatientWithRelations);
         setOpen(false);
       }}
       getOptionLabel={(option) => `${option.LastName}`}
