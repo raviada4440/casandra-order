@@ -28,6 +28,8 @@ import { LabOrderContext } from '.'
 
 import type { PatientWithRelations, OrganizationWithRelations, ProviderOrganizationPartialRelations } from '~prisma/generated/zod'
 import AutocompleteProvider from './AutocompleteProvider'
+import AutocompleteFhirPatient from './AutocompleteFhirPatient'
+import AutocompletePatient from './AutocompletePatient'
 
 type Props = {
   activeStep: number
@@ -133,13 +135,21 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
         </div>
           <Grid container spacing={5}>
             <Grid item xs={12} md={6}>
-              <TextField
-                fullWidth
-                label='Last Name'
-                value={formData?.LastName || ''}
-                placeholder='Last Name'
-                onChange={e => handleFormChange('LastName', e.target.value)}
-              />
+              {session?.authProvider === 'credentials' && session?.entryPoint === 'standalone' && (
+                <AutocompletePatient />
+              )}
+              {session?.authProvider === 'epic' && session?.entryPoint === 'standalone' && (
+                <AutocompleteFhirPatient />
+              )}
+              {session?.authProvider === 'epic' && session?.entryPoint === 'launch' && (
+                <TextField
+                  fullWidth
+                  label='Last Name'
+                  value={formData?.LastName || ''}
+                  placeholder='Last Name'
+                  onChange={e => handleFormChange('LastName', e.target.value)}
+                />
+              )}
             </Grid>
             <Grid item xs={12} md={6}>
               <TextField

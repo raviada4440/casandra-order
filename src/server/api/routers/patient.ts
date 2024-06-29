@@ -29,4 +29,27 @@ export const patientRouter = createTRPCRouter({
       })
     }),
 
+  getPatients: publicProcedure
+    .input(z.object({ searchStr: z.string() }))
+    .query(async ({ ctx, input}) => {
+      return ctx.db.patient.findMany({
+        where: {
+          OR: [
+            {
+              FirstName: {
+                contains: input.searchStr,
+              },
+            },
+            {
+              LastName: {
+                contains: input.searchStr,
+              },
+            }
+          ],
+        },
+        orderBy: { FirstName: "asc" },
+        take: input.searchStr == undefined || '' ? undefined : 10,
+      })
+    }),
+
 });

@@ -20,7 +20,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
     const launchToken = url.searchParams.get("launch")
 
     if (launchToken && launchToken.length > 0) {
-      epicProvider.authorization.params.scope = "launch launch/provider online-access openid profile fhirUser"
+      epicProvider.authorization.params.scope = "launch openid profile fhirUser"
     }
 
     console.log("authOptions providers in route: ", JSON.stringify(authOptions.providers))

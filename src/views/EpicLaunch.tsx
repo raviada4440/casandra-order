@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { useLocation } from "react-use"
-import { Box, Card, CardActionArea, CardContent, CardMedia, LinearProgress, Typography } from '@mui/material';
+import { Box, Card, CardActionArea, CardActions, CardContent, CardMedia, LinearProgress, Typography } from '@mui/material';
 import { signIn } from "next-auth/react";
 
 import { api } from '~trpc/react'
@@ -76,16 +76,18 @@ const EpicLaunch = () => {
           alt="Epic Launch"
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography gutterBottom variant="h4" component="div">
             Authenticating
           </Typography>
           <Typography variant="body2" color="text.secondary">
             Epic user is being authenticated and authorized. Please wait...
           </Typography>
+        </CardContent>
+        <CardActions>
           <Box sx={{ width: '100%' }}>
             <LinearProgress variant="determinate" value={progress} />
           </Box>
-        </CardContent>
+        </CardActions>
       </CardActionArea>
     </Card>
     </div>

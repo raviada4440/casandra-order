@@ -184,8 +184,19 @@ export const authOptions: NextAuthOptions = {
           await processBundle(practitionerRoleBundle, user.id as string)
         }
 
-
       }
+
+      if (account && account.type && account.provider ){
+        token.authType = account.type || ''
+        token.authProvider = account.provider || ''
+        token.entryPoint = 'standalone'
+
+        if (account && account.scope && account.scope.includes('launch')) {
+          console.log('launch:', account.scope)
+          token.entryPoint = 'launch'
+        }
+      }
+
 
       if (user) {
         if (user.name && user.email && user.UserAttribute) {
@@ -230,8 +241,26 @@ export const authOptions: NextAuthOptions = {
         if (token && token.patientId) {
           session.patientId = token.patientId
         }
+
+        if (token && token.accessToken) {
+          session.accessToken = token.accessToken
+        }
+
+        if (token && token.authType) {
+          session.authType = token.authType
+        }
+
+        if (token && token.authProvider) {
+          session.authProvider = token.authProvider
+        }
+
+        if (token && token.entryPoint) {
+          session.entryPoint = token.entryPoint
+        }
+
       }
 
+      console.log('session (session()):', session)
 
       return session
     },
