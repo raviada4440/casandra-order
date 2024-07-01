@@ -41,8 +41,11 @@ import StepperCustomDot from '@views/forms/form-wizard/StepperCustomDot'
 
 import AccountCard from './AccountCard'
 
-import type { LabOrderTestWithRelations, LabOrderWithRelations, PatientWithRelations } from '~prisma/generated/zod'
+import type { LabOrderSponsoredTestConsentWithRelations, LabOrderTestWithRelations, LabOrderWithRelations, PatientWithRelations, SponsoredTestWithPartialRelations} from '~prisma/generated/zod'
 import { api } from '~trpc/react';
+import StepEligibility from './StepEligibility';
+import Eligibility from './subtitle/Eligibility';
+
 
 // Types
 type Step = {
@@ -138,6 +141,16 @@ const AddLabOrder = () => {
     return [...targetObj, ...newSteps]
   }
 
+  const moveToTop = (title: string) => {
+    const index = stepEntries.findIndex(entry => entry.title === title);
+
+    if (index > -1) {
+      const [entry] = stepEntries.splice(index, 1); // Remove the entry
+
+      stepEntries.unshift(entry); // Add it to the top
+    }
+  }
+
   useEffect(() => {
     if (session && session.patientId && session.patientId.length > 0) {
       setPatientId(session.patientId)
@@ -183,9 +196,51 @@ const AddLabOrder = () => {
   const testCatalogQuery = queryParams.get('testcatalog[query]');
 
   console.log('testcatalog: ', testCatalogQuery);
+  const { data: tcData, error: tcError, isLoading: tcIsLoading } = api.testcatalog.getTestByCasandraTestId.useQuery({ casandraTestId: testCatalogQuery || ''})
 
   useEffect(() => {
-    if (testCatalogQuery) {
+    const sponsoredTests = tcData?.SponsoredTest || [];
+
+    if(sponsoredTests && sponsoredTests.length > 0 && testCatalogQuery) {
+
+      const hasEligibility = stepEntries.some(entry => entry.title === 'Eligibility')
+
+      if (!hasEligibility) {
+        const eligibilityStep = {
+          title: 'Eligibility',
+          subtitle: 'Eligibility',
+          stepDetails: StepEligibility,
+          subTitleDetails: Eligibility
+        }
+
+        stepEntries.push(eligibilityStep);
+        moveToTop('Tests');
+        moveToTop('Eligibility');
+        setSteps(stepEntries);
+        setActiveStep(0);
+      }
+
+      sponsoredTests.forEach((sponsoredTest: SponsoredTestWithPartialRelations) => {
+        if(sponsoredTest?.TestId === tcData?.TestId && sponsoredTest?.SponsoredProgram?.ProgramEligibility) {
+          console.log('Sponsored Test: ', sponsoredTest);
+
+          // Generate the LabOrderTest
+          const labOrderEligibilityConsent = [{
+            TestId: tcData.TestId,
+            SponsoredTest: tcData.SponsoredTest
+          }] as unknown as LabOrderSponsoredTestConsentWithRelations[];
+
+          const labOrderCopy = { ...labOrder, LabOrderSponsoredTestConsent: labOrderEligibilityConsent };
+
+          // Only update the state if labOrderCopy has changed
+          if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrder)) {
+            console.log('LabOrderCopy: ', labOrderCopy);
+            setLabOrderCopy(labOrderCopy);
+          }
+
+        }
+      });
+    } else if (testCatalogQuery && !sponsoredTests) {
 
       //move test details to top
       const newSteps = rearrangeSteps(stepEntries, 2);
@@ -196,9 +251,8 @@ const AddLabOrder = () => {
       setActiveStep(0);
     }
 
-  }, [setActiveStep, testCatalogQuery])
+  }, [setActiveStep, tcData, testCatalogQuery, labOrder, setLabOrderCopy, setSteps])
 
-  const { data: tcData, error: tcError, isLoading: tcIsLoading } = api.testcatalog.getTestByCasandraTestId.useQuery({ casandraTestId: testCatalogQuery || ''})
 
   useEffect(() => {
     if (tcError) {

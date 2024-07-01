@@ -152,28 +152,29 @@ model Lab {
 }
 
 model LabOrder {
-  Id                                             String               @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
-  OrderNumber                                    String?              @db.VarChar(45)
-  AccessionNumber                                String?              @db.VarChar(45)
-  OrderingProviderId                             String?              @db.VarChar(45)
-  TreatingProviderId                             String?              @db.VarChar(45)
-  PatientId                                      String?              @db.VarChar(45)
-  PatientMRN                                     String?              @db.VarChar(45)
-  PatientMobile                                  String?              @db.Text
-  PatientEmail                                   String?              @db.Text
-  OrganizationId                                 String?              @db.VarChar(45)
-  OrderDate                                      DateTime?            @default(now()) @db.DateTime(0)
-  OrderNotes                                     String?              @db.Text
-  CreatedAt                                      DateTime?            @default(now()) @db.DateTime(0)
-  UpdatedAt                                      DateTime?            @default(now()) @db.DateTime(0)
-  OrderingProvider                               Provider?            @relation("LabOrder_OrderingProviderIdToProvider", fields: [OrderingProviderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "laborder_ibfk_1")
-  TreatingProvider                               Provider?            @relation("LabOrder_TreatingProviderIdToProvider", fields: [TreatingProviderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "laborder_ibfk_2")
-  Patient                                        Patient?             @relation(fields: [PatientId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "laborder_ibfk_3")
-  Organization                                   Organization?        @relation(fields: [OrganizationId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "laborder_ibfk_4")
+  Id                                             String                       @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  OrderNumber                                    String?                      @db.VarChar(45)
+  AccessionNumber                                String?                      @db.VarChar(45)
+  OrderingProviderId                             String?                      @db.VarChar(45)
+  TreatingProviderId                             String?                      @db.VarChar(45)
+  PatientId                                      String?                      @db.VarChar(45)
+  PatientMRN                                     String?                      @db.VarChar(45)
+  PatientMobile                                  String?                      @db.Text
+  PatientEmail                                   String?                      @db.Text
+  OrganizationId                                 String?                      @db.VarChar(45)
+  OrderDate                                      DateTime?                    @default(now()) @db.DateTime(0)
+  OrderNotes                                     String?                      @db.Text
+  CreatedAt                                      DateTime?                    @default(now()) @db.DateTime(0)
+  UpdatedAt                                      DateTime?                    @default(now()) @db.DateTime(0)
+  OrderingProvider                               Provider?                    @relation("LabOrder_OrderingProviderIdToProvider", fields: [OrderingProviderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "laborder_ibfk_1")
+  TreatingProvider                               Provider?                    @relation("LabOrder_TreatingProviderIdToProvider", fields: [TreatingProviderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "laborder_ibfk_2")
+  Patient                                        Patient?                     @relation(fields: [PatientId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "laborder_ibfk_3")
+  Organization                                   Organization?                @relation(fields: [OrganizationId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "laborder_ibfk_4")
   LabOrderAttachment                             LabOrderAttachment[]
   LabOrderBilling                                LabOrderBilling[]
   LabOrderIcd                                    LabOrderIcd[]
   LabOrderSpecimen                               LabOrderSpecimen[]
+  LabOrderSponsoredTestConsent                   LabOrderSponsoredTestConsent[]
   LabOrderStatus                                 LabOrderStatus[]
   LabOrderTest                                   LabOrderTest[]
 
@@ -242,6 +243,23 @@ model LabOrderSpecimen {
 
   @@index([LabOrderId], map: "laborder_specimen_idx")
 }
+
+model LabOrderSponsoredTestConsent {
+  Id                      String         @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  LabOrderId              String?        @db.VarChar(45)
+  SponsoredCasandraTestId String?        @db.VarChar(512)
+  ProviderName            String?        @db.VarChar(45)
+  ProviderNPI             String?        @db.VarChar(45)
+  ConsentAt               DateTime?      @default(now()) @db.DateTime(0)
+  CreatedAt               DateTime?      @default(now()) @db.DateTime(0)
+  UpdatedAt               DateTime?      @default(now()) @db.DateTime(0)
+  SponsoredTest           SponsoredTest? @relation(fields: [SponsoredCasandraTestId], references: [CasandraTestId], onDelete: NoAction, onUpdate: NoAction, map: "consent_casandra_id_ibfk_2")
+  LabOrder                LabOrder?      @relation(fields: [LabOrderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "consent_ibfk_1")
+
+  @@index([SponsoredCasandraTestId], map: "consent_casandra_id_idx")
+  @@index([LabOrderId], map: "consent_id_idx")
+}
+
 
 model LabOrderStatus {
   Id         String    @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
@@ -492,6 +510,7 @@ model SponsoredProgram {
   ProgramUrl           String?         @db.VarChar(512)
   ProgramLabUrl        String?         @db.VarChar(512)
   SponosoredTestingUrl String?         @db.VarChar(512)
+  ProgramEligibility   String?         @db.LongText
   CreatedAt            DateTime?       @default(now()) @db.DateTime(0)
   UpdatedAt            DateTime?       @default(now()) @db.DateTime(0)
   Sponsor              Sponsor?        @relation(fields: [SponsorId], references: [SponsorId], onDelete: NoAction, onUpdate: NoAction, map: "sponsor_fk_constraint")
@@ -501,22 +520,24 @@ model SponsoredProgram {
 }
 
 model SponsoredTest {
-  Id                 String            @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
-  TestId             Int
-  LabTestId          String?           @db.VarChar(512)
-  SponsoredProgramId Int?
-  LabId              Int?
-  CasandraTestId     String            @db.VarChar(512)
-  Category           String            @db.VarChar(512)
-  SubCategory        String?           @db.VarChar(512)
-  CreatedAt          DateTime?         @default(now()) @db.DateTime(0)
-  UpdatedAt          DateTime?         @default(now()) @db.DateTime(0)
-  Lab                Lab?              @relation(fields: [LabId], references: [LabId], onDelete: NoAction, onUpdate: NoAction, map: "lab_sponsored_fk_constraint")
-  SponsoredProgram   SponsoredProgram? @relation(fields: [SponsoredProgramId], references: [ProgramId], onDelete: NoAction, onUpdate: NoAction, map: "program_fk_constraint")
-  TestCatalog        TestCatalog       @relation(fields: [TestId], references: [TestId], onDelete: NoAction, onUpdate: NoAction, map: "tc_sponsored_fk_constraint")
+  Id                           String                         @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  TestId                       Int
+  LabTestId                    String?                        @db.VarChar(512)
+  SponsoredProgramId           Int?
+  LabId                        Int?
+  CasandraTestId               String                         @unique(map: "CasandraTestId_UNIQUE") @db.VarChar(512)
+  Category                     String                         @db.VarChar(512)
+  SubCategory                  String?                        @db.VarChar(512)
+  CreatedAt                    DateTime?                      @default(now()) @db.DateTime(0)
+  UpdatedAt                    DateTime?                      @default(now()) @db.DateTime(0)
+  LabOrderSponsoredTestConsent LabOrderSponsoredTestConsent[]
+  Lab                          Lab?                           @relation(fields: [LabId], references: [LabId], onDelete: NoAction, onUpdate: NoAction, map: "lab_sponsored_fk_constraint")
+  SponsoredProgram             SponsoredProgram?              @relation(fields: [SponsoredProgramId], references: [ProgramId], onDelete: NoAction, onUpdate: NoAction, map: "program_fk_constraint")
+  TestCatalog                  TestCatalog                    @relation(fields: [TestId], references: [TestId], onDelete: NoAction, onUpdate: NoAction, map: "tc_sponsored_fk_constraint")
 
   @@index([LabId], map: "lab_sponsored_idx")
   @@index([SponsoredProgramId], map: "program_fk_constraint")
+  @@index([CasandraTestId], map: "spt_casandra_test_id_idx")
   @@index([TestId], map: "test_sponsored_idx")
 }
 
@@ -537,61 +558,61 @@ model TestBiomarker {
 }
 
 model TestCatalog {
-  TestId                   Int                        @id @default(autoincrement())
-  LabId                    Int?
-  href                     String?                    @db.Text
-  CasandraTestId           String                     @db.VarChar(512)
-  LabTestId                String?                    @db.VarChar(512)
-  TestName                 String?                    @db.VarChar(512)
-  AlternativeName          String?                    @db.VarChar(512)
-  AlternativeName1         String?                    @db.VarChar(512)
-  AlternativeName2         String?                    @db.VarChar(512)
-  AlternativeName3         String?                    @db.VarChar(512)
-  AlternativeName4         String?                    @db.VarChar(512)
-  AlternativeName5         String?                    @db.VarChar(512)
-  TestIncludes             String?                    @db.Text
-  SpecimenType             String?                    @db.VarChar(512)
-  SpecialInstructions      String?                    @db.Text
-  Methodology              String?                    @db.Text
-  TestDescription          String?                    @db.Text
-  Diseases                 String?                    @db.Text
-  Probes                   String?                    @db.Text
-  ClinicalSignificance     String?                    @db.Text
-  SpecimenRequirements     String?                    @db.Text
-  Volume                   String?                    @db.VarChar(512)
-  MinimumVolume            String?                    @db.VarChar(512)
-  Container                String?                    @db.Text
-  Collection               String?                    @db.Text
-  StabilityRequirements    String?                    @db.LongText
-  StorageTransportation    String?                    @db.Text
-  PatientPreparation       String?                    @db.Text
-  CausesForRejection       String?                    @db.Text
-  TestUsage                String?                    @db.Text
-  TestLimitations          String?                    @db.Text
-  CPTCodes                 String?                    @db.Text
-  NewYorkApproved          String?                    @db.VarChar(512)
-  LevelOfService           String?                    @db.VarChar(512)
-  TurnAroundTime           String?                    @db.VarChar(512)
-  AssayCategory            String?                    @db.LongText
-  ReferenceRanges          String?                    @db.LongText
-  SetupSchedule            String?                    @db.LongText
-  AlternativeSpecimen      String?                    @db.LongText
-  LoincCodesText           String?                    @db.LongText
-  LoincCodesHTML           String?                    @db.LongText
-  TestCategory             String?                    @db.VarChar(512)
-  TestSubCategory          String?                    @db.VarChar(512)
-  CreatedAt                DateTime                   @default(now()) @db.DateTime(0)
-  UpdatedAt                DateTime                   @default(now()) @db.DateTime(0)
-  LabOrderTest             LabOrderTest[]
-  OrganizationFavoriteTest OrganizationFavoriteTest[]
-  ProviderFavoriteTest     ProviderFavoriteTest[]
-  SponsoredTest            SponsoredTest[]
-  TestBiomarker            TestBiomarker[]
-  Lab                      Lab?                       @relation(fields: [LabId], references: [LabId], onDelete: NoAction, onUpdate: NoAction, map: "lab_fk_constraint")
-  TestCptCode              TestCptCode[]
-  TestGene                 TestGene[]
-  TestOrderLoinc           TestOrderLoinc[]
-  TestResultLoinc          TestResultLoinc[]
+  TestId                     Int                          @id @default(autoincrement())
+  LabId                      Int?
+  href                       String?                      @db.Text
+  CasandraTestId             String                       @db.VarChar(512)
+  LabTestId                  String?                      @db.VarChar(512)
+  TestName                   String?                      @db.VarChar(512)
+  AlternativeName            String?                      @db.VarChar(512)
+  AlternativeName1           String?                      @db.VarChar(512)
+  AlternativeName2           String?                      @db.VarChar(512)
+  AlternativeName3           String?                      @db.VarChar(512)
+  AlternativeName4           String?                      @db.VarChar(512)
+  AlternativeName5           String?                      @db.VarChar(512)
+  TestIncludes               String?                      @db.Text
+  SpecimenType               String?                      @db.VarChar(512)
+  SpecialInstructions        String?                      @db.Text
+  Methodology                String?                      @db.Text
+  TestDescription            String?                      @db.Text
+  Diseases                   String?                      @db.Text
+  Probes                     String?                      @db.Text
+  ClinicalSignificance       String?                      @db.Text
+  SpecimenRequirements       String?                      @db.Text
+  Volume                     String?                      @db.VarChar(512)
+  MinimumVolume              String?                      @db.VarChar(512)
+  Container                  String?                      @db.Text
+  Collection                 String?                      @db.Text
+  StabilityRequirements      String?                      @db.LongText
+  StorageTransportation      String?                      @db.Text
+  PatientPreparation         String?                      @db.Text
+  CausesForRejection         String?                      @db.Text
+  TestUsage                  String?                      @db.Text
+  TestLimitations            String?                      @db.Text
+  CPTCodes                   String?                      @db.Text
+  NewYorkApproved            String?                      @db.VarChar(512)
+  LevelOfService             String?                      @db.VarChar(512)
+  TurnAroundTime             String?                      @db.VarChar(512)
+  AssayCategory              String?                      @db.LongText
+  ReferenceRanges            String?                      @db.LongText
+  SetupSchedule              String?                      @db.LongText
+  AlternativeSpecimen        String?                      @db.LongText
+  LoincCodesText             String?                      @db.LongText
+  LoincCodesHTML             String?                      @db.LongText
+  TestCategory               String?                      @db.VarChar(512)
+  TestSubCategory            String?                      @db.VarChar(512)
+  CreatedAt                  DateTime                     @default(now()) @db.DateTime(0)
+  UpdatedAt                  DateTime                     @default(now()) @db.DateTime(0)
+  LabOrderTest               LabOrderTest[]
+  OrganizationFavoriteTest   OrganizationFavoriteTest[]
+  ProviderFavoriteTest       ProviderFavoriteTest[]
+  SponsoredTest              SponsoredTest[]
+  TestBiomarker              TestBiomarker[]
+  Lab                        Lab?                         @relation(fields: [LabId], references: [LabId], onDelete: NoAction, onUpdate: NoAction, map: "lab_fk_constraint")
+  TestCptCode                TestCptCode[]
+  TestGene                   TestGene[]
+  TestOrderLoinc             TestOrderLoinc[]
+  TestResultLoinc            TestResultLoinc[]
 
   @@unique([LabId, LabTestId], map: "LabAndLabTestId")
   @@index([LabId], map: "lab_fk_constraint")

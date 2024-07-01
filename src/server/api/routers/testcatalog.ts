@@ -115,6 +115,11 @@ export const testCatalogRouter = createTRPCRouter({
           include: {
             BIOMARKER: true,
           },
+        },
+        SponsoredTest: {
+          include: {
+            SponsoredProgram: true,
+          },
         }
       }
     })
