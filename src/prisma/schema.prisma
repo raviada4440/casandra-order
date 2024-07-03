@@ -28,7 +28,7 @@ datasource db {
 }
 
 model Account {
-  id                       String    @id
+  id                       String    @id @default(cuid())
   userId                   String    @unique(map: "userId_UNIQUE")
   type                     String
   provider                 String
@@ -53,6 +53,8 @@ model Account {
   smart_style_url          String?   @db.Text
   unconfirmed_status       String?   @db.VarChar(45)
   user_email               String?   @db.VarChar(45)
+  username                 String?   @db.VarChar(45)
+  tenant                   String?   @db.VarChar(256)
   createdAt                DateTime? @default(now()) @db.DateTime(0)
   updatedAt                DateTime? @db.DateTime(0)
   user                     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -680,7 +682,7 @@ model TestResultLoinc {
 }
 
 model User {
-  id            String         @id
+  id            String         @id @default(cuid())
   name          String?
   email         String?        @unique
   password      String?        @db.VarChar(255)

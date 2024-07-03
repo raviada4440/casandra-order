@@ -79,6 +79,7 @@ export const authOptions: NextAuthOptions = {
     ),
 
     // ** ...add more providers here
+    // EPIC Provider
     {
       id: "epic",
       name: "Epic",
@@ -89,11 +90,13 @@ export const authOptions: NextAuthOptions = {
       },
       clientId: process.env.EPIC_CLIENT_ID,
       clientSecret: process.env.EPIC_CLIENT_SECRET,
-      wellKnown: "https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/.well-known/openid-configuration",
+      wellKnown: process.env.EPIC_WELL_KNOWN_URL,
       authorization: { params: { scope: "openid profile fhirUser" } },
       idToken: true,
       checks: ["pkce", "state"],
       profile(profile) {
+        console.log('profile:', profile)
+
         return {
           id: profile.sub,
           name: profile.name,
@@ -103,7 +106,46 @@ export const authOptions: NextAuthOptions = {
           emailVerified: new Date(),
         }
       },
-    }
+    },
+
+    // CERNER Provider
+    {
+      id: "cerner",
+      name: "Cerner",
+      type: "oauth",
+      client: {
+        token_endpoint_auth_method: "client_secret_basic",
+      },
+      clientId: process.env.CERNER_CLIENT_ID,
+      clientSecret: process.env.CERNER_CLIENT_SECRET,
+      token: "https://authorization.cerner.com/tenants/ec2458f2-1e24-41c8-b71b-0e701af7583d/protocols/oauth2/profiles/smart-v1/token",
+
+      // userinfo: "https://kapi.kakao.com/v2/user/me",
+
+      // wellKnown: process.env.CERNER_WELL_KNOWN_URL,
+      authorization: {
+        url: "https://authorization.cerner.com/tenants/ec2458f2-1e24-41c8-b71b-0e701af7583d/protocols/oauth2/profiles/smart-v1/personas/provider/authorize",
+        params: { scope: "openid profile fhirUser" }
+      },
+      idToken: true,
+      checks: ["pkce", "state"],
+      jwks_endpoint: "https://authorization.cerner.com/jwk",
+      issuer: "https://authorization.cerner.com/tenants/ec2458f2-1e24-41c8-b71b-0e701af7583d/oidc/idsps/ec2458f2-1e24-41c8-b71b-0e701af7583d/",
+      profile(profile) {
+        console.log('profile:', profile)
+
+        return {
+          id: profile.sub,
+          name: profile.name,
+          email: profile.email,
+          image: profile.picture,
+          password: '',
+          emailVerified: new Date(),
+        }
+      }
+
+    },
+
 
   ],
 
@@ -139,9 +181,8 @@ export const authOptions: NextAuthOptions = {
      */
     async jwt({ token, user, account, profile }) {
 
-      // console.log('token (jwt()):', token)
-      // console.log('user (jwt()):', user)
-
+      console.log('token (jwt()):', token)
+      console.log('user (jwt()):', user)
       console.log('account (jwt()):', account)
       console.log('profile (jwt()):', profile)
 
@@ -229,8 +270,9 @@ export const authOptions: NextAuthOptions = {
       return token
     },
     async session({ session, token }) {
-      // console.log('session (session():', session)
-      // console.log('token (session()):', token)
+      console.log('session (session():', session)
+      console.log('token (session()):', token)
+
       if (session && session.user) {
         // ** Add custom params to user in session which are added in `jwt()` callback via `token` parameter
         // session.user.name = token.name
@@ -264,10 +306,11 @@ export const authOptions: NextAuthOptions = {
 
       return session
     },
-    async signIn({ account }) {
-      // console.log('user (signIn()):', user)
-      // console.log('account (signIn()):', account)
-      // console.log('profile (signIn()):', profile)
+    async signIn({ account, user, profile }) {
+      console.log('user (signIn()):', user)
+      console.log('account (signIn()):', account)
+      console.log('profile (signIn()):', profile)
+
       if (account) {
         const dstu2PatientExistsIn = "__epic.dstu2.patient" in account
 
@@ -283,6 +326,15 @@ export const authOptions: NextAuthOptions = {
           delete account["user"]
         }
 
+        const needPatientBanner = "need_patient_banner" in account
+
+        if (needPatientBanner) {
+          account.need_patient_banner = account["need_patient_banner"]
+
+          if (typeof account.need_patient_banner === 'boolean') {
+            account["need_patient_banner"] = account.need_patient_banner ? 'true' : 'false'
+          }
+        }
       }
 
       // console.log('account after deleting (signIn()):', account)

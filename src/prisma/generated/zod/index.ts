@@ -12,7 +12,7 @@ import type { Prisma } from '@prisma/client';
 
 export const TransactionIsolationLevelSchema = z.enum(['ReadUncommitted','ReadCommitted','RepeatableRead','Serializable']);
 
-export const AccountScalarFieldEnumSchema = z.enum(['id','userId','type','provider','providerAccountId','refresh_token','access_token','expires_at','token_type','scope','state','id_token','session_state','refresh_token_expires_in','epic_dstu2_patient','appointment','dob','encounter','location','loginDepartment','need_patient_banner','patient','smart_style_url','unconfirmed_status','user_email','createdAt','updatedAt']);
+export const AccountScalarFieldEnumSchema = z.enum(['id','userId','type','provider','providerAccountId','refresh_token','access_token','expires_at','token_type','scope','state','id_token','session_state','refresh_token_expires_in','epic_dstu2_patient','appointment','dob','encounter','location','loginDepartment','need_patient_banner','patient','smart_style_url','unconfirmed_status','user_email','username','tenant','createdAt','updatedAt']);
 
 export const AdminScalarFieldEnumSchema = z.enum(['Id','Name','Email','UserAttributeId']);
 
@@ -98,7 +98,7 @@ export const SortOrderSchema = z.enum(['asc','desc']);
 
 export const NullsOrderSchema = z.enum(['first','last']);
 
-export const AccountOrderByRelevanceFieldEnumSchema = z.enum(['id','userId','type','provider','providerAccountId','refresh_token','access_token','token_type','scope','state','id_token','session_state','epic_dstu2_patient','appointment','dob','encounter','location','loginDepartment','need_patient_banner','patient','smart_style_url','unconfirmed_status','user_email']);
+export const AccountOrderByRelevanceFieldEnumSchema = z.enum(['id','userId','type','provider','providerAccountId','refresh_token','access_token','token_type','scope','state','id_token','session_state','epic_dstu2_patient','appointment','dob','encounter','location','loginDepartment','need_patient_banner','patient','smart_style_url','unconfirmed_status','user_email','username','tenant']);
 
 export const AdminOrderByRelevanceFieldEnumSchema = z.enum(['Id','Name','Email','UserAttributeId']);
 
@@ -218,6 +218,8 @@ export const AccountSchema = z.object({
   smart_style_url: z.string().nullable(),
   unconfirmed_status: z.string().nullable(),
   user_email: z.string().nullable(),
+  username: z.string().nullable(),
+  tenant: z.string().nullable(),
   createdAt: z.date().nullable(),
   updatedAt: z.date().nullable(),
 })
@@ -2695,6 +2697,8 @@ export const AccountSelectSchema: z.ZodType<Prisma.AccountSelect> = z.object({
   smart_style_url: z.boolean().optional(),
   unconfirmed_status: z.boolean().optional(),
   user_email: z.boolean().optional(),
+  username: z.boolean().optional(),
+  tenant: z.boolean().optional(),
   createdAt: z.boolean().optional(),
   updatedAt: z.boolean().optional(),
   user: z.union([z.boolean(),z.lazy(() => UserArgsSchema)]).optional(),
@@ -3947,6 +3951,8 @@ export const AccountWhereInputSchema: z.ZodType<Prisma.AccountWhereInput> = z.ob
   smart_style_url: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   unconfirmed_status: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   user_email: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  username: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  tenant: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   createdAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   updatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   user: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
@@ -3978,6 +3984,8 @@ export const AccountOrderByWithRelationInputSchema: z.ZodType<Prisma.AccountOrde
   smart_style_url: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   unconfirmed_status: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   user_email: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  username: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  tenant: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   createdAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   updatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   user: z.lazy(() => UserOrderByWithRelationInputSchema).optional(),
@@ -4042,6 +4050,8 @@ export const AccountWhereUniqueInputSchema: z.ZodType<Prisma.AccountWhereUniqueI
   smart_style_url: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   unconfirmed_status: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   user_email: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  username: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  tenant: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   createdAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   updatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   user: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
@@ -4073,6 +4083,8 @@ export const AccountOrderByWithAggregationInputSchema: z.ZodType<Prisma.AccountO
   smart_style_url: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   unconfirmed_status: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   user_email: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  username: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  tenant: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   createdAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   updatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   _count: z.lazy(() => AccountCountOrderByAggregateInputSchema).optional(),
@@ -4111,6 +4123,8 @@ export const AccountScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Accou
   smart_style_url: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   unconfirmed_status: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   user_email: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  username: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  tenant: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   createdAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
   updatedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
 }).strict();
@@ -7590,7 +7604,7 @@ export const VerificationTokenScalarWhereWithAggregatesInputSchema: z.ZodType<Pr
 }).strict();
 
 export const AccountCreateInputSchema: z.ZodType<Prisma.AccountCreateInput> = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   type: z.string(),
   provider: z.string(),
   providerAccountId: z.string(),
@@ -7614,13 +7628,15 @@ export const AccountCreateInputSchema: z.ZodType<Prisma.AccountCreateInput> = z.
   smart_style_url: z.string().optional().nullable(),
   unconfirmed_status: z.string().optional().nullable(),
   user_email: z.string().optional().nullable(),
+  username: z.string().optional().nullable(),
+  tenant: z.string().optional().nullable(),
   createdAt: z.date().optional().nullable(),
   updatedAt: z.date().optional().nullable(),
   user: z.lazy(() => UserCreateNestedOneWithoutAccountInputSchema)
 }).strict();
 
 export const AccountUncheckedCreateInputSchema: z.ZodType<Prisma.AccountUncheckedCreateInput> = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   userId: z.string(),
   type: z.string(),
   provider: z.string(),
@@ -7645,6 +7661,8 @@ export const AccountUncheckedCreateInputSchema: z.ZodType<Prisma.AccountUnchecke
   smart_style_url: z.string().optional().nullable(),
   unconfirmed_status: z.string().optional().nullable(),
   user_email: z.string().optional().nullable(),
+  username: z.string().optional().nullable(),
+  tenant: z.string().optional().nullable(),
   createdAt: z.date().optional().nullable(),
   updatedAt: z.date().optional().nullable()
 }).strict();
@@ -7674,6 +7692,8 @@ export const AccountUpdateInputSchema: z.ZodType<Prisma.AccountUpdateInput> = z.
   smart_style_url: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   unconfirmed_status: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   user_email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  username: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  tenant: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   updatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   user: z.lazy(() => UserUpdateOneRequiredWithoutAccountNestedInputSchema).optional()
@@ -7705,12 +7725,14 @@ export const AccountUncheckedUpdateInputSchema: z.ZodType<Prisma.AccountUnchecke
   smart_style_url: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   unconfirmed_status: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   user_email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  username: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  tenant: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   updatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const AccountCreateManyInputSchema: z.ZodType<Prisma.AccountCreateManyInput> = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   userId: z.string(),
   type: z.string(),
   provider: z.string(),
@@ -7735,6 +7757,8 @@ export const AccountCreateManyInputSchema: z.ZodType<Prisma.AccountCreateManyInp
   smart_style_url: z.string().optional().nullable(),
   unconfirmed_status: z.string().optional().nullable(),
   user_email: z.string().optional().nullable(),
+  username: z.string().optional().nullable(),
+  tenant: z.string().optional().nullable(),
   createdAt: z.date().optional().nullable(),
   updatedAt: z.date().optional().nullable()
 }).strict();
@@ -7764,6 +7788,8 @@ export const AccountUpdateManyMutationInputSchema: z.ZodType<Prisma.AccountUpdat
   smart_style_url: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   unconfirmed_status: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   user_email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  username: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  tenant: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   updatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
@@ -7794,6 +7820,8 @@ export const AccountUncheckedUpdateManyInputSchema: z.ZodType<Prisma.AccountUnch
   smart_style_url: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   unconfirmed_status: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   user_email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  username: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  tenant: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   updatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
@@ -11135,7 +11163,7 @@ export const TestResultLoincUncheckedUpdateManyInputSchema: z.ZodType<Prisma.Tes
 }).strict();
 
 export const UserCreateInputSchema: z.ZodType<Prisma.UserCreateInput> = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   name: z.string().optional().nullable(),
   email: z.string().optional().nullable(),
   password: z.string().optional().nullable(),
@@ -11147,7 +11175,7 @@ export const UserCreateInputSchema: z.ZodType<Prisma.UserCreateInput> = z.object
 }).strict();
 
 export const UserUncheckedCreateInputSchema: z.ZodType<Prisma.UserUncheckedCreateInput> = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   name: z.string().optional().nullable(),
   email: z.string().optional().nullable(),
   password: z.string().optional().nullable(),
@@ -11183,7 +11211,7 @@ export const UserUncheckedUpdateInputSchema: z.ZodType<Prisma.UserUncheckedUpdat
 }).strict();
 
 export const UserCreateManyInputSchema: z.ZodType<Prisma.UserCreateManyInput> = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   name: z.string().optional().nullable(),
   email: z.string().optional().nullable(),
   password: z.string().optional().nullable(),
@@ -11399,6 +11427,8 @@ export const AccountCountOrderByAggregateInputSchema: z.ZodType<Prisma.AccountCo
   smart_style_url: z.lazy(() => SortOrderSchema).optional(),
   unconfirmed_status: z.lazy(() => SortOrderSchema).optional(),
   user_email: z.lazy(() => SortOrderSchema).optional(),
+  username: z.lazy(() => SortOrderSchema).optional(),
+  tenant: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -11434,6 +11464,8 @@ export const AccountMaxOrderByAggregateInputSchema: z.ZodType<Prisma.AccountMaxO
   smart_style_url: z.lazy(() => SortOrderSchema).optional(),
   unconfirmed_status: z.lazy(() => SortOrderSchema).optional(),
   user_email: z.lazy(() => SortOrderSchema).optional(),
+  username: z.lazy(() => SortOrderSchema).optional(),
+  tenant: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -11464,6 +11496,8 @@ export const AccountMinOrderByAggregateInputSchema: z.ZodType<Prisma.AccountMinO
   smart_style_url: z.lazy(() => SortOrderSchema).optional(),
   unconfirmed_status: z.lazy(() => SortOrderSchema).optional(),
   user_email: z.lazy(() => SortOrderSchema).optional(),
+  username: z.lazy(() => SortOrderSchema).optional(),
+  tenant: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
   updatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -16574,7 +16608,7 @@ export const NestedEnumUserAttribute_UserTypeNullableWithAggregatesFilterSchema:
 }).strict();
 
 export const UserCreateWithoutAccountInputSchema: z.ZodType<Prisma.UserCreateWithoutAccountInput> = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   name: z.string().optional().nullable(),
   email: z.string().optional().nullable(),
   password: z.string().optional().nullable(),
@@ -16585,7 +16619,7 @@ export const UserCreateWithoutAccountInputSchema: z.ZodType<Prisma.UserCreateWit
 }).strict();
 
 export const UserUncheckedCreateWithoutAccountInputSchema: z.ZodType<Prisma.UserUncheckedCreateWithoutAccountInput> = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   name: z.string().optional().nullable(),
   email: z.string().optional().nullable(),
   password: z.string().optional().nullable(),
@@ -21148,7 +21182,7 @@ export const ProviderUncheckedUpdateWithoutProviderOrganizationInputSchema: z.Zo
 }).strict();
 
 export const UserCreateWithoutSessionInputSchema: z.ZodType<Prisma.UserCreateWithoutSessionInput> = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   name: z.string().optional().nullable(),
   email: z.string().optional().nullable(),
   password: z.string().optional().nullable(),
@@ -21159,7 +21193,7 @@ export const UserCreateWithoutSessionInputSchema: z.ZodType<Prisma.UserCreateWit
 }).strict();
 
 export const UserUncheckedCreateWithoutSessionInputSchema: z.ZodType<Prisma.UserUncheckedCreateWithoutSessionInput> = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   name: z.string().optional().nullable(),
   email: z.string().optional().nullable(),
   password: z.string().optional().nullable(),
@@ -23903,7 +23937,7 @@ export const TestCatalogUncheckedUpdateWithoutTestResultLoincInputSchema: z.ZodT
 }).strict();
 
 export const AccountCreateWithoutUserInputSchema: z.ZodType<Prisma.AccountCreateWithoutUserInput> = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   type: z.string(),
   provider: z.string(),
   providerAccountId: z.string(),
@@ -23927,12 +23961,14 @@ export const AccountCreateWithoutUserInputSchema: z.ZodType<Prisma.AccountCreate
   smart_style_url: z.string().optional().nullable(),
   unconfirmed_status: z.string().optional().nullable(),
   user_email: z.string().optional().nullable(),
+  username: z.string().optional().nullable(),
+  tenant: z.string().optional().nullable(),
   createdAt: z.date().optional().nullable(),
   updatedAt: z.date().optional().nullable()
 }).strict();
 
 export const AccountUncheckedCreateWithoutUserInputSchema: z.ZodType<Prisma.AccountUncheckedCreateWithoutUserInput> = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   type: z.string(),
   provider: z.string(),
   providerAccountId: z.string(),
@@ -23956,6 +23992,8 @@ export const AccountUncheckedCreateWithoutUserInputSchema: z.ZodType<Prisma.Acco
   smart_style_url: z.string().optional().nullable(),
   unconfirmed_status: z.string().optional().nullable(),
   user_email: z.string().optional().nullable(),
+  username: z.string().optional().nullable(),
+  tenant: z.string().optional().nullable(),
   createdAt: z.date().optional().nullable(),
   updatedAt: z.date().optional().nullable()
 }).strict();
@@ -24042,6 +24080,8 @@ export const AccountUpdateWithoutUserInputSchema: z.ZodType<Prisma.AccountUpdate
   smart_style_url: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   unconfirmed_status: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   user_email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  username: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  tenant: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   updatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
@@ -24071,6 +24111,8 @@ export const AccountUncheckedUpdateWithoutUserInputSchema: z.ZodType<Prisma.Acco
   smart_style_url: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   unconfirmed_status: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   user_email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  username: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  tenant: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   createdAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   updatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
@@ -24191,7 +24233,7 @@ export const ProviderCreateOrConnectWithoutUserAttributeInputSchema: z.ZodType<P
 }).strict();
 
 export const UserCreateWithoutUserAttributeInputSchema: z.ZodType<Prisma.UserCreateWithoutUserAttributeInput> = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   name: z.string().optional().nullable(),
   email: z.string().optional().nullable(),
   password: z.string().optional().nullable(),
@@ -24202,7 +24244,7 @@ export const UserCreateWithoutUserAttributeInputSchema: z.ZodType<Prisma.UserCre
 }).strict();
 
 export const UserUncheckedCreateWithoutUserAttributeInputSchema: z.ZodType<Prisma.UserUncheckedCreateWithoutUserAttributeInput> = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   name: z.string().optional().nullable(),
   email: z.string().optional().nullable(),
   password: z.string().optional().nullable(),
@@ -30229,7 +30271,7 @@ export const TestResultLoincDeleteManyArgsSchema: z.ZodType<Prisma.TestResultLoi
 export const UserCreateArgsSchema: z.ZodType<Prisma.UserCreateArgs> = z.object({
   select: UserSelectSchema.optional(),
   include: UserIncludeSchema.optional(),
-  data: z.union([ UserCreateInputSchema,UserUncheckedCreateInputSchema ]),
+  data: z.union([ UserCreateInputSchema,UserUncheckedCreateInputSchema ]).optional(),
 }).strict() ;
 
 export const UserUpsertArgsSchema: z.ZodType<Prisma.UserUpsertArgs> = z.object({

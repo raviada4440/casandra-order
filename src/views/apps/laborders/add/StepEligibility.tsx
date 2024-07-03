@@ -97,7 +97,7 @@ const StepEligibility = ({ activeStep, handleNext, handlePrev, steps }: Props) =
         <div className='flex items-center gap-2 mbe-4'>
           <i className='ri-user-line text-3xl text-primary' />
           <Typography variant='h5' className='text-primary'>
-            Program Details & Elibility Criteria
+            Program Elibility Criteria
           </Typography>
         </div>
           <Grid container spacing={5}>

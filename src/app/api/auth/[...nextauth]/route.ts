@@ -26,6 +26,27 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
     console.log("authOptions providers in route: ", JSON.stringify(authOptions.providers))
   }
 
+
+  if(req?.url?.includes("cerner") && req.method === "POST") {
+    console.log(
+      "Handling callback request from my Identity Provider",
+      url.searchParams.get("wellknownUrl")
+    )
+    const cernerProvider: any = authOptions.providers.find(provider => provider.id === 'cerner')
+
+    // const wellknownUrl = url.searchParams.get("wellknownUrl")
+    // cernerProvider.wellKnown = wellknownUrl
+    // cernerProvider.type = "oauth"
+
+    const launchToken = url.searchParams.get("launch")
+
+    if (launchToken && launchToken.length > 0) {
+      cernerProvider.authorization.params.scope = "launch profile openid fhirUser"
+    }
+
+    console.log("authOptions providers in route: ", JSON.stringify(authOptions.providers))
+  }
+
   const response =  await NextAuth(req, res, authOptions)
 
   console.log("response: ", JSON.stringify(response))
