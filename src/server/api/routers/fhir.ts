@@ -11,6 +11,7 @@ import { createTRPCRouter, publicProcedure } from "@server/api/trpc"
 
 
 const getFHIRPractitioner = async (params: {
+  fhirEndpoint: string;
   accessToken: string;
   fhirUser: string;
 }): Promise<Practitioner> => {
@@ -31,11 +32,12 @@ const getFHIRPractitioner = async (params: {
 }
 
 const getFHIRPractitionerRole = async (params: {
+  fhirEndpoint: string;
   accessToken: string;
   providerAccountId: string;
 }): Promise<Bundle> => {
 
-  const url = new URL('https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/' + 'PractitionerRole?practitioner=' + params.providerAccountId)
+  const url = new URL(params.fhirEndpoint + 'PractitionerRole?practitioner=' + params.providerAccountId)
 
   const response = await fetch(url.toString(), {
     headers: {
@@ -53,11 +55,12 @@ const getFHIRPractitionerRole = async (params: {
 }
 
 const getFHIRPractitionerRoleWithIncludes = async (params: {
+  fhirEndpoint: string;
   accessToken: string;
   providerAccountId: string;
 }): Promise<Bundle> => {
 
-  const url = new URL('https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/' + 'PractitionerRole?practitioner=' + params.providerAccountId + '&_include=PractitionerRole:practitioner&_include=PractitionerRole:location')
+  const url = new URL(params.fhirEndpoint + 'PractitionerRole?practitioner=' + params.providerAccountId + '&_include=PractitionerRole:practitioner&_include=PractitionerRole:location')
 
   const response = await fetch(url.toString(), {
     headers: {
@@ -75,11 +78,12 @@ const getFHIRPractitionerRoleWithIncludes = async (params: {
 }
 
 const getFHIRLocation = async (params: {
+  fhirEndpoint: string;
   accessToken: string;
   fhirLocation: string;
 }): Promise<Location> => {
 
-  const url = new URL('https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/' + params.fhirLocation)
+  const url = new URL(params.fhirEndpoint + params.fhirLocation)
 
   const response = await fetch(url.toString(), {
     headers: {
@@ -91,17 +95,18 @@ const getFHIRLocation = async (params: {
 
   const data = (await response.json()) as Location;
 
-  // console.log('data: ', data)
+  console.log('data: ', JSON.stringify(data))
 
   return data;
 }
 
 const getFHIROrganization = async (params: {
+  fhirEndpoint: string;
   accessToken: string;
   fhirOrganization: string;
 }): Promise<Organization> => {
 
-  const url = new URL('https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/' + params.fhirOrganization)
+  const url = new URL(params.fhirEndpoint + params.fhirOrganization)
 
   const response = await fetch(url.toString(), {
     headers: {
@@ -119,11 +124,12 @@ const getFHIROrganization = async (params: {
 }
 
 const getFHIRPatient = async (params: {
+  fhirEndpoint: string;
   accessToken: string;
   fhirPatient: string;
 }): Promise<Patient> => {
 
-  const url = new URL('https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/' + params.fhirPatient)
+  const url = new URL(params.fhirEndpoint + params.fhirPatient)
 
   const response = await fetch(url.toString(), {
     headers: {
@@ -141,12 +147,14 @@ const getFHIRPatient = async (params: {
 }
 
 const getFHIRPatientList = async (params: {
+  fhirEndpoint: string;
   accessToken: string;
+  listOid: string;
 }): Promise<Bundle> => {
 
   // console.log('accessToken: ', params.accessToken)
 
-  const url = new URL('https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/List?code=patients&identifier=urn:oid:1.2.840.114350.1.13.0.1.7.2.806567|5332')
+  const url = new URL('https://fhir.epic.com/interconnect-fhir-oauth/api/FHIR/R4/List?code=patients&identifier='+ params.listOid)
 
   const response = await fetch(url.toString(), {
     headers: {
@@ -195,10 +203,10 @@ export const fhirRouter = createTRPCRouter({
 
 
   getPractitioner: publicProcedure
-    .input(z.object({ accessToken: z.string(), fhirUser: z.string() }))
+    .input(z.object({ fhirEndpoint: z.string(), accessToken: z.string(), fhirUser: z.string() }))
     .query(async ({ input }) => {
 
-      const practitioner = await getFHIRPractitioner({ accessToken: input.accessToken, fhirUser: input.fhirUser })
+      const practitioner = await getFHIRPractitioner({ fhirEndpoint: input.fhirEndpoint, accessToken: input.accessToken, fhirUser: input.fhirUser })
 
       // console.log(practitioner)
 
@@ -207,10 +215,10 @@ export const fhirRouter = createTRPCRouter({
     }),
 
   getPractitionerRole: publicProcedure
-    .input(z.object({ accessToken: z.string(), providerAccountId: z.string() }))
+    .input(z.object({ fhirEndpoint: z.string(), accessToken: z.string(), providerAccountId: z.string() }))
     .query(async ({ input }) => {
 
-      const bundle = await getFHIRPractitionerRole({ accessToken: input.accessToken, providerAccountId: input.providerAccountId })
+      const bundle = await getFHIRPractitionerRole({ fhirEndpoint: input.fhirEndpoint, accessToken: input.accessToken, providerAccountId: input.providerAccountId })
 
       // console.log(bundle)
 
@@ -227,10 +235,10 @@ export const fhirRouter = createTRPCRouter({
     }),
 
   getPractitionerRoleWithIncludes: publicProcedure
-    .input(z.object({ accessToken: z.string(), providerAccountId: z.string() }))
+    .input(z.object({ fhirEndpoint: z.string(), accessToken: z.string(), providerAccountId: z.string() }))
     .query(async ({ input }) => {
 
-      const bundle = await getFHIRPractitionerRoleWithIncludes({ accessToken: input.accessToken, providerAccountId: input.providerAccountId })
+      const bundle = await getFHIRPractitionerRoleWithIncludes({ fhirEndpoint: input.fhirEndpoint, accessToken: input.accessToken, providerAccountId: input.providerAccountId })
 
       // // console.log(bundle)
 
@@ -239,10 +247,10 @@ export const fhirRouter = createTRPCRouter({
     }),
 
   getLocation: publicProcedure
-    .input(z.object({ accessToken: z.string(), fhirLocation: z.string() }))
+    .input(z.object({ fhirEndpoint: z.string(), accessToken: z.string(), fhirLocation: z.string() }))
     .query(async ({ input }) => {
 
-      const location = await getFHIRLocation({ accessToken: input.accessToken, fhirLocation: input.fhirLocation })
+      const location = await getFHIRLocation({ fhirEndpoint: input.fhirEndpoint, accessToken: input.accessToken, fhirLocation: input.fhirLocation })
 
       // console.log(location)
 
@@ -251,10 +259,10 @@ export const fhirRouter = createTRPCRouter({
     }),
 
   getOrganization: publicProcedure
-    .input(z.object({ accessToken: z.string(), fhirOrganization: z.string() }))
+    .input(z.object({ fhirEndpoint: z.string(), accessToken: z.string(), fhirOrganization: z.string() }))
     .query(async ({ input }) => {
 
-      const organization = await getFHIROrganization({ accessToken: input.accessToken, fhirOrganization: input.fhirOrganization })
+      const organization = await getFHIROrganization({ fhirEndpoint: input.fhirEndpoint, accessToken: input.accessToken, fhirOrganization: input.fhirOrganization })
 
       // console.log(organization)
 
@@ -263,10 +271,10 @@ export const fhirRouter = createTRPCRouter({
     }),
 
   getPatient: publicProcedure
-    .input(z.object({ accessToken: z.string(), fhirPatient: z.string() }))
+    .input(z.object({ fhirEndpoint: z.string(), accessToken: z.string(), fhirPatient: z.string() }))
     .query(async ({ input }) => {
 
-      const patient = await getFHIRPatient({ accessToken: input.accessToken, fhirPatient: input.fhirPatient })
+      const patient = await getFHIRPatient({ fhirEndpoint: input.fhirEndpoint, accessToken: input.accessToken, fhirPatient: input.fhirPatient })
 
       // console.log(patient)
 
@@ -275,12 +283,12 @@ export const fhirRouter = createTRPCRouter({
     }),
 
   getPatientList: publicProcedure
-    .input(z.object({ accessToken: z.string() }))
+    .input(z.object({ fhirEndpoint: z.string(), accessToken: z.string(), listOid: z.string()}))
     .query(async ({ input }) => {
 
       const patientList: PrismaPatient[] = []
 
-      const patientBundle: Bundle = await getFHIRPatientList({ accessToken: input.accessToken })
+      const patientBundle: Bundle = await getFHIRPatientList({ fhirEndpoint: input.fhirEndpoint, accessToken: input.accessToken, listOid: input.listOid as string})
 
       if (patientBundle) {
         const list = patientBundle.entry?.[0].resource as List
@@ -290,7 +298,7 @@ export const fhirRouter = createTRPCRouter({
           for (const entry of list.entry) {
             const patientItem = entry.item;
 
-            const fhirPatientDetails = await getFHIRPatient({ accessToken: input.accessToken, fhirPatient: patientItem.reference as string})
+            const fhirPatientDetails = await getFHIRPatient({ fhirEndpoint: input.fhirEndpoint, accessToken: input.accessToken, fhirPatient: patientItem.reference as string})
 
             if (fhirPatientDetails) {
               const patient: PrismaPatient = mapPatient(fhirPatientDetails)

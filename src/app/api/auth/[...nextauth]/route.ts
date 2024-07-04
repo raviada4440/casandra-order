@@ -41,7 +41,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
     const launchToken = url.searchParams.get("launch")
 
     if (launchToken && launchToken.length > 0) {
-      cernerProvider.authorization.params.scope = "launch profile openid fhirUser"
+      cernerProvider.authorization.params.scope = "user/Location.read user/Organization.read user/Patient.read user/Practitioner.read fhirUser launch openid profile"
     }
 
     console.log("authOptions providers in route: ", JSON.stringify(authOptions.providers))

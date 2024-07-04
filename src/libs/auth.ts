@@ -118,19 +118,15 @@ export const authOptions: NextAuthOptions = {
       },
       clientId: process.env.CERNER_CLIENT_ID,
       clientSecret: process.env.CERNER_CLIENT_SECRET,
-      token: "https://authorization.cerner.com/tenants/ec2458f2-1e24-41c8-b71b-0e701af7583d/protocols/oauth2/profiles/smart-v1/token",
-
-      // userinfo: "https://kapi.kakao.com/v2/user/me",
-
-      // wellKnown: process.env.CERNER_WELL_KNOWN_URL,
+      token: process.env.CERNER_TOKEN_ENDPOINT,
       authorization: {
-        url: "https://authorization.cerner.com/tenants/ec2458f2-1e24-41c8-b71b-0e701af7583d/protocols/oauth2/profiles/smart-v1/personas/provider/authorize",
+        url: process.env.CERNER_AUTHORIZATION_ENDPOINT,
         params: { scope: "openid profile fhirUser" }
       },
       idToken: true,
       checks: ["pkce", "state"],
-      jwks_endpoint: "https://authorization.cerner.com/jwk",
-      issuer: "https://authorization.cerner.com/tenants/ec2458f2-1e24-41c8-b71b-0e701af7583d/oidc/idsps/ec2458f2-1e24-41c8-b71b-0e701af7583d/",
+      jwks_endpoint: process.env.CERNER_JKS_ENDPOINT,
+      issuer: process.env.CERNER_ISSUER,
       profile(profile) {
         console.log('profile:', profile)
 
@@ -181,53 +177,26 @@ export const authOptions: NextAuthOptions = {
      */
     async jwt({ token, user, account, profile }) {
 
-      console.log('token (jwt()):', token)
-      console.log('user (jwt()):', user)
+      // console.log('token (jwt()):', token)
+      // console.log('user (jwt()):', user)
       console.log('account (jwt()):', account)
-      console.log('profile (jwt()):', profile)
 
+      // console.log('profile (jwt()):', profile)
       let practitionerRoleBundle: Bundle | OperationOutcome;
       let fhirPatient: Patient | OperationOutcome | null = null;
       let parentOrg: Organization | null = null;
       let childOrg: Location | null = null;
 
-      if (account && profile && user && account.providerAccountId && account.access_token && user.id) {
-        practitionerRoleBundle = await api.fhir.getPractitionerRoleWithIncludes.query({ accessToken: account?.access_token as string, providerAccountId: account?.providerAccountId as string })
-        console.log('practitionerRoleBundle:', JSON.stringify(practitionerRoleBundle))
+      let providerAccountId = ''
+      let fhirEndpoint = ''
+      let fhirLocationId = ''
+      let fhirPatientId = ''
 
-        if (isOperationOutcome(practitionerRoleBundle)) {
-          console.log('practitionerRoleBundle is of type OperationOutcome');
-          const location = await api.fhir.getLocation.query({ accessToken: account?.access_token as string, fhirLocation: 'Location/' + account?.location as string })
-          const provider = await api.fhir.getPractitioner.query({ accessToken: account?.access_token as string, fhirUser: profile?.fhirUser as string })
 
-          if (location && location.managingOrganization) {
-            parentOrg = await api.fhir.getOrganization.query({ accessToken: account?.access_token as string, fhirOrganization: location.managingOrganization.reference as string })
+      if (token && user &&  account ) {
+        // Persist the OAuth access_token and or the user id to the token right after signin
+        token.accessToken = account.access_token
 
-            if (parentOrg) {
-              console.log('parentOrg:', JSON.stringify(parentOrg))
-            }
-          }
-
-          if (location && location.partOf) {
-            childOrg = await api.fhir.getLocation.query({ accessToken: account?.access_token as string, fhirLocation: location.partOf.reference as string })
-
-            if (childOrg) {
-              console.log('childOrg:', JSON.stringify(childOrg))
-            }
-          }
-
-          fhirPatient = await api.fhir.getPatient.query({ accessToken: account?.access_token as string, fhirPatient: 'Patient/' + account?.patient as string })
-
-          await processLocationProviderPatient(location, parentOrg as Organization, childOrg as Location, provider, fhirPatient, user.id as string)
-        } else {
-
-          console.log('practitionerRoleBundle is of type Bundle');
-          await processBundle(practitionerRoleBundle, user.id as string)
-        }
-
-      }
-
-      if (account && account.type && account.provider ){
         token.authType = account.type || ''
         token.authProvider = account.provider || ''
         token.entryPoint = 'standalone'
@@ -236,42 +205,90 @@ export const authOptions: NextAuthOptions = {
           console.log('launch:', account.scope)
           token.entryPoint = 'launch'
         }
-      }
 
+        if (profile ) {
+          token.id = profile?.email
 
-      if (user) {
-        if (user.name && user.email && user.UserAttribute) {
-          /*
-          * For adding custom parameters to user in session, we first need to add those parameters
-          * in token which then will be available in the `session()` callback
-          */
-          token.name = user.name
-          token.UserAttribute = user?.UserAttribute as UserAttributePartialRelations
-        } else if (account) {
-          const oathUser = await api.user.getUserById.query({ id: user.id as string })
-
-          if (oathUser) {
-            token.name = oathUser?.UserAttribute?.Provider?.Name
-            token.UserAttribute = oathUser?.UserAttribute as UserAttributePartialRelations
-          }
-
-          if (fhirPatient && !isOperationOutcome(fhirPatient) && fhirPatient.id) {
-            token.patientId = fhirPatient.id
+          if (account.provider === 'cerner') {
+            providerAccountId = profile.fhirUser.split("/").pop()
+            fhirEndpoint = process.env.CERNER_FHIR_ENDPOINT as string
+            fhirLocationId = 'Location/' + account.tenant as string
+            fhirPatientId = 'Patient/' + account.patient as string
+          } else if (account.provider === 'epic') {
+            token.id = profile?.email
+            providerAccountId = account.providerAccountId
+            fhirEndpoint = process.env.EPIC_FHIR_ENDPOINT as string
+            fhirLocationId = 'Location/' + account.location as string
+            fhirPatientId = 'Patient/' + account.patient as string
           }
         }
-      }
 
-      // Persist the OAuth access_token and or the user id to the token right after signin
-      if (account) {
-        token.accessToken = account.access_token
-        token.id = profile?.email
+        token.fhirEndpoint = fhirEndpoint
+
+        if (token.authType === 'oauth'  && token.entryPoint === 'standalone') {
+          practitionerRoleBundle = await api.fhir.getPractitionerRoleWithIncludes.query({ fhirEndpoint: fhirEndpoint, accessToken: account?.access_token as string, providerAccountId: providerAccountId })
+          console.log('practitionerRoleBundle:', JSON.stringify(practitionerRoleBundle))
+
+          if (!isOperationOutcome(practitionerRoleBundle)) {
+            console.log('practitionerRoleBundle is of type Bundle');
+            await processBundle(practitionerRoleBundle, user.id as string)
+          }
+        }
+
+        if (token.authType === 'oauth' && token.entryPoint === 'launch') {
+          console.log('practitionerRoleBundle is of type OperationOutcome');
+          const location = await api.fhir.getLocation.query({ fhirEndpoint: fhirEndpoint, accessToken: account?.access_token as string, fhirLocation: fhirLocationId })
+          const provider = await api.fhir.getPractitioner.query({ fhirEndpoint: fhirEndpoint, accessToken: account?.access_token as string, fhirUser: profile?.fhirUser as string })
+
+          if (location && location.managingOrganization) {
+            parentOrg = await api.fhir.getOrganization.query({ fhirEndpoint: fhirEndpoint, accessToken: account?.access_token as string, fhirOrganization: location.managingOrganization.reference as string })
+
+            if (parentOrg) {
+              console.log('parentOrg:', JSON.stringify(parentOrg))
+            }
+          }
+
+          if (location && location.partOf) {
+            childOrg = await api.fhir.getLocation.query({ fhirEndpoint: fhirEndpoint, accessToken: account?.access_token as string, fhirLocation: location.partOf.reference as string })
+
+            if (childOrg) {
+              console.log('childOrg:', JSON.stringify(childOrg))
+            }
+          }
+
+          fhirPatient = await api.fhir.getPatient.query({ fhirEndpoint: fhirEndpoint, accessToken: account?.access_token as string, fhirPatient: fhirPatientId })
+
+          await processLocationProviderPatient(location, parentOrg as Organization, childOrg as Location, provider, fhirPatient, user.id as string)
+        }
+
+        if (user) {
+          if (user.name && user.email && user.UserAttribute) {
+            /*
+            * For adding custom parameters to user in session, we first need to add those parameters
+            * in token which then will be available in the `session()` callback
+            */
+            token.name = user.name
+            token.UserAttribute = user?.UserAttribute as UserAttributePartialRelations
+          } else if (account) {
+            const oathUser = await api.user.getUserById.query({ id: user.id as string })
+
+            if (oathUser) {
+              token.name = oathUser?.UserAttribute?.Provider?.Name
+              token.UserAttribute = oathUser?.UserAttribute as UserAttributePartialRelations
+            }
+
+            if (fhirPatient && !isOperationOutcome(fhirPatient) && fhirPatient.id) {
+              token.patientId = fhirPatient.id
+            }
+          }
+        }
       }
 
       return token
     },
     async session({ session, token }) {
-      console.log('session (session():', session)
-      console.log('token (session()):', token)
+      // console.log('session (session():', session)
+      // console.log('token (session()):', token)
 
       if (session && session.user) {
         // ** Add custom params to user in session which are added in `jwt()` callback via `token` parameter
@@ -300,16 +317,20 @@ export const authOptions: NextAuthOptions = {
           session.entryPoint = token.entryPoint
         }
 
+        if (token && token.fhirEndpoint) {
+          session.fhirEndpoint = token.fhirEndpoint
+        }
+
       }
 
       console.log('session (session()):', session)
 
       return session
     },
-    async signIn({ account, user, profile }) {
-      console.log('user (signIn()):', user)
-      console.log('account (signIn()):', account)
-      console.log('profile (signIn()):', profile)
+    async signIn({ account }) {
+      // console.log('user (signIn()):', user)
+      // console.log('account (signIn()):', account)
+      // console.log('profile (signIn()):', profile)
 
       if (account) {
         const dstu2PatientExistsIn = "__epic.dstu2.patient" in account
@@ -496,13 +517,13 @@ const processLocationProviderPatient = async (location: Location, parentOrg: Org
   const providerToProviderOrg = { ...provider, ProviderOrganization: { connectOrCreate: { where: { Id: provider.Id }, create: organization } } }
   const userAttributeProvider = { ...userAttribute, Provider: { connectOrCreate: { where: { Id: provider.Id }, create: providerToProviderOrg } } }
 
+  console.log('userAttributeProvider:', JSON.stringify(userAttributeProvider))
+
+  // const userAttributeAfterCreate = await api.directory.addUserAttribute.mutate(userAttributeProvider)
+  // console.log('orgAfterCreate:', JSON.stringify(userAttributeAfterCreate))
 
   const patientAfterCreate = await api.patient.upsertPatient.mutate(patientObj)
 
-  // console.log('userAttributeProvider:', JSON.stringify(userAttributeProvider))
-  const userAttributeAfterCreate = await api.directory.addUserAttribute.mutate(userAttributeProvider)
-
-  console.log('orgAfterCreate:', JSON.stringify(userAttributeAfterCreate))
   console.log('patientAfterCreate:', JSON.stringify(patientAfterCreate))
 
 

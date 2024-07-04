@@ -7,6 +7,7 @@ interface ISession extends DefaultSession {
   authProvider?: string
   entryPoint?: string
   accessToken?: string
+  fhirEndpoint?: string
 }
 
 declare module "next-auth" {
@@ -16,6 +17,7 @@ declare module "next-auth" {
     authProvider?: string
     entryPoint?: string
     accessToken?: string
+    fhirEndpoint?: string
   }
 }
 

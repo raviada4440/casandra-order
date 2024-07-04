@@ -20,9 +20,15 @@ const AutocompleteFhirPatient = () => {
   const [options, setOptions] = useState<Patient[]>([]);
   const loading = open && options.length === 0;
 
-  // const [inputValue, setInputValue] = useState('');
+  let listOid = ''
 
-  const { data, error, isLoading } = api.fhir.getPatientList.useQuery({ accessToken: session?.accessToken as string });
+  if (session?.authType === 'oauth' && session?.authProvider === 'cerner') {
+    listOid = 'urn:oid:1.2.840.114350.1.13.0.1.7.2.806567|5332'
+  } else {
+    listOid = 'urn:oid:1.2.840.114350.1.13.0.1.7.2.806567|5332'
+  }
+
+  const { data, error, isLoading } = api.fhir.getPatientList.useQuery({ fhirEndpoint: session?.fhirEndpoint as string, accessToken: session?.accessToken as string, listOid: listOid });
 
   const onPatientChange = (value: PatientWithRelations) => {
     console.log('value', value)
