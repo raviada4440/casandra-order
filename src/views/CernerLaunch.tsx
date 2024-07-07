@@ -72,7 +72,7 @@ const CernerLaunch = () => {
         <CardMedia
           component="img"
           sx={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-          image="/images/pages/epic-casandra.png"
+          image="/images/pages/cerner-casandra.png"
           alt="Cerner Launch"
         />
         <CardContent>

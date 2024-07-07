@@ -73,4 +73,17 @@ export const directoryRouter = createTRPCRouter({
       })
     }),
 
+  getOrganizationByOrgName: publicProcedure
+    .input(z.object({ name: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.organization.findMany({
+        where: {
+          OrgName: {
+            equals: input.name,
+          },
+        },
+        orderBy: { OrgName: "asc" },
+        take: input.name == undefined || '' ? undefined : 50,
+      })
+    }),
 })

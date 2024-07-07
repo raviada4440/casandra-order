@@ -10,7 +10,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
 
   if(req?.url?.includes("epic") && req.method === "POST") {
     console.log(
-      "Handling callback request from my Identity Provider",
+      "Handling callback request from epic",
       url.searchParams.get("wellknownUrl")
     )
     const wellknownUrl = url.searchParams.get("wellknownUrl")
@@ -23,13 +23,13 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
       epicProvider.authorization.params.scope = "launch openid profile fhirUser"
     }
 
-    console.log("authOptions providers in route: ", JSON.stringify(authOptions.providers))
+    console.log("authOptions providers in route: ", JSON.stringify(epicProvider))
   }
 
 
   if(req?.url?.includes("cerner") && req.method === "POST") {
     console.log(
-      "Handling callback request from my Identity Provider",
+      "Handling callback request from cerner",
       url.searchParams.get("wellknownUrl")
     )
     const cernerProvider: any = authOptions.providers.find(provider => provider.id === 'cerner')
@@ -44,7 +44,7 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
       cernerProvider.authorization.params.scope = "user/Location.read user/Organization.read user/Patient.read user/Practitioner.read fhirUser launch openid profile"
     }
 
-    console.log("authOptions providers in route: ", JSON.stringify(authOptions.providers))
+    console.log("cerner authOptions providers in route: ", JSON.stringify(cernerProvider))
   }
 
   const response =  await NextAuth(req, res, authOptions)

@@ -138,10 +138,10 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
               {session?.authProvider === 'credentials' && session?.entryPoint === 'standalone' && (
                 <AutocompletePatient />
               )}
-              {session?.authProvider === 'epic' && session?.entryPoint === 'standalone' && (
+              {(session?.authProvider === 'cerner' || session?.authProvider === 'epic') && session?.entryPoint === 'standalone' && (
                 <AutocompleteFhirPatient />
               )}
-              {session?.authProvider === 'epic' && session?.entryPoint === 'launch' && (
+              {(session?.authProvider === 'cerner' || session?.authProvider === 'epic') && session?.entryPoint === 'launch' && (
                 <TextField
                   fullWidth
                   label='Last Name'
@@ -163,7 +163,7 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
             <Grid item xs={12} md={3}>
               <AppReactDatepicker
                 boxProps={{ className: 'is-full' }}
-                selected={formData?.DateOfBirth || null }
+                selected={formData?.DateOfBirth? new Date(formData?.DateOfBirth.getTime() + Math.abs(formData?.DateOfBirth.getTimezoneOffset() * 60000)) : null || null }
                 dateFormat={'MM/dd/yyyy'}
                 onChange={(date: Date) => handleFormChange('DateOfBirth', date)}
                 customInput={<TextField fullWidth label='Date Of Birth' size='medium' />}

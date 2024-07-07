@@ -7,10 +7,10 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 // import { PrismaClient } from '@prisma/client'
 import type { NextAuthOptions } from 'next-auth'
 import type { Adapter } from 'next-auth/adapters'
-import type { Bundle, Location, Practitioner, OperationOutcome, Patient, Organization } from "fhir/r4";
+import type { Bundle, Location, Practitioner, OperationOutcome, Patient, Organization as FhirOrganization } from "fhir/r4";
 import dayjs from 'dayjs';
 
-import type { UserAttributePartialRelations } from '~prisma/generated/zod'
+import type { Organization, UserAttributePartialRelations } from '~prisma/generated/zod'
 import { api } from '~trpc/server'
 import { db } from "@server/db";
 
@@ -95,8 +95,6 @@ export const authOptions: NextAuthOptions = {
       idToken: true,
       checks: ["pkce", "state"],
       profile(profile) {
-        console.log('profile:', profile)
-
         return {
           id: profile.sub,
           name: profile.name,
@@ -113,6 +111,7 @@ export const authOptions: NextAuthOptions = {
       id: "cerner",
       name: "Cerner",
       type: "oauth",
+      version: "2.0",
       client: {
         token_endpoint_auth_method: "client_secret_basic",
       },
@@ -128,8 +127,6 @@ export const authOptions: NextAuthOptions = {
       jwks_endpoint: process.env.CERNER_JKS_ENDPOINT,
       issuer: process.env.CERNER_ISSUER,
       profile(profile) {
-        console.log('profile:', profile)
-
         return {
           id: profile.sub,
           name: profile.name,
@@ -184,7 +181,7 @@ export const authOptions: NextAuthOptions = {
       // console.log('profile (jwt()):', profile)
       let practitionerRoleBundle: Bundle | OperationOutcome;
       let fhirPatient: Patient | OperationOutcome | null = null;
-      let parentOrg: Organization | null = null;
+      let parentOrg: FhirOrganization | null = null;
       let childOrg: Location | null = null;
 
       let providerAccountId = ''
@@ -240,25 +237,39 @@ export const authOptions: NextAuthOptions = {
           const location = await api.fhir.getLocation.query({ fhirEndpoint: fhirEndpoint, accessToken: account?.access_token as string, fhirLocation: fhirLocationId })
           const provider = await api.fhir.getPractitioner.query({ fhirEndpoint: fhirEndpoint, accessToken: account?.access_token as string, fhirUser: profile?.fhirUser as string })
 
-          if (location && location.managingOrganization) {
-            parentOrg = await api.fhir.getOrganization.query({ fhirEndpoint: fhirEndpoint, accessToken: account?.access_token as string, fhirOrganization: location.managingOrganization.reference as string })
-
-            if (parentOrg) {
-              console.log('parentOrg:', JSON.stringify(parentOrg))
-            }
-          }
-
-          if (location && location.partOf) {
-            childOrg = await api.fhir.getLocation.query({ fhirEndpoint: fhirEndpoint, accessToken: account?.access_token as string, fhirLocation: location.partOf.reference as string })
-
-            if (childOrg) {
-              console.log('childOrg:', JSON.stringify(childOrg))
-            }
-          }
-
           fhirPatient = await api.fhir.getPatient.query({ fhirEndpoint: fhirEndpoint, accessToken: account?.access_token as string, fhirPatient: fhirPatientId })
 
-          await processLocationProviderPatient(location, parentOrg as Organization, childOrg as Location, provider, fhirPatient, user.id as string)
+          if (account.location) {
+            if (location && location.managingOrganization) {
+              parentOrg = await api.fhir.getOrganization.query({ fhirEndpoint: fhirEndpoint, accessToken: account?.access_token as string, fhirOrganization: location.managingOrganization.reference as string })
+
+              if (parentOrg) {
+                console.log('parentOrg:', JSON.stringify(parentOrg))
+              }
+            }
+
+            if (location && location.partOf) {
+              childOrg = await api.fhir.getLocation.query({ fhirEndpoint: fhirEndpoint, accessToken: account?.access_token as string, fhirLocation: location.partOf.reference as string })
+
+              if (childOrg) {
+                console.log('childOrg:', JSON.stringify(childOrg))
+              }
+            }
+
+            await processLocationProviderPatient(location, parentOrg as FhirOrganization, childOrg as Location, provider, fhirPatient, user.id as string)
+          } else {
+
+            if (token.authProvider === 'cerner') {
+              const orgs = await api.directory.getOrganizationByOrgName.query({name: "Cerner Health System"})
+
+              if (orgs && orgs.length > 0) {
+                const org = orgs[0] as unknown as Organization
+
+                await processOrganizationProviderPatient(org, provider, fhirPatient, user.id as string)
+              }
+            }
+
+          }
         }
 
         if (user) {
@@ -409,7 +420,7 @@ export const processBundle = async (bundle: Bundle, userId: string) => {
   }
 }
 
-const mapOrganization = (organization: Organization) => {
+const mapOrganization = (organization: FhirOrganization) => {
 
   return {
     Id: organization.id,
@@ -467,11 +478,13 @@ const mapPatient = (fhirPatient: Patient) => {
     }
   }
 
+  console.log('fhirPatient:', fhirPatient)
+
   return {
     Id: fhirPatient.id,
     FirstName: fhirPatient.name?.[0].given?.[0],
     LastName: fhirPatient.name?.[0].family,
-    DateOfBirth: dayjs(fhirPatient.birthDate, 'YYYY-MM-DD').toDate(),
+    DateOfBirth: new Date(dayjs(fhirPatient.birthDate).format('YYYY-MM-DD')),
     Gender: fhirPatient.gender,
     Email: email,
     Mobile: mobile,
@@ -483,7 +496,7 @@ const isOperationOutcome = (obj: any): obj is OperationOutcome => {
   return obj && obj.resourceType === 'OperationOutcome' && Array.isArray(obj.issue);
 }
 
-const processLocationProviderPatient = async (location: Location, parentOrg: Organization, childOrg: Location, practitioner: Practitioner, patient: Patient, userId: string) => {
+const processLocationProviderPatient = async (location: Location, parentOrg: FhirOrganization, childOrg: Location, practitioner: Practitioner, patient: Patient, userId: string) => {
   let org: any = {}
   let parentOrganization: any = {}
   let provider: any = {}
@@ -519,8 +532,9 @@ const processLocationProviderPatient = async (location: Location, parentOrg: Org
 
   console.log('userAttributeProvider:', JSON.stringify(userAttributeProvider))
 
-  // const userAttributeAfterCreate = await api.directory.addUserAttribute.mutate(userAttributeProvider)
-  // console.log('orgAfterCreate:', JSON.stringify(userAttributeAfterCreate))
+  const userAttributeAfterCreate = await api.directory.addUserAttribute.mutate(userAttributeProvider)
+
+  console.log('orgAfterCreate:', JSON.stringify(userAttributeAfterCreate))
 
   const patientAfterCreate = await api.patient.upsertPatient.mutate(patientObj)
 
@@ -529,3 +543,32 @@ const processLocationProviderPatient = async (location: Location, parentOrg: Org
 
 }
 
+const processOrganizationProviderPatient = async (org: Organization, practitioner: Practitioner, patient: Patient, userId: string) => {
+
+  let provider: any = {}
+  let userAttribute: any = {}
+  let patientObj: any = {}
+
+  provider = mapProvider(practitioner)
+  userAttribute = {
+    UserId: userId,
+    UserType: 'Provider',
+  }
+
+  patientObj = mapPatient(patient)
+
+  const organization = { Organization: { connectOrCreate: { where: { Id: org.Id }, create: org } } }
+  const providerToProviderOrg = { ...provider, ProviderOrganization: { connectOrCreate: { where: { Id: provider.Id }, create: organization } } }
+  const userAttributeProvider = { ...userAttribute, Provider: { connectOrCreate: { where: { Id: provider.Id }, create: providerToProviderOrg } } }
+
+  console.log('userAttributeProvider:', JSON.stringify(userAttributeProvider))
+  console.log('patientObj:', JSON.stringify(patientObj))
+
+  const userAttributeAfterCreate = await api.directory.addUserAttribute.mutate(userAttributeProvider)
+  const patientAfterCreate = await api.patient.upsertPatient.mutate(patientObj)
+
+  console.log('orgAfterCreate:', JSON.stringify(userAttributeAfterCreate))
+  console.log('patientAfterCreate:', JSON.stringify(patientAfterCreate))
+
+
+}
