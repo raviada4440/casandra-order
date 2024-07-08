@@ -1,7 +1,7 @@
 'use client'
 
 // React Imports
-import type { Dispatch, SetStateAction} from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import { createContext, useEffect, useState } from 'react'
 
 import { LocalizationProvider } from '@mui/x-date-pickers';
@@ -18,10 +18,14 @@ import StepContent from '@mui/material/StepContent'
 import Typography from '@mui/material/Typography'
 import { styled } from '@mui/material/styles'
 import Grid from '@mui/material/Grid'
+import { toast } from 'react-toastify'
 
 // Component Imports
-import { useLocation } from 'react-use';
 import { useSession } from 'next-auth/react';
+import uuid from 'react-native-uuid'
+
+
+import { useLocation } from 'react-use';
 
 import StepPatientDetails from './StepPatientDetails'
 import StepIcdDetails from './StepIcdDetails'
@@ -41,7 +45,16 @@ import StepperCustomDot from '@views/forms/form-wizard/StepperCustomDot'
 
 import AccountCard from './AccountCard'
 
-import type { LabOrderSponsoredTestConsentWithRelations, LabOrderTestWithRelations, LabOrderWithRelations, PatientWithRelations, SponsoredTestWithPartialRelations} from '~prisma/generated/zod'
+import type {
+  LabOrderSponsoredTestConsentWithRelations,
+  LabOrderTestWithRelations,
+  LabOrderWithRelations,
+  PatientWithRelations,
+  ProviderWithRelations,
+  SponsoredTestWithPartialRelations,
+} from '~prisma/generated/zod'
+
+
 import { api } from '~trpc/react';
 import StepEligibility from './StepEligibility';
 import Eligibility from './subtitle/Eligibility';
@@ -106,20 +119,32 @@ type LabOrderContextType = {
   setLabOrder: Dispatch<SetStateAction<LabOrderWithRelations>>
 };
 
+const generateOrderNumber = () => {
+  // Generate a 5-digit random number
+  const randomNumber = Math.floor(Math.random() * 90000) + 10000;
+
+  // Return 'CS' concatenated with the random number
+  return `CS${randomNumber}`;
+};
+
 // Step 1: Create a new context
 export const LabOrderContext = createContext<LabOrderContextType>({} as LabOrderContextType)
 
 const AddLabOrder = () => {
   // States
+  const labOrderStatus = { Id: uuid.v4() as string, Status: 'Order Created', StatusDate: new Date() }
+
   const [activeStep, setActiveStep] = useState<number>(0)
   const [patientId, setPatientId] = useState<string>('')
-  const [labOrder, setLabOrder] = useState<LabOrderWithRelations>({} as LabOrderWithRelations)
-  const [labOrderCopy, setLabOrderCopy] = useState<LabOrderWithRelations>({} as LabOrderWithRelations)
+  const [labOrder, setLabOrder] = useState<LabOrderWithRelations>({ Id: uuid.v4() as string, OrderDate: new Date(), OrderNumber: generateOrderNumber(), LabOrderStatus: [labOrderStatus]  } as LabOrderWithRelations)
+  const [labOrderCopy, setLabOrderCopy] = useState<LabOrderWithRelations>({ ...labOrder } as LabOrderWithRelations)
   const [steps, setSteps] = useState<Step[]>(stepEntries)
+
+  const createLabOrder = api.laborders.upsertLabOrder.useMutation()
 
   const { data: session } = useSession()
 
-  console.log('patientId: ', session?.patientId)
+  // console.log('patientId: ', session?.patientId)
 
   const getStepContent = (step: number, handleNext: () => void, handlePrev: () => void) => {
     const Tag = steps[step].stepDetails;
@@ -152,10 +177,22 @@ const AddLabOrder = () => {
   }
 
   useEffect(() => {
+    if (session?.user.UserAttribute?.Provider) {
+      const labOrderCopyWithOrderingProvider = { ...labOrderCopy, OrderingProvider: session?.user.UserAttribute?.Provider as ProviderWithRelations }
+
+      // Only update the state if labOrderCopy has changed
+      if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrderCopyWithOrderingProvider)) {
+        // console.log('labOrderCopyWithOrderingProvider: ', labOrderCopy);
+        setLabOrderCopy(labOrderCopyWithOrderingProvider);
+      }
+    }
+  }, [session, labOrderCopy, setLabOrderCopy])
+
+  useEffect(() => {
     if (session && session.patientId && session.patientId.length > 0) {
       setPatientId(session.patientId)
 
-      console.log('patientId: ', patientId)
+      // console.log('patientId: ', patientId)
     }
   }, [session, setPatientId, patientId])
 
@@ -170,19 +207,16 @@ const AddLabOrder = () => {
       return;
     }
 
-    if (session && patData && patData?.Id.length > 0) {
-      const labOrderCopy = { ...labOrder, Patient: patData as PatientWithRelations }
+    if (patData && patData?.Id.length > 0) {
+      const labOrderCopyWithPatient = { ...labOrderCopy, Patient: patData as PatientWithRelations }
 
-      console.log('LabOrderCopy after patient: ', labOrderCopy);
-
-        // Only update the state if labOrderCopy has changed
-      if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrder)) {
-        console.log('LabOrderCopy: ', labOrderCopy);
-        setLabOrderCopy(labOrderCopy);
+      // Only update the state if labOrderCopy has changed
+      if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrderCopyWithPatient)) {
+        // console.log('labOrderCopyWithPatient: ', labOrderCopy);
+        setLabOrderCopy(labOrderCopyWithPatient);
       }
     }
-
-  }, [session, patData, patError, patIsLoading, labOrder, setLabOrderCopy]);
+  }, [patData, patError, patIsLoading, labOrderCopy, setLabOrderCopy]);
 
 
 
@@ -195,13 +229,13 @@ const AddLabOrder = () => {
   // Get a specific query parameter
   const testCatalogQuery = queryParams.get('testcatalog[query]');
 
-  console.log('testcatalog: ', testCatalogQuery);
-  const { data: tcData, error: tcError, isLoading: tcIsLoading } = api.testcatalog.getTestByCasandraTestId.useQuery({ casandraTestId: testCatalogQuery || ''})
+  // console.log('testcatalog: ', testCatalogQuery);
+  const { data: tcData, error: tcError, isLoading: tcIsLoading } = api.testcatalog.getTestByCasandraTestId.useQuery({ casandraTestId: testCatalogQuery || '' })
 
   useEffect(() => {
     const sponsoredTests = tcData?.SponsoredTest || [];
 
-    if(sponsoredTests && sponsoredTests.length > 0 && testCatalogQuery) {
+    if (sponsoredTests && sponsoredTests.length > 0 && testCatalogQuery) {
 
       const hasEligibility = stepEntries.some(entry => entry.title === 'Eligibility')
 
@@ -221,8 +255,8 @@ const AddLabOrder = () => {
       }
 
       sponsoredTests.forEach((sponsoredTest: SponsoredTestWithPartialRelations) => {
-        if(sponsoredTest?.TestId === tcData?.TestId && sponsoredTest?.SponsoredProgram?.ProgramEligibility) {
-          console.log('Sponsored Test: ', sponsoredTest);
+        if (sponsoredTest?.TestId === tcData?.TestId && sponsoredTest?.SponsoredProgram?.ProgramEligibility) {
+          // console.log('Sponsored Test: ', sponsoredTest);
 
           // Generate the LabOrderTest
           const labOrderEligibilityConsent = [{
@@ -234,7 +268,7 @@ const AddLabOrder = () => {
 
           // Only update the state if labOrderCopy has changed
           if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrder)) {
-            console.log('LabOrderCopy: ', labOrderCopy);
+            // console.log('LabOrderCopy: ', labOrderCopy);
             setLabOrderCopy(labOrderCopy);
           }
 
@@ -274,7 +308,7 @@ const AddLabOrder = () => {
 
       // Only update the state if labOrderCopy has changed
       if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrder)) {
-        console.log('LabOrderCopy: ', labOrderCopy);
+        // console.log('LabOrderCopy: ', labOrderCopy);
         setLabOrderCopy(labOrderCopy);
       }
     }
@@ -290,7 +324,8 @@ const AddLabOrder = () => {
     if (activeStep !== steps.length - 1) {
       setActiveStep(activeStep + 1)
     } else {
-      alert('Submitted..!!')
+      console.log('LabOrder: ', JSON.stringify(labOrder))
+      saveLabOrder()
     }
   }
 
@@ -298,6 +333,38 @@ const AddLabOrder = () => {
     if (activeStep !== 0) {
       setActiveStep(activeStep - 1)
     }
+  }
+
+  const saveLabOrder = () => {
+
+    const newLabOrder = {
+      Id: labOrder.Id,
+      OrderNumber: labOrder.OrderNumber,
+      PatientMRN: labOrder.PatientMRN,
+      PatientMobile: labOrder.Patient?.Mobile,
+      PatientEmail: labOrder.Patient?.Email,
+      OrderingProviderId: labOrder.OrderingProvider?.Id,
+      TreatingProviderId: labOrder.TreatingProvider?.Id,
+      OrganizationId: labOrder.Organization?.Id,
+      PatientId: labOrder.Patient?.Id,
+      OrderDate: labOrder.OrderDate,
+      LabOrderIcd: {connectOrCreate: labOrder.LabOrderIcd.map(labIcd => ({ where: { Id: labIcd.Id }, create: {Id: labIcd.Id, ICDId: labIcd.ICD?.Id} } ))},
+      LabOrderTest: {connectOrCreate: labOrder.LabOrderTest.map(labTest => ({ where: { Id: labTest.Id }, create: {Id: labTest.Id, TestId: labTest.TestId} } ))},
+      LabOrderSpecimen: {connectOrCreate: labOrder.LabOrderSpecimen.map(labSpecimen => ({ where: { Id: labSpecimen.Id }, create: labSpecimen }))},
+      LabOrderStatus: {connectOrCreate: labOrder.LabOrderStatus.map(labOrderStatus => ({ where: { Id: labOrderStatus.Id }, create: labOrderStatus }))},
+    }
+
+    createLabOrder.mutate(newLabOrder, {
+      onSuccess: (newData) => {
+        console.log('Returned data:', newData)
+        toast.success('Lab Order Created Successfully')
+      },
+      onError: (error) => {
+        console.error('Error creating lab order:', error)
+        toast.error('Error creating lab order')
+      }
+    })
+
   }
 
   return (

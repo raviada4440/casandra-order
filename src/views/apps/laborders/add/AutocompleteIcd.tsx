@@ -2,9 +2,11 @@
 
 import React, { useContext, useEffect, useState } from 'react';
 
+import uuid from 'react-native-uuid';
+
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
-import { Chip, CircularProgress, Grid  } from '@mui/material';
+import { Chip, CircularProgress, Grid } from '@mui/material';
 
 import type { ICD, ICDWithRelations, LabOrderIcdWithRelations } from '~prisma/generated/zod';
 import { api } from '~trpc/react';
@@ -23,7 +25,7 @@ const AutocompleteIcd = () => {
   const { data, error, isLoading } = api.laborders.getIcdCodes.useQuery({ searchStr: inputValue })
 
   const onIcdChange = (values: ICD[]) => {
-    console.log('value', values)
+    // console.log('value', values)
 
     // Create a copy of labOrder
     const labOrderCopy = { ...labOrder }
@@ -34,23 +36,19 @@ const AutocompleteIcd = () => {
     // For each value in values array
     values.forEach((value) => {
 
-    // Check if the ICD already exists in the LabOrderIcd array
-    const exists = labOrderCopy.LabOrderIcd.some((labOrderIcd) => labOrderIcd && labOrderIcd.ICD ? labOrderIcd.ICD.Code === value.Code : false);
+      // Check if the ICD already exists in the LabOrderIcd array
+      const exists = labOrderCopy.LabOrderIcd.some((labOrderIcd) => labOrderIcd && labOrderIcd.ICD ? labOrderIcd.ICD.Code === value.Code : false);
 
-    if (!exists) {
+      if (!exists) {
 
         // Create an object of type LabOrderIcdWithRelations
-        const newLabOrderIcdEntry: LabOrderIcdWithRelations = {
-          Id: '',
-          CreatedAt: null,
-          UpdatedAt: null,
-          LabOrderId: null,
-          ICDId: null,
+        const newLabOrderIcdEntry = {
+          Id: uuid.v4() as string,
           ICD: value as ICDWithRelations
         }
 
         // Push the new object to the LabOrderIcd array
-        labOrderCopy.LabOrderIcd.push(newLabOrderIcdEntry)
+        labOrderCopy.LabOrderIcd.push(newLabOrderIcdEntry as LabOrderIcdWithRelations)
       }
     })
 
@@ -102,7 +100,7 @@ const AutocompleteIcd = () => {
         ))
       }
       renderOption={(props, option: ICD, selected) => (
-        <li {...props} key={option.Id}  style={{ backgroundColor: selected ? '#fff' : '#ddd' }}>
+        <li {...props} key={option.Id} style={{ backgroundColor: selected ? '#fff' : '#ddd' }}>
           <Grid key={option.Id} container alignItems="center">
             <Grid item xs={3}>
               {option.Code}

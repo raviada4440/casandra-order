@@ -23,7 +23,7 @@ const AutocompletePatient = () => {
   const { data, error, isLoading } = api.patient.getPatients.useQuery({ searchStr: inputValue });
 
   const onPatientChange = (value: PatientWithRelations) => {
-    console.log('value', value)
+    // console.log('value', value)
 
     // Create a copy of labOrder
     const labOrderCopy = { ...labOrder }
@@ -72,7 +72,7 @@ const AutocompletePatient = () => {
       getOptionLabel={(option) => `${option.LastName}`}
       isOptionEqualToValue={(option, value) => option.Id === value.Id}
       renderOption={(props, option: Patient, selected) => (
-        <li {...props}  key={option.Id} style={{ backgroundColor: selected ? '#fff' : '#ddd' }}>
+        <li {...props} key={option.Id} style={{ backgroundColor: selected ? '#fff' : '#ddd' }}>
           <Grid container alignItems="center">
             <Grid item xs={4}>
               {option.FirstName}

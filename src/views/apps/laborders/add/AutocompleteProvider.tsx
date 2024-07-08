@@ -23,7 +23,7 @@ const AutocompleteProvider = () => {
   const { data, error, isLoading } = api.laborders.getProviders.useQuery({ searchStr: inputValue });
 
   const onProviderChange = (value: ProviderWithRelations) => {
-    console.log('value', value)
+    // console.log('value', value)
 
     // Create a copy of labOrder
     const labOrderCopy = { ...labOrder }
@@ -72,7 +72,7 @@ const AutocompleteProvider = () => {
       getOptionLabel={(option) => `${option.Name}`}
       isOptionEqualToValue={(option, value) => option.Id === value.Id}
       renderOption={(props, option: Provider, selected) => (
-        <li {...props}  key={option.Id} style={{ backgroundColor: selected ? '#fff' : '#ddd' }}>
+        <li {...props} key={option.Id} style={{ backgroundColor: selected ? '#fff' : '#ddd' }}>
           <Grid container alignItems="center">
             <Grid item xs={8}>
               {option.Name}

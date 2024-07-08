@@ -25,11 +25,16 @@ const AccountCard = () => {
 
   const isBelowMdScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'))
   const isBelowSmScreen = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
-  const { data: session } = useSession()
 
-  const orderingPhysicianCredentials = session?.user.UserAttribute?.Provider?.Credentials ? session?.user.UserAttribute?.Provider?.Credentials : ''
-  const orderingPhysicianName = session?.user.UserAttribute?.Provider && orderingPhysicianCredentials.length > 0 ? session?.user.UserAttribute?.Provider?.Name + ', ' + orderingPhysicianCredentials : session?.user.UserAttribute?.Provider?.Name
-  const orderingPhysiciaSpecialty = session?.user.UserAttribute?.Provider?.Specialty ? session?.user.UserAttribute?.Provider?.Specialty  : ''
+  // const { data: session } = useSession()
+
+  // const orderingPhysicianCredentials = session?.user.UserAttribute?.Provider?.Credentials ? session?.user.UserAttribute?.Provider?.Credentials : ''
+  // const orderingPhysicianName = session?.user.UserAttribute?.Provider && orderingPhysicianCredentials.length > 0 ? session?.user.UserAttribute?.Provider?.Name + ', ' + orderingPhysicianCredentials : session?.user.UserAttribute?.Provider?.Name
+  // const orderingPhysiciaSpecialty = session?.user.UserAttribute?.Provider?.Specialty ? session?.user.UserAttribute?.Provider?.Specialty  : ''
+
+  const orderingPhysicianCredentials = labOrder?.OrderingProvider ? labOrder.OrderingProvider?.Credentials ? labOrder.OrderingProvider?.Credentials : '' : ''
+  const orderingPhysicianName = labOrder?.OrderingProvider && orderingPhysicianCredentials.length > 0 ? labOrder.OrderingProvider?.Name + ', ' + orderingPhysicianCredentials : labOrder.OrderingProvider?.Name ? labOrder.OrderingProvider?.Name : ''
+  const orderingPhysiciaSpecialty = labOrder?.OrderingProvider ? labOrder.OrderingProvider?.Specialty  : ''
 
   const treatingPhysicianCredentials = labOrder?.TreatingProvider ? labOrder.TreatingProvider?.Credentials ? labOrder.TreatingProvider?.Credentials : '' : ''
   const treatingPhysicianName = labOrder?.TreatingProvider && treatingPhysicianCredentials.length > 0 ? labOrder.TreatingProvider?.Name + ', ' + treatingPhysicianCredentials : labOrder.TreatingProvider?.Name ? labOrder.TreatingProvider?.Name : ''

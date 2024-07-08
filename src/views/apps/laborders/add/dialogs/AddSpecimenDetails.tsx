@@ -67,8 +67,8 @@ const AddSpecimenDetails = ({ open, setOpen, specimenRecord }: AddSpecimenProps)
 
   useEffect(() => {
     if (open && !hasSetFormData.current) {
-      console.log('empty specimenRecord received: ', specimenRecord);
-      setFormData({...specimenRecord});
+      // console.log('empty specimenRecord received: ', specimenRecord);
+      setFormData({ ...specimenRecord });
       hasSetFormData.current = true;
     } else if (!open) {
       hasSetFormData.current = false;
@@ -83,7 +83,7 @@ const AddSpecimenDetails = ({ open, setOpen, specimenRecord }: AddSpecimenProps)
 
   const handleSave = (specimen: LabOrderSpecimenWithRelations) => {
     if (specimen) {
-      console.log('specimen: ', specimen)
+      // console.log('specimen: ', specimen)
 
       // Create a copy of labOrder
       const labOrderCopy = { ...labOrder }
@@ -91,141 +91,141 @@ const AddSpecimenDetails = ({ open, setOpen, specimenRecord }: AddSpecimenProps)
       // Add the specimen to LabOrderSpecimen
       labOrderCopy.LabOrderSpecimen = [...(labOrderCopy.LabOrderSpecimen || []), specimen]
 
-      console.log('labOrderCopy: ', labOrderCopy)
+      // console.log('labOrderCopy: ', labOrderCopy)
 
       // Update labOrder
       setLabOrder(labOrderCopy)
 
-      console.log('labOrder: ', labOrder)
+      // console.log('labOrder: ', labOrder)
       setFormData({} as LabOrderSpecimenWithRelations)
     }
   }
 
   return (
     <Dialog fullWidth maxWidth='md' scroll='body' open={open} onClose={() => setOpen(false)}>
-    <DialogTitle
-      variant='h4'
-      className='flex gap-2 flex-col text-center pbs-10 pbe-6 pli-10 sm:pbs-16 sm:pbe-6 sm:pli-16'
-    >
-      Specimen Details
-    </DialogTitle>
-    <DialogContent className='flex flex-col gap-6 pbs-0 pbe-10 pli-10 sm:pli-16 sm:pbe-16'>
-      <IconButton onClick={() => setOpen(false)} className='absolute block-start-4 inline-end-4'>
-        <i className='ri-close-line' />
-      </IconButton>
-      <div className='flex flex-col gap-2 mt-4'>
-    <form onSubmit={e => e.preventDefault()}>
-      <Grid container spacing={5}>
-        <Grid item xs={12} md={6}>
-          <FormControl fullWidth>
-            <Autocomplete
+      <DialogTitle
+        variant='h4'
+        className='flex gap-2 flex-col text-center pbs-10 pbe-6 pli-10 sm:pbs-16 sm:pbe-6 sm:pli-16'
+      >
+        Specimen Details
+      </DialogTitle>
+      <DialogContent className='flex flex-col gap-6 pbs-0 pbe-10 pli-10 sm:pli-16 sm:pbe-16'>
+        <IconButton onClick={() => setOpen(false)} className='absolute block-start-4 inline-end-4'>
+          <i className='ri-close-line' />
+        </IconButton>
+        <div className='flex flex-col gap-2 mt-4'>
+          <form onSubmit={e => e.preventDefault()}>
+            <Grid container spacing={5}>
+              <Grid item xs={12} md={6}>
+                <FormControl fullWidth>
+                  <Autocomplete
 
-              // value={specimenTypes.find(option => option.Name === formData?.SpecimenType || '')}
-              onChange={(event: any, newValue: any) => {
-                handleFormChange('SpecimenType', newValue.Name);
-              }}
-              inputValue={inputValue}
-              onInputChange={(event, newInputValue) => {
-                setInputValue(newInputValue);
-              }}
-              id="specimen-type-select"
-              getOptionLabel={(option) => `${option.Name}`}
-              isOptionEqualToValue={(option, value) => option.Name === value.Name}
-              options={specimenTypes}
-              renderOption={(props, option: any, selected) => (
-                <li {...props} key={option.Name}  style={{ backgroundColor: selected ? '#fff' : '#ddd' }}>
-                  <Grid container alignItems="center">
-                    <Grid item xs={3}>
-                      {option.Name}
-                    </Grid>
-                    <Grid item xs={9}>
-                      {option.Description}
-                    </Grid>
-                  </Grid>
-                </li>
-              )}
-              renderInput={(params) => <TextField {...params} label="Specimen Type" />}
-            />
-          </FormControl>
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            fullWidth
-            type='number'
-            label='Specimen Count'
+                    // value={specimenTypes.find(option => option.Name === formData?.SpecimenType || '')}
+                    onChange={(event: any, newValue: any) => {
+                      handleFormChange('SpecimenType', newValue.Name);
+                    }}
+                    inputValue={inputValue}
+                    onInputChange={(event, newInputValue) => {
+                      setInputValue(newInputValue);
+                    }}
+                    id="specimen-type-select"
+                    getOptionLabel={(option) => `${option.Name}`}
+                    isOptionEqualToValue={(option, value) => option.Name === value.Name}
+                    options={specimenTypes}
+                    renderOption={(props, option: any, selected) => (
+                      <li {...props} key={option.Name} style={{ backgroundColor: selected ? '#fff' : '#ddd' }}>
+                        <Grid container alignItems="center">
+                          <Grid item xs={3}>
+                            {option.Name}
+                          </Grid>
+                          <Grid item xs={9}>
+                            {option.Description}
+                          </Grid>
+                        </Grid>
+                      </li>
+                    )}
+                    renderInput={(params) => <TextField {...params} label="Specimen Type" />}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  type='number'
+                  label='Specimen Count'
 
-            // value={formData?.SpecimenCount}
-            onChange={e => handleFormChange('SpecimenCount', e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <AppReactDatepicker
-            boxProps={{ className: 'is-full' }}
-            selected={formData?.CollectedDate || null }
-            dateFormat={'MM/dd/yyyy'}
-            onChange={(date: Date) => handleFormChange('CollectedDate', date)}
-            customInput={<TextField fullWidth label='Collection Date' size='medium' />}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TimePicker
-            label="Collection Time"
-            defaultValue={formData?.CollectedTime ? dayjs(formData?.CollectedTime, 'HH:mm A') : null}
-            onChange={(newValue) => {
-              const timeString = newValue ? dayjs(newValue).format('HH:mm A') : '';
+                  // value={formData?.SpecimenCount}
+                  onChange={e => handleFormChange('SpecimenCount', e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <AppReactDatepicker
+                  boxProps={{ className: 'is-full' }}
+                  selected={formData?.CollectedDate || null}
+                  dateFormat={'MM/dd/yyyy'}
+                  onChange={(date: Date) => handleFormChange('CollectedDate', date)}
+                  customInput={<TextField fullWidth label='Collection Date' size='medium' />}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TimePicker
+                  label="Collection Time"
+                  defaultValue={formData?.CollectedTime ? dayjs(formData?.CollectedTime, 'HH:mm A') : null}
+                  onChange={(newValue) => {
+                    const timeString = newValue ? dayjs(newValue).format('HH:mm A') : '';
 
-              handleFormChange('CollectedTime', timeString)
-            }}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            fullWidth
-            label='Specimen ID'
+                    handleFormChange('CollectedTime', timeString)
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  label='Specimen ID'
 
-            // value={formData?.SpecimenID || ''}
-            onChange={e => handleFormChange('SpecimenID', e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            fullWidth
-            label='Bodysite'
+                  // value={formData?.SpecimenID || ''}
+                  onChange={e => handleFormChange('SpecimenID', e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  label='Bodysite'
 
-            // value={formData?.BodySite || ''}
-            onChange={e => handleFormChange('BodySite', e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            fullWidth
-            label='Fixative'
+                  // value={formData?.BodySite || ''}
+                  onChange={e => handleFormChange('BodySite', e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  label='Fixative'
 
-            // value={formData?.Fixative || ''}
-            onChange={e => handleFormChange('Fixative', e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            fullWidth
-            label='Fixative Duration'
+                  // value={formData?.Fixative || ''}
+                  onChange={e => handleFormChange('Fixative', e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  label='Fixative Duration'
 
-            // value={formData?.FixativeDuration || ''}
-            onChange={e => handleFormChange('FixativeDuration', e.target.value)}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            fullWidth
-            label='ColdIschemicTime'
+                  // value={formData?.FixativeDuration || ''}
+                  onChange={e => handleFormChange('FixativeDuration', e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  label='ColdIschemicTime'
 
-            // value={formData?.ColdIschemicTime || ''}
-            onChange={e => handleFormChange('ColdIschemicTime', e.target.value)}
-          />
-        </Grid>
-      </Grid>
-      </form>
-      </div>
+                  // value={formData?.ColdIschemicTime || ''}
+                  onChange={e => handleFormChange('ColdIschemicTime', e.target.value)}
+                />
+              </Grid>
+            </Grid>
+          </form>
+        </div>
         <DialogActions className='gap-2 justify-center pbs-0 pbe-10 pli-10 sm:pbe-16 sm:pli-16'>
           <Button variant='contained' onClick={() => {
             handleSave(formData || {} as LabOrderSpecimenWithRelations)

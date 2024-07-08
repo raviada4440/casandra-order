@@ -1,6 +1,8 @@
 // React Imports
-import type { ChangeEvent} from 'react';
+import type { ChangeEvent } from 'react';
 import { useContext, useEffect, useState } from 'react'
+
+import uuid from 'react-native-uuid';
 
 // MUI Imports
 import Grid from '@mui/material/Grid'
@@ -27,7 +29,6 @@ import DirectionalIcon from '@/components/DirectionalIcon'
 import { LabOrderContext } from '.'
 
 import type { LabOrderTestWithRelations } from '~prisma/generated/zod';
-
 
 const searchClient = Client({
   url: '/api/search'
@@ -75,11 +76,11 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
   // States
   const { labOrder, setLabOrder } = useContext(LabOrderContext);
 
-  console.log('labOrder ', labOrder)
+  // console.log('labOrder ', labOrder)
 
   const [selected, setSelected] = useState<readonly LabOrderTestWithRelations[]>([]);
 
-  console.log('selected ', selected)
+  // console.log('selected ', selected)
 
   useEffect(() => {
     setSelected(labOrder?.LabOrderTest || []);
@@ -131,10 +132,11 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
   const handleClick = (event: ChangeEvent<unknown>, hit: any) => {
     event.preventDefault()
 
-    // console.log(event.target)
-    // console.log(hit)
+    // // console.log(event.target)
+    // // console.log(hit)
 
     const labOrderTest = {
+      Id: uuid.v4() as string,
       TestId: hit.TestId,
       TestCatalog: {
         TestId: hit.TestId,
@@ -161,7 +163,7 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
 
     setSelected(newSelected);
 
-    console.log(selected)
+    // console.log(selected)
 
     const labOrderCopy = { ...labOrder }
 
@@ -181,7 +183,7 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
         <div className="hit__details">
           <Grid container alignItems="center">
             <Grid item>
-              <Checkbox checked={isSelected(props.hit.TestId) } onChange={(event) => handleClick(event, props.hit)} />
+              <Checkbox checked={isSelected(props.hit.TestId)} onChange={(event) => handleClick(event, props.hit)} />
             </Grid>
             <Grid item xs>
               <h4>

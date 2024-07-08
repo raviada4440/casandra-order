@@ -1,6 +1,8 @@
 import { z } from "zod"
 
+import { LabOrderUncheckedCreateInputSchema } from "~prisma/generated/zod"
 import { createTRPCRouter, publicProcedure } from "@server/api/trpc"
+
 
 export type CustomLabOrderType = {
   Id: string
@@ -195,5 +197,18 @@ export const labOrderRouter = createTRPCRouter({
       take: input.searchStr == undefined || '' ? undefined : 10,
     })
   }),
+
+  upsertLabOrder: publicProcedure
+    .input(LabOrderUncheckedCreateInputSchema)
+    .mutation(async ({ ctx, input }) => {
+
+      return ctx.db.labOrder.upsert({
+        where: {
+          Id: input.Id,
+        },
+        update: input,
+        create: input,
+      });
+    }),
 
 })

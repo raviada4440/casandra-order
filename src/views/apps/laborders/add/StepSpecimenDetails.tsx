@@ -37,28 +37,13 @@ type Props = {
 
 const columnHelper = createColumnHelper<LabOrderSpecimenWithRelations>()
 
-const convertDate = (collectionDate: Date|null) => collectionDate ? new Date(collectionDate).toLocaleDateString('en-US', {
+const convertDate = (collectionDate: Date | null) => collectionDate ? new Date(collectionDate).toLocaleDateString('en-US', {
   year: 'numeric',
   month: '2-digit',
   day: '2-digit'
 }) : 'N/A'
 
-const getEmptySpecimenRecord = () => {
-  return  {
-    Id: uuid.v4(),
-    LabOrderId: undefined,
-    SpecimenType: undefined,
-    SpecimenCount: undefined,
-    CollectedDate: new Date(),
-    CollectedTime: dayjs.utc(new Date()).tz('America/Chicago').format('HH:mm A'),
-    SpecimenID: undefined,
-    BodySite: undefined,
-    TumorType: undefined,
-    Fixative: undefined,
-    FixativeDuration: undefined,
-    ColdIschemicTime: undefined,
-  } as unknown as LabOrderSpecimenWithRelations
-}
+
 
 const StepSpecimenDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
 
@@ -68,6 +53,23 @@ const StepSpecimenDetails = ({ activeStep, handleNext, handlePrev, steps }: Prop
   const [data, setData] = useState(labOrder.LabOrderSpecimen ?? [] as LabOrderSpecimenWithRelations[])
   const [deleteId, setDeleteId] = useState(undefined as string | undefined)
   const [open, setOpen] = useState(false)
+
+  const getEmptySpecimenRecord = () => {
+    return {
+      Id: uuid.v4(),
+      SpecimenType: undefined,
+      SpecimenCount: undefined,
+      CollectedDate: new Date(),
+      CollectedTime: dayjs.utc(new Date()).tz('America/Chicago').format('HH:mm A'),
+      SpecimenID: undefined,
+      BodySite: undefined,
+      TumorType: undefined,
+      Fixative: undefined,
+      FixativeDuration: undefined,
+      ColdIschemicTime: undefined,
+    } as unknown as LabOrderSpecimenWithRelations
+  }
+
   const [emptySepcimenRecord, setEmptySpecimenRecord] = useState<LabOrderSpecimenWithRelations>(getEmptySpecimenRecord())
 
   const renderOpenDialog = () => {
@@ -82,7 +84,7 @@ const StepSpecimenDetails = ({ activeStep, handleNext, handlePrev, steps }: Prop
   }
 
   const handleOpen = (id: string) => {
-    console.log('Deleting with id: ', id)
+    // console.log('Deleting with id: ', id)
     setDeleteId(id)
     setOpen(true)
   }
@@ -103,7 +105,7 @@ const StepSpecimenDetails = ({ activeStep, handleNext, handlePrev, steps }: Prop
     // Update labOrder
     setLabOrder(labOrderCopy)
 
-    console.log('labOrder: ', labOrder)
+    // console.log('labOrder: ', labOrder)
     setOpen(false)
   }
 
@@ -161,10 +163,11 @@ const StepSpecimenDetails = ({ activeStep, handleNext, handlePrev, steps }: Prop
 
   useEffect(() => {
     if (labOrder.LabOrderSpecimen) {
-      console.log('labOrder.LabOrderSpecimen', labOrder.LabOrderSpecimen)
+      // console.log('labOrder.LabOrderSpecimen', labOrder.LabOrderSpecimen)
 
       setData(labOrder.LabOrderSpecimen)
-      console.log('data', data)
+
+      // console.log('data', data)
     }
   }, [labOrder, data, setData])
 
@@ -188,47 +191,47 @@ const StepSpecimenDetails = ({ activeStep, handleNext, handlePrev, steps }: Prop
             </Typography>
           }
           className='items-start sm:flex-row sm:items-center'
-          sx={{ '& .MuiCardHeader-action': { m: 0 }, '& .MuiCardHeader-avatar': { mr: 0 }}}
+          sx={{ '& .MuiCardHeader-action': { m: 0 }, '& .MuiCardHeader-avatar': { mr: 0 } }}
           action={renderOpenDialog()}
         />
         <CardContent>
-        <div className='overflow-x-auto mb-20'>
-          <table className={styles.table}>
-            <thead>
-              {table.getHeaderGroups().map(headerGroup => (
-                <tr key={headerGroup.id}>
-                  {headerGroup.headers.map(header => (
-                    <th key={header.id}>
-                      {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            {table.getCoreRowModel().rows.length === 0 ? (
-              <tbody>
-                <tr>
-                  <td colSpan={table.getVisibleFlatColumns().length} className='text-center'>
-                    No specimens are added
-                  </td>
-                </tr>
-              </tbody>
-            ) : (
-              <tbody>
-                {table
-                  .getRowModel()
-                  .rows.map(row => (
-                    <tr key={row.id}>
-                      {row.getVisibleCells().map(cell => (
-                        <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
-                      ))}
-                    </tr>
-                  ))}
-              </tbody>
-            )}
-          </table>
-        </div>
-        <Grid item xs={12}>
+          <div className='overflow-x-auto mb-20'>
+            <table className={styles.table}>
+              <thead>
+                {table.getHeaderGroups().map(headerGroup => (
+                  <tr key={headerGroup.id}>
+                    {headerGroup.headers.map(header => (
+                      <th key={header.id}>
+                        {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                      </th>
+                    ))}
+                  </tr>
+                ))}
+              </thead>
+              {table.getCoreRowModel().rows.length === 0 ? (
+                <tbody>
+                  <tr>
+                    <td colSpan={table.getVisibleFlatColumns().length} className='text-center'>
+                      No specimens are added
+                    </td>
+                  </tr>
+                </tbody>
+              ) : (
+                <tbody>
+                  {table
+                    .getRowModel()
+                    .rows.map(row => (
+                      <tr key={row.id}>
+                        {row.getVisibleCells().map(cell => (
+                          <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                        ))}
+                      </tr>
+                    ))}
+                </tbody>
+              )}
+            </table>
+          </div>
+          <Grid item xs={12}>
             <div className='flex items-center justify-between'>
               <Button
                 variant='outlined'
