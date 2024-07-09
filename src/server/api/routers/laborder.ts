@@ -65,7 +65,7 @@ export const labOrderRouter = createTRPCRouter({
           },
         },
       },
-      orderBy: { OrderDate: "asc" },
+      orderBy: { OrderDate: "desc" },
     }).then(labOrders => labOrders.map(labOrder => ({
       Id: labOrder.Id,
       OrderNumber: labOrder.OrderNumber,

@@ -4,6 +4,9 @@
 import type { Dispatch, SetStateAction } from 'react';
 import { createContext, useEffect, useState } from 'react'
 
+import { useParams, useRouter } from 'next/navigation'
+
+import { useLocation } from 'react-use';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
@@ -24,8 +27,9 @@ import { toast } from 'react-toastify'
 import { useSession } from 'next-auth/react';
 import uuid from 'react-native-uuid'
 
+import type { Locale } from '@configs/i18n'
+import { getLocalizedUrl } from '@/utils/i18n'
 
-import { useLocation } from 'react-use';
 
 import StepPatientDetails from './StepPatientDetails'
 import StepIcdDetails from './StepIcdDetails'
@@ -139,6 +143,8 @@ const AddLabOrder = () => {
   const [labOrder, setLabOrder] = useState<LabOrderWithRelations>({ Id: uuid.v4() as string, OrderDate: new Date(), OrderNumber: generateOrderNumber(), LabOrderStatus: [labOrderStatus]  } as LabOrderWithRelations)
   const [labOrderCopy, setLabOrderCopy] = useState<LabOrderWithRelations>({ ...labOrder } as LabOrderWithRelations)
   const [steps, setSteps] = useState<Step[]>(stepEntries)
+  const router = useRouter()
+  const { lang: locale } = useParams()
 
   const createLabOrder = api.laborders.upsertLabOrder.useMutation()
 
@@ -358,6 +364,7 @@ const AddLabOrder = () => {
       onSuccess: (newData) => {
         console.log('Returned data:', newData)
         toast.success('Lab Order Created Successfully')
+        router.push(getLocalizedUrl(`apps/laborders/list?refreshId=${new Date().getTime()}`, locale as Locale))
       },
       onError: (error) => {
         console.error('Error creating lab order:', error)

@@ -6,7 +6,7 @@ import { api } from '~trpc/server'
 import type { CustomLabOrderType } from '@server/api/routers/laborder';
 
 
-const InvoiceApp = async () => {
+const LabOrders = async () => {
 
 
   const labOrdersData: CustomLabOrderType[] = await api.laborders.getLabOrders.query()
@@ -17,4 +17,4 @@ const InvoiceApp = async () => {
   return <LabOrderList labOrdersData={labOrdersData} totalOrdersInTransit={totalOrdersInTransit} totalIncompleteOrders={totalIncompleteOrders} />
 }
 
-export default InvoiceApp
+export default LabOrders
