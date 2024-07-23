@@ -62,7 +62,7 @@ const AutocompleteFhirPatient = () => {
   return (
     <Autocomplete
       className='flex flex-col sm:flex-row is-full'
-      id="providers-autocomplete"
+      id="fhir-patient-autocomplete"
       open={open}
       onOpen={() => {
         setOpen(true);

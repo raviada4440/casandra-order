@@ -34,7 +34,7 @@ import { getLocalizedUrl } from '@/utils/i18n'
 import StepPatientDetails from './StepPatientDetails'
 import StepIcdDetails from './StepIcdDetails'
 import StepTestDetails from './StepTestDetails'
-import StepSpecimenDetails from './StepSpecimenDetails'
+import StepSpecimenCollectionDetails from './StepSpecimenCollectionDetails'
 import StepBillingDetails from './StepBillingDetails'
 
 import PatientSubtitle from './subtitle/Patient';
@@ -62,6 +62,8 @@ import type {
 import { api } from '~trpc/react';
 import StepEligibility from './StepEligibility';
 import Eligibility from './subtitle/Eligibility';
+import StepSpecimenKitDetails from './StepSpecimenKitDetails';
+import StepSpecimenPSCDetails from './StepSpecimenPSCDetails';
 
 
 // Types
@@ -95,7 +97,7 @@ const stepEntries = [
   {
     title: 'Specimen',
     subtitle: 'Specimen Type',
-    stepDetails: StepSpecimenDetails,
+    stepDetails: StepSpecimenCollectionDetails,
     subTitleDetails: SpecimenSubtitle
   },
   {
@@ -121,6 +123,8 @@ const ConnectorHeight = styled(StepConnector)(() => ({
 type LabOrderContextType = {
   labOrder: LabOrderWithRelations,
   setLabOrder: Dispatch<SetStateAction<LabOrderWithRelations>>
+  collectionMethod: string,
+  setCollectionMethod: Dispatch<SetStateAction<string>>
 };
 
 const generateOrderNumber = () => {
@@ -140,6 +144,7 @@ const AddLabOrder = () => {
 
   const [activeStep, setActiveStep] = useState<number>(0)
   const [patientId, setPatientId] = useState<string>('')
+  const [collectionMethod, setCollectionMethod] = useState<string>('')
   const [labOrder, setLabOrder] = useState<LabOrderWithRelations>({ Id: uuid.v4() as string, OrderDate: new Date(), OrderNumber: generateOrderNumber(), LabOrderStatus: [labOrderStatus]  } as LabOrderWithRelations)
   const [labOrderCopy, setLabOrderCopy] = useState<LabOrderWithRelations>({ ...labOrder } as LabOrderWithRelations)
   const [steps, setSteps] = useState<Step[]>(stepEntries)
@@ -239,58 +244,70 @@ const AddLabOrder = () => {
   const { data: tcData, error: tcError, isLoading: tcIsLoading } = api.testcatalog.getTestByCasandraTestId.useQuery({ casandraTestId: testCatalogQuery || '' })
 
   useEffect(() => {
-    const sponsoredTests = tcData?.SponsoredTest || [];
+    if (tcData) {
+      const sponsoredTests = tcData?.SponsoredTest || []
+      const collectionOption = tcData?.CollectionMethod || ''
 
-    if (sponsoredTests && sponsoredTests.length > 0 && testCatalogQuery) {
+      setCollectionMethod(collectionOption)
 
-      const hasEligibility = stepEntries.some(entry => entry.title === 'Eligibility')
+      const specimenEntry = stepEntries.find(entry => entry.title === "Specimen")
 
-      if (!hasEligibility) {
-        const eligibilityStep = {
-          title: 'Eligibility',
-          subtitle: 'Eligibility',
-          stepDetails: StepEligibility,
-          subTitleDetails: Eligibility
-        }
-
-        stepEntries.push(eligibilityStep);
-        moveToTop('Tests');
-        moveToTop('Eligibility');
-        setSteps(stepEntries);
-        setActiveStep(0);
+      if (specimenEntry && collectionOption === 'KIT') {
+        specimenEntry.stepDetails = StepSpecimenKitDetails
+      } else if (specimenEntry && collectionOption === 'PSC') {
+        specimenEntry.stepDetails = StepSpecimenPSCDetails
       }
 
-      sponsoredTests.forEach((sponsoredTest: SponsoredTestWithPartialRelations) => {
-        if (sponsoredTest?.TestId === tcData?.TestId && sponsoredTest?.SponsoredProgram?.ProgramEligibility) {
-          // console.log('Sponsored Test: ', sponsoredTest);
+      if (sponsoredTests && sponsoredTests.length > 0 && testCatalogQuery) {
 
-          // Generate the LabOrderTest
-          const labOrderEligibilityConsent = [{
-            TestId: tcData.TestId,
-            SponsoredTest: tcData.SponsoredTest
-          }] as unknown as LabOrderSponsoredTestConsentWithRelations[];
+        const hasEligibility = stepEntries.some(entry => entry.title === 'Eligibility')
 
-          const labOrderCopy = { ...labOrder, LabOrderSponsoredTestConsent: labOrderEligibilityConsent };
-
-          // Only update the state if labOrderCopy has changed
-          if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrder)) {
-            // console.log('LabOrderCopy: ', labOrderCopy);
-            setLabOrderCopy(labOrderCopy);
+        if (!hasEligibility) {
+          const eligibilityStep = {
+            title: 'Eligibility',
+            subtitle: 'Eligibility',
+            stepDetails: StepEligibility,
+            subTitleDetails: Eligibility
           }
 
+          stepEntries.push(eligibilityStep);
+          moveToTop('Tests');
+          moveToTop('Eligibility');
+          setSteps(stepEntries);
+          setActiveStep(0);
         }
-      });
-    } else if (testCatalogQuery && !sponsoredTests) {
 
-      //move test details to top
-      const newSteps = rearrangeSteps(stepEntries, 2);
+        sponsoredTests.forEach((sponsoredTest: SponsoredTestWithPartialRelations) => {
+          if (sponsoredTest?.TestId === tcData?.TestId && sponsoredTest?.SponsoredProgram?.ProgramEligibility) {
+            // console.log('Sponsored Test: ', sponsoredTest);
 
-      setSteps(newSteps);
+            // Generate the LabOrderTest
+            const labOrderEligibilityConsent = [{
+              TestId: tcData.TestId,
+              SponsoredTest: tcData.SponsoredTest
+            }] as unknown as LabOrderSponsoredTestConsentWithRelations[];
 
-      // set th test step as active
-      setActiveStep(0);
+            const labOrderCopy = { ...labOrder, LabOrderSponsoredTestConsent: labOrderEligibilityConsent };
+
+            // Only update the state if labOrderCopy has changed
+            if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrder)) {
+              // console.log('LabOrderCopy: ', labOrderCopy);
+              setLabOrderCopy(labOrderCopy);
+            }
+
+          }
+        });
+      } else if (testCatalogQuery && !sponsoredTests) {
+
+        //move test details to top
+        const newSteps = rearrangeSteps(stepEntries, 2);
+
+        setSteps(newSteps);
+
+        // set th test step as active
+        setActiveStep(0);
+      }
     }
-
   }, [setActiveStep, tcData, testCatalogQuery, labOrder, setLabOrderCopy, setSteps])
 
 
@@ -375,7 +392,7 @@ const AddLabOrder = () => {
   }
 
   return (
-    <LabOrderContext.Provider value={{ labOrder, setLabOrder }}>
+    <LabOrderContext.Provider value={{ labOrder, setLabOrder, collectionMethod, setCollectionMethod }}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Grid container spacing={6}>
           <Grid item xs={12}>

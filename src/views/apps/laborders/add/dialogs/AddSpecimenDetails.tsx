@@ -59,12 +59,13 @@ type AddSpecimenProps = {
 
 const AddSpecimenDetails = ({ open, setOpen, specimenRecord }: AddSpecimenProps) => {
   // States
-  const { labOrder, setLabOrder } = useContext(LabOrderContext);
+  const { labOrder, setLabOrder, collectionMethod } = useContext(LabOrderContext);
   const [formData, setFormData] = useState<LabOrderSpecimenWithRelations>(specimenRecord)
   const [inputValue, setInputValue] = useState('');
   const hasSetFormData = useRef(false);
 
-
+  console.log('collectionMethod ', collectionMethod)
+  
   useEffect(() => {
     if (open && !hasSetFormData.current) {
       // console.log('empty specimenRecord received: ', specimenRecord);

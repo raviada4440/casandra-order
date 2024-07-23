@@ -227,21 +227,30 @@ model LabOrderIcd {
 }
 
 model LabOrderSpecimen {
-  Id               String    @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
-  LabOrderId       String?   @db.VarChar(45)
-  SpecimenType     String?   @db.VarChar(45)
-  SpecimenCount    String?   @db.VarChar(45)
-  CollectedDate    DateTime? @db.Date
-  CollectedTime    String?   @db.VarChar(45)
-  SpecimenID       String?   @db.VarChar(45)
-  BodySite         String?   @db.VarChar(45)
-  TumorType        String?   @db.VarChar(45)
-  Fixative         String?   @db.VarChar(45)
-  FixativeDuration String?   @db.VarChar(45)
-  ColdIschemicTime String?   @db.VarChar(45)
-  CreatedAt        DateTime? @default(now()) @db.DateTime(0)
-  UpdatedAt        DateTime? @default(now()) @db.DateTime(0)
-  LabOrder         LabOrder? @relation(fields: [LabOrderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "laborderspecimen_ibfk_1")
+  Id                 String    @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  LabOrderId         String?   @db.VarChar(45)
+  SpecimenType       String?   @db.VarChar(45)
+  SpecimenCount      String?   @db.VarChar(45)
+  CollectedDate      DateTime? @db.Date
+  CollectedTime      String?   @db.VarChar(45)
+  SpecimenID         String?   @db.VarChar(45)
+  BodySite           String?   @db.VarChar(45)
+  TumorType          String?   @db.VarChar(45)
+  Fixative           String?   @db.VarChar(45)
+  FixativeDuration   String?   @db.VarChar(45)
+  ColdIschemicTime   String?   @db.VarChar(45)
+  PatientAddress1    String?   @db.VarChar(45)
+  PatientAddress2    String?   @db.VarChar(45)
+  PatientCity        String?   @db.VarChar(45)
+  PatientState       String?   @db.VarChar(45)
+  PatientZip         String?   @db.VarChar(45)
+  PscLab             String?   @db.VarChar(45)
+  PscLocation        String?   @db.VarChar(45)
+  PscAppointmentAt   DateTime? @db.Date
+  PscAppointmentTime String?   @db.VarChar(45)
+  CreatedAt          DateTime? @default(now()) @db.DateTime(0)
+  UpdatedAt          DateTime? @default(now()) @db.DateTime(0)
+  LabOrder           LabOrder? @relation(fields: [LabOrderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "laborderspecimen_ibfk_1")
 
   @@index([LabOrderId], map: "laborder_specimen_idx")
 }
@@ -603,6 +612,7 @@ model TestCatalog {
   LoincCodesHTML             String?                      @db.LongText
   TestCategory               String?                      @db.VarChar(512)
   TestSubCategory            String?                      @db.VarChar(512)
+  CollectionMethod           TestCatalog_CollectionMethod?
   CreatedAt                  DateTime                     @default(now()) @db.DateTime(0)
   UpdatedAt                  DateTime                     @default(now()) @db.DateTime(0)
   LabOrderTest               LabOrderTest[]
@@ -713,4 +723,9 @@ model VerificationToken {
 enum UserAttribute_UserType {
   Admin
   Provider
+}
+
+enum TestCatalog_CollectionMethod {
+  KIT
+  PSC
 }

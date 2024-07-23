@@ -29,6 +29,7 @@ import DirectionalIcon from '@/components/DirectionalIcon'
 import { LabOrderContext } from '.'
 
 import type { LabOrderTestWithRelations } from '~prisma/generated/zod';
+import { loadIcon } from '@iconify/utils';
 
 const searchClient = Client({
   url: '/api/search'
@@ -74,7 +75,7 @@ type Props = {
 
 const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
   // States
-  const { labOrder, setLabOrder } = useContext(LabOrderContext);
+  const { labOrder, setLabOrder, setCollectionMethod } = useContext(LabOrderContext);
 
   // console.log('labOrder ', labOrder)
 
@@ -132,8 +133,9 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
   const handleClick = (event: ChangeEvent<unknown>, hit: any) => {
     event.preventDefault()
 
-    // // console.log(event.target)
-    // // console.log(hit)
+    console.log('CollectionMethod :', hit.CollectionMethod)
+
+    setCollectionMethod(hit.CollectionMethod)
 
     const labOrderTest = {
       Id: uuid.v4() as string,

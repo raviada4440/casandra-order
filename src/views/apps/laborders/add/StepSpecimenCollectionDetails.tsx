@@ -48,7 +48,9 @@ const convertDate = (collectionDate: Date | null) => collectionDate ? new Date(c
 const StepSpecimenDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
 
   // States
-  const { labOrder, setLabOrder } = useContext(LabOrderContext)
+  const { labOrder, setLabOrder, collectionMethod } = useContext(LabOrderContext)
+
+  console.log('collectionMethod ', collectionMethod)
 
   const [data, setData] = useState(labOrder.LabOrderSpecimen ?? [] as LabOrderSpecimenWithRelations[])
   const [deleteId, setDeleteId] = useState(undefined as string | undefined)
