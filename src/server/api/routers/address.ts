@@ -1,10 +1,6 @@
 import { z } from "zod"
 
-import uuid from 'react-native-uuid'
-
 import { createTRPCRouter, publicProcedure } from "@server/api/trpc"
-import { genSaltSync, hashSync } from "bcryptjs"
-
 
 export type AddressType = {
   place_id: string | null

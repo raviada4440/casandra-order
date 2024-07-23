@@ -29,7 +29,6 @@ import DirectionalIcon from '@/components/DirectionalIcon'
 import { LabOrderContext } from '.'
 
 import type { LabOrderTestWithRelations } from '~prisma/generated/zod';
-import { loadIcon } from '@iconify/utils';
 
 const searchClient = Client({
   url: '/api/search'

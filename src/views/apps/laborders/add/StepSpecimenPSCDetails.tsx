@@ -1,5 +1,5 @@
 // React Imports
-import { useContext, useEffect, useState } from 'react'
+// import { useContext, useEffect, useState } from 'react'
 
 // import { useSession } from 'next-auth/react'
 
@@ -8,24 +8,14 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
-import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import Select from '@mui/material/Select'
-import MenuItem from '@mui/material/MenuItem'
 
 
 // Component Imports
 import DirectionalIcon from '@/components/DirectionalIcon'
-import { LabOrderContext } from '.'
 
-
-
-
-import type { LabOrderSpecimenWithRelations } from '~prisma/generated/zod'
-import AutocompleteAddress from './AutocompleteAddress'
-import states from '../../../../data/states'
+// import { LabOrderContext } from '.'
+// import type { LabOrderSpecimenWithRelations } from '~prisma/generated/zod'
 
 type Props = {
   activeStep: number
@@ -38,23 +28,22 @@ type Props = {
 const StepSpecimenPSCDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
 
   // Vars
-  const { labOrder, setLabOrder } = useContext(LabOrderContext);
-  const [formData, setFormData] = useState<LabOrderSpecimenWithRelations>(labOrder?.LabOrderSpecimen?.[0] as LabOrderSpecimenWithRelations)
+  // const { labOrder } = useContext(LabOrderContext);
 
   // const { data: session } = useSession()
 
-  const handleFormChange = (field: keyof LabOrderSpecimenWithRelations, value: LabOrderSpecimenWithRelations[keyof LabOrderSpecimenWithRelations]) => {
-    const updatedFormData = { ...formData, [field]: value };
+  // const handleFormChange = (field: keyof LabOrderSpecimenWithRelations, value: LabOrderSpecimenWithRelations[keyof LabOrderSpecimenWithRelations]) => {
+  //   const updatedFormData = { ...formData, [field]: value };
 
-    setFormData(updatedFormData as LabOrderSpecimenWithRelations);
-    setLabOrder({ ...labOrder, LabOrderSpecimen: [updatedFormData] })
-  }
+  //   setFormData(updatedFormData as LabOrderSpecimenWithRelations);
+  //   setLabOrder({ ...labOrder, LabOrderSpecimen: [updatedFormData] })
+  // }
 
-  useEffect(() => {
-    if(labOrder?.LabOrderSpecimen?.[0]) {
-      setFormData(labOrder?.LabOrderSpecimen?.[0] as LabOrderSpecimenWithRelations)
-    }
-  }, [labOrder, setFormData])
+  // useEffect(() => {
+  //   if(labOrder?.LabOrderSpecimen?.[0]) {
+  //     setFormData(labOrder?.LabOrderSpecimen?.[0] as LabOrderSpecimenWithRelations)
+  //   }
+  // }, [labOrder, setFormData])
 
   return (
     <>

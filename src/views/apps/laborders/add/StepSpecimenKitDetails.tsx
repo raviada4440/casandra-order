@@ -57,7 +57,7 @@ const StepSpecimenKitDetails = ({ activeStep, handleNext, handlePrev, steps }: P
 
     console.log('formData: ', formData)
 
-  }, [labOrder?.LabOrderSpecimen])
+  }, [labOrder?.LabOrderSpecimen, formData])
 
   return (
     <>

@@ -12,6 +12,7 @@ const apiClient = API(
       // if you are authenticating with api key
       // https://www.searchkit.co/docs/guides/setup-elasticsearch#connecting-with-api-key
       apiKey: process.env.ELASTICSEARCH_API_KEY,
+      
       // if you are authenticating with username/password
       // https://www.searchkit.co/docs/guides/setup-elasticsearch#connecting-with-usernamepassword
       //auth: {
