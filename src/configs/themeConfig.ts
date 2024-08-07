@@ -68,7 +68,7 @@ const themeConfig: Config = {
     detached: true, //! true, false (This will not work in the Horizontal Layout or floating navbar is enabled)
     blur: false // true, false
   },
-  contentWidth: 'wide', // 'compact', 'wide'
+  contentWidth: 'compact', // 'compact', 'wide'
   footer: {
     type: 'static', // 'fixed', 'static'
     contentWidth: 'compact', // 'compact', 'wide'
