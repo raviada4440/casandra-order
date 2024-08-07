@@ -35,13 +35,11 @@ import StepPatientDetails from './StepPatientDetails'
 import StepIcdDetails from './StepIcdDetails'
 import StepTestDetails from './StepTestDetails'
 import StepSpecimenCollectionDetails from './StepSpecimenCollectionDetails'
-import StepBillingDetails from './StepBillingDetails'
 
 import PatientSubtitle from './subtitle/Patient';
 import IcdSubtitle from './subtitle/IcdCodes';
 import TestSubtitle from './subtitle/Tests';
 import SpecimenSubtitle from './subtitle/Specimen';
-import BillingSubtitle from './subtitle/Billing';
 
 // Styled Component Imports
 import StepperWrapper from '@core/styles/stepper'
