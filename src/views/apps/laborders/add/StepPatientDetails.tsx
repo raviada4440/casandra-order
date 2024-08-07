@@ -237,7 +237,7 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
                 <div className='flex items-center justify-between'>
                   <Button
                     variant='outlined'
-                    color='secondary'
+                    color='primary'
                     disabled={activeStep === 0}
                     onClick={handlePrev}
                     startIcon={<DirectionalIcon ltrIconClass='ri-arrow-left-line' rtlIconClass='ri-arrow-right-line' />}

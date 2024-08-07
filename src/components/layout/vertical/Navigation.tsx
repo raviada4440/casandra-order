@@ -102,7 +102,7 @@ const Navigation = (props: Props) => {
     <VerticalNav
       customStyles={navigationCustomStyles(verticalNavOptions, theme)}
       collapsedWidth={68}
-      backgroundColor={isSkinBordered ? 'var(--mui-palette-background-paper)' : 'var(--mui-palette-background-default)'}
+      backgroundColor={isSkinBordered ? 'var(--mui-palette-background-paper)' : '#BFD1E5'}
       // eslint-disable-next-line lines-around-comment
       // The following condition adds the data-mui-color-scheme='dark' attribute to the VerticalNav component
       // when semiDark is enabled and the mode or systemMode is light
@@ -113,7 +113,6 @@ const Navigation = (props: Props) => {
     >
       {/* Nav Header including Logo & nav toggle icons  */}
       <NavHeader>
-        <Logo />
         {!(isCollapsed && !isHovered) && (
           <NavCollapseIcons
             lockedIcon={<i className='ri-radio-button-line text-xl' />}

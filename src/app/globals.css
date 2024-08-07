@@ -88,6 +88,12 @@ ul:not([class]) {
   }
 }
 
+.ts-menu-label {
+  color: rgba(46, 38, 61, 0.9);
+}
+.ts-menu-icon {
+  color: rgba(46, 38, 61, 0.9);
+}
 .ts-vertical-nav-root {
   .ps__thumb-y {
     inline-size: 4px;

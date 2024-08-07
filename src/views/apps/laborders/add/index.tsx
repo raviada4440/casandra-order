@@ -99,12 +99,6 @@ const stepEntries = [
     subtitle: 'Specimen Type',
     stepDetails: StepSpecimenCollectionDetails,
     subTitleDetails: SpecimenSubtitle
-  },
-  {
-    title: 'Billing',
-    subtitle: 'Billing',
-    stepDetails: StepBillingDetails,
-    subTitleDetails: BillingSubtitle
   }
 ]
 

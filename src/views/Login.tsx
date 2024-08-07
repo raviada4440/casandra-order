@@ -262,7 +262,7 @@ const Login = ({ mode }: { mode: Mode }) => {
                 <AutocompleteEndpoint />
                 <Button
                   variant="outlined"
-                  color='secondary'
+                  color='primary'
                   className='self-center text-textPrimary'
                   startIcon={<img src='/images/pages/epic.png' alt='Google' width={45} />}
                   sx={{ '& .MuiButton-startIcon': { marginInlineEnd: 3 } }}
