@@ -290,6 +290,7 @@ const LabOrderListTable = ({ labOrdersData, columnFiltersData }: { labOrdersData
       }),
       columnHelper.accessor('action', {
         header: 'Actions',
+        enableColumnFilter:false,
         cell: ({ row }) => (
           <div className='flex items-center'>
             <IconButton onClick={() => handleEditPermission(row.original.OrderNumber as string)}>

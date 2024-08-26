@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'
+
 // Third-party Imports
 import classnames from 'classnames'
 
@@ -109,6 +111,16 @@ const NavbarContent = () => {
       <div className='flex items-center gap-[7px]'>
         <NavToggle />
         <Logo />
+        <div className='flex items-center ml-10'>
+          <Link href='https://casandra-dashboard.vercel.app' target='_blank' className='text-primary'>
+            Test Menu
+          </Link>
+        </div>
+        <div className='flex items-center ml-10'>
+          <Link href='https://www.casandra.ai/contact' target='_blank' className='text-primary'>
+            Support
+          </Link>
+        </div>
         {/* <NavSearch /> */}
       </div>
       <div className='flex items-center'>
