@@ -12,6 +12,7 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
+import IconButton from '@mui/material/IconButton'
 
 // import IconButton from '@mui/material/IconButton'
 import TablePagination from '@mui/material/TablePagination'
@@ -116,6 +117,10 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
 
   // Return if the item should be filtered in/out
   return itemRank.passed
+}
+
+const handleEditPermission = (orderNumber: string) => {
+  console.log('Order Number:', orderNumber)
 }
 
 const Filter = ({ column, table }: { column: Column<any, unknown>; table: Table<any> }) => {
@@ -270,10 +275,11 @@ const LabOrderListTable = ({ labOrdersData, columnFiltersData }: { labOrdersData
         header: 'Patient Name',
         cell: ({ row }) => <Typography className={`${classes.cell250}`}>{row.original.PatientName}</Typography>
       }),
-      columnHelper.accessor('AccessionNumber', {
-        header: 'Accession',
-        cell: ({ row }) => <Typography className={`${classes.cell75}`}>{row.original.AccessionNumber}</Typography>
-      }),
+
+      // columnHelper.accessor('AccessionNumber', {
+      //   header: 'Accession',
+      //   cell: ({ row }) => <Typography className={`${classes.cell75}`}>{row.original.AccessionNumber}</Typography>
+      // }),
       columnHelper.accessor('OrderingPhysician', {
         header: 'Ordering Physician',
         cell: ({ row }) => <Typography className={`${classes.cell250}`}>{row.original.OrderingPhysician}</Typography>
@@ -282,6 +288,20 @@ const LabOrderListTable = ({ labOrdersData, columnFiltersData }: { labOrdersData
         header: 'Status',
         cell: ({ row }) => <Typography className={`${classes.cell150}`}>{row.original.Status}</Typography>
       }),
+      columnHelper.accessor('action', {
+        header: 'Actions',
+        cell: ({ row }) => (
+          <div className='flex items-center'>
+            <IconButton onClick={() => handleEditPermission(row.original.OrderNumber as string)}>
+              <i className='ri-edit-box-line text-[22px] text-textSecondary' />
+            </IconButton>
+            <IconButton>
+              <i className='ri-bank-card-line text-[22px] text-textSecondary' />
+            </IconButton>
+          </div>
+        ),
+        enableSorting: false
+      })
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -345,7 +365,7 @@ const LabOrderListTable = ({ labOrdersData, columnFiltersData }: { labOrdersData
         >
           New Order
         </Button>
-        <Button
+        {/* <Button
           variant='contained'
           component={Link}
           startIcon={<i className='ri-add-line' />}
@@ -353,7 +373,7 @@ const LabOrderListTable = ({ labOrdersData, columnFiltersData }: { labOrdersData
           className='is-full sm:is-auto'
         >
           New Order V2
-        </Button>
+        </Button> */}
         </div>
         <div className='flex flex-col sm:flex-row is-full sm:is-auto items-center gap-4'>
           <DebouncedInput

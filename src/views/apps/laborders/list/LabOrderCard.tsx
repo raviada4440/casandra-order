@@ -53,7 +53,7 @@ const LabOrderCard = ({ totalOrdersInTransit, totalIncompleteOrders }: { totalOr
                   <Typography>{item.subtitle}</Typography>
                 </div>
                 <Avatar variant='rounded' className='bs-[42px] is-[42px]'>
-                  <i className={classnames('text-[26px]', item.icon)}></i>
+                  <i className={classnames('text-[26px]', item.icon)} style={{ color: '#831c78' }}></i>
                 </Avatar>
               </div>
               {isBelowMdScreen && !isBelowSmScreen && index < data.length - 2 && (
