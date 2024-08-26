@@ -260,16 +260,36 @@ const Login = ({ mode }: { mode: Mode }) => {
                   <Typography className='mbs-1'>Please choose your organization and use Epic credentials to sign in</Typography>
                 </div>
                 <AutocompleteEndpoint />
-                <Button
-                  variant="outlined"
-                  color='primary'
-                  className='self-center text-textPrimary'
-                  startIcon={<img src='/images/pages/epic.png' alt='Google' width={45} />}
-                  sx={{ '& .MuiButton-startIcon': { marginInlineEnd: 3 } }}
-                  onClick={() => signIn('epic', undefined , { display: 'popup', wellknownUrl: settings.selectedEndpoint?.Endpoint + ".well-known/openid-configuration" as string })}
-                >
-                  Sign in with my EPIC
-                </Button>
+                <div className='flex flex-col items-center gap-4'>
+                  {/* <div className='flex gap-4'> */}
+                  <Grid item xs={12} md={6}>
+                    <Button
+                      fullWidth
+                      variant="outlined"
+                      color='primary'
+                      className='self-center text-textPrimary'
+                      startIcon={<img src='/images/pages/epic.png' alt='Epic' width={45} />}
+                      sx={{ '& .MuiButton-startIcon': { marginInlineEnd: 3 }, width: '300px', mt: 6 }}
+                      onClick={() => signIn('epic', undefined , { display: 'popup', wellknownUrl: settings.selectedEndpoint?.Endpoint + ".well-known/openid-configuration" as string })}
+                    >
+                      Sign in with my EPIC
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Button
+                      fullWidth
+                      variant="outlined"
+                      color='primary'
+                      className='self-center text-textPrimary'
+                      startIcon={<img src='/images/pages/cerner.png' alt='Cerner' width={75} />}
+                      sx={{ '& .MuiButton-startIcon': { marginInlineEnd: 3 }, width: '300px' }}
+                      onClick={() => signIn('cerner', undefined , { display: 'popup', wellknownUrl: settings.selectedEndpoint?.Endpoint + ".well-known/openid-configuration" as string })}
+                    >
+                      Sign in with my Cerner
+                    </Button>
+                    </Grid>
+                  {/* </div> */}
+                </div>
               </div>
             </Grid>
           </Grid>
