@@ -269,7 +269,7 @@ const Login = ({ mode }: { mode: Mode }) => {
                       color='primary'
                       className='self-center text-textPrimary'
                       startIcon={<img src='/images/pages/epic.png' alt='Epic' width={45} />}
-                      sx={{ '& .MuiButton-startIcon': { marginInlineEnd: 3 }, width: '300px', mt: 6 }}
+                      sx={{ '& .MuiButton-startIcon': { marginInlineEnd: 3 }, width: '300px', mt: 6, height: '50px' }}
                       onClick={() => signIn('epic', undefined , { display: 'popup', wellknownUrl: settings.selectedEndpoint?.Endpoint + ".well-known/openid-configuration" as string })}
                     >
                       Sign in with my EPIC
@@ -282,7 +282,7 @@ const Login = ({ mode }: { mode: Mode }) => {
                       color='primary'
                       className='self-center text-textPrimary'
                       startIcon={<img src='/images/pages/cerner.png' alt='Cerner' width={75} />}
-                      sx={{ '& .MuiButton-startIcon': { marginInlineEnd: 3 }, width: '300px' }}
+                      sx={{ '& .MuiButton-startIcon': { marginInlineEnd: 3 }, width: '300px', height: '50px'  }}
                       onClick={() => signIn('cerner', undefined , { display: 'popup', wellknownUrl: settings.selectedEndpoint?.Endpoint + ".well-known/openid-configuration" as string })}
                     >
                       Sign in with my Cerner
