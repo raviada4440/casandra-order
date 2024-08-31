@@ -151,8 +151,8 @@ const Login = ({ mode }: { mode: Mode }) => {
   }
 
   return (
-    <div className='flex flex-col justify-center items-center min-bs-[75dvh] relative p-6'>
-      <Card className='flex flex-col'>
+    <div className='flex flex-col justify-center items-center min-h-screen p-6'>
+      <Card className='flex flex-col' sx={{ width: '75%' }}>
         <CardContent className='!p-12'>
           <div className='flex justify-center items-center gap-3 mbe-6'>
             <Logo className='text-primary' height={40} width={350} />
@@ -165,7 +165,7 @@ const Login = ({ mode }: { mode: Mode }) => {
               <div className='flex flex-col gap-5'>
                 <div>
                   {/* <Typography variant='h4'>{`Welcome to ${themeConfig.templateName}!👋🏻`}</Typography> */}
-                  <Typography className='mbs-1'>Please sign-in to your username & password, if not registered, please contact Casandra team</Typography>
+                  <Typography sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}  className='mbs-1'>Sign in to your account</Typography>
                 </div>
                 <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-5'>
                   <Controller
@@ -233,16 +233,48 @@ const Login = ({ mode }: { mode: Mode }) => {
                     {loading && <CircularProgress size={20} color='inherit' />}
                     Log In
                   </Button>
-                  {/* <div className='flex justify-center items-center flex-wrap gap-2'>
-                    <Typography>New on our platform?</Typography>
-                    <Typography component={Link} href='/register' color='primary'>
-                      Create an account
+                  <div className='flex justify-center items-center flex-wrap gap-4'>
+                    <Typography sx={{ fontWeight: 'bold', fontSize: '1.2rem' }} >Don&lsquo;t have an account?</Typography>
+                    <Typography
+                      component={Link}
+                      href={'https://www.casandra.ai/contact/'}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      color='primary'
+                      sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}
+                    >
+                      Sign up
                     </Typography>
-                  </div> */}
+                  </div>
+                  {matches ? (
+                    <Divider className="mt-6 mb-6">
+                      <Chip label="OR" size="small" color="primary" />
+                    </Divider>
+                  ) : (
+                    <Divider variant="middle"  className="mt-6 mb-4 items-start items-center">
+                      <Chip label="OR" size="small" color="primary"/>
+                    </Divider>
+                  )}
+
+                  {/* <Divider className='gap-3'>or</Divider> */}
+                  <div className='flex justify-center items-center gap-4'>
+                    <IconButton className='text-facebook'>
+                      <i className='ri-facebook-fill' />
+                    </IconButton>
+                    <IconButton className='text-twitter'>
+                      <i className='ri-twitter-fill' />
+                    </IconButton>
+                    <IconButton className='text-github'>
+                      <i className='ri-github-fill' />
+                    </IconButton>
+                    <IconButton className='text-googlePlus'>
+                      <i className='ri-google-line' />
+                    </IconButton>
+                  </div>
                 </form>
               </div>
             </Grid>
-            <Grid item xs={12} md={1}>
+            <Grid item xs={12} md={2}>
               {matches ? (
                 <Divider className="mt-4 mb-4">
                   <Chip label="OR" size="small" color="primary" />
@@ -253,16 +285,19 @@ const Login = ({ mode }: { mode: Mode }) => {
                 </Divider>
               )}
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={5}>
               <div className='flex flex-col gap-5'>
                 <div>
                   {/* <Typography variant='h4'>{`Welcome to ${themeConfig.templateName}!👋🏻`}</Typography> */}
-                  <Typography className='mbs-1'>Please choose your organization and use Epic credentials to sign in</Typography>
+                  <Typography sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}  className='mbs-1'>Use single sign-on (SSO)</Typography>
                 </div>
                 <AutocompleteEndpoint />
                 <div className='flex flex-col items-center gap-4'>
-                  {/* <div className='flex gap-4'> */}
-                  <Grid item xs={12} md={6}>
+                  <div className='flex justify-center items-center gap-4'>
+                    <Typography sx={{ fontWeight: 'bold', fontSize: '1rem' }}>Out of the box integrations with</Typography>
+                    <img src='/images/pages/epic.png' alt='Epic' width={45} />
+                    <img src='/images/pages/cerner.png' alt='Cerner' width={75} />
+                  {/* <Grid item xs={12} md={6}>
                     <Button
                       fullWidth
                       variant="outlined"
@@ -287,8 +322,8 @@ const Login = ({ mode }: { mode: Mode }) => {
                     >
                       Sign in with my Cerner
                     </Button>
-                    </Grid>
-                  {/* </div> */}
+                  </Grid> */}
+                  </div>
                 </div>
               </div>
             </Grid>

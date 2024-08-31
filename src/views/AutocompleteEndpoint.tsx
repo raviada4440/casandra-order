@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { CircularProgress, Grid } from '@mui/material';
+import { signIn } from 'next-auth/react'
 
 import type { OrganizationEndpoint } from '~prisma/generated/zod';
 import { api } from '~trpc/react';
@@ -30,6 +31,16 @@ const AutocompleteEndpoint = () => {
 
     // Update the labOrder state
     updateSettings({selectedEndpoint: value})
+
+    if(value && value.EHRVendor && value.Endpoint) {
+      signIn(value?.EHRVendor?.toLowerCase(), undefined , { display: 'popup', wellknownUrl: value.Endpoint + ".well-known/openid-configuration" as string })
+    }
+
+    // if (value.EHRVendor === 'Epic') {
+
+    // } else {
+    //   signIn('cerner', undefined , { display: 'popup', wellknownUrl: value.Endpoint + ".well-known/openid-configuration" as string })
+    // }
 
   }
 
@@ -88,7 +99,7 @@ const AutocompleteEndpoint = () => {
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Search for FHIR Endpoint"
+          label="Find your organization"
           variant="outlined"
           InputProps={{
             ...params.InputProps,
