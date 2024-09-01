@@ -43,6 +43,7 @@ import Logo from '@core/svg/Logo'
 // Util Imports
 import { getLocalizedUrl } from '@/utils/i18n'
 import AutocompleteEndpoint from './AutocompleteEndpoint';
+import data from '../data/searchData';
 
 // import { api } from '~trpc/react';
 
@@ -201,6 +202,7 @@ const Login = ({ mode }: { mode: Mode }) => {
                         label='Password'
                         id='login-password'
                         type={isPasswordShown ? 'text' : 'password'}
+                        InputLabelProps={{ shrink: !!field.value }}
                         onChange={e => {
                           field.onChange(e.target.value)
                           errorState !== null && setErrorState(null)
@@ -277,7 +279,7 @@ const Login = ({ mode }: { mode: Mode }) => {
                       fullWidth
                       variant='contained'
                       type='submit'
-                      disabled={true}
+                      disabled={!settings.selectedEndpoint?.OrgName?.includes('Sandbox')}
                       className='gap-2 mt-8'
                       onClick={() => signIn(settings.selectedEndpoint?.EHRVendor?.toLowerCase(), undefined , { display: 'popup', wellknownUrl: settings.selectedEndpoint?.Endpoint + ".well-known/openid-configuration" as string })}
                       >
