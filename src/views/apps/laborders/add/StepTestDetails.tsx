@@ -8,6 +8,10 @@ import uuid from 'react-native-uuid';
 import Grid from '@mui/material/Grid'
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Typography from '@mui/material/Typography'
+
 import "instantsearch.css/themes/satellite-min.css"
 
 import {
@@ -143,6 +147,7 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
         TestId: hit.TestId,
         TestName: hit.TestName,
         LabTestId: hit.LabTestId,
+        CasandraTestId: hit.CasandraTestId,
       }
     } as unknown as LabOrderTestWithRelations
 
@@ -207,6 +212,15 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
   }
 
   return (
+    <Card>
+      <CardContent>
+        <div className='flex items-center gap-2 mbe-4'>
+          <i className='ri-microscope-line text-3xl text-primary' />
+          <Typography variant='h5' className='text-primary'>
+            Tests
+          </Typography>
+        </div>
+
     <Grid container spacing={5}>
       <Grid item xs={12}>
         <div className="">
@@ -214,7 +228,7 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
             <Configure hitsPerPage={10} />
             <div className="container">
               <div className="searchbox">
-                <SearchBox />
+                <SearchBox placeholder='Search for tests by name, testcode or biomarker'/>
               </div>
               <div className="search-panel">
                 <div className="search-panel__results">
@@ -276,6 +290,8 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
         </div>
       </Grid>
     </Grid>
+    </CardContent>
+    </Card>
   )
 }
 

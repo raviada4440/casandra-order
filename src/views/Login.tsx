@@ -233,43 +233,18 @@ const Login = ({ mode }: { mode: Mode }) => {
                     {loading && <CircularProgress size={20} color='inherit' />}
                     Log In
                   </Button>
-                  <div className='flex justify-center items-center flex-wrap gap-4'>
-                    <Typography sx={{ fontWeight: 'bold', fontSize: '1.2rem' }} >Don&lsquo;t have an account?</Typography>
+                  <div className='flex justify-left items-center flex-wrap gap-4'>
+                    <Typography >Don&lsquo;t have an account?</Typography>
                     <Typography
                       component={Link}
                       href={'https://www.casandra.ai/contact/'}
                       target="_blank"
                       rel="noopener noreferrer"
                       color='primary'
-                      sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}
+
                     >
                       Sign up
                     </Typography>
-                  </div>
-                  {matches ? (
-                    <Divider className="mt-6 mb-6">
-                      <Chip label="OR" size="small" color="primary" />
-                    </Divider>
-                  ) : (
-                    <Divider variant="middle"  className="mt-6 mb-4 items-start items-center">
-                      <Chip label="OR" size="small" color="primary"/>
-                    </Divider>
-                  )}
-
-                  {/* <Divider className='gap-3'>or</Divider> */}
-                  <div className='flex justify-center items-center gap-4'>
-                    <IconButton className='text-facebook'>
-                      <i className='ri-facebook-fill' />
-                    </IconButton>
-                    <IconButton className='text-twitter'>
-                      <i className='ri-twitter-fill' />
-                    </IconButton>
-                    <IconButton className='text-github'>
-                      <i className='ri-github-fill' />
-                    </IconButton>
-                    <IconButton className='text-googlePlus'>
-                      <i className='ri-google-line' />
-                    </IconButton>
                   </div>
                 </form>
               </div>
@@ -288,44 +263,42 @@ const Login = ({ mode }: { mode: Mode }) => {
             <Grid item xs={12} md={5}>
               <div className='flex flex-col gap-5'>
                 <div>
-                  {/* <Typography variant='h4'>{`Welcome to ${themeConfig.templateName}!👋🏻`}</Typography> */}
                   <Typography sx={{ fontWeight: 'bold', fontSize: '1.2rem' }}  className='mbs-1'>Use single sign-on (SSO)</Typography>
                 </div>
-                <AutocompleteEndpoint />
-                <div className='flex flex-col items-center gap-4'>
-                  <div className='flex justify-center items-center gap-4'>
-                    <Typography sx={{ fontWeight: 'bold', fontSize: '1rem' }}>Out of the box integrations with</Typography>
-                    <img src='/images/pages/epic.png' alt='Epic' width={45} />
-                    <img src='/images/pages/cerner.png' alt='Cerner' width={75} />
-                  {/* <Grid item xs={12} md={6}>
+
+                  <div className='flex justify-left items-center flex-wrap gap-2'>
+                    <Typography className='mb-4'>Integrated with</Typography>
+                    <img className='mb-4' src='/images/pages/epic.png' alt='Epic' width={45} />
+                    <img className='mb-4' src='/images/pages/cerner.png' alt='Cerner' width={75} />
+
+                    <AutocompleteEndpoint />
+
                     <Button
                       fullWidth
-                      variant="outlined"
-                      color='primary'
-                      className='self-center text-textPrimary'
-                      startIcon={<img src='/images/pages/epic.png' alt='Epic' width={45} />}
-                      sx={{ '& .MuiButton-startIcon': { marginInlineEnd: 3 }, width: '300px', mt: 6, height: '50px' }}
-                      onClick={() => signIn('epic', undefined , { display: 'popup', wellknownUrl: settings.selectedEndpoint?.Endpoint + ".well-known/openid-configuration" as string })}
-                    >
-                      Sign in with my EPIC
+                      variant='contained'
+                      type='submit'
+                      disabled={true}
+                      className='gap-2 mt-8'
+                      onClick={() => signIn(settings.selectedEndpoint?.EHRVendor?.toLowerCase(), undefined , { display: 'popup', wellknownUrl: settings.selectedEndpoint?.Endpoint + ".well-known/openid-configuration" as string })}
+                      >
+                      {loading && <CircularProgress size={20} color='inherit' />}
+                      Log In
                     </Button>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <Button
-                      fullWidth
-                      variant="outlined"
+                  </div>
+                  <div className='flex justify-left items-center flex-wrap gap-4'>
+                    <Typography >Activate your organization. </Typography>
+                    <Typography
+                      component={Link}
+                      href={'https://www.casandra.ai/contact/'}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       color='primary'
-                      className='self-center text-textPrimary'
-                      startIcon={<img src='/images/pages/cerner.png' alt='Cerner' width={75} />}
-                      sx={{ '& .MuiButton-startIcon': { marginInlineEnd: 3 }, width: '300px', height: '50px'  }}
-                      onClick={() => signIn('cerner', undefined , { display: 'popup', wellknownUrl: settings.selectedEndpoint?.Endpoint + ".well-known/openid-configuration" as string })}
+
                     >
-                      Sign in with my Cerner
-                    </Button>
-                  </Grid> */}
+                      Contact Us
+                    </Typography>
                   </div>
                 </div>
-              </div>
             </Grid>
           </Grid>
         </CardContent>

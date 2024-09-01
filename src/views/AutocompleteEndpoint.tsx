@@ -32,9 +32,9 @@ const AutocompleteEndpoint = () => {
     // Update the labOrder state
     updateSettings({selectedEndpoint: value})
 
-    if(value && value.EHRVendor && value.Endpoint) {
-      signIn(value?.EHRVendor?.toLowerCase(), undefined , { display: 'popup', wellknownUrl: value.Endpoint + ".well-known/openid-configuration" as string })
-    }
+    // if(value && value.EHRVendor && value.Endpoint) {
+    //   signIn(value?.EHRVendor?.toLowerCase(), undefined , { display: 'popup', wellknownUrl: value.Endpoint + ".well-known/openid-configuration" as string })
+    // }
 
     // if (value.EHRVendor === 'Epic') {
 

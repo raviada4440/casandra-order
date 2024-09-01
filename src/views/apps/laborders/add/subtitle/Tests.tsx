@@ -28,7 +28,7 @@ const TestSubtitle = () => {
     <div>
       { labOrder?.LabOrderTest && labOrder?.LabOrderTest.length > 0 ? labOrder?.LabOrderTest?.map((test, index) => (
         <div key={index} className='flex items-center gap-4'>
-          <Typography className='step-subtitle min-is-[65px]'>{`${test.TestCatalog?.LabTestId}`}</Typography>
+          <Typography className='step-subtitle min-is-[65px]'>{`${test.TestCatalog?.CasandraTestId}`}</Typography>
           <Typography className={`${classes.cell150} step-subtitle`}>{`${test.TestCatalog?.TestName}`}</Typography>
         </div>
       )) : (
