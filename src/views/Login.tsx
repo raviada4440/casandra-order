@@ -43,7 +43,6 @@ import Logo from '@core/svg/Logo'
 // Util Imports
 import { getLocalizedUrl } from '@/utils/i18n'
 import AutocompleteEndpoint from './AutocompleteEndpoint';
-import data from '../data/searchData';
 
 // import { api } from '~trpc/react';
 

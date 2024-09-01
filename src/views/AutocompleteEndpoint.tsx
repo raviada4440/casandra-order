@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { CircularProgress, Grid } from '@mui/material';
-import { signIn } from 'next-auth/react'
 
 import type { OrganizationEndpoint } from '~prisma/generated/zod';
 import { api } from '~trpc/react';
