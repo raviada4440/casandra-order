@@ -50,7 +50,7 @@ const StyledVerticalNav = styled.aside<StyledVerticalNavProps>`
       inset-inline-start: -${({ collapsedWidth }) => `${collapsedWidth}px`};
     }
     &.${verticalNavClasses.toggled} {
-      inset-inline-start: 0;
+      inset-inline-start: 10;
     }
   }
 

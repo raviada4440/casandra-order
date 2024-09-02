@@ -51,7 +51,7 @@ export type VerticalNavProps = HTMLAttributes<HTMLHtmlElement> & {
 const VerticalNav = (props: VerticalNavProps) => {
   // Props
   const {
-    width = 260,
+    width = 200,
     collapsedWidth = 80,
     defaultCollapsed = false,
     backgroundColor = 'white',

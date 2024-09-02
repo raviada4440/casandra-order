@@ -30,7 +30,6 @@ import { LabOrderContext } from '.'
 
 
 import type { PatientWithRelations, OrganizationWithRelations, ProviderOrganizationPartialRelations } from '~prisma/generated/zod'
-import AutocompleteProvider from './AutocompleteProvider'
 import AutocompleteFhirPatient from './AutocompleteFhirPatient'
 import AutocompletePatient from './AutocompletePatient'
 
@@ -73,17 +72,6 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
     setLabOrder({ ...labOrder, PatientMRN: value })
   }
 
-  const handleOrgChange = (event: SelectChangeEvent) => {
-    // console.log('event.target.value', event.target.value)
-    const providerOrg = providerOrgs.find(org => org.Organization?.Id === event.target.value)
-
-    // console.log('providerOrg', providerOrg)
-
-    setLabOrder({ ...labOrder, Organization: providerOrg?.Organization as OrganizationWithRelations })
-
-    // console.log('labOrder', labOrder)
-  };
-
   useEffect(() => {
     if (providerOrgs.length === 1) {
       labOrder.Organization = providerOrgs[0].Organization as OrganizationWithRelations
@@ -107,7 +95,7 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
         <Card>
           <CardContent>
 
-            <div className='flex items-center gap-2 mbe-4'>
+            {/* <div className='flex items-center gap-2 mbe-4'>
               <i className='ri-hospital-line text-3xl text-primary' />
               <Typography variant='h5' className='text-primary'>
                 Location & Treating Physician
@@ -133,7 +121,7 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
               <Grid item xs={12} md={6}>
                 <AutocompleteProvider />
               </Grid>
-            </Grid>
+            </Grid> */}
             {/* <Divider className="mb-6" /> */}
 
             <div className='flex items-center gap-2 mbe-4'>

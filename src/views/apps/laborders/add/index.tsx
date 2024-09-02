@@ -40,12 +40,13 @@ import PatientSubtitle from './subtitle/Patient';
 import IcdSubtitle from './subtitle/IcdCodes';
 import TestSubtitle from './subtitle/Tests';
 import SpecimenSubtitle from './subtitle/Specimen';
+import AccountSubtitle from './subtitle/Account';
 
 // Styled Component Imports
 import StepperWrapper from '@core/styles/stepper'
 import StepperCustomDot from '@views/forms/form-wizard/StepperCustomDot'
 
-import AccountCard from './AccountCard'
+// import AccountCard from './AccountCard'
 
 import type {
   LabOrderSponsoredTestConsentWithRelations,
@@ -62,6 +63,7 @@ import StepEligibility from './StepEligibility';
 import Eligibility from './subtitle/Eligibility';
 import StepSpecimenKitDetails from './StepSpecimenKitDetails';
 import StepSpecimenPSCDetails from './StepSpecimenPSCDetails';
+import StepAccountDetails from './StepAccountDetails';
 
 
 // Types
@@ -74,6 +76,12 @@ type Step = {
 
 // Vars
 const stepEntries = [
+  {
+    title: 'Account',
+    subtitle: 'Account',
+    stepDetails: StepAccountDetails,
+    subTitleDetails: AccountSubtitle
+  },
   {
     title: 'Patient',
     subtitle: 'Patient',
@@ -387,9 +395,9 @@ const AddLabOrder = () => {
     <LabOrderContext.Provider value={{ labOrder, setLabOrder, collectionMethod, setCollectionMethod }}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Grid container spacing={6}>
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}>
             <AccountCard />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
             <Card className='flex flex-col lg:flex-row'>
               <CardContent className='border-be lg:border-be-0 lg:border-ie lg:min-is-[300px]'>
