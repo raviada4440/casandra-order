@@ -1,5 +1,7 @@
 // React Imports
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
+
+import { useSession } from 'next-auth/react';
 
 // MUI Imports
 import Typography from '@mui/material/Typography'
@@ -8,6 +10,7 @@ import { makeStyles } from '@mui/styles'
 
 // Component Imports
 import { LabOrderContext } from '..'
+import type { ProviderWithRelations } from '~prisma/generated/zod';
 
 const useStyles = makeStyles({
   cell150: {
@@ -22,8 +25,23 @@ const useStyles = makeStyles({
 const AccountSubtitle = () => {
 
   // Vars
-  const { labOrder } = useContext(LabOrderContext)
+  const { labOrder, setLabOrder } = useContext(LabOrderContext)
   const classes = useStyles();
+  const { data: session } = useSession()
+
+  useEffect(() => {
+    if (session?.user.UserAttribute?.Provider) {
+      const labOrderCopy = { ...labOrder }
+      
+      labOrderCopy.OrderingProvider = session?.user.UserAttribute?.Provider as ProviderWithRelations;
+
+      // Only update the state if labOrderCopy has changed
+      if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrder)) {
+        // console.log('labOrderCopyWithOrderingProvider: ', labOrderCopy);
+        setLabOrder(labOrderCopy);
+      }
+    }
+  }, [session, labOrder, setLabOrder])
 
   const organizationName = labOrder?.Organization ? labOrder.Organization?.OrgName : ''
 
@@ -46,7 +64,7 @@ const AccountSubtitle = () => {
           <Typography className={`${classes.cell150} step-subtitle`}>{ `${treatingPhysicianName}` }</Typography>
         </div>
         <div className='flex items-center gap-1'>
-          <Typography className='step-subtitle min-is-[65px]'>Organization:</Typography>
+          <Typography className='step-subtitle min-is-[65px]'>Location:</Typography>
           <Typography className={`${classes.cell150} step-subtitle`}>{`${organizationName}`}</Typography>
         </div>
       </>
@@ -61,7 +79,7 @@ const AccountSubtitle = () => {
           <Typography className='step-subtitle'>&nbsp;</Typography>
         </div>
         <div className='flex items-center gap-4'>
-          <Typography className='step-subtitle min-is-[65px]'>Organization:</Typography>
+          <Typography className='step-subtitle min-is-[65px]'>Location:</Typography>
           <Typography className='step-subtitle'>&nbsp;</Typography>
         </div>
         </>

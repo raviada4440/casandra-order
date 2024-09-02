@@ -13,7 +13,6 @@ import InputAdornment from '@mui/material/InputAdornment'
 import Typography from '@mui/material/Typography'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
-import type { SelectChangeEvent } from '@mui/material/Select';
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 

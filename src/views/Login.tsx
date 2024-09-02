@@ -282,7 +282,7 @@ const Login = ({ mode }: { mode: Mode }) => {
                       className='gap-2 mt-8'
                       onClick={() => signIn(settings.selectedEndpoint?.EHRVendor?.toLowerCase(), undefined , { display: 'popup', wellknownUrl: settings.selectedEndpoint?.Endpoint + ".well-known/openid-configuration" as string })}
                       >
-                      {loading && <CircularProgress size={20} color='inherit' />}
+                      {/* {loading && <CircularProgress size={20} color='inherit' />} */}
                       Log In
                     </Button>
                   </div>

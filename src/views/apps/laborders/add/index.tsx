@@ -53,7 +53,6 @@ import type {
   LabOrderTestWithRelations,
   LabOrderWithRelations,
   PatientWithRelations,
-  ProviderWithRelations,
   SponsoredTestWithPartialRelations,
 } from '~prisma/generated/zod'
 
@@ -187,17 +186,7 @@ const AddLabOrder = () => {
     }
   }
 
-  useEffect(() => {
-    if (session?.user.UserAttribute?.Provider) {
-      const labOrderCopyWithOrderingProvider = { ...labOrderCopy, OrderingProvider: session?.user.UserAttribute?.Provider as ProviderWithRelations }
 
-      // Only update the state if labOrderCopy has changed
-      if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrderCopyWithOrderingProvider)) {
-        // console.log('labOrderCopyWithOrderingProvider: ', labOrderCopy);
-        setLabOrderCopy(labOrderCopyWithOrderingProvider);
-      }
-    }
-  }, [session, labOrderCopy, setLabOrderCopy])
 
   useEffect(() => {
     if (session && session.patientId && session.patientId.length > 0) {

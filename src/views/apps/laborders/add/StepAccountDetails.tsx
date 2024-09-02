@@ -81,10 +81,13 @@ const StepAccountDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
             <div className='flex items-center gap-2 mbe-4'>
               <i className='ri-hospital-line text-3xl text-primary' />
               <Typography variant='h5' className='text-primary'>
-                Location & Treating Physician
+                Treating Physician & Location
               </Typography>
             </div>
             <Grid className="mb-6" container  spacing={5}>
+              <Grid item xs={12}>
+                <AutocompleteProvider />
+              </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
                   <InputLabel id='select-location'>Location</InputLabel>
@@ -100,9 +103,6 @@ const StepAccountDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
                     ))}
                   </Select>
                 </FormControl>
-              </Grid>
-              <Grid item xs={12}>
-                <AutocompleteProvider />
               </Grid>
             </Grid>
             <Grid item xs={12}>
