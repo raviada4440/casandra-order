@@ -273,18 +273,31 @@ const Login = ({ mode }: { mode: Mode }) => {
                     <img className='mb-4' src='/images/pages/cerner.png' alt='Cerner' width={75} />
 
                     <AutocompleteEndpoint />
-
+                    { settings.selectedEndpoint?.EHRVendor?.toLowerCase() === 'cerner' ? (
+                      <Button
+                      fullWidth
+                      variant='contained'
+                      type='submit'
+                      disabled={!settings.selectedEndpoint?.OrgName?.includes('Sandbox')}
+                      className='gap-2 mt-8'
+                      onClick={() => signIn(settings.selectedEndpoint?.EHRVendor?.toLowerCase(), undefined , { aud: 'https://fhir-ehr-code.cerner.com/r4/ec2458f2-1e24-41c8-b71b-0e701af7583d/', wellknownUrl: settings.selectedEndpoint?.Endpoint + ".well-known/openid-configuration" as string })}
+                      >
+                      {/* {loading && <CircularProgress size={20} color='inherit'} /> */}
+                      Log In
+                      </Button>
+                    ) : (
                     <Button
                       fullWidth
                       variant='contained'
                       type='submit'
                       disabled={!settings.selectedEndpoint?.OrgName?.includes('Sandbox')}
                       className='gap-2 mt-8'
-                      onClick={() => signIn(settings.selectedEndpoint?.EHRVendor?.toLowerCase(), undefined , { display: 'popup', wellknownUrl: settings.selectedEndpoint?.Endpoint + ".well-known/openid-configuration" as string })}
+                      onClick={() => signIn(settings.selectedEndpoint?.EHRVendor?.toLowerCase(), undefined , { wellknownUrl: settings.selectedEndpoint?.Endpoint + ".well-known/openid-configuration" as string })}
                       >
                       {/* {loading && <CircularProgress size={20} color='inherit' />} */}
                       Log In
                     </Button>
+                   )}
                   </div>
                   <div className='flex justify-left items-center flex-wrap gap-4'>
                     <Typography >Activate your organization. </Typography>
