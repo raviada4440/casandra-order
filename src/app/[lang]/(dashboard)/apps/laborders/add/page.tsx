@@ -1,7 +1,7 @@
 // MUI Imports
 import Grid from '@mui/material/Grid'
 
-import AddLabOrder from '@views/apps/laborders/add'
+import AddLabOrderCdx from '@views/apps/laborders/add'
 
 // import { api } from '~trpc/server'
 
@@ -15,7 +15,7 @@ const LabOrderAdd = async () => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={12} md={12}>
-        <AddLabOrder />
+        <AddLabOrderCdx />
       </Grid>
     </Grid>
   )

@@ -30,7 +30,7 @@ import Client from '@searchkit/instantsearch-client'
 
 // Component Imports
 import DirectionalIcon from '@/components/DirectionalIcon'
-import { LabOrderContext } from '.'
+import { LabOrderContext } from '..'
 
 import type { LabOrderTestWithRelations } from '~prisma/generated/zod';
 
@@ -221,76 +221,79 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
           </Typography>
         </div>
 
-    <Grid container spacing={5}>
-      <Grid item xs={12}>
-        <div className="">
-          <InstantSearch indexName="testcatalog" searchClient={searchClient} routing>
-            <Configure hitsPerPage={10} />
-            <div className="container">
-              <div className="searchbox">
-                <SearchBox placeholder='Search for tests by name, testcode or biomarker'/>
-              </div>
-              <div className="search-panel">
-                <div className="search-panel__results">
+        <Grid container spacing={5}>
+          <Grid item xs={12}>
+            <div className="">
+              <InstantSearch indexName="testcatalog" searchClient={searchClient} routing>
+                <Configure hitsPerPage={10} />
+                <div className="container">
+                  <div className="searchbox">
+                    <SearchBox placeholder='Search for tests by name, testcode or biomarker' />
+                  </div>
+                  <div className="search-panel">
+                    <div className="search-panel__results">
 
-                  {/* <Stats /> */}
-                  <CurrentRefinements />
-                  <QueryRulesBanner />
-                  <InfiniteHits hitComponent={HitView} showPrevious={false} />
-                  {/* <Hits hitComponent={HitView} /> */}
-                  {/* <Pagination /> */}
-                </div>
+                      {/* <Stats /> */}
+                      <CurrentRefinements />
+                      <QueryRulesBanner />
+                      <InfiniteHits hitComponent={HitView} showPrevious={false} />
+                      {/* <Hits hitComponent={HitView} /> */}
+                      {/* <Pagination /> */}
+                    </div>
 
-                <div className="search-panel__filters">
-                  <DynamicWidgets facets={['*']}>
-                    <Panel header="Lab">
-                      <RefinementList attribute="Lab" />
-                    </Panel>
-                    <Panel header="Biomarker">
-                      <RefinementList attribute="Biomarker" searchable />
-                    </Panel>
-                    <Panel header="Sponsored Program">
-                      <RefinementList attribute="Sponsored Program" />
-                    </Panel>
-                    <Panel header="Therapeutic Area">
-                      <RefinementList attribute="Therapeutic Area" />
-                    </Panel>
-                  </DynamicWidgets>
+                    <div className="search-panel__filters">
+                      <DynamicWidgets facets={['*']}>
+                        <Panel header="Lab">
+                          <RefinementList attribute="Lab" />
+                        </Panel>
+                        <Panel header="Biomarker">
+                          <RefinementList attribute="Biomarker" searchable />
+                        </Panel>
+                        <Panel header="Sponsored Program">
+                          <RefinementList attribute="Sponsored Program" />
+                        </Panel>
+                        <Panel header="Therapeutic Area">
+                          <RefinementList attribute="Therapeutic Area" />
+                        </Panel>
+                        <Panel header="Test Type">
+                          <RefinementList attribute="Test Type" />
+                        </Panel>
+                      </DynamicWidgets>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              </InstantSearch>
             </div>
-          </InstantSearch>
-        </div>
-      </Grid>
-      <Grid item xs={12}>
-        <div className='flex items-center justify-between'>
-          <Button
-            variant='outlined'
-            color='primary'
-            disabled={activeStep === 0}
-            onClick={handlePrev}
-            startIcon={<DirectionalIcon ltrIconClass='ri-arrow-left-line' rtlIconClass='ri-arrow-right-line' />}
-          >
-            Previous
-          </Button>
-          <Button
-            variant='contained'
-            color={activeStep === steps.length - 1 ? 'success' : 'primary'}
-            onClick={handleNext}
-            endIcon={
-              activeStep === steps.length - 1 ? (
-                <i className='ri-check-line' />
-              ) : (
-                <DirectionalIcon ltrIconClass='ri-arrow-right-line' rtlIconClass='ri-arrow-left-line' />
-              )
-            }
-          >
-            {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
-          </Button>
-        </div>
-      </Grid>
-    </Grid>
-    </CardContent>
+          </Grid>
+          <Grid item xs={12}>
+            <div className='flex items-center justify-between'>
+              <Button
+                variant='outlined'
+                color='primary'
+                disabled={activeStep === 0}
+                onClick={handlePrev}
+                startIcon={<DirectionalIcon ltrIconClass='ri-arrow-left-line' rtlIconClass='ri-arrow-right-line' />}
+              >
+                Previous
+              </Button>
+              <Button
+                variant='contained'
+                color={activeStep === steps.length - 1 ? 'success' : 'primary'}
+                onClick={handleNext}
+                endIcon={
+                  activeStep === steps.length - 1 ? (
+                    <i className='ri-check-line' />
+                  ) : (
+                    <DirectionalIcon ltrIconClass='ri-arrow-right-line' rtlIconClass='ri-arrow-left-line' />
+                  )
+                }
+              >
+                {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
+              </Button>
+            </div>
+          </Grid>
+        </Grid>
+      </CardContent>
     </Card>
   )
 }

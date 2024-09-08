@@ -23,14 +23,14 @@ import AppReactDatepicker from '@/libs/styles/AppReactDatepicker'
 
 // Component Imports
 import DirectionalIcon from '@/components/DirectionalIcon'
-import { LabOrderContext } from '.'
+import { LabOrderContext } from '..'
 
 
 
 
 import type { PatientWithRelations, OrganizationWithRelations, ProviderOrganizationPartialRelations } from '~prisma/generated/zod'
-import AutocompleteFhirPatient from './AutocompleteFhirPatient'
-import AutocompletePatient from './AutocompletePatient'
+import AutocompleteFhirPatient from '../autocomplete/AutocompleteFhirPatient'
+import AutocompletePatient from '../autocomplete/AutocompletePatient'
 
 type Props = {
   activeStep: number

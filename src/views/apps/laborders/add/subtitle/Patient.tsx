@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 
 
 // Component Imports
-import { LabOrderContext } from '..'
+import { LabOrderContext } from '../index-not-used'
 
 const PatientSubtitle = () => {
 
@@ -21,35 +21,35 @@ const PatientSubtitle = () => {
 
   return (
     <div>
-      { labOrder?.Patient ? (
+      {labOrder?.Patient ? (
         <>
-        <div className='flex items-center gap-4'>
-          <Typography className='step-subtitle min-is-[65px]'>Name:</Typography>
-          <Typography className='step-subtitle'>{ labOrder?.Patient.FirstName || labOrder?.Patient.LastName ? `${labOrder?.Patient.FirstName ? labOrder?.Patient.FirstName : ''} ${labOrder?.Patient.LastName ? labOrder?.Patient.LastName : ''}` : ''}</Typography>
-        </div>
-        <div className='flex items-center gap-4'>
-          <Typography className='step-subtitle min-is-[65px]'>DOB:</Typography>
-          <Typography className='step-subtitle'>{ `${dob}` }</Typography>
-        </div>
-        <div className='flex items-center gap-4'>
-          <Typography className='step-subtitle min-is-[65px]'>MRN:</Typography>
-          <Typography className='step-subtitle'>{ labOrder?.PatientMRN ? `${labOrder?.PatientMRN}` : ''}</Typography>
-        </div>
-      </>
+          <div className='flex items-center gap-4'>
+            <Typography className='step-subtitle min-is-[65px]'>Name:</Typography>
+            <Typography className='step-subtitle'>{labOrder?.Patient.FirstName || labOrder?.Patient.LastName ? `${labOrder?.Patient.FirstName ? labOrder?.Patient.FirstName : ''} ${labOrder?.Patient.LastName ? labOrder?.Patient.LastName : ''}` : ''}</Typography>
+          </div>
+          <div className='flex items-center gap-4'>
+            <Typography className='step-subtitle min-is-[65px]'>DOB:</Typography>
+            <Typography className='step-subtitle'>{`${dob}`}</Typography>
+          </div>
+          <div className='flex items-center gap-4'>
+            <Typography className='step-subtitle min-is-[65px]'>MRN:</Typography>
+            <Typography className='step-subtitle'>{labOrder?.PatientMRN ? `${labOrder?.PatientMRN}` : ''}</Typography>
+          </div>
+        </>
       ) : (
         <>
-        <div className='flex items-center gap-4'>
-          <Typography className='step-subtitle min-is-[65px]'>Name:</Typography>
-          <Typography className='step-subtitle'>&nbsp;</Typography>
-        </div>
-        <div className='flex items-center gap-4'>
-          <Typography className='step-subtitle min-is-[65px]'>DOB:</Typography>
-          <Typography className='step-subtitle'>&nbsp;</Typography>
-        </div>
-        <div className='flex items-center gap-4'>
-          <Typography className='step-subtitle min-is-[65px]'>MRN:</Typography>
-          <Typography className='step-subtitle'>&nbsp;</Typography>
-        </div>
+          <div className='flex items-center gap-4'>
+            <Typography className='step-subtitle min-is-[65px]'>Name:</Typography>
+            <Typography className='step-subtitle'>&nbsp;</Typography>
+          </div>
+          <div className='flex items-center gap-4'>
+            <Typography className='step-subtitle min-is-[65px]'>DOB:</Typography>
+            <Typography className='step-subtitle'>&nbsp;</Typography>
+          </div>
+          <div className='flex items-center gap-4'>
+            <Typography className='step-subtitle min-is-[65px]'>MRN:</Typography>
+            <Typography className='step-subtitle'>&nbsp;</Typography>
+          </div>
         </>
       )}
     </div>

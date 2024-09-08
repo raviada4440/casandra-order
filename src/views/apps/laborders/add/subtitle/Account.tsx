@@ -9,8 +9,8 @@ import Typography from '@mui/material/Typography'
 import { makeStyles } from '@mui/styles'
 
 // Component Imports
-import { LabOrderContext } from '..'
 import type { ProviderWithRelations } from '~prisma/generated/zod';
+import { LabOrderContext } from '..';
 
 const useStyles = makeStyles({
   cell150: {
@@ -32,7 +32,7 @@ const AccountSubtitle = () => {
   useEffect(() => {
     if (session?.user.UserAttribute?.Provider) {
       const labOrderCopy = { ...labOrder }
-      
+
       labOrderCopy.OrderingProvider = session?.user.UserAttribute?.Provider as ProviderWithRelations;
 
       // Only update the state if labOrderCopy has changed
@@ -53,35 +53,35 @@ const AccountSubtitle = () => {
 
   return (
     <div>
-      { labOrder?.Patient ? (
+      {labOrder?.Patient ? (
         <>
-        <div className='flex items-center gap-1'>
-          <Typography className='step-subtitle min-is-[65px]'>Ordering:</Typography>
-          <Typography className={`${classes.cell150} step-subtitle`}>{ `${orderingPhysicianName}` }</Typography>
-        </div>
-        <div className='flex items-center gap-1'>
-          <Typography className='step-subtitle min-is-[65px]'>Treating:</Typography>
-          <Typography className={`${classes.cell150} step-subtitle`}>{ `${treatingPhysicianName}` }</Typography>
-        </div>
-        <div className='flex items-center gap-1'>
-          <Typography className='step-subtitle min-is-[65px]'>Location:</Typography>
-          <Typography className={`${classes.cell150} step-subtitle`}>{`${organizationName}`}</Typography>
-        </div>
-      </>
+          <div className='flex items-center gap-1'>
+            <Typography className='step-subtitle min-is-[65px]'>Ordering:</Typography>
+            <Typography className={`${classes.cell150} step-subtitle`}>{`${orderingPhysicianName}`}</Typography>
+          </div>
+          <div className='flex items-center gap-1'>
+            <Typography className='step-subtitle min-is-[65px]'>Treating:</Typography>
+            <Typography className={`${classes.cell150} step-subtitle`}>{`${treatingPhysicianName}`}</Typography>
+          </div>
+          <div className='flex items-center gap-1'>
+            <Typography className='step-subtitle min-is-[65px]'>Location:</Typography>
+            <Typography className={`${classes.cell150} step-subtitle`}>{`${organizationName}`}</Typography>
+          </div>
+        </>
       ) : (
         <>
-        <div className='flex items-center gap-4'>
-          <Typography className='step-subtitle min-is-[65px]'>Ordering:</Typography>
-          <Typography className='step-subtitle'>&nbsp;</Typography>
-        </div>
-        <div className='flex items-center gap-4'>
-          <Typography className='step-subtitle min-is-[65px]'>Treating:</Typography>
-          <Typography className='step-subtitle'>&nbsp;</Typography>
-        </div>
-        <div className='flex items-center gap-4'>
-          <Typography className='step-subtitle min-is-[65px]'>Location:</Typography>
-          <Typography className='step-subtitle'>&nbsp;</Typography>
-        </div>
+          <div className='flex items-center gap-4'>
+            <Typography className='step-subtitle min-is-[65px]'>Ordering:</Typography>
+            <Typography className='step-subtitle'>&nbsp;</Typography>
+          </div>
+          <div className='flex items-center gap-4'>
+            <Typography className='step-subtitle min-is-[65px]'>Treating:</Typography>
+            <Typography className='step-subtitle'>&nbsp;</Typography>
+          </div>
+          <div className='flex items-center gap-4'>
+            <Typography className='step-subtitle min-is-[65px]'>Location:</Typography>
+            <Typography className='step-subtitle'>&nbsp;</Typography>
+          </div>
         </>
       )}
     </div>

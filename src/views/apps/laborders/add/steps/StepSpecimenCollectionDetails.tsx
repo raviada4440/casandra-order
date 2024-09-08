@@ -21,9 +21,9 @@ import styles from '@core/styles/table.module.css'
 import DirectionalIcon from '@/components/DirectionalIcon'
 import OpenDialogOnElementClick from '@/components/dialogs/OpenDialogOnElementClick'
 
-import { LabOrderContext } from '.'
+import { LabOrderContext } from '..'
 import type { LabOrderSpecimenWithRelations } from '~prisma/generated/zod'
-import AddSpecimenDetails from './dialogs/AddSpecimenDetails'
+import AddSpecimenDetails from '../dialogs/AddSpecimenDetails'
 
 extend(utc);
 extend(timezone);

@@ -9,7 +9,7 @@ import { makeStyles } from '@mui/styles'
 
 
 // Component Imports
-import { LabOrderContext } from '..'
+import { LabOrderContext } from '../index-not-used'
 
 const useStyles = makeStyles({
   cell150: {
@@ -50,9 +50,9 @@ const TestSubtitle = () => {
   }
 
   return (
-      <div>
-        { labOrder?.LabOrderTest && labOrder?.LabOrderTest.length > 0 ? labOrder?.LabOrderTest?.map((test, index) => (
-          <React.Fragment key={index}>
+    <div>
+      {labOrder?.LabOrderTest && labOrder?.LabOrderTest.length > 0 ? labOrder?.LabOrderTest?.map((test, index) => (
+        <React.Fragment key={index}>
           <Grid container alignItems="center" spacing={0}>
             <Grid item xs={3}>
               <Typography className='step-subtitle'>{`${test.TestCatalog?.CasandraTestId}`}</Typography>
@@ -68,7 +68,7 @@ const TestSubtitle = () => {
           </Grid>
         </React.Fragment>
       )) : (
-          <>
+        <>
           <div className='flex items-center gap-4'>
             <Typography className='step-subtitle min-is-[65px]'>Test Code: </Typography>
             <Typography className='step-subtitle'>&nbsp;</Typography>
@@ -77,26 +77,26 @@ const TestSubtitle = () => {
             <Typography className='step-subtitle min-is-[65px]'>Test Name: </Typography>
             <Typography className='step-subtitle'>&nbsp;</Typography>
           </div>
-          </>
-        )
+        </>
+      )
       }
-          <Dialog
-            open={open}
-            onClose={handleClose}
-          >
-            <DialogTitle>{"Confirm Delete"}</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                Are you sure you want to delete this item?
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
-              <Button onClick={handleDelete} color="primary" autoFocus>
-                Delete
-              </Button>
-            </DialogActions>
-          </Dialog>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+      >
+        <DialogTitle>{"Confirm Delete"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this item?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleDelete} color="primary" autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   )
 }

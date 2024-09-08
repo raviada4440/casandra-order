@@ -86,7 +86,69 @@ model BIOMARKER {
   HGNCApprovedName   String?         @db.VarChar(512)
   TestBiomarker      TestBiomarker[]
 }
+model CdxTest {
+  Id                String      @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  TestId            Int
+  CasandraTestId    String      @unique(map: "CasandraTestId_UNIQUE") @db.VarChar(512)
+  Category          String      @db.VarChar(64)
+  SecondaryCategory String?     @db.VarChar(128)
+  TertiaryCategory  String?     @db.VarChar(256)
+  CreatedAt         DateTime?   @default(now()) @db.DateTime(0)
+  UpdatedAt         DateTime?   @default(now()) @db.DateTime(0)
+  TestCatalog       TestCatalog @relation(fields: [TestId], references: [TestId], onDelete: NoAction, onUpdate: NoAction, map: "tc_cdx_fk_constraint")
 
+  @@index([CasandraTestId], map: "spt_casandra_test_id_idx")
+  @@index([TestId], map: "tc_cdx_fk_constraint")
+}
+
+model CompanionDiagnosticDevices {
+  Id                        String  @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  DiagnosticName            String? @db.Text
+  ReplacedBy                String? @db.Text
+  TestInfoPage              String? @db.Text
+  Manufacturer              String? @db.VarChar(128)
+  CurrentManufacturer       String? @db.VarChar(255)
+  TestRequisitionForm       String? @db.Text
+  IVD_LDT                   String? @db.VarChar(45)
+  Pharma1                   String? @db.VarChar(255)
+  Pharma2                   String? @db.VarChar(255)
+  TurnaroundTime            String? @db.VarChar(45)
+  Indication                String? @db.Text
+  CancerType                String? @db.VarChar(45)
+  SpecimenType              String? @db.VarChar(128)
+  DrugWithdrawalDate        String? @db.VarChar(45)
+  DrugTradeName             String? @db.Text
+  DrugGenericName           String? @db.VarChar(128)
+  ComboTradeName1           String? @db.VarChar(45)
+  ComboGenericName1         String? @db.VarChar(45)
+  ComboTradeName2           String? @db.VarChar(45)
+  ComboGenericName2         String? @db.VarChar(45)
+  Status                    String? @db.VarChar(45)
+  NdaBlaNum                 String? @db.VarChar(512)
+  TestingPlatform           String? @db.Text
+  TestingTechnology         String? @db.Text
+  TargetedOrCGP             String? @db.VarChar(45)
+  Biomarkers                String? @db.Text
+  BiomarkerDetails          String? @db.Text
+  CorrectedBiomarkers       String? @db.Text
+  CorrectedBiomarkerDetails String? @db.Text
+  GrantDate                 String? @db.Text
+  DeviceWithdrawalDate      String? @db.VarChar(45)
+  PMANum                    String? @db.VarChar(512)
+  GenericDeviceName         String? @db.VarChar(256)
+  Applicant                 String? @db.Text
+  SupplimentNumber          String? @db.VarChar(45)
+  NewTest                   String? @db.VarChar(45)
+  ReceivedDate              String? @db.VarChar(45)
+  DecisionDate              String? @db.VarChar(45)
+  TimeDecision              Int?
+  NoticeDate                String? @db.VarChar(45)
+  SupplimentType            String? @db.Text
+  SupplimentReason          String? @db.Text
+  ExpeditedReviewGranted    String? @db.VarChar(45)
+  CombinationProduct        String? @db.VarChar(45)
+  ApprovalOrderStatement    String? @db.Text
+}
 model ICD {
   Id               String        @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
   Code             String?       @db.VarChar(45)
@@ -149,7 +211,6 @@ model Lab {
   City          String?         @db.VarChar(512)
   State         String?         @db.VarChar(512)
   Zip           String?         @db.VarChar(512)
-  SponsoredTest SponsoredTest[]
   TestCatalog   TestCatalog[]
 }
 
@@ -533,24 +594,23 @@ model SponsoredProgram {
 model SponsoredTest {
   Id                           String                         @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
   TestId                       Int
-  LabTestId                    String?                        @db.VarChar(512)
-  SponsoredProgramId           Int?
-  LabId                        Int?
-  CasandraTestId               String                         @unique(map: "CasandraTestId_UNIQUE") @db.VarChar(512)
-  Category                     String                         @db.VarChar(512)
-  SubCategory                  String?                        @db.VarChar(512)
+  CasandraTestId               String                         @db.VarChar(64) @unique
+  SponsoredProgramId           Int
+  Category                     String                         @db.VarChar(128)
+  SecondaryCategory            String?                        @db.VarChar(256)
+  TertiaryCategory             String?                        @db.VarChar(256)
   CreatedAt                    DateTime?                      @default(now()) @db.DateTime(0)
   UpdatedAt                    DateTime?                      @default(now()) @db.DateTime(0)
   LabOrderSponsoredTestConsent LabOrderSponsoredTestConsent[]
-  Lab                          Lab?                           @relation(fields: [LabId], references: [LabId], onDelete: NoAction, onUpdate: NoAction, map: "lab_sponsored_fk_constraint")
-  SponsoredProgram             SponsoredProgram?              @relation(fields: [SponsoredProgramId], references: [ProgramId], onDelete: NoAction, onUpdate: NoAction, map: "program_fk_constraint")
+  SponsoredProgram             SponsoredProgram               @relation(fields: [SponsoredProgramId], references: [ProgramId], onDelete: NoAction, onUpdate: NoAction, map: "program_fk_constraint")
   TestCatalog                  TestCatalog                    @relation(fields: [TestId], references: [TestId], onDelete: NoAction, onUpdate: NoAction, map: "tc_sponsored_fk_constraint")
 
-  @@index([LabId], map: "lab_sponsored_idx")
+  @@unique([CasandraTestId, SponsoredProgramId, Category, SecondaryCategory, TertiaryCategory], map: "all_UNIQUE")
   @@index([SponsoredProgramId], map: "program_fk_constraint")
   @@index([CasandraTestId], map: "spt_casandra_test_id_idx")
   @@index([TestId], map: "test_sponsored_idx")
 }
+
 
 model TestBiomarker {
   Id                  Int         @id @default(autoincrement())
@@ -618,6 +678,7 @@ model TestCatalog {
   LabOrderTest               LabOrderTest[]
   OrganizationFavoriteTest   OrganizationFavoriteTest[]
   ProviderFavoriteTest       ProviderFavoriteTest[]
+  CdxTest                    CdxTest[]
   SponsoredTest              SponsoredTest[]
   TestBiomarker              TestBiomarker[]
   Lab                        Lab?                         @relation(fields: [LabId], references: [LabId], onDelete: NoAction, onUpdate: NoAction, map: "lab_fk_constraint")

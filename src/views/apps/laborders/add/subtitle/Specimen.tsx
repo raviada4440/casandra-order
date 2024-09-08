@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography'
 
 
 // Component Imports
-import { LabOrderContext } from '..'
+import { LabOrderContext } from '../index-not-used'
 
 // const useStyles = makeStyles({
 //   cell25: {
@@ -26,7 +26,7 @@ const SpecimenSubtitle = () => {
 
   // const classes = useStyles();
 
-  const collectionDateString = (collectionDate: Date|null) => collectionDate ? new Date(collectionDate).toLocaleDateString('en-US', {
+  const collectionDateString = (collectionDate: Date | null) => collectionDate ? new Date(collectionDate).toLocaleDateString('en-US', {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit'
@@ -34,7 +34,7 @@ const SpecimenSubtitle = () => {
 
   return (
     <div>
-      { labOrder?.LabOrderSpecimen && labOrder?.LabOrderSpecimen.length > 0 ? labOrder?.LabOrderSpecimen?.map((specimen, index) => (
+      {labOrder?.LabOrderSpecimen && labOrder?.LabOrderSpecimen.length > 0 ? labOrder?.LabOrderSpecimen?.map((specimen, index) => (
         <div key={index} className='flex items-center gap-1'>
           {/* <Typography className='step-subtitle min-is-[65px]'>Type:</Typography> */}
           <Typography className='step-subtitle'>{`${specimen.SpecimenType}`}</Typography>
@@ -45,22 +45,22 @@ const SpecimenSubtitle = () => {
         </div>
       )) : (
         <>
-        <div className='flex items-center gap-4'>
-          <Typography className='step-subtitle min-is-[65px]'>Type:</Typography>
-          <Typography className='step-subtitle'>&nbsp;</Typography>
-        </div>
-        <div className='flex items-center gap-4'>
-          <Typography className='step-subtitle min-is-[65px]'>Body Site:</Typography>
-          <Typography className='step-subtitle'>&nbsp;</Typography>
-        </div>
-        <div className='flex items-center gap-4'>
-          <Typography className='step-subtitle min-is-[65px]'>Date:</Typography>
-          <Typography className='step-subtitle'>&nbsp;</Typography>
+          <div className='flex items-center gap-4'>
+            <Typography className='step-subtitle min-is-[65px]'>Type:</Typography>
+            <Typography className='step-subtitle'>&nbsp;</Typography>
           </div>
-        <div className='flex items-center gap-4'>
-          <Typography className='step-subtitle min-is-[65px]'>Time:</Typography>
-          <Typography className='step-subtitle'>&nbsp;</Typography>
-        </div>
+          <div className='flex items-center gap-4'>
+            <Typography className='step-subtitle min-is-[65px]'>Body Site:</Typography>
+            <Typography className='step-subtitle'>&nbsp;</Typography>
+          </div>
+          <div className='flex items-center gap-4'>
+            <Typography className='step-subtitle min-is-[65px]'>Date:</Typography>
+            <Typography className='step-subtitle'>&nbsp;</Typography>
+          </div>
+          <div className='flex items-center gap-4'>
+            <Typography className='step-subtitle min-is-[65px]'>Time:</Typography>
+            <Typography className='step-subtitle'>&nbsp;</Typography>
+          </div>
         </>
       )}
     </div>

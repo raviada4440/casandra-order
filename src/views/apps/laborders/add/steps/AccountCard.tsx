@@ -14,7 +14,7 @@ import type { Theme } from '@mui/material/styles'
 // Third-party Imports
 import classnames from 'classnames'
 
-import { LabOrderContext } from '.';
+import { LabOrderContext } from '../index-not-used';
 
 
 
@@ -27,15 +27,15 @@ const AccountCard = () => {
 
   const orderingPhysicianCredentials = labOrder?.OrderingProvider ? labOrder.OrderingProvider?.Credentials ? labOrder.OrderingProvider?.Credentials : '' : ''
   const orderingPhysicianName = labOrder?.OrderingProvider && orderingPhysicianCredentials.length > 0 ? labOrder.OrderingProvider?.Name + ', ' + orderingPhysicianCredentials : labOrder.OrderingProvider?.Name ? labOrder.OrderingProvider?.Name : ''
-  const orderingPhysiciaSpecialty = labOrder?.OrderingProvider ? labOrder.OrderingProvider?.Specialty  : ''
+  const orderingPhysiciaSpecialty = labOrder?.OrderingProvider ? labOrder.OrderingProvider?.Specialty : ''
 
   const treatingPhysicianCredentials = labOrder?.TreatingProvider ? labOrder.TreatingProvider?.Credentials ? labOrder.TreatingProvider?.Credentials : '' : ''
   const treatingPhysicianName = labOrder?.TreatingProvider && treatingPhysicianCredentials.length > 0 ? labOrder.TreatingProvider?.Name + ', ' + treatingPhysicianCredentials : labOrder.TreatingProvider?.Name ? labOrder.TreatingProvider?.Name : ''
-  const treatingPhysiciaSpecialty = labOrder?.TreatingProvider ? labOrder.TreatingProvider?.Specialty  : ''
+  const treatingPhysiciaSpecialty = labOrder?.TreatingProvider ? labOrder.TreatingProvider?.Specialty : ''
 
   const organizationName = labOrder?.Organization ? labOrder.Organization?.OrgName : ''
-  const organizationAddress = labOrder?.Organization ? labOrder.Organization?.OrgAddress  : ''
-  const organizationCityState = labOrder?.Organization ? labOrder.Organization?.OrgCity + ', ' +  labOrder.Organization?.OrgState + ' - ' + labOrder.Organization?.OrgZip : ''
+  const organizationAddress = labOrder?.Organization ? labOrder.Organization?.OrgAddress : ''
+  const organizationCityState = labOrder?.Organization ? labOrder.Organization?.OrgCity + ', ' + labOrder.Organization?.OrgState + ' - ' + labOrder.Organization?.OrgZip : ''
 
   return (
     <Card>
@@ -48,14 +48,14 @@ const AccountCard = () => {
         </div>
 
         <Grid container spacing={6}>
-        <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              key={1}
-              className='sm:[&:nth-of-type(odd)>div]:pie-6 sm:[&:nth-of-type(odd)>div]:border-ie md:[&:not(:last-child)>div]:pie-6 md:[&:not(:last-child)>div]:border-ie'
-            >
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={4}
+            key={1}
+            className='sm:[&:nth-of-type(odd)>div]:pie-6 sm:[&:nth-of-type(odd)>div]:border-ie md:[&:not(:last-child)>div]:pie-6 md:[&:not(:last-child)>div]:border-ie'
+          >
             <div className='flex flex-col gap-2'>
               <Typography className='font-medium' color='text.primary'>
                 Organization
@@ -67,22 +67,22 @@ const AccountCard = () => {
               </div>
             </div>
             {isBelowMdScreen && !isBelowSmScreen && (
-                <Divider
-                  className={classnames('mbs-6', {
-                    'mie-6': true
-                  })}
-                />
-              )}
+              <Divider
+                className={classnames('mbs-6', {
+                  'mie-6': true
+                })}
+              />
+            )}
             {isBelowSmScreen && <Divider className='mbs-6' />}
           </Grid>
           <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              key={2}
-              className='sm:[&:nth-of-type(odd)>div]:pie-6 sm:[&:nth-of-type(odd)>div]:border-ie md:[&:not(:last-child)>div]:pie-6 md:[&:not(:last-child)>div]:border-ie'
-            >
+            item
+            xs={12}
+            sm={6}
+            md={4}
+            key={2}
+            className='sm:[&:nth-of-type(odd)>div]:pie-6 sm:[&:nth-of-type(odd)>div]:border-ie md:[&:not(:last-child)>div]:pie-6 md:[&:not(:last-child)>div]:border-ie'
+          >
             <div className='flex flex-col gap-2'>
               <Typography className='font-medium' color='text.primary'>
                 Ordering Physician
@@ -93,21 +93,21 @@ const AccountCard = () => {
               </div>
             </div>
             {isBelowMdScreen && !isBelowSmScreen && (
-                <Divider
-                  className={classnames('mbs-6', {
-                    'mie-6': true
-                  })}
-                />
-              )}
+              <Divider
+                className={classnames('mbs-6', {
+                  'mie-6': true
+                })}
+              />
+            )}
             {isBelowSmScreen && <Divider className='mbs-6' />}
           </Grid>
           <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              key={3}
-            >
+            item
+            xs={12}
+            sm={6}
+            md={4}
+            key={3}
+          >
             <div className='flex flex-col gap-2'>
               <Typography className='font-medium' color='text.primary'>
                 Treating Physician
@@ -118,12 +118,12 @@ const AccountCard = () => {
               </div>
             </div>
             {isBelowMdScreen && !isBelowSmScreen && (
-                <Divider
-                  className={classnames('mbs-6', {
-                    'mie-6': false
-                  })}
-                />
-              )}
+              <Divider
+                className={classnames('mbs-6', {
+                  'mie-6': false
+                })}
+              />
+            )}
             {isBelowSmScreen && <Divider className='mbs-6' />}
           </Grid>
         </Grid>

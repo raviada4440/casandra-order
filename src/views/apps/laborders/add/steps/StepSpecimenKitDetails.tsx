@@ -18,14 +18,14 @@ import MenuItem from '@mui/material/MenuItem'
 
 // Component Imports
 import DirectionalIcon from '@/components/DirectionalIcon'
-import { LabOrderContext } from '.'
+import { LabOrderContext } from '..'
 
 
 
 
 import type { LabOrderSpecimenWithRelations } from '~prisma/generated/zod'
-import AutocompleteAddress from './AutocompleteAddress'
-import states from '../../../../data/states'
+import AutocompleteAddress from '../autocomplete/AutocompleteAddress'
+import states from '../../../../../data/states'
 
 type Props = {
   activeStep: number
@@ -51,7 +51,7 @@ const StepSpecimenKitDetails = ({ activeStep, handleNext, handlePrev, steps }: P
   }
 
   useEffect(() => {
-    if(labOrder?.LabOrderSpecimen?.[0]) {
+    if (labOrder?.LabOrderSpecimen?.[0]) {
       setFormData(labOrder?.LabOrderSpecimen?.[0] as LabOrderSpecimenWithRelations)
     }
 
@@ -78,8 +78,8 @@ const StepSpecimenKitDetails = ({ activeStep, handleNext, handlePrev, steps }: P
                 </Typography>
               </Grid>
               <Grid item xs={12} md={6}>
-                <AutocompleteAddress/>
-                  {/* <TextField
+                <AutocompleteAddress />
+                {/* <TextField
                     fullWidth
                     label='Address 1'
                     value={formData?.PatientAddress1 || ''}

@@ -10,7 +10,7 @@ import { Chip, CircularProgress, Grid } from '@mui/material';
 
 import type { ICD, ICDWithRelations, LabOrderIcdWithRelations } from '~prisma/generated/zod';
 import { api } from '~trpc/react';
-import { LabOrderContext } from '.';
+import { LabOrderContext } from '..';
 
 const AutocompleteIcd = () => {
 

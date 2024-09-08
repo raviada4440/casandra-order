@@ -1,8 +1,7 @@
 'use client'
 
 // React Imports
-import type { Dispatch, SetStateAction } from 'react';
-import { createContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useParams, useRouter } from 'next/navigation'
 
@@ -63,6 +62,7 @@ import Eligibility from './subtitle/Eligibility';
 import StepSpecimenKitDetails from './steps/StepSpecimenKitDetails';
 import StepSpecimenPSCDetails from './steps/StepSpecimenPSCDetails';
 import StepAccountDetails from './steps/StepAccountDetails';
+import { LabOrderContext } from './index-not-used';
 
 
 // Types
@@ -119,12 +119,6 @@ const ConnectorHeight = styled(StepConnector)(() => ({
   }
 }))
 
-type LabOrderContextType = {
-  labOrder: LabOrderWithRelations,
-  setLabOrder: Dispatch<SetStateAction<LabOrderWithRelations>>
-  collectionMethod: string,
-  setCollectionMethod: Dispatch<SetStateAction<string>>
-};
 
 const generateOrderNumber = () => {
   // Generate a 5-digit random number
@@ -134,10 +128,8 @@ const generateOrderNumber = () => {
   return `CS${randomNumber}`;
 };
 
-// Step 1: Create a new context
-export const LabOrderContext = createContext<LabOrderContextType>({} as LabOrderContextType)
 
-const AddLabOrderCdx = () => {
+const AddLabOrderSponsored = ({ tcQuery }: { tcQuery: string }) => {
   // States
   const labOrderStatus = { Id: uuid.v4() as string, Status: 'Order Created', StatusDate: new Date() }
 
@@ -147,11 +139,6 @@ const AddLabOrderCdx = () => {
   const [labOrder, setLabOrder] = useState<LabOrderWithRelations>({ Id: uuid.v4() as string, OrderDate: new Date(), OrderNumber: generateOrderNumber(), LabOrderStatus: [labOrderStatus] } as LabOrderWithRelations)
   const [labOrderCopy, setLabOrderCopy] = useState<LabOrderWithRelations>({ ...labOrder } as LabOrderWithRelations)
   const [steps, setSteps] = useState<Step[]>(stepEntries)
-  const [tcQuery, setTcQuery] = useState<string>('')
-  const [source, setSource] = useState<string>('')
-
-  console.log('source: ', source)
-
   const router = useRouter()
   const { lang: locale } = useParams()
 
@@ -229,34 +216,10 @@ const AddLabOrderCdx = () => {
   const location = useLocation();
 
   // Parse the query parameters
-  // const queryParams = new URLSearchParams(location.search);
+  const queryParams = new URLSearchParams(location.search);
 
   // Get a specific query parameter
-  // const testCatalogQuery = queryParams.get('testcatalog[query]');
-
-  useEffect(() => {
-    // Parse the query parameters
-    const queryParams = new URLSearchParams(location.search);
-
-    // console.log('queryParams', queryParams.toString())
-
-    const redirectTo = queryParams.get('redirectTo') as string;
-    const url = new URL(redirectTo, location.href)
-
-    const qParams = new URLSearchParams(url.search);
-
-    // Get a specific query parameter
-    const testCatalogQuery = qParams.get('testcatalog[query]') as string;
-    const sourceQuery = qParams.get('source') as string;
-
-    console.log('testCatalogQuery', testCatalogQuery)
-    console.log('sourceQuery', sourceQuery)
-
-    setTcQuery(testCatalogQuery)
-    setSource(sourceQuery)
-
-  }, [location])
-
+  const testCatalogQuery = queryParams.get('testcatalog[query]');
 
   // console.log('testcatalog: ', testCatalogQuery);
   const { data: tcData, error: tcError, isLoading: tcIsLoading } = api.testcatalog.getTestByCasandraTestId.useQuery({ casandraTestId: tcQuery || '' })
@@ -276,7 +239,7 @@ const AddLabOrderCdx = () => {
         specimenEntry.stepDetails = StepSpecimenPSCDetails
       }
 
-      if (sponsoredTests && sponsoredTests.length > 0 && tcQuery) {
+      if (sponsoredTests && sponsoredTests.length > 0 && testCatalogQuery) {
 
         const hasEligibility = stepEntries.some(entry => entry.title === 'Eligibility')
 
@@ -315,7 +278,7 @@ const AddLabOrderCdx = () => {
 
           }
         });
-      } else if (tcQuery && !sponsoredTests) {
+      } else if (testCatalogQuery && !sponsoredTests) {
 
         //move test details to top
         const newSteps = rearrangeSteps(stepEntries, 2);
@@ -326,7 +289,7 @@ const AddLabOrderCdx = () => {
         setActiveStep(0);
       }
     }
-  }, [setActiveStep, tcData, tcQuery, labOrder, setLabOrderCopy, setSteps])
+  }, [setActiveStep, tcData, testCatalogQuery, labOrder, setLabOrderCopy, setSteps])
 
 
   useEffect(() => {
@@ -338,7 +301,7 @@ const AddLabOrderCdx = () => {
       return;
     }
 
-    if (tcQuery && tcData && tcData?.TestId > 0) {
+    if (testCatalogQuery && tcData && tcData?.TestId > 0) {
       // Generate the LabOrderTest
       const labOrderTest = [{
         TestId: tcData.TestId,
@@ -354,7 +317,7 @@ const AddLabOrderCdx = () => {
       }
     }
 
-  }, [tcQuery, tcData, tcError, tcIsLoading, labOrder, setLabOrderCopy]);
+  }, [testCatalogQuery, tcData, tcError, tcIsLoading, labOrder, setLabOrderCopy]);
 
   useEffect(() => {
     setLabOrder(labOrderCopy);
@@ -453,4 +416,4 @@ const AddLabOrderCdx = () => {
   )
 }
 
-export default AddLabOrderCdx
+export default AddLabOrderSponsored

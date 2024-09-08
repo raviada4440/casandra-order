@@ -2,25 +2,33 @@
 
 import React, { useContext, useEffect, useState } from 'react';
 
+import { useSession } from 'next-auth/react'
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { CircularProgress, Grid } from '@mui/material';
 
 import type { Patient, PatientWithRelations } from '~prisma/generated/zod';
 import { api } from '~trpc/react';
-import { LabOrderContext } from '.';
+import { LabOrderContext } from '..';
 
-const AutocompletePatient = () => {
+const AutocompleteFhirPatient = () => {
 
   const { labOrder, setLabOrder } = useContext(LabOrderContext);
+  const { data: session } = useSession()
 
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState<Patient[]>([]);
   const loading = open && options.length === 0;
 
-  const [inputValue, setInputValue] = useState('');
+  let listOid = ''
 
-  const { data, error, isLoading } = api.patient.getPatients.useQuery({ searchStr: inputValue });
+  if (session?.authType === 'oauth' && session?.authProvider === 'cerner') {
+    listOid = 'urn:oid:1.2.840.114350.1.13.0.1.7.2.806567|5332'
+  } else {
+    listOid = 'urn:oid:1.2.840.114350.1.13.0.1.7.2.806567|5332'
+  }
+
+  const { data, error, isLoading } = api.fhir.getPatientList.useQuery({ fhirEndpoint: session?.fhirEndpoint as string, accessToken: session?.accessToken as string, listOid: listOid });
 
   const onPatientChange = (value: PatientWithRelations) => {
     // console.log('value', value)
@@ -49,12 +57,12 @@ const AutocompletePatient = () => {
     if (data) {
       setOptions(data);
     }
-  }, [data, error, isLoading]);
+  }, [data, error, isLoading, session]);
 
   return (
     <Autocomplete
       className='flex flex-col sm:flex-row is-full'
-      id="patient-autocomplete"
+      id="fhir-patient-autocomplete"
       open={open}
       onOpen={() => {
         setOpen(true);
@@ -62,9 +70,10 @@ const AutocompletePatient = () => {
       onClose={() => {
         setOpen(false);
       }}
-      onInputChange={(event, newInputValue) => {
-        setInputValue(newInputValue);
-      }}
+
+      // onInputChange={(event, newInputValue) => {
+      //   setInputValue(newInputValue);
+      // }}
       onChange={(event, newValue) => {
         onPatientChange(newValue as PatientWithRelations);
         setOpen(false);
@@ -89,7 +98,7 @@ const AutocompletePatient = () => {
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Search for a patient"
+          label="Patient List from Epic FHIR Server"
           variant="outlined"
           InputProps={{
             ...params.InputProps,
@@ -106,4 +115,4 @@ const AutocompletePatient = () => {
   );
 }
 
-export default AutocompletePatient;
+export default AutocompleteFhirPatient;

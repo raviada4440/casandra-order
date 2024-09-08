@@ -20,13 +20,13 @@ import uuid from 'react-native-uuid'
 
 // Component Imports
 import DirectionalIcon from '@/components/DirectionalIcon'
-import { LabOrderContext } from '.'
 
 
 
 
 import type { PatientWithRelations, OrganizationWithRelations, ProviderOrganizationPartialRelations } from '~prisma/generated/zod'
-import AutocompleteProvider from './AutocompleteProvider'
+import AutocompleteProvider from '../autocomplete/AutocompleteProvider'
+import { LabOrderContext } from '..'
 
 type Props = {
   activeStep: number
@@ -84,7 +84,7 @@ const StepAccountDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
                 Treating Physician & Location
               </Typography>
             </div>
-            <Grid className="mb-6" container  spacing={5}>
+            <Grid className="mb-6" container spacing={5}>
               <Grid item xs={12}>
                 <AutocompleteProvider />
               </Grid>

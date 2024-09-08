@@ -12,7 +12,7 @@ const apiClient = API(
       // if you are authenticating with api key
       // https://www.searchkit.co/docs/guides/setup-elasticsearch#connecting-with-api-key
       apiKey: process.env.ELASTICSEARCH_API_KEY,
-      
+
       // if you are authenticating with username/password
       // https://www.searchkit.co/docs/guides/setup-elasticsearch#connecting-with-usernamepassword
       //auth: {
@@ -28,13 +28,16 @@ const apiClient = API(
         { field: 'LabName', weight: 3 },
         { field: 'LabTestId', weight: 5 },
         { field: 'CasandraTestId', weight: 5 },
+        { field: 'type', weight: 2 },
         { field: 'sponsored_program.ProgramName', weight: 2 },
-        { field: 'sponsored_program.TherapeuticArea', weight: 2 },
+        { field: 'sponsored_program.Category', weight: 2 },
+        { field: 'sponsored_program.SecondaryCategory', weight: 2 },
+        { field: 'sponsored_program.TertiaryCategory', weight: 2 },
         { field: 'biomarkers.HGNCApprovedSymbol', weight: 2 },
         { field: 'provider_favorite.ProviderId', weight: 2 },
         { field: 'organization_favorite.OrganizationId', weight: 2 },
       ],
-      result_attributes: ['TestId', 'LabTestId', 'CasandraTestId', 'TestName', 'LabName', 'CollectionMethod'],
+      result_attributes: ['TestId', 'LabTestId', 'CasandraTestId', 'TestName', 'LabName', 'CollectionMethod', 'sponsored_program.ProgramId', 'cdx.Id'],
       facet_attributes: [
         {
           attribute: 'Lab',
@@ -53,9 +56,15 @@ const apiClient = API(
         },
         {
           attribute: 'Therapeutic Area',
-          field: 'sponsored_program.TherapeuticArea.keyword',
+          field: 'sponsored_program.Category.keyword',
           type: 'string'
-        }
+        },
+        {
+          attribute: 'Test Type',
+          field: 'type.keyword',
+          type: 'string'
+        },
+
       ],
       filter_attributes: [
         {
@@ -87,6 +96,7 @@ const apiClient = API(
             {
               action: 'RenderFacetsOrder',
               facetAttributesOrder: [
+                'Test Type',
                 'Sponsored Program',
                 'Therapeutic Area',
                 'Lab',
