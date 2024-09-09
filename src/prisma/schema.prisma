@@ -577,7 +577,6 @@ model Sponsor {
 model SponsoredProgram {
   ProgramId            Int             @id @default(autoincrement())
   SponsorId            Int?
-  TherapeuticArea      String?         @db.VarChar(128)
   ProgramName          String?         @db.VarChar(512)
   ProgramUrl           String?         @db.VarChar(512)
   ProgramLabUrl        String?         @db.VarChar(512)

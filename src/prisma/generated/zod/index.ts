@@ -76,7 +76,7 @@ export const SessionScalarFieldEnumSchema = z.enum(['id','sessionToken','userId'
 
 export const SponsorScalarFieldEnumSchema = z.enum(['SponsorId','SponsorName','SponsorCode','SponsorWebsite','SponsorType','Address','City','State','Zip']);
 
-export const SponsoredProgramScalarFieldEnumSchema = z.enum(['ProgramId','SponsorId','TherapeuticArea','ProgramName','ProgramUrl','ProgramLabUrl','SponosoredTestingUrl','ProgramEligibility','CreatedAt','UpdatedAt']);
+export const SponsoredProgramScalarFieldEnumSchema = z.enum(['ProgramId','SponsorId','ProgramName','ProgramUrl','ProgramLabUrl','SponosoredTestingUrl','ProgramEligibility','CreatedAt','UpdatedAt']);
 
 export const SponsoredTestScalarFieldEnumSchema = z.enum(['Id','TestId','CasandraTestId','SponsoredProgramId','Category','SecondaryCategory','TertiaryCategory','CreatedAt','UpdatedAt']);
 
@@ -166,7 +166,7 @@ export const SessionOrderByRelevanceFieldEnumSchema = z.enum(['id','sessionToken
 
 export const SponsorOrderByRelevanceFieldEnumSchema = z.enum(['SponsorName','SponsorCode','SponsorWebsite','SponsorType','Address','City','State','Zip']);
 
-export const SponsoredProgramOrderByRelevanceFieldEnumSchema = z.enum(['TherapeuticArea','ProgramName','ProgramUrl','ProgramLabUrl','SponosoredTestingUrl','ProgramEligibility']);
+export const SponsoredProgramOrderByRelevanceFieldEnumSchema = z.enum(['ProgramName','ProgramUrl','ProgramLabUrl','SponosoredTestingUrl','ProgramEligibility']);
 
 export const SponsoredTestOrderByRelevanceFieldEnumSchema = z.enum(['Id','CasandraTestId','Category','SecondaryCategory','TertiaryCategory']);
 
@@ -2077,7 +2077,6 @@ export const SponsorWithPartialRelationsSchema: z.ZodType<SponsorWithPartialRela
 export const SponsoredProgramSchema = z.object({
   ProgramId: z.number(),
   SponsorId: z.number().nullable(),
-  TherapeuticArea: z.string().nullable(),
   ProgramName: z.string().nullable(),
   ProgramUrl: z.string().nullable(),
   ProgramLabUrl: z.string().nullable(),
@@ -3792,7 +3791,6 @@ export const SponsoredProgramCountOutputTypeSelectSchema: z.ZodType<Prisma.Spons
 export const SponsoredProgramSelectSchema: z.ZodType<Prisma.SponsoredProgramSelect> = z.object({
   ProgramId: z.boolean().optional(),
   SponsorId: z.boolean().optional(),
-  TherapeuticArea: z.boolean().optional(),
   ProgramName: z.boolean().optional(),
   ProgramUrl: z.boolean().optional(),
   ProgramLabUrl: z.boolean().optional(),
@@ -7124,7 +7122,6 @@ export const SponsoredProgramWhereInputSchema: z.ZodType<Prisma.SponsoredProgram
   NOT: z.union([ z.lazy(() => SponsoredProgramWhereInputSchema),z.lazy(() => SponsoredProgramWhereInputSchema).array() ]).optional(),
   ProgramId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   SponsorId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
-  TherapeuticArea: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   ProgramName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   ProgramUrl: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   ProgramLabUrl: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
@@ -7139,7 +7136,6 @@ export const SponsoredProgramWhereInputSchema: z.ZodType<Prisma.SponsoredProgram
 export const SponsoredProgramOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.SponsoredProgramOrderByWithRelationAndSearchRelevanceInput> = z.object({
   ProgramId: z.lazy(() => SortOrderSchema).optional(),
   SponsorId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  TherapeuticArea: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ProgramName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ProgramUrl: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ProgramLabUrl: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -7161,7 +7157,6 @@ export const SponsoredProgramWhereUniqueInputSchema: z.ZodType<Prisma.SponsoredP
   OR: z.lazy(() => SponsoredProgramWhereInputSchema).array().optional(),
   NOT: z.union([ z.lazy(() => SponsoredProgramWhereInputSchema),z.lazy(() => SponsoredProgramWhereInputSchema).array() ]).optional(),
   SponsorId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
-  TherapeuticArea: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   ProgramName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   ProgramUrl: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   ProgramLabUrl: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
@@ -7176,7 +7171,6 @@ export const SponsoredProgramWhereUniqueInputSchema: z.ZodType<Prisma.SponsoredP
 export const SponsoredProgramOrderByWithAggregationInputSchema: z.ZodType<Prisma.SponsoredProgramOrderByWithAggregationInput> = z.object({
   ProgramId: z.lazy(() => SortOrderSchema).optional(),
   SponsorId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  TherapeuticArea: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ProgramName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ProgramUrl: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ProgramLabUrl: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -7197,7 +7191,6 @@ export const SponsoredProgramScalarWhereWithAggregatesInputSchema: z.ZodType<Pri
   NOT: z.union([ z.lazy(() => SponsoredProgramScalarWhereWithAggregatesInputSchema),z.lazy(() => SponsoredProgramScalarWhereWithAggregatesInputSchema).array() ]).optional(),
   ProgramId: z.union([ z.lazy(() => IntWithAggregatesFilterSchema),z.number() ]).optional(),
   SponsorId: z.union([ z.lazy(() => IntNullableWithAggregatesFilterSchema),z.number() ]).optional().nullable(),
-  TherapeuticArea: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   ProgramName: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   ProgramUrl: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   ProgramLabUrl: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
@@ -11375,7 +11368,6 @@ export const SponsorUncheckedUpdateManyInputSchema: z.ZodType<Prisma.SponsorUnch
 }).strict();
 
 export const SponsoredProgramCreateInputSchema: z.ZodType<Prisma.SponsoredProgramCreateInput> = z.object({
-  TherapeuticArea: z.string().optional().nullable(),
   ProgramName: z.string().optional().nullable(),
   ProgramUrl: z.string().optional().nullable(),
   ProgramLabUrl: z.string().optional().nullable(),
@@ -11390,7 +11382,6 @@ export const SponsoredProgramCreateInputSchema: z.ZodType<Prisma.SponsoredProgra
 export const SponsoredProgramUncheckedCreateInputSchema: z.ZodType<Prisma.SponsoredProgramUncheckedCreateInput> = z.object({
   ProgramId: z.number().optional(),
   SponsorId: z.number().optional().nullable(),
-  TherapeuticArea: z.string().optional().nullable(),
   ProgramName: z.string().optional().nullable(),
   ProgramUrl: z.string().optional().nullable(),
   ProgramLabUrl: z.string().optional().nullable(),
@@ -11402,7 +11393,6 @@ export const SponsoredProgramUncheckedCreateInputSchema: z.ZodType<Prisma.Sponso
 }).strict();
 
 export const SponsoredProgramUpdateInputSchema: z.ZodType<Prisma.SponsoredProgramUpdateInput> = z.object({
-  TherapeuticArea: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramLabUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -11417,7 +11407,6 @@ export const SponsoredProgramUpdateInputSchema: z.ZodType<Prisma.SponsoredProgra
 export const SponsoredProgramUncheckedUpdateInputSchema: z.ZodType<Prisma.SponsoredProgramUncheckedUpdateInput> = z.object({
   ProgramId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   SponsorId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  TherapeuticArea: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramLabUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -11431,7 +11420,6 @@ export const SponsoredProgramUncheckedUpdateInputSchema: z.ZodType<Prisma.Sponso
 export const SponsoredProgramCreateManyInputSchema: z.ZodType<Prisma.SponsoredProgramCreateManyInput> = z.object({
   ProgramId: z.number().optional(),
   SponsorId: z.number().optional().nullable(),
-  TherapeuticArea: z.string().optional().nullable(),
   ProgramName: z.string().optional().nullable(),
   ProgramUrl: z.string().optional().nullable(),
   ProgramLabUrl: z.string().optional().nullable(),
@@ -11442,7 +11430,6 @@ export const SponsoredProgramCreateManyInputSchema: z.ZodType<Prisma.SponsoredPr
 }).strict();
 
 export const SponsoredProgramUpdateManyMutationInputSchema: z.ZodType<Prisma.SponsoredProgramUpdateManyMutationInput> = z.object({
-  TherapeuticArea: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramLabUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -11455,7 +11442,6 @@ export const SponsoredProgramUpdateManyMutationInputSchema: z.ZodType<Prisma.Spo
 export const SponsoredProgramUncheckedUpdateManyInputSchema: z.ZodType<Prisma.SponsoredProgramUncheckedUpdateManyInput> = z.object({
   ProgramId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   SponsorId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  TherapeuticArea: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramLabUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -14567,7 +14553,6 @@ export const SponsoredProgramOrderByRelevanceInputSchema: z.ZodType<Prisma.Spons
 export const SponsoredProgramCountOrderByAggregateInputSchema: z.ZodType<Prisma.SponsoredProgramCountOrderByAggregateInput> = z.object({
   ProgramId: z.lazy(() => SortOrderSchema).optional(),
   SponsorId: z.lazy(() => SortOrderSchema).optional(),
-  TherapeuticArea: z.lazy(() => SortOrderSchema).optional(),
   ProgramName: z.lazy(() => SortOrderSchema).optional(),
   ProgramUrl: z.lazy(() => SortOrderSchema).optional(),
   ProgramLabUrl: z.lazy(() => SortOrderSchema).optional(),
@@ -14585,7 +14570,6 @@ export const SponsoredProgramAvgOrderByAggregateInputSchema: z.ZodType<Prisma.Sp
 export const SponsoredProgramMaxOrderByAggregateInputSchema: z.ZodType<Prisma.SponsoredProgramMaxOrderByAggregateInput> = z.object({
   ProgramId: z.lazy(() => SortOrderSchema).optional(),
   SponsorId: z.lazy(() => SortOrderSchema).optional(),
-  TherapeuticArea: z.lazy(() => SortOrderSchema).optional(),
   ProgramName: z.lazy(() => SortOrderSchema).optional(),
   ProgramUrl: z.lazy(() => SortOrderSchema).optional(),
   ProgramLabUrl: z.lazy(() => SortOrderSchema).optional(),
@@ -14598,7 +14582,6 @@ export const SponsoredProgramMaxOrderByAggregateInputSchema: z.ZodType<Prisma.Sp
 export const SponsoredProgramMinOrderByAggregateInputSchema: z.ZodType<Prisma.SponsoredProgramMinOrderByAggregateInput> = z.object({
   ProgramId: z.lazy(() => SortOrderSchema).optional(),
   SponsorId: z.lazy(() => SortOrderSchema).optional(),
-  TherapeuticArea: z.lazy(() => SortOrderSchema).optional(),
   ProgramName: z.lazy(() => SortOrderSchema).optional(),
   ProgramUrl: z.lazy(() => SortOrderSchema).optional(),
   ProgramLabUrl: z.lazy(() => SortOrderSchema).optional(),
@@ -22866,7 +22849,6 @@ export const UserUncheckedUpdateWithoutSessionInputSchema: z.ZodType<Prisma.User
 }).strict();
 
 export const SponsoredProgramCreateWithoutSponsorInputSchema: z.ZodType<Prisma.SponsoredProgramCreateWithoutSponsorInput> = z.object({
-  TherapeuticArea: z.string().optional().nullable(),
   ProgramName: z.string().optional().nullable(),
   ProgramUrl: z.string().optional().nullable(),
   ProgramLabUrl: z.string().optional().nullable(),
@@ -22879,7 +22861,6 @@ export const SponsoredProgramCreateWithoutSponsorInputSchema: z.ZodType<Prisma.S
 
 export const SponsoredProgramUncheckedCreateWithoutSponsorInputSchema: z.ZodType<Prisma.SponsoredProgramUncheckedCreateWithoutSponsorInput> = z.object({
   ProgramId: z.number().optional(),
-  TherapeuticArea: z.string().optional().nullable(),
   ProgramName: z.string().optional().nullable(),
   ProgramUrl: z.string().optional().nullable(),
   ProgramLabUrl: z.string().optional().nullable(),
@@ -22922,7 +22903,6 @@ export const SponsoredProgramScalarWhereInputSchema: z.ZodType<Prisma.SponsoredP
   NOT: z.union([ z.lazy(() => SponsoredProgramScalarWhereInputSchema),z.lazy(() => SponsoredProgramScalarWhereInputSchema).array() ]).optional(),
   ProgramId: z.union([ z.lazy(() => IntFilterSchema),z.number() ]).optional(),
   SponsorId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
-  TherapeuticArea: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   ProgramName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   ProgramUrl: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   ProgramLabUrl: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
@@ -23090,7 +23070,6 @@ export const LabOrderSponsoredTestConsentCreateManySponsoredTestInputEnvelopeSch
 }).strict();
 
 export const SponsoredProgramCreateWithoutSponsoredTestInputSchema: z.ZodType<Prisma.SponsoredProgramCreateWithoutSponsoredTestInput> = z.object({
-  TherapeuticArea: z.string().optional().nullable(),
   ProgramName: z.string().optional().nullable(),
   ProgramUrl: z.string().optional().nullable(),
   ProgramLabUrl: z.string().optional().nullable(),
@@ -23104,7 +23083,6 @@ export const SponsoredProgramCreateWithoutSponsoredTestInputSchema: z.ZodType<Pr
 export const SponsoredProgramUncheckedCreateWithoutSponsoredTestInputSchema: z.ZodType<Prisma.SponsoredProgramUncheckedCreateWithoutSponsoredTestInput> = z.object({
   ProgramId: z.number().optional(),
   SponsorId: z.number().optional().nullable(),
-  TherapeuticArea: z.string().optional().nullable(),
   ProgramName: z.string().optional().nullable(),
   ProgramUrl: z.string().optional().nullable(),
   ProgramLabUrl: z.string().optional().nullable(),
@@ -23267,7 +23245,6 @@ export const SponsoredProgramUpdateToOneWithWhereWithoutSponsoredTestInputSchema
 }).strict();
 
 export const SponsoredProgramUpdateWithoutSponsoredTestInputSchema: z.ZodType<Prisma.SponsoredProgramUpdateWithoutSponsoredTestInput> = z.object({
-  TherapeuticArea: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramLabUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -23281,7 +23258,6 @@ export const SponsoredProgramUpdateWithoutSponsoredTestInputSchema: z.ZodType<Pr
 export const SponsoredProgramUncheckedUpdateWithoutSponsoredTestInputSchema: z.ZodType<Prisma.SponsoredProgramUncheckedUpdateWithoutSponsoredTestInput> = z.object({
   ProgramId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
   SponsorId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  TherapeuticArea: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramLabUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -27385,7 +27361,6 @@ export const ProviderOrganizationUncheckedUpdateManyWithoutProviderInputSchema: 
 
 export const SponsoredProgramCreateManySponsorInputSchema: z.ZodType<Prisma.SponsoredProgramCreateManySponsorInput> = z.object({
   ProgramId: z.number().optional(),
-  TherapeuticArea: z.string().optional().nullable(),
   ProgramName: z.string().optional().nullable(),
   ProgramUrl: z.string().optional().nullable(),
   ProgramLabUrl: z.string().optional().nullable(),
@@ -27396,7 +27371,6 @@ export const SponsoredProgramCreateManySponsorInputSchema: z.ZodType<Prisma.Spon
 }).strict();
 
 export const SponsoredProgramUpdateWithoutSponsorInputSchema: z.ZodType<Prisma.SponsoredProgramUpdateWithoutSponsorInput> = z.object({
-  TherapeuticArea: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramLabUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -27409,7 +27383,6 @@ export const SponsoredProgramUpdateWithoutSponsorInputSchema: z.ZodType<Prisma.S
 
 export const SponsoredProgramUncheckedUpdateWithoutSponsorInputSchema: z.ZodType<Prisma.SponsoredProgramUncheckedUpdateWithoutSponsorInput> = z.object({
   ProgramId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
-  TherapeuticArea: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramLabUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -27422,7 +27395,6 @@ export const SponsoredProgramUncheckedUpdateWithoutSponsorInputSchema: z.ZodType
 
 export const SponsoredProgramUncheckedUpdateManyWithoutSponsorInputSchema: z.ZodType<Prisma.SponsoredProgramUncheckedUpdateManyWithoutSponsorInput> = z.object({
   ProgramId: z.union([ z.number(),z.lazy(() => IntFieldUpdateOperationsInputSchema) ]).optional(),
-  TherapeuticArea: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   ProgramLabUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
