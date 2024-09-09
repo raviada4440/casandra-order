@@ -41,6 +41,9 @@ const TestSubtitle = () => {
 
   const handleDelete = () => {
     if (labOrder && labOrder.LabOrderTest) {
+
+      console.log('Deleting test with id: ', deleteId)
+
       const updatedLabOrderTest = labOrder.LabOrderTest.filter(test => test.Id !== deleteId);
 
       setLabOrder({ ...labOrder, LabOrderTest: updatedLabOrderTest });

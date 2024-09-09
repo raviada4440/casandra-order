@@ -3,14 +3,13 @@ import Grid from '@mui/material/Grid'
 
 import AddLabOrder from '@views/apps/laborders/add'
 
+
 // import { api } from '~trpc/server'
 
 
 const LabOrderAdd = async () => {
 
   // const labOrder = await api.laborders.getLabOrder.query({ labOrderId: '' })
-
-
 
   return (
     <Grid container spacing={6}>

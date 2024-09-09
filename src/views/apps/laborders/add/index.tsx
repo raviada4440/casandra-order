@@ -41,6 +41,7 @@ import IcdSubtitle from './subtitle/IcdCodes';
 import TestSubtitle from './subtitle/Tests';
 import SpecimenSubtitle from './subtitle/Specimen';
 import AccountSubtitle from './subtitle/Account';
+import BillingSubtitle from './subtitle/Billing';
 
 // Styled Component Imports
 import StepperWrapper from '@core/styles/stepper'
@@ -63,6 +64,7 @@ import Eligibility from './subtitle/Eligibility';
 import StepSpecimenKitDetails from './steps/StepSpecimenKitDetails';
 import StepSpecimenPSCDetails from './steps/StepSpecimenPSCDetails';
 import StepAccountDetails from './steps/StepAccountDetails';
+import StepBillingDetails from './steps/StepBillingDetails';
 
 
 // Types
@@ -120,10 +122,14 @@ const ConnectorHeight = styled(StepConnector)(() => ({
 }))
 
 type LabOrderContextType = {
-  labOrder: LabOrderWithRelations,
+  labOrder: LabOrderWithRelations
   setLabOrder: Dispatch<SetStateAction<LabOrderWithRelations>>
-  collectionMethod: string,
+  collectionMethod: string
   setCollectionMethod: Dispatch<SetStateAction<string>>
+  steps: Step[]
+  setSteps: Dispatch<SetStateAction<Step[]>>
+  moveToTop: (title: string) => void
+  setActiveStep: Dispatch<SetStateAction<number>>
 };
 
 const generateOrderNumber = () => {
@@ -148,9 +154,11 @@ const AddLabOrder = () => {
   const [labOrderCopy, setLabOrderCopy] = useState<LabOrderWithRelations>({ ...labOrder } as LabOrderWithRelations)
   const [steps, setSteps] = useState<Step[]>(stepEntries)
   const [tcQuery, setTcQuery] = useState<string>('')
-  const [source, setSource] = useState<string>('')
+  const [labTestId, setLabTestId] = useState<string>('')
 
-  console.log('source: ', source)
+  // const [source, setSource] = useState<string>('')
+
+  // console.log('source: ', source)
 
   const router = useRouter()
   const { lang: locale } = useParams()
@@ -247,15 +255,22 @@ const AddLabOrder = () => {
 
     // Get a specific query parameter
     const testCatalogQuery = qParams.get('testcatalog[query]') as string;
-    const sourceQuery = qParams.get('source') as string;
+
+    // const sourceQuery = qParams.get('source') as string;
 
     console.log('testCatalogQuery', testCatalogQuery)
-    console.log('sourceQuery', sourceQuery)
 
-    setTcQuery(testCatalogQuery)
-    setSource(sourceQuery)
+    // console.log('sourceQuery', sourceQuery)
 
-  }, [location])
+    if (testCatalogQuery != tcQuery ) {
+      setTcQuery(testCatalogQuery)
+
+      setLabTestId(uuid.v4() as string)
+    }
+
+    // setSource(sourceQuery)
+
+  }, [location, tcQuery, setTcQuery, setLabTestId])
 
 
   // console.log('testcatalog: ', testCatalogQuery);
@@ -277,24 +292,6 @@ const AddLabOrder = () => {
       }
 
       if (sponsoredTests && sponsoredTests.length > 0 && tcQuery) {
-
-        const hasEligibility = stepEntries.some(entry => entry.title === 'Eligibility')
-
-        if (!hasEligibility) {
-          const eligibilityStep = {
-            title: 'Eligibility',
-            subtitle: 'Eligibility',
-            stepDetails: StepEligibility,
-            subTitleDetails: Eligibility
-          }
-
-          stepEntries.push(eligibilityStep);
-          moveToTop('Eligibility');
-          moveToTop('Tests');
-          setSteps(stepEntries);
-          setActiveStep(0);
-        }
-
         sponsoredTests.forEach((sponsoredTest: SponsoredTestWithPartialRelations) => {
           if (sponsoredTest?.TestId === tcData?.TestId && sponsoredTest?.SponsoredProgram?.ProgramEligibility) {
             // console.log('Sponsored Test: ', sponsoredTest);
@@ -341,9 +338,56 @@ const AddLabOrder = () => {
     if (tcQuery && tcData && tcData?.TestId > 0) {
       // Generate the LabOrderTest
       const labOrderTest = [{
+        Id: labTestId,
         TestId: tcData.TestId,
         TestCatalog: tcData
       }] as unknown as LabOrderTestWithRelations[];
+
+      if (tcData?.SponsoredTest && tcData?.SponsoredTest?.length > 0) {
+        const hasEligibility = stepEntries.some(entry => entry.title === 'Eligibility')
+
+        if (!hasEligibility) {
+          const eligibilityStep = {
+            title: 'Eligibility',
+            subtitle: 'Eligibility',
+            stepDetails: StepEligibility,
+            subTitleDetails: Eligibility
+          }
+
+          stepEntries.push(eligibilityStep);
+          moveToTop('Eligibility');
+          moveToTop('Tests');
+          setSteps(stepEntries);
+          setActiveStep(0);
+        }
+      } else if (tcData?.CdxTest && tcData?.CdxTest?.length > 0) {
+        const hasEligibility = stepEntries.some(entry => entry.title === 'Eligibility')
+
+        if (hasEligibility) {
+          const index = stepEntries.findIndex(entry => entry.title === 'Eligibility');
+
+          if (index > -1) {
+            stepEntries.splice(index, 1);
+            setSteps(stepEntries);
+          }
+        }
+
+        const hasBilling = stepEntries.some(entry => entry.title === 'Billing')
+
+        if (!hasBilling) {
+          const eligibilityStep = {
+            title: 'Billing',
+            subtitle: 'Billing',
+            stepDetails: StepBillingDetails,
+            subTitleDetails: BillingSubtitle
+          }
+
+          stepEntries.push(eligibilityStep);
+          moveToTop('Tests');
+          setSteps(stepEntries);
+          setActiveStep(0);
+        }
+      }
 
       const labOrderCopy = { ...labOrder, LabOrderTest: labOrderTest };
 
@@ -410,7 +454,7 @@ const AddLabOrder = () => {
   }
 
   return (
-    <LabOrderContext.Provider value={{ labOrder, setLabOrder, collectionMethod, setCollectionMethod }}>
+    <LabOrderContext.Provider value={{ labOrder, setLabOrder, collectionMethod, setCollectionMethod, steps, setSteps, moveToTop, setActiveStep}}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Grid container spacing={6}>
           {/* <Grid item xs={12}>

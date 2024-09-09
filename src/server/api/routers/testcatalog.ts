@@ -120,7 +120,8 @@ export const testCatalogRouter = createTRPCRouter({
           include: {
             SponsoredProgram: true,
           },
-        }
+        },
+        CdxTest: true
       }
     })
   }),

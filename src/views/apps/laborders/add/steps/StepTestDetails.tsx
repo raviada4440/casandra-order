@@ -33,6 +33,10 @@ import DirectionalIcon from '@/components/DirectionalIcon'
 import { LabOrderContext } from '..'
 
 import type { LabOrderTestWithRelations } from '~prisma/generated/zod';
+import StepEligibility from './StepEligibility';
+import Eligibility from '../subtitle/Eligibility';
+import StepBillingDetails from './StepBillingDetails';
+import BillingSubtitle from '../subtitle/Billing';
 
 const searchClient = Client({
   url: '/api/search'
@@ -76,19 +80,27 @@ type Props = {
   steps: { title: string; subtitle: string }[]
 }
 
-const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
+const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
   // States
-  const { labOrder, setLabOrder, setCollectionMethod } = useContext(LabOrderContext);
+  const { labOrder, setLabOrder, setCollectionMethod, moveToTop, steps, setSteps, setActiveStep } = useContext(LabOrderContext);
 
   // console.log('labOrder ', labOrder)
 
   const [selected, setSelected] = useState<readonly LabOrderTestWithRelations[]>([]);
 
+
   // console.log('selected ', selected)
 
   useEffect(() => {
-    setSelected(labOrder?.LabOrderTest || []);
-  }, [labOrder?.LabOrderTest]);
+
+    console.log('labOrder?.LabOrderTest ', labOrder?.LabOrderTest)
+
+    if (labOrder?.LabOrderTest && labOrder?.LabOrderTest.length > 0) {
+      setSelected(labOrder?.LabOrderTest);
+    } else {
+      setSelected([])
+    }
+  }, [labOrder]);
 
   // const [isSelected, setIsSelected] = useState<boolean>(false);
   // const [selectedTestId, setSelectedTestId] = useState<number>(0);
@@ -139,6 +151,73 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
     console.log('CollectionMethod :', hit.CollectionMethod)
 
     setCollectionMethod(hit.CollectionMethod)
+
+    console.log('hit :', hit)
+
+    if (hit.type === 'Sponsored') {
+      // remove billing step
+      const hasBilling = steps?.some(entry => entry.title === 'Billing')
+
+      if (hasBilling) {
+        const index = steps?.findIndex(entry => entry.title === 'Billing');
+
+        if (index > -1) {
+          steps?.splice(index, 1);
+          setSteps(steps);
+        }
+      }
+
+      // add eligibility step
+      const hasEligibility = steps?.some(entry => entry.title === 'Eligibility')
+
+      if (!hasEligibility) {
+        const eligibilityStep = {
+          title: 'Eligibility',
+          subtitle: 'Eligibility',
+          stepDetails: StepEligibility,
+          subTitleDetails: Eligibility
+        }
+
+        steps?.push(eligibilityStep);
+        moveToTop('Eligibility');
+        moveToTop('Tests');
+        setSteps(steps);
+        setActiveStep(0);
+      }
+    } else if (hit.type === 'CDx') {
+
+      // remove eligibility step
+      const hasEligibility = steps?.some(entry => entry.title === 'Eligibility')
+
+      if (hasEligibility) {
+        const index = steps?.findIndex(entry => entry.title === 'Eligibility');
+
+        if (index > -1) {
+          steps?.splice(index, 1);
+          setSteps(steps);
+        }
+      }
+
+      // add billing step
+      const hasBilling = steps?.some(entry => entry.title === 'Billing')
+
+      if (!hasBilling) {
+        const eligibilityStep = {
+          title: 'Billing',
+          subtitle: 'Billing',
+          stepDetails: StepBillingDetails,
+          subTitleDetails: BillingSubtitle
+        }
+
+        steps?.push(eligibilityStep);
+        moveToTop('Tests');
+        setSteps(steps);
+        setActiveStep(0);
+      }
+    } else {
+      console.log('No type')
+    }
+
 
     const labOrderTest = {
       Id: uuid.v4() as string,
@@ -229,6 +308,7 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
                 <div className="container">
                   <div className="searchbox">
                     <SearchBox placeholder='Search for tests by name, testcode or biomarker' />
+                    <Typography variant='body2' className='text-textSecondary'>Please clear the searchbox contents to see more choices</Typography>
                   </div>
                   <div className="search-panel">
                     <div className="search-panel__results">
@@ -278,17 +358,17 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =
               </Button>
               <Button
                 variant='contained'
-                color={activeStep === steps.length - 1 ? 'success' : 'primary'}
+                color={activeStep === steps?.length - 1 ? 'success' : 'primary'}
                 onClick={handleNext}
                 endIcon={
-                  activeStep === steps.length - 1 ? (
+                  activeStep === steps?.length - 1 ? (
                     <i className='ri-check-line' />
                   ) : (
                     <DirectionalIcon ltrIconClass='ri-arrow-right-line' rtlIconClass='ri-arrow-left-line' />
                   )
                 }
               >
-                {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
+                {activeStep === steps?.length - 1 ? 'Submit' : 'Next'}
               </Button>
             </div>
           </Grid>

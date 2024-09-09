@@ -130,21 +130,12 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
               </Typography>
             </div>
             <Grid container spacing={5}>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={12}>
                 {session?.authProvider === 'credentials' && session?.entryPoint === 'standalone' && (
                   <AutocompletePatient />
                 )}
                 {(session?.authProvider === 'cerner' || session?.authProvider === 'epic') && session?.entryPoint === 'standalone' && (
                   <AutocompleteFhirPatient />
-                )}
-                {(session?.authProvider === 'cerner' || session?.authProvider === 'epic') && session?.entryPoint === 'launch' && (
-                  <TextField
-                    fullWidth
-                    label='Last Name'
-                    value={formData?.LastName || ''}
-                    placeholder='Last Name'
-                    onChange={e => handleFormChange('LastName', e.target.value)}
-                  />
                 )}
               </Grid>
               <Grid item xs={12} md={6}>
@@ -154,6 +145,15 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
                   value={formData?.FirstName || ''}
                   placeholder='First Name'
                   onChange={e => handleFormChange('FirstName', e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  label='Last Name'
+                  value={formData?.LastName || ''}
+                  placeholder='Last Name'
+                  onChange={e => handleFormChange('LastName', e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} md={3}>

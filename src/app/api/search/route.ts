@@ -37,7 +37,7 @@ const apiClient = API(
         { field: 'provider_favorite.ProviderId', weight: 2 },
         { field: 'organization_favorite.OrganizationId', weight: 2 },
       ],
-      result_attributes: ['TestId', 'LabTestId', 'CasandraTestId', 'TestName', 'LabName', 'CollectionMethod', 'sponsored_program.ProgramId', 'cdx.Id'],
+      result_attributes: ['TestId', 'LabTestId', 'CasandraTestId', 'TestName', 'LabName', 'CollectionMethod', 'sponsored_program.ProgramId', 'cdx.Id', 'type'],
       facet_attributes: [
         {
           attribute: 'Lab',
