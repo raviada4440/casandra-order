@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography'
 
 
 // Component Imports
-import { LabOrderContext } from '../index-not-used'
+import { LabOrderContext } from '..';
 
 const PatientSubtitle = () => {
 

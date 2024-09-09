@@ -9,7 +9,7 @@ import { makeStyles } from '@mui/styles'
 
 
 // Component Imports
-import { LabOrderContext } from '../index-not-used'
+import { LabOrderContext } from '..';
 
 const useStyles = makeStyles({
   cell150: {
