@@ -264,7 +264,6 @@ const AddLabOrder = () => {
 
     if (testCatalogQuery != tcQuery ) {
       setTcQuery(testCatalogQuery)
-
       setLabTestId(uuid.v4() as string)
     }
 
@@ -398,15 +397,35 @@ const AddLabOrder = () => {
       }
     }
 
-  }, [tcQuery, tcData, tcError, tcIsLoading, labOrder, setLabOrderCopy]);
+  }, [tcQuery, tcData, tcError, tcIsLoading, labOrder, setLabOrderCopy, labTestId]);
 
   useEffect(() => {
     setLabOrder(labOrderCopy);
   }, [labOrderCopy, setLabOrder])
 
+  const addQueryParam = (key: string, value: string) => {
+    const url = new URL(window.location.href);
+
+    url.searchParams.set(key, value);
+    window.history.pushState({}, '', url.toString());
+  }
+
   // Handlers
   const handleNext = () => {
     if (activeStep !== steps.length - 1) {
+      const currentStep = steps[activeStep+1]
+
+      console.log('Current Step: ', currentStep.title)
+
+      if (currentStep.title === 'Tests') {
+        console.log('Current Step: ', currentStep.title)
+
+        if (labOrder.LabOrderIcd.length > 0) {
+          console.log('labOrder.LabOrderIcd.length: ', labOrder.LabOrderIcd.length)
+          addQueryParam('testcatalog[query]', labOrder.LabOrderIcd[0].ICD?.Code || '')
+        }
+      }
+
       setActiveStep(activeStep + 1)
     } else {
       console.log('LabOrder: ', JSON.stringify(labOrder))

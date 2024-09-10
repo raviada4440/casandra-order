@@ -307,7 +307,7 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
                 <Configure hitsPerPage={10} />
                 <div className="container">
                   <div className="searchbox">
-                    <SearchBox placeholder='Search for tests by name, testcode or biomarker' />
+                    <SearchBox placeholder='Search for tests by name, testcode or biomarker'/>
                     <Typography variant='body2' className='text-textSecondary'>Please clear the searchbox contents to see more choices</Typography>
                   </div>
                   <div className="search-panel">

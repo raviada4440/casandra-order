@@ -34,10 +34,11 @@ const apiClient = API(
         { field: 'sponsored_program.SecondaryCategory', weight: 2 },
         { field: 'sponsored_program.TertiaryCategory', weight: 2 },
         { field: 'biomarkers.HGNCApprovedSymbol', weight: 2 },
+        { field: 'icd_codes.IcdCode', weight: 2 },
         { field: 'provider_favorite.ProviderId', weight: 2 },
         { field: 'organization_favorite.OrganizationId', weight: 2 },
       ],
-      result_attributes: ['TestId', 'LabTestId', 'CasandraTestId', 'TestName', 'LabName', 'CollectionMethod', 'sponsored_program.ProgramId', 'cdx.Id', 'type'],
+      result_attributes: ['TestId', 'LabTestId', 'CasandraTestId', 'TestName', 'LabName', 'CollectionMethod', 'sponsored_program.ProgramId', 'cdx.Id', 'type', 'icd_codes.IcdCode'],
       facet_attributes: [
         {
           attribute: 'Lab',
@@ -85,6 +86,11 @@ const apiClient = API(
         {
           attribute: 'organization_favorite.OrganizationId',
           field: 'organization_favorite.OrganizationId.keyword',
+          type: 'string'
+        },
+        {
+          attribute: 'icd_codes.IcdCode',
+          field: 'icd_codes.IcdCode.keyword',
           type: 'string'
         }
       ],
