@@ -14,9 +14,7 @@ import type { Theme } from '@mui/material/styles'
 // Third-party Imports
 import classnames from 'classnames'
 
-import { LabOrderContext } from '..';;
-
-
+import { LabOrderContext } from '..';
 
 const AccountCard = () => {
   // Hooks
