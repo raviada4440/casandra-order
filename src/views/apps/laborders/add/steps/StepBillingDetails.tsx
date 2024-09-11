@@ -3,7 +3,6 @@ import { useContext, useState } from 'react'
 // MUI Imports
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
-import InputAdornment from '@mui/material/InputAdornment'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
