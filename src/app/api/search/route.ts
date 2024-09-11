@@ -21,7 +21,7 @@ const apiClient = API(
       //},
     },
     search_settings: {
-      highlight_attributes: ['TestName'],
+      highlight_attributes: ['TestName', 'DrugName' , 'AlternativeName2'],
       snippet_attributes: ['LabName'],
       search_attributes: [
         { field: 'TestName', weight: 3 },
@@ -29,16 +29,16 @@ const apiClient = API(
         { field: 'LabTestId', weight: 5 },
         { field: 'CasandraTestId', weight: 5 },
         { field: 'type', weight: 2 },
-        { field: 'sponsored_program.ProgramName', weight: 2 },
-        { field: 'sponsored_program.Category', weight: 2 },
-        { field: 'sponsored_program.SecondaryCategory', weight: 2 },
-        { field: 'sponsored_program.TertiaryCategory', weight: 2 },
+        { field: 'ProgramName', weight: 2 },
+        { field: 'Category', weight: 2 },
+        { field: 'SecondaryCategory', weight: 2 },
+        { field: 'TertiaryCategory', weight: 2 },
         { field: 'biomarkers.HGNCApprovedSymbol', weight: 2 },
-        { field: 'icd_codes.IcdCode', weight: 2 },
+        { field: 'IcdCode', weight: 2 },
         { field: 'provider_favorite.ProviderId', weight: 2 },
         { field: 'organization_favorite.OrganizationId', weight: 2 },
       ],
-      result_attributes: ['TestId', 'LabTestId', 'CasandraTestId', 'TestName', 'LabName', 'CollectionMethod', 'sponsored_program.ProgramId', 'cdx.Id', 'type', 'icd_codes.IcdCode'],
+      result_attributes: ['TestId', 'LabTestId', 'CasandraTestId', 'TestName', 'DrugName', 'AlternativeName2', 'LabName', 'CollectionMethod', 'sponsored_program.ProgramId', 'cdx.Id', 'type', 'IcdCode'],
       facet_attributes: [
         {
           attribute: 'Lab',
@@ -52,12 +52,12 @@ const apiClient = API(
         },
         {
           attribute: 'Sponsored Program',
-          field: 'sponsored_program.ProgramName.keyword',
+          field: 'ProgramName.keyword',
           type: 'string'
         },
         {
           attribute: 'Therapeutic Area',
-          field: 'sponsored_program.Category.keyword',
+          field: 'Category.keyword',
           type: 'string'
         },
         {
@@ -89,8 +89,8 @@ const apiClient = API(
           type: 'string'
         },
         {
-          attribute: 'icd_codes.IcdCode',
-          field: 'icd_codes.IcdCode.keyword',
+          attribute: 'IcdCode',
+          field: 'IcdCode.keyword',
           type: 'string'
         }
       ],

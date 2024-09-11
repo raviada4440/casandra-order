@@ -90,9 +90,12 @@ model CdxTest {
   Id                String      @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
   TestId            Int
   CasandraTestId    String      @unique(map: "CasandraTestId_UNIQUE") @db.VarChar(512)
+  FDAApprovedCDxName  String?   @db.VarChar(512)
+  DrugName          String?     @db.VarChar(64)
   Category          String      @db.VarChar(64)
   SecondaryCategory String?     @db.VarChar(128)
   TertiaryCategory  String?     @db.VarChar(256)
+  RequiredBiomarkers String?   @db.Text
   CreatedAt         DateTime?   @default(now()) @db.DateTime(0)
   UpdatedAt         DateTime?   @default(now()) @db.DateTime(0)
   TestCatalog       TestCatalog @relation(fields: [TestId], references: [TestId], onDelete: NoAction, onUpdate: NoAction, map: "tc_cdx_fk_constraint")
@@ -153,6 +156,10 @@ model ICD {
   Id               String        @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
   Code             String?       @db.VarChar(45)
   ShortDescription String?       @db.Text
+  Alias1           String?       @db.Text
+  Alias2           String?       @db.Text
+  Alias3           String?       @db.Text
+  Alias4           String?       @db.Text
   CreatedAt        DateTime?     @default(now()) @db.DateTime(0)
   UpdatedAt        DateTime?     @default(now()) @db.DateTime(0)
   LabOrderIcd      LabOrderIcd[]
@@ -305,6 +312,12 @@ model LabOrderSpecimen {
   PatientCity        String?   @db.VarChar(45)
   PatientState       String?   @db.VarChar(45)
   PatientZip         String?   @db.VarChar(45)
+  SpecimenLocation   String?   @db.VarChar(45)
+  SpecimenAddress1    String?   @db.VarChar(45)
+  SpecimenAddress2    String?   @db.VarChar(45)
+  SpecimenCity        String?   @db.VarChar(45)
+  SpecimenState       String?   @db.VarChar(45)
+  SpecimenZip         String?   @db.VarChar(45)
   PscLab             String?   @db.VarChar(45)
   PscLocation        String?   @db.VarChar(45)
   PscAppointmentAt   DateTime? @db.Date
@@ -672,6 +685,7 @@ model TestCatalog {
   TestCategory               String?                      @db.VarChar(512)
   TestSubCategory            String?                      @db.VarChar(512)
   CollectionMethod           TestCatalog_CollectionMethod?
+  FDAApproved                String?                      @db.VarChar(45)
   CreatedAt                  DateTime                     @default(now()) @db.DateTime(0)
   UpdatedAt                  DateTime                     @default(now()) @db.DateTime(0)
   LabOrderTest               LabOrderTest[]

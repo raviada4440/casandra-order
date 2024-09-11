@@ -24,8 +24,9 @@ import {
   CurrentRefinements,
   Configure,
   DynamicWidgets,
-  useQueryRules,
+  useQueryRules
 } from 'react-instantsearch'
+
 import Client from '@searchkit/instantsearch-client'
 
 // Component Imports
@@ -82,14 +83,20 @@ type Props = {
 
 const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
   // States
-  const { labOrder, setLabOrder, setCollectionMethod, moveToTop, steps, setSteps, setActiveStep } = useContext(LabOrderContext);
+  const { labOrder, setLabOrder, setCollectionMethod, moveToTop, steps, setSteps, setActiveStep, source } = useContext(LabOrderContext);
 
   // console.log('labOrder ', labOrder)
 
   const [selected, setSelected] = useState<readonly LabOrderTestWithRelations[]>([]);
 
+  const [indexName, setIndexName] = useState<string>('spxcdx');
 
-  // console.log('selected ', selected)
+
+  useEffect(() => {
+    if (source === 'cdx' || source === 'sponsored') {
+      setIndexName('testcatalog')
+    }
+  }, [source])
 
   useEffect(() => {
 
@@ -100,6 +107,7 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
     } else {
       setSelected([])
     }
+
   }, [labOrder]);
 
   // const [isSelected, setIsSelected] = useState<boolean>(false);
@@ -260,6 +268,23 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
   }
 
 
+  // const transformItems: InfiniteHitsProps['transformItems'] = (items, {results}) => {
+
+  //   console.log('results: ', results)
+  //   console.log('items: ', items)
+
+  //   const newitems =  results?.hits.map((hit: any) => ({
+  //     ...hit,
+  //     TestName: hit.AlternativeName2.toLowerCase(),
+  //   }))
+
+  //   results?.hits = newitems
+
+  //   console.log('results: ', results)
+
+  //   return results
+  // };
+
   const isSelected = (id: number) => selected?.some(item => item.TestId === id)
 
   const HitView = (props: any) => {
@@ -303,7 +328,7 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
         <Grid container spacing={5}>
           <Grid item xs={12}>
             <div className="">
-              <InstantSearch indexName="testcatalog" searchClient={searchClient} routing>
+              <InstantSearch indexName={indexName} searchClient={searchClient} routing>
                 <Configure hitsPerPage={10} />
                 <div className="container">
                   <div className="searchbox">

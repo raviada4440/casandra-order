@@ -1,8 +1,6 @@
 // React Imports
 import { useContext, useEffect, useState } from 'react'
 
-import uuid from 'react-native-uuid'
-
 // import { useSession } from 'next-auth/react'
 
 // MUI Imports
@@ -24,7 +22,7 @@ import { LabOrderContext } from '..'
 
 
 
-import type { LabOrderSponsoredTestConsentWithRelations, SponsoredTestWithRelations } from '~prisma/generated/zod'
+import type { LabOrderSponsoredTestConsentWithRelations } from '~prisma/generated/zod'
 
 type Props = {
   activeStep: number
@@ -38,9 +36,9 @@ const StepEligibility = ({ activeStep, handleNext, handlePrev, steps }: Props) =
 
   // Vars
   const { labOrder, setLabOrder } = useContext(LabOrderContext);
-  const [formData, setFormData] = useState<LabOrderSponsoredTestConsentWithRelations>(labOrder?.LabOrderSponsoredTestConsent?.[0] || { Id: uuid.v4() as string, LabOrderId: labOrder.Id } as LabOrderSponsoredTestConsentWithRelations)
+  const [formData, setFormData] = useState<LabOrderSponsoredTestConsentWithRelations>({} as LabOrderSponsoredTestConsentWithRelations)
 
-  // const [htmlContent, setHtmlContent] = useState('');
+  const [htmlContent, setHtmlContent] = useState('');
 
   // console.log('formData.', (formData?.SponsoredTest && formData?.SponsoredTest?.[0].SponsoredProgram?.ProgramEligibility) || '')
 
@@ -51,40 +49,34 @@ const StepEligibility = ({ activeStep, handleNext, handlePrev, steps }: Props) =
     const updatedFormData = { ...formData, [field]: value };
 
     setFormData(updatedFormData);
-    setLabOrder({ ...labOrder, LabOrderSponsoredTestConsent: [...labOrder.LabOrderSponsoredTestConsent, updatedFormData] })
+    setLabOrder({ ...labOrder, LabOrderSponsoredTestConsent: [updatedFormData] })
   }
 
-  // const handleMRNChange = (value: string) => {
-  //   setLabOrder({ ...labOrder, PatientMRN: value })
-  // }
-
-  // const handleOrgChange = (event: SelectChangeEvent) => {
-  //   // console.log('event.target.value', event.target.value)
-  //   const providerOrg = providerOrgs.find(org => org.Organization?.Id === event.target.value)
-
-  //   // console.log('providerOrg', providerOrg)
-
-  //   // setLabOrder({...labOrder, Organization: providerOrg?.Organization as OrganizationWithRelations })
-
-  //   // console.log('labOrder', labOrder)
-  // };
-  // // console.log('formData?.SponsoredTest?.SponsoredProgram?.ProgramEligibility: ', formData?.SponsoredTest[0]?.SponsoredProgram?.ProgramEligibility)
 
   useEffect(() => {
     if (labOrder?.LabOrderSponsoredTestConsent && labOrder?.LabOrderSponsoredTestConsent.length > 0) {
-      setFormData({ ...labOrder.LabOrderSponsoredTestConsent[0] } as LabOrderSponsoredTestConsentWithRelations)
+      const laborderCopy = { ...labOrder }
 
-      const labOrderSponsoredTestConsent: LabOrderSponsoredTestConsentWithRelations = labOrder.LabOrderSponsoredTestConsent[0] as LabOrderSponsoredTestConsentWithRelations
+      setFormData( laborderCopy.LabOrderSponsoredTestConsent[0] as LabOrderSponsoredTestConsentWithRelations)
 
-      if (labOrderSponsoredTestConsent.SponsoredTest) {
-        const sponsoredTest: SponsoredTestWithRelations = labOrderSponsoredTestConsent.SponsoredTest
+      console.log('formData', formData)
 
-        if (sponsoredTest && sponsoredTest.SponsoredProgram && sponsoredTest.SponsoredProgram.ProgramEligibility) {
-          // console.log('sponsoredTest.SponsoredProgram.ProgramEligibility: ', sponsoredTest.SponsoredProgram.ProgramEligibility)
-        }
-      }
+      setHtmlContent(formData.SponsoredTest?.[0].SponsoredProgram?.ProgramEligibility)
+
+      // const labOrderSponsoredTestConsent: LabOrderSponsoredTestConsentWithRelations = labOrder.LabOrderSponsoredTestConsent[0] as LabOrderSponsoredTestConsentWithRelations
+
+      // if (labOrderSponsoredTestConsent.SponsoredTest) {
+      //   const sponsoredTest: SponsoredTestWithRelations = labOrderSponsoredTestConsent.SponsoredTest
+
+      //   if (sponsoredTest && sponsoredTest.SponsoredProgram && sponsoredTest.SponsoredProgram.ProgramEligibility) {
+
+      //     console.log('sponsoredTest.SponsoredProgram.ProgramEligibility', sponsoredTest.SponsoredProgram.ProgramEligibility)
+
+      //     setHtmlContent(sponsoredTest.SponsoredProgram.ProgramEligibility)
+      //   }
+      // }
     }
-  }, [labOrder?.LabOrderSponsoredTestConsent])
+  }, [labOrder, formData, setFormData, setHtmlContent])
 
   return (
     <>
@@ -105,7 +97,7 @@ const StepEligibility = ({ activeStep, handleNext, handlePrev, steps }: Props) =
             <Grid container spacing={5}>
 
               <Grid item xs={12} md={12}>
-                <div dangerouslySetInnerHTML={{ __html: formData?.SponsoredTest && formData.SponsoredTest?.[0]?.SponsoredProgram?.ProgramEligibility }} />
+                <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
               </Grid>
               <Grid item xs={12} md={4}>
                 <TextField

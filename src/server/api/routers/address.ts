@@ -50,7 +50,7 @@ const getAddressesSmarty = async (searchString: string): Promise<any> => {
 
   const data = await response.json()
 
-  // console.log('data: ', data)
+  console.log('data: ', data)
 
   return data;
 }

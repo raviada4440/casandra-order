@@ -167,7 +167,27 @@ export const labOrderRouter = createTRPCRouter({
             ShortDescription: {
               contains: input.searchStr,
             },
-          }
+          },
+          {
+            Alias1: {
+              contains: input.searchStr,
+            },
+          },
+          {
+            Alias2: {
+              contains: input.searchStr,
+            },
+          },
+          {
+            Alias3: {
+              contains: input.searchStr,
+            },
+          },
+          {
+            Alias4: {
+              contains: input.searchStr,
+            },
+          },
         ],
       },
       orderBy: { Code: "asc" },

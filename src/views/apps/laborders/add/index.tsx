@@ -130,6 +130,7 @@ type LabOrderContextType = {
   setSteps: Dispatch<SetStateAction<Step[]>>
   moveToTop: (title: string) => void
   setActiveStep: Dispatch<SetStateAction<number>>
+  source: string
 };
 
 const generateOrderNumber = () => {
@@ -156,7 +157,7 @@ const AddLabOrder = () => {
   const [tcQuery, setTcQuery] = useState<string>('')
   const [labTestId, setLabTestId] = useState<string>('')
 
-  // const [source, setSource] = useState<string>('')
+  const [source, setSource] = useState<string>('')
 
   // console.log('source: ', source)
 
@@ -256,18 +257,14 @@ const AddLabOrder = () => {
     // Get a specific query parameter
     const testCatalogQuery = qParams.get('testcatalog[query]') as string;
 
-    // const sourceQuery = qParams.get('source') as string;
+    const sourceQuery = qParams.get('source') as string;
 
     console.log('testCatalogQuery', testCatalogQuery)
+    console.log('sourceQuery', sourceQuery)
 
-    // console.log('sourceQuery', sourceQuery)
-
-    if (testCatalogQuery != tcQuery ) {
-      setTcQuery(testCatalogQuery)
-      setLabTestId(uuid.v4() as string)
-    }
-
-    // setSource(sourceQuery)
+    setTcQuery(testCatalogQuery)
+    setSource(sourceQuery)
+    setLabTestId(uuid.v4() as string)
 
   }, [location, tcQuery, setTcQuery, setLabTestId])
 
@@ -420,9 +417,11 @@ const AddLabOrder = () => {
       if (currentStep.title === 'Tests') {
         console.log('Current Step: ', currentStep.title)
 
-        if (labOrder.LabOrderIcd.length > 0) {
+        if (labOrder.LabOrderIcd.length > 0 ) {
           console.log('labOrder.LabOrderIcd.length: ', labOrder.LabOrderIcd.length)
-          addQueryParam('testcatalog[query]', labOrder.LabOrderIcd[0].ICD?.Code || '')
+          addQueryParam('spxcdx[query]', labOrder.LabOrderIcd[0].ICD?.Code || '')
+        } else if (source === 'cdx' || source === 'sponosored') {
+          addQueryParam('testcatalog[query]', tcQuery)
         }
       }
 
@@ -473,7 +472,7 @@ const AddLabOrder = () => {
   }
 
   return (
-    <LabOrderContext.Provider value={{ labOrder, setLabOrder, collectionMethod, setCollectionMethod, steps, setSteps, moveToTop, setActiveStep}}>
+    <LabOrderContext.Provider value={{ labOrder, setLabOrder, collectionMethod, setCollectionMethod, steps, setSteps, moveToTop, setActiveStep, source}}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Grid container spacing={6}>
           {/* <Grid item xs={12}>
