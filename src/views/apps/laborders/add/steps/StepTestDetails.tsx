@@ -33,7 +33,7 @@ import Client from '@searchkit/instantsearch-client'
 import DirectionalIcon from '@/components/DirectionalIcon'
 import { LabOrderContext } from '..'
 
-import type { LabOrderTestWithRelations } from '~prisma/generated/zod';
+import type { LabOrderSponsoredTestConsentWithRelations, LabOrderTestWithRelations } from '~prisma/generated/zod';
 import StepEligibility from './StepEligibility';
 import Eligibility from '../subtitle/Eligibility';
 import StepBillingDetails from './StepBillingDetails';
@@ -83,20 +83,13 @@ type Props = {
 
 const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
   // States
-  const { labOrder, setLabOrder, setCollectionMethod, moveToTop, steps, setSteps, setActiveStep, source } = useContext(LabOrderContext);
+  const { labOrder, setLabOrder, setCollectionMethod, moveToTop, steps, setSteps, setActiveStep } = useContext(LabOrderContext);
 
   // console.log('labOrder ', labOrder)
 
   const [selected, setSelected] = useState<readonly LabOrderTestWithRelations[]>([]);
 
-  const [indexName, setIndexName] = useState<string>('spxcdx');
-
-
-  useEffect(() => {
-    if (source === 'cdx' || source === 'sponsored') {
-      setIndexName('testcatalog')
-    }
-  }, [source])
+  // const [indexName, setIndexName] = useState<string>('spxcdx');
 
   useEffect(() => {
 
@@ -162,7 +155,7 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
 
     console.log('hit :', hit)
 
-    if (hit.type === 'Sponsored') {
+    if (hit.type[0] === 'Sponsored') {
       // remove billing step
       const hasBilling = steps?.some(entry => entry.title === 'Billing')
 
@@ -178,6 +171,24 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
       // add eligibility step
       const hasEligibility = steps?.some(entry => entry.title === 'Eligibility')
 
+      // Generate the LabOrderTest
+      const labOrderEligibilityConsent = [{
+        TestId: hit.TestId,
+        SponsoredTest: [{
+          SponsoredProgram: {
+            ProgramEligibility: hit.ProgramEligibility
+          }
+        }]
+      }] as unknown as LabOrderSponsoredTestConsentWithRelations[];
+
+      const labOrderCopy = { ...labOrder, LabOrderSponsoredTestConsent: labOrderEligibilityConsent };
+
+      // Only update the state if labOrderCopy has changed
+      if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrder)) {
+        // console.log('LabOrderCopy: ', labOrderCopy);
+        setLabOrder(labOrderCopy);
+      }
+
       if (!hasEligibility) {
         const eligibilityStep = {
           title: 'Eligibility',
@@ -188,11 +199,12 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
 
         steps?.push(eligibilityStep);
         moveToTop('Eligibility');
-        moveToTop('Tests');
+
+        // moveToTop('Tests');
         setSteps(steps);
-        setActiveStep(0);
+        setActiveStep(activeStep);
       }
-    } else if (hit.type === 'CDx') {
+    } else if (hit.type[0] === 'CDx') {
 
       // remove eligibility step
       const hasEligibility = steps?.some(entry => entry.title === 'Eligibility')
@@ -218,9 +230,10 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
         }
 
         steps?.push(eligibilityStep);
-        moveToTop('Tests');
+
+        // moveToTop('Tests');
         setSteps(steps);
-        setActiveStep(0);
+        setActiveStep(activeStep);
       }
     } else {
       console.log('No type')
@@ -328,7 +341,7 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
         <Grid container spacing={5}>
           <Grid item xs={12}>
             <div className="">
-              <InstantSearch indexName={indexName} searchClient={searchClient} routing>
+              <InstantSearch indexName='spxcdx' searchClient={searchClient} routing>
                 <Configure hitsPerPage={10} />
                 <div className="container">
                   <div className="searchbox">

@@ -255,14 +255,16 @@ const AddLabOrder = () => {
 
 
     // Get a specific query parameter
-    const testCatalogQuery = qParams.get('testcatalog[query]') as string;
+    const testCatalogQuery = qParams.get('spxcdx[query]') as string;
 
-    const sourceQuery = qParams.get('source') as string;
+    const sourceQuery = qParams.get('spxcdx[refinementList][Test Type][0]') as string;
 
     console.log('testCatalogQuery', testCatalogQuery)
+
     console.log('sourceQuery', sourceQuery)
 
     setTcQuery(testCatalogQuery)
+
     setSource(sourceQuery)
     setLabTestId(uuid.v4() as string)
 
@@ -281,10 +283,12 @@ const AddLabOrder = () => {
 
       const specimenEntry = stepEntries.find(entry => entry.title === "Specimen")
 
-      if (specimenEntry && collectionOption === 'KIT') {
-        specimenEntry.stepDetails = StepSpecimenKitDetails
-      } else if (specimenEntry && collectionOption === 'PSC') {
-        specimenEntry.stepDetails = StepSpecimenPSCDetails
+      if (specimenEntry) {
+        if (collectionOption === 'KIT') {
+          specimenEntry.stepDetails = StepSpecimenKitDetails
+        } else if (collectionOption === 'PSC') {
+          specimenEntry.stepDetails = StepSpecimenPSCDetails
+        }
       }
 
       if (sponsoredTests && sponsoredTests.length > 0 && tcQuery) {
@@ -339,7 +343,7 @@ const AddLabOrder = () => {
         TestCatalog: tcData
       }] as unknown as LabOrderTestWithRelations[];
 
-      if (tcData?.SponsoredTest && tcData?.SponsoredTest?.length > 0) {
+      if (tcData?.SponsoredTest && tcData?.SponsoredTest?.length > 0 && source === 'Sponsored') {
         const hasEligibility = stepEntries.some(entry => entry.title === 'Eligibility')
 
         if (!hasEligibility) {
@@ -356,7 +360,7 @@ const AddLabOrder = () => {
           setSteps(stepEntries);
           setActiveStep(0);
         }
-      } else if (tcData?.CdxTest && tcData?.CdxTest?.length > 0) {
+      } else if (tcData?.CdxTest && tcData?.CdxTest?.length > 0 && source === 'CDx') {
         const hasEligibility = stepEntries.some(entry => entry.title === 'Eligibility')
 
         if (hasEligibility) {
@@ -394,7 +398,7 @@ const AddLabOrder = () => {
       }
     }
 
-  }, [tcQuery, tcData, tcError, tcIsLoading, labOrder, setLabOrderCopy, labTestId]);
+  }, [tcQuery, tcData, tcError, tcIsLoading, labOrder, setLabOrderCopy, labTestId, source]);
 
   useEffect(() => {
     setLabOrder(labOrderCopy);
@@ -420,8 +424,6 @@ const AddLabOrder = () => {
         if (labOrder.LabOrderIcd.length > 0 ) {
           console.log('labOrder.LabOrderIcd.length: ', labOrder.LabOrderIcd.length)
           addQueryParam('spxcdx[query]', labOrder.LabOrderIcd[0].ICD?.Code || '')
-        } else if (source === 'cdx' || source === 'sponosored') {
-          addQueryParam('testcatalog[query]', tcQuery)
         }
       }
 

@@ -273,6 +273,7 @@ model LabOrderBilling {
   BillToId                 String?   @db.VarChar(45)
   HealthPalnId             String?   @db.VarChar(45)
   PatientStatus            String?   @db.VarChar(45)
+  SubscriberId             String?   @db.VarChar(45)
   SponoseredTestCouponCode String?   @db.VarChar(45)
   CreatedAt                DateTime? @default(now()) @db.DateTime(0)
   UpdatedAt                DateTime? @default(now()) @db.DateTime(0)

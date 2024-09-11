@@ -22,7 +22,7 @@ const apiClient = API(
     },
     search_settings: {
       highlight_attributes: ['TestName', 'DrugName' , 'AlternativeName2'],
-      snippet_attributes: ['LabName'],
+      snippet_attributes: ['LabName', 'TurnAroundTime'],
       search_attributes: [
         { field: 'TestName', weight: 3 },
         { field: 'LabName', weight: 3 },
@@ -38,7 +38,7 @@ const apiClient = API(
         { field: 'provider_favorite.ProviderId', weight: 2 },
         { field: 'organization_favorite.OrganizationId', weight: 2 },
       ],
-      result_attributes: ['TestId', 'LabTestId', 'CasandraTestId', 'TestName', 'DrugName', 'AlternativeName2', 'LabName', 'CollectionMethod', 'sponsored_program.ProgramId', 'cdx.Id', 'type', 'IcdCode'],
+      result_attributes: ['TestId', 'LabTestId', 'CasandraTestId', 'TestName', 'DrugName', 'AlternativeName2', 'TurnAroundTime', 'LabName', 'CollectionMethod', 'sponsored_program.ProgramId', 'cdx.Id', 'type', 'IcdCode', 'ProgramEligibility'],
       facet_attributes: [
         {
           attribute: 'Lab',

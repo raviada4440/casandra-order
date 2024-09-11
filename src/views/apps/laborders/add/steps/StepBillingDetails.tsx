@@ -1,3 +1,5 @@
+import { useContext, useState } from 'react'
+
 // MUI Imports
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
@@ -6,15 +8,18 @@ import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
-import FormLabel from '@mui/material/FormLabel'
-import Radio from '@mui/material/Radio'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import RadioGroup from '@mui/material/RadioGroup'
-import Checkbox from '@mui/material/Checkbox'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Typography from '@mui/material/Typography'
+
 import Button from '@mui/material/Button'
+
+import uuid from 'react-native-uuid'
 
 // Component Imports
 import DirectionalIcon from '@/components/DirectionalIcon'
+import { LabOrderContext } from '..'
+import type { LabOrderBillingWithRelations } from '~prisma/generated/zod'
 
 type Props = {
   activeStep: number
@@ -24,140 +29,132 @@ type Props = {
 }
 
 const StepBillingDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
-  return (
-    <Grid container spacing={5}>
-      <Grid item xs={12} md={6}>
-        <TextField
-          fullWidth
-          type='number'
-          placeholder='25,000'
-          label='Expected Price'
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position='end'>
-                <i className='ri-money-dollar-circle-line' />
-              </InputAdornment>
-            )
-          }}
-        />
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <TextField
-          fullWidth
-          type='number'
-          placeholder='500'
-          label='Price Per SQFT'
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position='end'>
-                <i className='ri-money-dollar-circle-line' />
-              </InputAdornment>
-            )
-          }}
-        />
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <TextField
-          fullWidth
-          type='number'
-          placeholder='50'
-          label='Maintenance Charge'
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position='end'>
-                <i className='ri-money-dollar-circle-line' />
-              </InputAdornment>
-            )
-          }}
-        />
-      </Grid>
+  // Vars
+  const { labOrder, setLabOrder } = useContext(LabOrderContext);
+  const billingId = uuid.v4()
 
-      <Grid item xs={12} md={6}>
-        <FormControl fullWidth>
-          <InputLabel id='select-maintenance'>Maintenance Period</InputLabel>
-          <Select labelId='select-maintenance' label='Maintenance Period' defaultValue=''>
-            <MenuItem value='monthly'>Monthly</MenuItem>
-            <MenuItem value='quarterly'>Quarterly</MenuItem>
-            <MenuItem value='half-yearly'>Half Yearly</MenuItem>
-            <MenuItem value='yearly'>Yearly</MenuItem>
-            <MenuItem value='one-time'>One-time</MenuItem>
-          </Select>
-        </FormControl>
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <TextField
-          fullWidth
-          type='number'
-          placeholder='250'
-          label='Booking/Token Amount'
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position='end'>
-                <i className='ri-money-dollar-circle-line' />
-              </InputAdornment>
-            )
-          }}
-        />
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <TextField
-          fullWidth
-          type='number'
-          placeholder='500'
-          label='Other Amount'
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position='end'>
-                <i className='ri-money-dollar-circle-line' />
-              </InputAdornment>
-            )
-          }}
-        />
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <FormControl className='gap-2'>
-          <FormLabel id='price-radio'>Show Price As</FormLabel>
-          <RadioGroup name='price-group' defaultValue='negotiable' aria-labelledby='price-radio'>
-            <FormControlLabel value='negotiable' control={<Radio />} label='Negotiable' />
-            <FormControlLabel value='call-for-price' control={<Radio />} label='Call For Price' />
-          </RadioGroup>
-        </FormControl>
-      </Grid>
-      <Grid item xs={12} md={6}>
-        <FormControl className='gap-2'>
-          <FormLabel>Price Includes</FormLabel>
-          <FormControlLabel control={<Checkbox defaultChecked />} label='Car Parking' />
-          <FormControlLabel control={<Checkbox />} label='Club Membership' />
-        </FormControl>
-      </Grid>
-      <Grid item xs={12}>
-        <div className='flex items-center justify-between'>
-          <Button
-            variant='outlined'
-            color='primary'
-            disabled={activeStep === 0}
-            onClick={handlePrev}
-            startIcon={<DirectionalIcon ltrIconClass='ri-arrow-left-line' rtlIconClass='ri-arrow-right-line' />}
-          >
-            Previous
-          </Button>
-          <Button
-            variant='contained'
-            color={activeStep === steps.length - 1 ? 'success' : 'primary'}
-            onClick={handleNext}
-            endIcon={
-              activeStep === steps.length - 1 ? (
-                <i className='ri-check-line' />
-              ) : (
-                <DirectionalIcon ltrIconClass='ri-arrow-right-line' rtlIconClass='ri-arrow-left-line' />
-              )
-            }
-          >
-            {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
-          </Button>
-        </div>
-      </Grid>
-    </Grid>
+  if (!labOrder.LabOrderBilling) {
+    labOrder.LabOrderBilling = [{ Id: billingId }] as LabOrderBillingWithRelations[]
+  }
+
+  const [formData, setFormData] = useState<LabOrderBillingWithRelations>(labOrder?.LabOrderBilling[0] as LabOrderBillingWithRelations)
+
+
+  const handleFormChange = (field: keyof LabOrderBillingWithRelations, value: LabOrderBillingWithRelations[keyof LabOrderBillingWithRelations]) => {
+    const updatedFormData = { ...formData, [field]: value };
+
+    setFormData(updatedFormData);
+    setLabOrder({ ...labOrder, LabOrderBilling: [updatedFormData] })
+  }
+
+
+  return (
+    <>
+      <form onSubmit={e => e.preventDefault()}>
+
+
+        <Card>
+          <CardContent>
+            <div className='flex items-center gap-2 mbe-4'>
+              <i className='ri-user-line text-3xl text-primary' />
+              <Typography variant='h5' className='text-primary'>
+                Billing
+              </Typography>
+            </div>
+            <Grid container spacing={5}>
+              <Grid item xs={12} md={3}>
+                <FormControl fullWidth>
+                  <InputLabel id='select-billto'>Bill To</InputLabel>
+                  <Select
+                    id='billto-select'
+                    label='Bill To'
+                    labelId='select-billto'
+                    value={formData?.BillToId || ''}
+                    onChange={e => handleFormChange('BillToId', e.target.value)}
+                  >
+                    <MenuItem value='ins'>Insurance</MenuItem>
+                    <MenuItem value='self'>Patient</MenuItem>
+                    <MenuItem value='pharma'>Pharma</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <FormControl fullWidth>
+                  <InputLabel id='select-patientstatus'>Patient Status</InputLabel>
+                  <Select
+                    id='patientstatus-select'
+                    label='Patient Status'
+                    labelId='select-patientstatus'
+                    value={formData?.PatientStatus || ''}
+                    onChange={e => handleFormChange('PatientStatus', e.target.value)}
+                  >
+                    <MenuItem value='inpatient'>Hospital Inpatient</MenuItem>
+                    <MenuItem value='hchb'>Home Care Home Base</MenuItem>
+                    <MenuItem value='longterm'>Longterm Care</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12} md={3}>
+                <FormControl fullWidth>
+                  <InputLabel id='select-healthplan'>Health Plan</InputLabel>
+                  <Select
+                    id='healthplan-select'
+                    label='Health Plan'
+                    labelId='select-healthplan'
+                    value={formData?.HealthPalnId || ''}
+                    onChange={e => handleFormChange('HealthPalnId', e.target.value)}
+                  >
+                    <MenuItem value='bcbsnc'>BCBS of North Caroline</MenuItem>
+                    <MenuItem value='bcbstx'>BCBS of Texas</MenuItem>
+                    <MenuItem value='aetna'>Aetna CVS</MenuItem>
+                    <MenuItem value='united'>United Healthcare</MenuItem>
+                    <MenuItem value='ambetter'>Ambetter</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <TextField
+                  fullWidth
+                  label='Subscriber Id'
+                  value={formData?.SubscriberId || ''}
+                  placeholder='Subscriber Id'
+                  onChange={e => handleFormChange('SubscriberId', e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <div className='flex items-center justify-between'>
+                  <Button
+                    variant='outlined'
+                    color='primary'
+                    disabled={activeStep === 0}
+                    onClick={handlePrev}
+                    startIcon={<DirectionalIcon ltrIconClass='ri-arrow-left-line' rtlIconClass='ri-arrow-right-line' />}
+                  >
+                    Previous
+                  </Button>
+                  <Button
+                    variant='contained'
+                    color={activeStep === steps.length - 1 ? 'success' : 'primary'}
+                    onClick={handleNext}
+                    endIcon={
+                      activeStep === steps.length - 1 ? (
+                        <i className='ri-check-line' />
+                      ) : (
+                        <DirectionalIcon ltrIconClass='ri-arrow-right-line' rtlIconClass='ri-arrow-left-line' />
+                      )
+                    }
+                  >
+                    {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
+                  </Button>
+                </div>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
+      </form>
+    </>
   )
 }
 
