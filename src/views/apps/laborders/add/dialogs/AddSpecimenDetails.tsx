@@ -168,8 +168,11 @@ const AddSpecimenDetails = ({ open, setOpen, specimenRecord }: AddSpecimenProps)
                                 <Grid item xs={3}>
                                   {option.Name}
                                 </Grid>
-                                <Grid item xs={9}>
-                                  {option.Description}
+                                <Grid item xs={1}>&nbsp;</Grid>
+                                <Grid item xs={8}>
+                                  <Typography variant="body2" style={{ fontStyle: 'italic' }}>
+                                    {option.Description}
+                                  </Typography>
                                 </Grid>
                               </Grid>
                             </li>
@@ -297,6 +300,7 @@ const AddSpecimenDetails = ({ open, setOpen, specimenRecord }: AddSpecimenProps)
                         <Select
                           id='state-select'
                           labelId='select-state'
+                          label='State'
                           value={formData?.SpecimenState || ''}
                           onChange={e => handleFormChange('SpecimenState', e.target.value)}
                         >

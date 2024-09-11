@@ -61,7 +61,7 @@ const StepBillingDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
               </Typography>
             </div>
             <Grid container spacing={5}>
-              <Grid item xs={12} md={3}>
+              <Grid item xs={12} md={6}>
                 <FormControl fullWidth>
                   <InputLabel id='select-billto'>Bill To</InputLabel>
                   <Select
@@ -77,7 +77,7 @@ const StepBillingDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} md={3}>
+              <Grid item xs={12} md={6}>
                 <FormControl fullWidth>
                   <InputLabel id='select-patientstatus'>Patient Status</InputLabel>
                   <Select
@@ -87,14 +87,15 @@ const StepBillingDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
                     value={formData?.PatientStatus || ''}
                     onChange={e => handleFormChange('PatientStatus', e.target.value)}
                   >
+                    <MenuItem value='inpatient'>Outpatient</MenuItem>
                     <MenuItem value='inpatient'>Hospital Inpatient</MenuItem>
-                    <MenuItem value='hchb'>Home Care Home Base</MenuItem>
+                    <MenuItem value='hchb'>Home Care</MenuItem>
                     <MenuItem value='longterm'>Longterm Care</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
 
-              <Grid item xs={12} md={3}>
+              <Grid item xs={12} md={12}>
                 <FormControl fullWidth>
                   <InputLabel id='select-healthplan'>Health Plan</InputLabel>
                   <Select
@@ -104,7 +105,7 @@ const StepBillingDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
                     value={formData?.HealthPalnId || ''}
                     onChange={e => handleFormChange('HealthPalnId', e.target.value)}
                   >
-                    <MenuItem value='bcbsnc'>BCBS of North Caroline</MenuItem>
+                    <MenuItem value='bcbsnc'>BCBS of North Carolina</MenuItem>
                     <MenuItem value='bcbstx'>BCBS of Texas</MenuItem>
                     <MenuItem value='aetna'>Aetna CVS</MenuItem>
                     <MenuItem value='united'>United Healthcare</MenuItem>
@@ -116,9 +117,9 @@ const StepBillingDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
               <Grid item xs={12} md={6}>
                 <TextField
                   fullWidth
-                  label='Subscriber Id'
+                  label='Subscriber ID'
                   value={formData?.SubscriberId || ''}
-                  placeholder='Subscriber Id'
+                  placeholder='Subscriber ID'
                   onChange={e => handleFormChange('SubscriberId', e.target.value)}
                 />
               </Grid>

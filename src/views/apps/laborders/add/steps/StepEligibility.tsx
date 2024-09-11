@@ -102,7 +102,7 @@ const StepEligibility = ({ activeStep, handleNext, handlePrev, steps }: Props) =
               <Grid item xs={12} md={4}>
                 <TextField
                   fullWidth
-                  label='ProviderName'
+                  label='Provider Name'
                   value={formData?.ProviderName || ''}
                   placeholder='ProviderName'
                   onChange={e => handleFormChange('ProviderName', e.target.value)}
@@ -111,7 +111,7 @@ const StepEligibility = ({ activeStep, handleNext, handlePrev, steps }: Props) =
               <Grid item xs={12} md={4}>
                 <TextField
                   fullWidth
-                  label='ProviderNPI'
+                  label='Provider NPI'
                   value={formData?.ProviderNPI || ''}
                   placeholder='ProviderNPI'
                   onChange={e => handleFormChange('ProviderNPI', e.target.value)}
