@@ -683,8 +683,6 @@ model TestCatalog {
   AlternativeSpecimen        String?                      @db.LongText
   LoincCodesText             String?                      @db.LongText
   LoincCodesHTML             String?                      @db.LongText
-  TestCategory               String?                      @db.VarChar(512)
-  TestSubCategory            String?                      @db.VarChar(512)
   CollectionMethod           TestCatalog_CollectionMethod?
   FDAApproved                String?                      @db.VarChar(45)
   CreatedAt                  DateTime                     @default(now()) @db.DateTime(0)

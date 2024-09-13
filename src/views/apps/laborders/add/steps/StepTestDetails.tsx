@@ -1,12 +1,15 @@
 // React Imports
-import type { ChangeEvent } from 'react';
-import { useContext, useEffect, useState } from 'react'
+// import type { ChangeEvent } from 'react';
 
-import uuid from 'react-native-uuid';
+import { useContext } from 'react'
+
+// import uuid from 'react-native-uuid';
 
 // MUI Imports
 import Grid from '@mui/material/Grid'
-import Checkbox from '@mui/material/Checkbox';
+
+// import Checkbox from '@mui/material/Checkbox';
+
 import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -17,10 +20,12 @@ import "instantsearch.css/themes/satellite-min.css"
 import {
   InstantSearch,
   SearchBox,
-  InfiniteHits,
-  Highlight,
+
+  // InfiniteHits,
+  // Highlight,
   RefinementList,
-  Snippet,
+
+  // Snippet,
   CurrentRefinements,
   Configure,
   DynamicWidgets,
@@ -33,11 +38,12 @@ import Client from '@searchkit/instantsearch-client'
 import DirectionalIcon from '@/components/DirectionalIcon'
 import { LabOrderContext } from '..'
 
-import type { LabOrderSponsoredTestConsentWithRelations, LabOrderTestWithRelations } from '~prisma/generated/zod';
-import StepEligibility from './StepEligibility';
-import Eligibility from '../subtitle/Eligibility';
-import StepBillingDetails from './StepBillingDetails';
-import BillingSubtitle from '../subtitle/Billing';
+// import type { LabOrderSponsoredTestConsentWithRelations, LabOrderTestWithRelations } from '~prisma/generated/zod';
+// import StepEligibility from './StepEligibility';
+// import Eligibility from '../subtitle/Eligibility';
+// import StepBillingDetails from './StepBillingDetails';
+// import BillingSubtitle from '../subtitle/Billing';
+import CustomInfiniteHits from './CustomInfiniteHits';
 
 const searchClient = Client({
   url: '/api/search'
@@ -83,25 +89,25 @@ type Props = {
 
 const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
   // States
-  const { labOrder, setLabOrder, setCollectionMethod, moveToTop, steps, setSteps, setActiveStep } = useContext(LabOrderContext);
+  const { steps } = useContext(LabOrderContext);
 
   // console.log('labOrder ', labOrder)
 
-  const [selected, setSelected] = useState<readonly LabOrderTestWithRelations[]>([]);
+  // const [selected, setSelected] = useState<readonly LabOrderTestWithRelations[]>([]);
 
   // const [indexName, setIndexName] = useState<string>('spxcdx');
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    console.log('labOrder?.LabOrderTest ', labOrder?.LabOrderTest)
+  //   console.log('labOrder?.LabOrderTest ', labOrder?.LabOrderTest)
 
-    if (labOrder?.LabOrderTest && labOrder?.LabOrderTest.length > 0) {
-      setSelected(labOrder?.LabOrderTest);
-    } else {
-      setSelected([])
-    }
+  //   if (labOrder?.LabOrderTest && labOrder?.LabOrderTest.length > 0) {
+  //     setSelected(labOrder?.LabOrderTest);
+  //   } else {
+  //     setSelected([])
+  //   }
 
-  }, [labOrder]);
+  // }, [labOrder]);
 
   // const [isSelected, setIsSelected] = useState<boolean>(false);
   // const [selectedTestId, setSelectedTestId] = useState<number>(0);
@@ -146,139 +152,139 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
   //   )
   // })
 
-  const handleClick = (event: ChangeEvent<unknown>, hit: any) => {
-    event.preventDefault()
+  // const handleClick = (event: ChangeEvent<unknown>, hit: any) => {
+  //   event.preventDefault()
 
-    console.log('CollectionMethod :', hit.CollectionMethod)
+  //   console.log('CollectionMethod :', hit.CollectionMethod)
 
-    setCollectionMethod(hit.CollectionMethod)
+  //   setCollectionMethod(hit.CollectionMethod)
 
-    console.log('hit :', hit)
+  //   console.log('hit :', hit)
 
-    if (hit.type[0] === 'Sponsored') {
-      // remove billing step
-      const hasBilling = steps?.some(entry => entry.title === 'Billing')
+  //   if (hit.type[0] === 'Sponsored') {
+  //     // remove billing step
+  //     const hasBilling = steps?.some(entry => entry.title === 'Billing')
 
-      if (hasBilling) {
-        const index = steps?.findIndex(entry => entry.title === 'Billing');
+  //     if (hasBilling) {
+  //       const index = steps?.findIndex(entry => entry.title === 'Billing');
 
-        if (index > -1) {
-          steps?.splice(index, 1);
-          setSteps(steps);
-        }
-      }
+  //       if (index > -1) {
+  //         steps?.splice(index, 1);
+  //         setSteps(steps);
+  //       }
+  //     }
 
-      // add eligibility step
-      const hasEligibility = steps?.some(entry => entry.title === 'Eligibility')
+  //     // add eligibility step
+  //     const hasEligibility = steps?.some(entry => entry.title === 'Eligibility')
 
-      // Generate the LabOrderTest
-      const labOrderEligibilityConsent = [{
-        TestId: hit.TestId,
-        SponsoredTest: [{
-          SponsoredProgram: {
-            ProgramEligibility: hit.ProgramEligibility
-          }
-        }]
-      }] as unknown as LabOrderSponsoredTestConsentWithRelations[];
+  //     // Generate the LabOrderTest
+  //     const labOrderEligibilityConsent = [{
+  //       TestId: hit.TestId,
+  //       SponsoredTest: [{
+  //         SponsoredProgram: {
+  //           ProgramEligibility: hit.ProgramEligibility
+  //         }
+  //       }]
+  //     }] as unknown as LabOrderSponsoredTestConsentWithRelations[];
 
-      const labOrderCopy = { ...labOrder, LabOrderSponsoredTestConsent: labOrderEligibilityConsent };
+  //     const labOrderCopy = { ...labOrder, LabOrderSponsoredTestConsent: labOrderEligibilityConsent };
 
-      // Only update the state if labOrderCopy has changed
-      if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrder)) {
-        // console.log('LabOrderCopy: ', labOrderCopy);
-        setLabOrder(labOrderCopy);
-      }
+  //     // Only update the state if labOrderCopy has changed
+  //     if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrder)) {
+  //       // console.log('LabOrderCopy: ', labOrderCopy);
+  //       setLabOrder(labOrderCopy);
+  //     }
 
-      if (!hasEligibility) {
-        const eligibilityStep = {
-          title: 'Eligibility',
-          subtitle: 'Eligibility',
-          stepDetails: StepEligibility,
-          subTitleDetails: Eligibility
-        }
+  //     if (!hasEligibility) {
+  //       const eligibilityStep = {
+  //         title: 'Eligibility',
+  //         subtitle: 'Eligibility',
+  //         stepDetails: StepEligibility,
+  //         subTitleDetails: Eligibility
+  //       }
 
-        steps?.push(eligibilityStep);
-        moveToTop('Eligibility');
+  //       steps?.push(eligibilityStep);
+  //       moveToTop('Eligibility');
 
-        // moveToTop('Tests');
-        setSteps(steps);
-        setActiveStep(activeStep);
-      }
-    } else if (hit.type[0] === 'CDx') {
+  //       // moveToTop('Tests');
+  //       setSteps(steps);
+  //       setActiveStep(activeStep);
+  //     }
+  //   } else if (hit.type[0] === 'CDx') {
 
-      // remove eligibility step
-      const hasEligibility = steps?.some(entry => entry.title === 'Eligibility')
+  //     // remove eligibility step
+  //     const hasEligibility = steps?.some(entry => entry.title === 'Eligibility')
 
-      if (hasEligibility) {
-        const index = steps?.findIndex(entry => entry.title === 'Eligibility');
+  //     if (hasEligibility) {
+  //       const index = steps?.findIndex(entry => entry.title === 'Eligibility');
 
-        if (index > -1) {
-          steps?.splice(index, 1);
-          setSteps(steps);
-        }
-      }
+  //       if (index > -1) {
+  //         steps?.splice(index, 1);
+  //         setSteps(steps);
+  //       }
+  //     }
 
-      // add billing step
-      const hasBilling = steps?.some(entry => entry.title === 'Billing')
+  //     // add billing step
+  //     const hasBilling = steps?.some(entry => entry.title === 'Billing')
 
-      if (!hasBilling) {
-        const eligibilityStep = {
-          title: 'Billing',
-          subtitle: 'Billing',
-          stepDetails: StepBillingDetails,
-          subTitleDetails: BillingSubtitle
-        }
+  //     if (!hasBilling) {
+  //       const eligibilityStep = {
+  //         title: 'Billing',
+  //         subtitle: 'Billing',
+  //         stepDetails: StepBillingDetails,
+  //         subTitleDetails: BillingSubtitle
+  //       }
 
-        steps?.push(eligibilityStep);
+  //       steps?.push(eligibilityStep);
 
-        // moveToTop('Tests');
-        setSteps(steps);
-        setActiveStep(activeStep);
-      }
-    } else {
-      console.log('No type')
-    }
+  //       // moveToTop('Tests');
+  //       setSteps(steps);
+  //       setActiveStep(activeStep);
+  //     }
+  //   } else {
+  //     console.log('No type')
+  //   }
 
 
-    const labOrderTest = {
-      Id: uuid.v4() as string,
-      TestId: hit.TestId,
-      TestCatalog: {
-        TestId: hit.TestId,
-        TestName: hit.TestName,
-        LabTestId: hit.LabTestId,
-        CasandraTestId: hit.CasandraTestId,
-      }
-    } as unknown as LabOrderTestWithRelations
+  //   const labOrderTest = {
+  //     Id: uuid.v4() as string,
+  //     TestId: hit.TestId,
+  //     TestCatalog: {
+  //       TestId: hit.TestId,
+  //       TestName: hit.TestName,
+  //       LabTestId: hit.LabTestId,
+  //       CasandraTestId: hit.CasandraTestId,
+  //     }
+  //   } as unknown as LabOrderTestWithRelations
 
-    const selectedIndex = selected.findIndex(item => item.TestId === hit.TestId)
-    let newSelected: readonly LabOrderTestWithRelations[] = [];
+  //   const selectedIndex = selected.findIndex(item => item.TestId === hit.TestId)
+  //   let newSelected: readonly LabOrderTestWithRelations[] = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, labOrderTest);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
+  //   if (selectedIndex === -1) {
+  //     newSelected = newSelected.concat(selected, labOrderTest);
+  //   } else if (selectedIndex === 0) {
+  //     newSelected = newSelected.concat(selected.slice(1));
+  //   } else if (selectedIndex === selected.length - 1) {
+  //     newSelected = newSelected.concat(selected.slice(0, -1));
+  //   } else if (selectedIndex > 0) {
+  //     newSelected = newSelected.concat(
+  //       selected.slice(0, selectedIndex),
+  //       selected.slice(selectedIndex + 1),
+  //     );
+  //   }
 
-    setSelected(newSelected);
+  //   setSelected(newSelected);
 
-    // console.log(selected)
+  //   // console.log(selected)
 
-    const labOrderCopy = { ...labOrder }
+  //   const labOrderCopy = { ...labOrder }
 
-    labOrderCopy.LabOrderTest = newSelected as LabOrderTestWithRelations[]
+  //   labOrderCopy.LabOrderTest = newSelected as LabOrderTestWithRelations[]
 
-    setLabOrder(labOrderCopy)
+  //   setLabOrder(labOrderCopy)
 
-    // setSelectedTestId(hit.TestId)
-  }
+  //   // setSelectedTestId(hit.TestId)
+  // }
 
 
   // const transformItems: InfiniteHitsProps['transformItems'] = (items, {results}) => {
@@ -298,35 +304,53 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
   //   return results
   // };
 
-  const isSelected = (id: number) => selected?.some(item => item.TestId === id)
+  // const isSelected = (id: number) => selected?.some(item => item.TestId === id)
 
-  const HitView = (props: any) => {
-    return (
-      <div>
-        <div className="hit__details">
-          <Grid container alignItems="center">
-            <Grid item>
-              <Checkbox checked={isSelected(props.hit.TestId)} onChange={(event) => handleClick(event, props.hit)} />
-            </Grid>
-            <Grid item xs>
-              <h4>
-                <Highlight attribute="TestName" hit={props.hit} />
-              </h4>
-              <Snippet attribute="LabName" hit={props.hit} />
-            </Grid>
-          </Grid>
-
-          {/* <span>
-          <Checkbox checked={isSelected(props.hit.TestId)} onChange={(event) => handleClick(event, props.hit.TestId)} />
-          <h4>
-            <Highlight attribute="TestName" hit={props.hit} />
-          </h4>
-          </span>
-          <Snippet attribute="LabName" hit={props.hit} /> */}
-        </div>
-      </div>
-    )
-  }
+  // const HitView = (props: any) => {
+  //   return (
+  //     <div>
+  //       <div className="hit__details">
+  //         <Grid container alignItems="center">
+  //           {props.hit.LabTests.length > 1 ? (
+  //             <Grid item className='ml-3'>
+  //               <Typography variant='h6' className='text-primary'>
+  //                 {props.hit.GroupName}
+  //               </Typography>
+  //               <Grid container direction="column" spacing={1} style={{ marginBottom: '15px' }}>
+  //                 {props.hit.LabTests.map((test: any) => (
+  //                   <>
+  //                   <Grid item xs key={test.TestId} style={{ marginBottom: '-15px' }}>
+  //                     <span className='text-textSecondary' style={{ display: 'flex', alignItems: 'center' }}>
+  //                       <Checkbox size="small" checked={isSelected(test.TestId)} onChange={(event) => handleClick(event, props.hit)} />
+  //                       <Typography variant='body2' className='text-textSecondary'>
+  //                         {test.LabName} ( {test.TurnAroundTime} )
+  //                       </Typography>
+  //                     </span>
+  //                   </Grid>
+  //                   </>
+  //                 )) }
+  //               </Grid>
+  //             </Grid>
+  //           ) : (
+  //             <>
+  //             <Grid item>
+  //               <Checkbox size="small" checked={isSelected(props.hit.LabTests[0].TestId)} onChange={(event) => handleClick(event, props.hit)} />
+  //             </Grid>
+  //             <Grid item>
+  //               <Typography variant='h6' className='text-primary'>
+  //                 {props.hit.GroupName}
+  //               </Typography>
+  //               <Typography variant='body2' className='text-textSecondary'>
+  //               {props.hit.LabTests[0].LabName} ( {props.hit.LabTests[0].TurnAroundTime} )
+  //               </Typography>
+  //             </Grid>
+  //             </>
+  //           )}
+  //         </Grid>
+  //       </div>
+  //     </div>
+  //   )
+  // }
 
   return (
     <Card>
@@ -341,8 +365,8 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
         <Grid container spacing={5}>
           <Grid item xs={12}>
             <div className="">
-              <InstantSearch indexName='spxcdx' searchClient={searchClient} routing>
-                <Configure hitsPerPage={10} />
+              <InstantSearch indexName='casandratests' searchClient={searchClient} routing>
+                <Configure hitsPerPage={20} />
                 <div className="container">
                   <div className="searchbox">
                     <SearchBox placeholder='Search for tests by name, testcode or biomarker'/>
@@ -351,12 +375,9 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
                   <div className="search-panel">
                     <div className="search-panel__results">
 
-                      {/* <Stats /> */}
                       <CurrentRefinements />
                       <QueryRulesBanner />
-                      <InfiniteHits hitComponent={HitView} showPrevious={false} />
-                      {/* <Hits hitComponent={HitView} /> */}
-                      {/* <Pagination /> */}
+                      <CustomInfiniteHits />
                     </div>
 
                     <div className="search-panel__filters">
@@ -364,17 +385,8 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
                         <Panel header="Lab">
                           <RefinementList attribute="Lab" />
                         </Panel>
-                        <Panel header="Biomarker">
-                          <RefinementList attribute="Biomarker" searchable />
-                        </Panel>
-                        <Panel header="Sponsored Program">
-                          <RefinementList attribute="Sponsored Program" />
-                        </Panel>
-                        <Panel header="Therapeutic Area">
-                          <RefinementList attribute="Therapeutic Area" />
-                        </Panel>
-                        <Panel header="Test Type">
-                          <RefinementList attribute="Test Type" />
+                        <Panel header="Drug Name">
+                          <RefinementList attribute="Drug Name" />
                         </Panel>
                       </DynamicWidgets>
                     </div>

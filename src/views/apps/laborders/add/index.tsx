@@ -131,6 +131,7 @@ type LabOrderContextType = {
   moveToTop: (title: string) => void
   setActiveStep: Dispatch<SetStateAction<number>>
   source: string
+  activeStep: number
 };
 
 const generateOrderNumber = () => {
@@ -255,9 +256,9 @@ const AddLabOrder = () => {
 
 
     // Get a specific query parameter
-    const testCatalogQuery = qParams.get('spxcdx[query]') as string;
+    const testCatalogQuery = qParams.get('casandratests[query]') as string;
 
-    const sourceQuery = qParams.get('spxcdx[refinementList][Test Type][0]') as string;
+    const sourceQuery = qParams.get('casandratests[refinementList][Test Type][0]') as string;
 
     console.log('testCatalogQuery', testCatalogQuery)
 
@@ -271,138 +272,138 @@ const AddLabOrder = () => {
   }, [location, tcQuery, setTcQuery, setLabTestId])
 
 
-  // console.log('testcatalog: ', testCatalogQuery);
-  const { data: tcData, error: tcError, isLoading: tcIsLoading } = api.testcatalog.getTestByCasandraTestId.useQuery({ casandraTestId: tcQuery || '' })
+  // // console.log('testcatalog: ', testCatalogQuery);
+  // const { data: tcData, error: tcError, isLoading: tcIsLoading } = api.testcatalog.getTestByCasandraTestId.useQuery({ casandraTestId: tcQuery || '' })
 
-  useEffect(() => {
-    if (tcData) {
-      const sponsoredTests = tcData?.SponsoredTest || []
-      const collectionOption = tcData?.CollectionMethod || ''
+  // useEffect(() => {
+  //   if (tcData) {
+  //     const sponsoredTests = tcData?.SponsoredTest || []
+  //     const collectionOption = tcData?.CollectionMethod || ''
 
-      setCollectionMethod(collectionOption)
+  //     setCollectionMethod(collectionOption)
 
-      const specimenEntry = stepEntries.find(entry => entry.title === "Specimen")
+  //     const specimenEntry = stepEntries.find(entry => entry.title === "Specimen")
 
-      if (specimenEntry) {
-        if (collectionOption === 'KIT') {
-          specimenEntry.stepDetails = StepSpecimenKitDetails
-        } else if (collectionOption === 'PSC') {
-          specimenEntry.stepDetails = StepSpecimenPSCDetails
-        }
-      }
+  //     if (specimenEntry) {
+  //       if (collectionOption === 'KIT') {
+  //         specimenEntry.stepDetails = StepSpecimenKitDetails
+  //       } else if (collectionOption === 'PSC') {
+  //         specimenEntry.stepDetails = StepSpecimenPSCDetails
+  //       }
+  //     }
 
-      if (sponsoredTests && sponsoredTests.length > 0 && tcQuery) {
-        sponsoredTests.forEach((sponsoredTest: SponsoredTestWithPartialRelations) => {
-          if (sponsoredTest?.TestId === tcData?.TestId && sponsoredTest?.SponsoredProgram?.ProgramEligibility) {
-            // console.log('Sponsored Test: ', sponsoredTest);
+  //     if (sponsoredTests && sponsoredTests.length > 0 && tcQuery) {
+  //       sponsoredTests.forEach((sponsoredTest: SponsoredTestWithPartialRelations) => {
+  //         if (sponsoredTest?.TestId === tcData?.TestId && sponsoredTest?.SponsoredProgram?.ProgramEligibility) {
+  //           // console.log('Sponsored Test: ', sponsoredTest);
 
-            // Generate the LabOrderTest
-            const labOrderEligibilityConsent = [{
-              TestId: tcData.TestId,
-              SponsoredTest: tcData.SponsoredTest
-            }] as unknown as LabOrderSponsoredTestConsentWithRelations[];
+  //           // Generate the LabOrderTest
+  //           const labOrderEligibilityConsent = [{
+  //             TestId: tcData.TestId,
+  //             SponsoredTest: tcData.SponsoredTest
+  //           }] as unknown as LabOrderSponsoredTestConsentWithRelations[];
 
-            const labOrderCopy = { ...labOrder, LabOrderSponsoredTestConsent: labOrderEligibilityConsent };
+  //           const labOrderCopy = { ...labOrder, LabOrderSponsoredTestConsent: labOrderEligibilityConsent };
 
-            // Only update the state if labOrderCopy has changed
-            if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrder)) {
-              // console.log('LabOrderCopy: ', labOrderCopy);
-              setLabOrderCopy(labOrderCopy);
-            }
+  //           // Only update the state if labOrderCopy has changed
+  //           if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrder)) {
+  //             // console.log('LabOrderCopy: ', labOrderCopy);
+  //             setLabOrderCopy(labOrderCopy);
+  //           }
 
-          }
-        });
-      } else if (tcQuery && !sponsoredTests) {
+  //         }
+  //       });
+  //     } else if (tcQuery && !sponsoredTests) {
 
-        //move test details to top
-        const newSteps = rearrangeSteps(stepEntries, 2);
+  //       //move test details to top
+  //       const newSteps = rearrangeSteps(stepEntries, 2);
 
-        setSteps(newSteps);
+  //       setSteps(newSteps);
 
-        // set th test step as active
-        setActiveStep(0);
-      }
-    }
-  }, [setActiveStep, tcData, tcQuery, labOrder, setLabOrderCopy, setSteps])
+  //       // set th test step as active
+  //       setActiveStep(0);
+  //     }
+  //   }
+  // }, [setActiveStep, tcData, tcQuery, labOrder, setLabOrderCopy, setSteps])
 
 
-  useEffect(() => {
-    if (tcError) {
-      console.error(tcError);
-    }
+  // useEffect(() => {
+  //   if (tcError) {
+  //     console.error(tcError);
+  //   }
 
-    if (tcIsLoading) {
-      return;
-    }
+  //   if (tcIsLoading) {
+  //     return;
+  //   }
 
-    if (tcQuery && tcData && tcData?.TestId > 0) {
-      // Generate the LabOrderTest
-      const labOrderTest = [{
-        Id: labTestId,
-        TestId: tcData.TestId,
-        TestCatalog: tcData
-      }] as unknown as LabOrderTestWithRelations[];
+  //   if (tcQuery && tcData && tcData?.TestId > 0) {
+  //     // Generate the LabOrderTest
+  //     const labOrderTest = [{
+  //       Id: labTestId,
+  //       TestId: tcData.TestId,
+  //       TestCatalog: tcData
+  //     }] as unknown as LabOrderTestWithRelations[];
 
-      if (tcData?.SponsoredTest && tcData?.SponsoredTest?.length > 0 && source === 'Sponsored') {
-        const hasEligibility = stepEntries.some(entry => entry.title === 'Eligibility')
+  //     if (tcData?.SponsoredTest && tcData?.SponsoredTest?.length > 0 && source === 'Sponsored') {
+  //       const hasEligibility = stepEntries.some(entry => entry.title === 'Eligibility')
 
-        if (!hasEligibility) {
-          const eligibilityStep = {
-            title: 'Eligibility',
-            subtitle: 'Eligibility',
-            stepDetails: StepEligibility,
-            subTitleDetails: Eligibility
-          }
+  //       if (!hasEligibility) {
+  //         const eligibilityStep = {
+  //           title: 'Eligibility',
+  //           subtitle: 'Eligibility',
+  //           stepDetails: StepEligibility,
+  //           subTitleDetails: Eligibility
+  //         }
 
-          stepEntries.push(eligibilityStep);
-          moveToTop('Eligibility');
-          moveToTop('Tests');
-          setSteps(stepEntries);
-          setActiveStep(0);
-        }
-      } else if (tcData?.CdxTest && tcData?.CdxTest?.length > 0 && source === 'CDx') {
-        const hasEligibility = stepEntries.some(entry => entry.title === 'Eligibility')
+  //         stepEntries.push(eligibilityStep);
+  //         moveToTop('Eligibility');
+  //         moveToTop('Tests');
+  //         setSteps(stepEntries);
+  //         setActiveStep(0);
+  //       }
+  //     } else if (tcData?.CdxTest && tcData?.CdxTest?.length > 0 && source === 'CDx') {
+  //       const hasEligibility = stepEntries.some(entry => entry.title === 'Eligibility')
 
-        if (hasEligibility) {
-          const index = stepEntries.findIndex(entry => entry.title === 'Eligibility');
+  //       if (hasEligibility) {
+  //         const index = stepEntries.findIndex(entry => entry.title === 'Eligibility');
 
-          if (index > -1) {
-            stepEntries.splice(index, 1);
-            setSteps(stepEntries);
-          }
-        }
+  //         if (index > -1) {
+  //           stepEntries.splice(index, 1);
+  //           setSteps(stepEntries);
+  //         }
+  //       }
 
-        const hasBilling = stepEntries.some(entry => entry.title === 'Billing')
+  //       const hasBilling = stepEntries.some(entry => entry.title === 'Billing')
 
-        if (!hasBilling) {
-          const eligibilityStep = {
-            title: 'Billing',
-            subtitle: 'Billing',
-            stepDetails: StepBillingDetails,
-            subTitleDetails: BillingSubtitle
-          }
+  //       if (!hasBilling) {
+  //         const eligibilityStep = {
+  //           title: 'Billing',
+  //           subtitle: 'Billing',
+  //           stepDetails: StepBillingDetails,
+  //           subTitleDetails: BillingSubtitle
+  //         }
 
-          stepEntries.push(eligibilityStep);
-          moveToTop('Tests');
-          setSteps(stepEntries);
-          setActiveStep(0);
-        }
-      }
+  //         stepEntries.push(eligibilityStep);
+  //         moveToTop('Tests');
+  //         setSteps(stepEntries);
+  //         setActiveStep(0);
+  //       }
+  //     }
 
-      const labOrderCopy = { ...labOrder, LabOrderTest: labOrderTest };
+  //     const labOrderCopy = { ...labOrder, LabOrderTest: labOrderTest };
 
-      // Only update the state if labOrderCopy has changed
-      if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrder)) {
-        // console.log('LabOrderCopy: ', labOrderCopy);
-        setLabOrderCopy(labOrderCopy);
-      }
-    }
+  //     // Only update the state if labOrderCopy has changed
+  //     if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrder)) {
+  //       // console.log('LabOrderCopy: ', labOrderCopy);
+  //       setLabOrderCopy(labOrderCopy);
+  //     }
+  //   }
 
-  }, [tcQuery, tcData, tcError, tcIsLoading, labOrder, setLabOrderCopy, labTestId, source]);
+  // }, [tcQuery, tcData, tcError, tcIsLoading, labOrder, setLabOrderCopy, labTestId, source]);
 
-  useEffect(() => {
-    setLabOrder(labOrderCopy);
-  }, [labOrderCopy, setLabOrder])
+  // useEffect(() => {
+  //   setLabOrder(labOrderCopy);
+  // }, [labOrderCopy, setLabOrder])
 
   const addQueryParam = (key: string, value: string) => {
     const url = new URL(window.location.href);
@@ -423,7 +424,7 @@ const AddLabOrder = () => {
 
         if (labOrder.LabOrderIcd.length > 0 ) {
           console.log('labOrder.LabOrderIcd.length: ', labOrder.LabOrderIcd.length)
-          addQueryParam('spxcdx[query]', labOrder.LabOrderIcd[0].ICD?.Code || '')
+          addQueryParam('casandratests[query]', labOrder.LabOrderIcd[0].ICD?.Code || '')
         }
       }
 
@@ -474,7 +475,7 @@ const AddLabOrder = () => {
   }
 
   return (
-    <LabOrderContext.Provider value={{ labOrder, setLabOrder, collectionMethod, setCollectionMethod, steps, setSteps, moveToTop, setActiveStep, source}}>
+    <LabOrderContext.Provider value={{ labOrder, setLabOrder, collectionMethod, setCollectionMethod, steps, setSteps, moveToTop, setActiveStep, source, activeStep}}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Grid container spacing={6}>
           {/* <Grid item xs={12}>

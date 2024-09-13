@@ -267,3 +267,14 @@ li.ais-InfiniteHits-item {
 .MuiCheckbox-root	{
   padding: 0.5rem;
 }
+
+.hit-section {
+  marginBottom: 20px;
+}
+
+.hit-view-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 4px;
+  marginBottom: 15px;
+}

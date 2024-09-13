@@ -17,7 +17,7 @@ const LabOrderList = ({ labOrdersData, totalOrdersInTransit, totalIncompleteOrde
 
   const { settings } = useSettings()
 
-  console.log('settings.columnFilters: ', settings.columnFilters)
+  // console.log('settings.columnFilters: ', settings.columnFilters)
 
   return (
     <Grid container spacing={6}>
