@@ -363,6 +363,9 @@ model LabOrderTest {
   Id          String       @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
   LabOrderId  String?      @db.VarChar(45)
   TestId      Int?
+  Type        String?      @db.VarChar(45)
+  DrugName    String?      @db.VarChar(64)
+  Indication  String?      @db.VarChar(128)
   CreatedAt   DateTime?    @default(now()) @db.DateTime(0)
   UpdatedAt   DateTime?    @default(now()) @db.DateTime(0)
   LabOrder    LabOrder?    @relation(fields: [LabOrderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "labordertest_ibfk_1")

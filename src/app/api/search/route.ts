@@ -34,7 +34,7 @@ const apiClient = API(
         { field: 'DrugName', weight: 2 },
         { field: 'IcdCode', weight: 2 },
       ],
-      result_attributes: ['GroupName', 'LabTests', 'Type', 'DrugName'],
+      result_attributes: ['GroupName', 'LabTests', 'Type', 'DrugName', 'Indication'],
       facet_attributes: [
         {
           attribute: 'Lab',
