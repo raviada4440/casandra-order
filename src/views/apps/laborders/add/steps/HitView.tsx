@@ -1,7 +1,8 @@
 import type { ChangeEvent} from "react";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import uuid from 'react-native-uuid';
+
 import { Grid, Typography, Checkbox } from "@mui/material";
 
 import { LabOrderContext } from "..";
@@ -22,7 +23,7 @@ const HitView = (props: any) => {
 
   const [selected, setSelected] = useState<readonly LabOrderTestWithRelations[]>([]);
 
-  const isSelected = (id: number, type: string) => selected?.some(item => item.TestId === id && item.Type === type);
+  const isSelected = (id: number, type: string, drugName: string, indication: string) => selected?.some(item => item.TestId === id && item.Type === type && item.DrugName === drugName && item.Indication === indication)
 
   useEffect(() => {
 
@@ -36,14 +37,14 @@ const HitView = (props: any) => {
 
   }, [labOrder]);
 
-  const handleClick = (event: ChangeEvent<unknown>, type: string, hit: any) => {
+  const handleClick = (event: ChangeEvent<unknown>, type: string, drugName: string, indication: string, hit: any) => {
     event.preventDefault()
 
     // console.log('CollectionMethod :', hit.CollectionMethod)
 
     // setCollectionMethod(hit.CollectionMethod)
 
-    console.log('hit :', hit, 'type :', type)
+    console.log('hit :', hit, 'type :', type, 'drugName :', drugName, 'indication :', indication)
 
     if (type === 'Sponsored Tests') {
       // remove billing step
@@ -134,6 +135,8 @@ const HitView = (props: any) => {
       Id: uuid.v4() as string,
       Type: type,
       TestId: hit.TestId,
+      DrugName: drugName,
+      Indication: indication,
       TestCatalog: {
         TestId: hit.TestId,
         TestName: hit.TestName,
@@ -182,23 +185,23 @@ const HitView = (props: any) => {
           </Typography>
           <Grid container direction="column" spacing={1} style={{ marginBottom: '15px' }}>
             {props.hit.LabTests.map((test: any) => (
-              <>
+              <React.Fragment key={uuid.v4() as string}>
               <Grid item xs id={`${props.hit.GroupName-test.TestId}`} style={{ marginBottom: '-15px' }}>
                 <span className='text-textSecondary' style={{ display: 'flex', alignItems: 'center' }}>
-                  <Checkbox id={`${props.hit.GroupName-test.TestId}`} size="small" checked={isSelected(test.TestId, props.hit.Type)} onChange={(event) => handleClick(event, props.hit.Type, test)} />
+                  <Checkbox id={`${props.hit.GroupName-test.TestId}`} size="small" checked={isSelected(test.TestId, props.hit.Type, props.hit.DrugName, props.hit.Indication)} onChange={(event) => handleClick(event, props.hit.Type, props.hit.DrugName, props.hit.Indication, test)} />
                   <Typography variant='body2' className='text-textSecondary'>
                     {test.LabName} ( {test.TurnAroundTime} )
                   </Typography>
                 </span>
               </Grid>
-              </>
+              </React.Fragment>
             )) }
           </Grid>
         </Grid>
       ) : (
-        <>
+        <React.Fragment key={uuid.v4() as string}>
         <Grid item>
-          <Checkbox size="small" checked={isSelected(props.hit.LabTests[0].TestId, props.hit.Type)} onChange={(event) => handleClick(event, props.hit.Type, props.hit.LabTests[0])} />
+          <Checkbox size="small" checked={isSelected(props.hit.LabTests[0].TestId, props.hit.Type, props.hit.DrugName, props.hit.Indication)} onChange={(event) => handleClick(event, props.hit.Type, props.hit.DrugName, props.hit.Indication, props.hit.LabTests[0])} />
         </Grid>
         <Grid item>
           <Typography variant='h6' className='text-primary'>
@@ -208,7 +211,7 @@ const HitView = (props: any) => {
           {props.hit.LabTests[0].LabName} ( {props.hit.LabTests[0].TurnAroundTime} )
           </Typography>
         </Grid>
-        </>
+        </React.Fragment>
       )}
     </Grid>
     </div>

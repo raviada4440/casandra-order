@@ -44,7 +44,7 @@ export const LabOrderSponsoredTestConsentScalarFieldEnumSchema = z.enum(['Id','L
 
 export const LabOrderStatusScalarFieldEnumSchema = z.enum(['Id','LabOrderId','Status','StatusDate','CreatedAt','UpdatedAt']);
 
-export const LabOrderTestScalarFieldEnumSchema = z.enum(['Id','LabOrderId','TestId','CreatedAt','UpdatedAt']);
+export const LabOrderTestScalarFieldEnumSchema = z.enum(['Id','LabOrderId','TestId','Type','DrugName','Indication','CreatedAt','UpdatedAt']);
 
 export const LoincComponentHierarchyScalarFieldEnumSchema = z.enum(['Id','ParentId','Level','Code','Sequence','CodeText','Component','Property','Timing','Scale','Method']);
 
@@ -134,7 +134,7 @@ export const LabOrderSponsoredTestConsentOrderByRelevanceFieldEnumSchema = z.enu
 
 export const LabOrderStatusOrderByRelevanceFieldEnumSchema = z.enum(['Id','LabOrderId','Status']);
 
-export const LabOrderTestOrderByRelevanceFieldEnumSchema = z.enum(['Id','LabOrderId']);
+export const LabOrderTestOrderByRelevanceFieldEnumSchema = z.enum(['Id','LabOrderId','Type','DrugName','Indication']);
 
 export const LoincComponentHierarchyOrderByRelevanceFieldEnumSchema = z.enum(['Code','Sequence','CodeText','Component','Property','Timing','Scale','Method']);
 
@@ -1261,6 +1261,9 @@ export const LabOrderTestSchema = z.object({
   Id: z.string(),
   LabOrderId: z.string().nullable(),
   TestId: z.number().nullable(),
+  Type: z.string().nullable(),
+  DrugName: z.string().nullable(),
+  Indication: z.string().nullable(),
   CreatedAt: z.date().nullable(),
   UpdatedAt: z.date().nullable(),
 })
@@ -3396,6 +3399,9 @@ export const LabOrderTestSelectSchema: z.ZodType<Prisma.LabOrderTestSelect> = z.
   Id: z.boolean().optional(),
   LabOrderId: z.boolean().optional(),
   TestId: z.boolean().optional(),
+  Type: z.boolean().optional(),
+  DrugName: z.boolean().optional(),
+  Indication: z.boolean().optional(),
   CreatedAt: z.boolean().optional(),
   UpdatedAt: z.boolean().optional(),
   LabOrder: z.union([z.boolean(),z.lazy(() => LabOrderArgsSchema)]).optional(),
@@ -5973,6 +5979,9 @@ export const LabOrderTestWhereInputSchema: z.ZodType<Prisma.LabOrderTestWhereInp
   Id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   LabOrderId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   TestId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
+  Type: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  DrugName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Indication: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   LabOrder: z.union([ z.lazy(() => LabOrderNullableRelationFilterSchema),z.lazy(() => LabOrderWhereInputSchema) ]).optional().nullable(),
@@ -5983,6 +5992,9 @@ export const LabOrderTestOrderByWithRelationAndSearchRelevanceInputSchema: z.Zod
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   TestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Type: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  DrugName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Indication: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   LabOrder: z.lazy(() => LabOrderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
@@ -6000,6 +6012,9 @@ export const LabOrderTestWhereUniqueInputSchema: z.ZodType<Prisma.LabOrderTestWh
   NOT: z.union([ z.lazy(() => LabOrderTestWhereInputSchema),z.lazy(() => LabOrderTestWhereInputSchema).array() ]).optional(),
   LabOrderId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   TestId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
+  Type: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  DrugName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Indication: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   LabOrder: z.union([ z.lazy(() => LabOrderNullableRelationFilterSchema),z.lazy(() => LabOrderWhereInputSchema) ]).optional().nullable(),
@@ -6010,6 +6025,9 @@ export const LabOrderTestOrderByWithAggregationInputSchema: z.ZodType<Prisma.Lab
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   TestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Type: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  DrugName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Indication: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   _count: z.lazy(() => LabOrderTestCountOrderByAggregateInputSchema).optional(),
@@ -6026,6 +6044,9 @@ export const LabOrderTestScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.
   Id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   LabOrderId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   TestId: z.union([ z.lazy(() => IntNullableWithAggregatesFilterSchema),z.number() ]).optional().nullable(),
+  Type: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  DrugName: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  Indication: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
 }).strict();
@@ -10301,6 +10322,9 @@ export const LabOrderStatusUncheckedUpdateManyInputSchema: z.ZodType<Prisma.LabO
 
 export const LabOrderTestCreateInputSchema: z.ZodType<Prisma.LabOrderTestCreateInput> = z.object({
   Id: z.string().optional(),
+  Type: z.string().optional().nullable(),
+  DrugName: z.string().optional().nullable(),
+  Indication: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable(),
   LabOrder: z.lazy(() => LabOrderCreateNestedOneWithoutLabOrderTestInputSchema).optional(),
@@ -10311,12 +10335,18 @@ export const LabOrderTestUncheckedCreateInputSchema: z.ZodType<Prisma.LabOrderTe
   Id: z.string().optional(),
   LabOrderId: z.string().optional().nullable(),
   TestId: z.number().optional().nullable(),
+  Type: z.string().optional().nullable(),
+  DrugName: z.string().optional().nullable(),
+  Indication: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable()
 }).strict();
 
 export const LabOrderTestUpdateInputSchema: z.ZodType<Prisma.LabOrderTestUpdateInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  Type: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  DrugName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Indication: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LabOrder: z.lazy(() => LabOrderUpdateOneWithoutLabOrderTestNestedInputSchema).optional(),
@@ -10327,6 +10357,9 @@ export const LabOrderTestUncheckedUpdateInputSchema: z.ZodType<Prisma.LabOrderTe
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   TestId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Type: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  DrugName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Indication: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
@@ -10335,12 +10368,18 @@ export const LabOrderTestCreateManyInputSchema: z.ZodType<Prisma.LabOrderTestCre
   Id: z.string().optional(),
   LabOrderId: z.string().optional().nullable(),
   TestId: z.number().optional().nullable(),
+  Type: z.string().optional().nullable(),
+  DrugName: z.string().optional().nullable(),
+  Indication: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable()
 }).strict();
 
 export const LabOrderTestUpdateManyMutationInputSchema: z.ZodType<Prisma.LabOrderTestUpdateManyMutationInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  Type: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  DrugName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Indication: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
@@ -10349,6 +10388,9 @@ export const LabOrderTestUncheckedUpdateManyInputSchema: z.ZodType<Prisma.LabOrd
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   TestId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Type: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  DrugName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Indication: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
@@ -13914,6 +13956,9 @@ export const LabOrderTestCountOrderByAggregateInputSchema: z.ZodType<Prisma.LabO
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.lazy(() => SortOrderSchema).optional(),
   TestId: z.lazy(() => SortOrderSchema).optional(),
+  Type: z.lazy(() => SortOrderSchema).optional(),
+  DrugName: z.lazy(() => SortOrderSchema).optional(),
+  Indication: z.lazy(() => SortOrderSchema).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -13926,6 +13971,9 @@ export const LabOrderTestMaxOrderByAggregateInputSchema: z.ZodType<Prisma.LabOrd
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.lazy(() => SortOrderSchema).optional(),
   TestId: z.lazy(() => SortOrderSchema).optional(),
+  Type: z.lazy(() => SortOrderSchema).optional(),
+  DrugName: z.lazy(() => SortOrderSchema).optional(),
+  Indication: z.lazy(() => SortOrderSchema).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -13934,6 +13982,9 @@ export const LabOrderTestMinOrderByAggregateInputSchema: z.ZodType<Prisma.LabOrd
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.lazy(() => SortOrderSchema).optional(),
   TestId: z.lazy(() => SortOrderSchema).optional(),
+  Type: z.lazy(() => SortOrderSchema).optional(),
+  DrugName: z.lazy(() => SortOrderSchema).optional(),
+  Indication: z.lazy(() => SortOrderSchema).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -19392,6 +19443,9 @@ export const LabOrderStatusCreateManyLabOrderInputEnvelopeSchema: z.ZodType<Pris
 
 export const LabOrderTestCreateWithoutLabOrderInputSchema: z.ZodType<Prisma.LabOrderTestCreateWithoutLabOrderInput> = z.object({
   Id: z.string().optional(),
+  Type: z.string().optional().nullable(),
+  DrugName: z.string().optional().nullable(),
+  Indication: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable(),
   TestCatalog: z.lazy(() => TestCatalogCreateNestedOneWithoutLabOrderTestInputSchema).optional()
@@ -19400,6 +19454,9 @@ export const LabOrderTestCreateWithoutLabOrderInputSchema: z.ZodType<Prisma.LabO
 export const LabOrderTestUncheckedCreateWithoutLabOrderInputSchema: z.ZodType<Prisma.LabOrderTestUncheckedCreateWithoutLabOrderInput> = z.object({
   Id: z.string().optional(),
   TestId: z.number().optional().nullable(),
+  Type: z.string().optional().nullable(),
+  DrugName: z.string().optional().nullable(),
+  Indication: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable()
 }).strict();
@@ -19801,6 +19858,9 @@ export const LabOrderTestScalarWhereInputSchema: z.ZodType<Prisma.LabOrderTestSc
   Id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   LabOrderId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   TestId: z.union([ z.lazy(() => IntNullableFilterSchema),z.number() ]).optional().nullable(),
+  Type: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  DrugName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Indication: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
 }).strict();
@@ -23916,6 +23976,9 @@ export const TestCatalogUncheckedUpdateWithoutTestBiomarkerInputSchema: z.ZodTyp
 
 export const LabOrderTestCreateWithoutTestCatalogInputSchema: z.ZodType<Prisma.LabOrderTestCreateWithoutTestCatalogInput> = z.object({
   Id: z.string().optional(),
+  Type: z.string().optional().nullable(),
+  DrugName: z.string().optional().nullable(),
+  Indication: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable(),
   LabOrder: z.lazy(() => LabOrderCreateNestedOneWithoutLabOrderTestInputSchema).optional()
@@ -23924,6 +23987,9 @@ export const LabOrderTestCreateWithoutTestCatalogInputSchema: z.ZodType<Prisma.L
 export const LabOrderTestUncheckedCreateWithoutTestCatalogInputSchema: z.ZodType<Prisma.LabOrderTestUncheckedCreateWithoutTestCatalogInput> = z.object({
   Id: z.string().optional(),
   LabOrderId: z.string().optional().nullable(),
+  Type: z.string().optional().nullable(),
+  DrugName: z.string().optional().nullable(),
+  Indication: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable()
 }).strict();
@@ -26698,6 +26764,9 @@ export const LabOrderStatusCreateManyLabOrderInputSchema: z.ZodType<Prisma.LabOr
 export const LabOrderTestCreateManyLabOrderInputSchema: z.ZodType<Prisma.LabOrderTestCreateManyLabOrderInput> = z.object({
   Id: z.string().optional(),
   TestId: z.number().optional().nullable(),
+  Type: z.string().optional().nullable(),
+  DrugName: z.string().optional().nullable(),
+  Indication: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable()
 }).strict();
@@ -26926,6 +26995,9 @@ export const LabOrderStatusUncheckedUpdateManyWithoutLabOrderInputSchema: z.ZodT
 
 export const LabOrderTestUpdateWithoutLabOrderInputSchema: z.ZodType<Prisma.LabOrderTestUpdateWithoutLabOrderInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  Type: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  DrugName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Indication: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   TestCatalog: z.lazy(() => TestCatalogUpdateOneWithoutLabOrderTestNestedInputSchema).optional()
@@ -26934,6 +27006,9 @@ export const LabOrderTestUpdateWithoutLabOrderInputSchema: z.ZodType<Prisma.LabO
 export const LabOrderTestUncheckedUpdateWithoutLabOrderInputSchema: z.ZodType<Prisma.LabOrderTestUncheckedUpdateWithoutLabOrderInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   TestId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Type: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  DrugName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Indication: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
@@ -26941,6 +27016,9 @@ export const LabOrderTestUncheckedUpdateWithoutLabOrderInputSchema: z.ZodType<Pr
 export const LabOrderTestUncheckedUpdateManyWithoutLabOrderInputSchema: z.ZodType<Prisma.LabOrderTestUncheckedUpdateManyWithoutLabOrderInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   TestId: z.union([ z.number(),z.lazy(() => NullableIntFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Type: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  DrugName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Indication: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
@@ -27741,6 +27819,9 @@ export const LabOrderSponsoredTestConsentUncheckedUpdateManyWithoutSponsoredTest
 export const LabOrderTestCreateManyTestCatalogInputSchema: z.ZodType<Prisma.LabOrderTestCreateManyTestCatalogInput> = z.object({
   Id: z.string().optional(),
   LabOrderId: z.string().optional().nullable(),
+  Type: z.string().optional().nullable(),
+  DrugName: z.string().optional().nullable(),
+  Indication: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable()
 }).strict();
@@ -27838,6 +27919,9 @@ export const TestResultLoincCreateManyTestCatalogInputSchema: z.ZodType<Prisma.T
 
 export const LabOrderTestUpdateWithoutTestCatalogInputSchema: z.ZodType<Prisma.LabOrderTestUpdateWithoutTestCatalogInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  Type: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  DrugName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Indication: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LabOrder: z.lazy(() => LabOrderUpdateOneWithoutLabOrderTestNestedInputSchema).optional()
@@ -27846,6 +27930,9 @@ export const LabOrderTestUpdateWithoutTestCatalogInputSchema: z.ZodType<Prisma.L
 export const LabOrderTestUncheckedUpdateWithoutTestCatalogInputSchema: z.ZodType<Prisma.LabOrderTestUncheckedUpdateWithoutTestCatalogInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Type: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  DrugName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Indication: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
@@ -27853,6 +27940,9 @@ export const LabOrderTestUncheckedUpdateWithoutTestCatalogInputSchema: z.ZodType
 export const LabOrderTestUncheckedUpdateManyWithoutTestCatalogInputSchema: z.ZodType<Prisma.LabOrderTestUncheckedUpdateManyWithoutTestCatalogInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Type: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  DrugName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Indication: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
