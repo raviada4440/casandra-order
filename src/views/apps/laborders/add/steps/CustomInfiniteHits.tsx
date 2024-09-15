@@ -13,10 +13,6 @@ const CustomInfiniteHits = () => {
   const sponsoredTests = hits.filter(hit => hit.Type === 'Sponsored Tests');
   const companionDiagnostics = hits.filter(hit => hit.Type === 'Companion Diagnostics');
 
-  console.log('hits :', hits)
-  console.log('sponsoredTests :', sponsoredTests)
-  console.log('companionDiagnostics :', companionDiagnostics)
-
   return (
     <div>
       <div className="hit__details">

@@ -17,7 +17,7 @@ import '@/app/globals.css'
 
 const HitView = (props: any) => {
 
-  console.log('props :', props)
+  console.log('props (HitView) :', props)
 
   const { labOrder, setLabOrder, moveToTop, steps, setSteps, setActiveStep, activeStep } = useContext(LabOrderContext);
 
@@ -26,8 +26,6 @@ const HitView = (props: any) => {
   const isSelected = (id: number, type: string, drugName: string, indication: string) => selected?.some(item => item.TestId === id && item.Type === type && item.DrugName === drugName && item.Indication === indication)
 
   useEffect(() => {
-
-    console.log('labOrder?.LabOrderTest ', labOrder?.LabOrderTest)
 
     if (labOrder?.LabOrderTest && labOrder?.LabOrderTest.length > 0) {
       setSelected(labOrder?.LabOrderTest);
@@ -64,7 +62,11 @@ const HitView = (props: any) => {
 
       // Generate the LabOrderTest
       const labOrderEligibilityConsent = [{
-        TestId: hit.TestId,
+        LabOrderId: labOrder.Id,
+        SponsoredCasandraTestId: hit.CasandraTestId,
+        ProviderName: '',
+        ProviderNPI: '',
+        ConsentAt: new Date(),
         SponsoredTest: [{
           SponsoredProgram: {
             ProgramEligibility: hit.ProgramEligibility
@@ -88,12 +90,20 @@ const HitView = (props: any) => {
           subTitleDetails: Eligibility
         }
 
-        steps?.push(eligibilityStep);
-        moveToTop('Eligibility');
+        // Find the index of the step with the title 'Tests'
+        const testsIndex = steps.findIndex(step => step.title === 'Tests');
+
+        // Insert eligibilityStep after the step with the title 'Tests'
+        if (testsIndex !== -1) {
+          steps.splice(testsIndex + 1, 0, eligibilityStep);
+        }
+
+        // steps?.push(eligibilityStep);
+        // moveToTop('Eligibility');
 
         // moveToTop('Tests');
         setSteps(steps);
-        setActiveStep(activeStep+1);
+        setActiveStep(activeStep);
       }
     } else if (type === 'Companion Diagnostics') {
 
@@ -124,7 +134,7 @@ const HitView = (props: any) => {
 
         // moveToTop('Tests');
         setSteps(steps);
-        setActiveStep(activeStep+1);
+        setActiveStep(activeStep);
       }
     } else {
       console.log('No type')
