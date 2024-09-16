@@ -245,12 +245,18 @@ li.ais-InfiniteHits-item {
           font-size: .75rem;
           margin-block-end: 10px;
           .ais-CurrentRefinements-category {
-              .ais-CurrentRefinements-delete {
-                  color: #fff;
-                  &:hover {
-                      color: #fff;
-                  }
-              }
+            .ais-CurrentRefinements-categoryLabel {
+              max-width: 150px;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            },
+            .ais-CurrentRefinements-delete {
+                color: #fff;
+                &:hover {
+                    color: #fff;
+                }
+            }
           }
       }
   }

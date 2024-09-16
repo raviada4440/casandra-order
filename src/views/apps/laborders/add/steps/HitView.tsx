@@ -19,9 +19,11 @@ const HitView = (props: any) => {
 
   console.log('props (HitView) :', props)
 
-  const { labOrder, setLabOrder, moveToTop, steps, setSteps, setActiveStep, activeStep } = useContext(LabOrderContext);
+  const { labOrder, setLabOrder, steps, setSteps, setActiveStep, activeStep } = useContext(LabOrderContext);
 
   const [selected, setSelected] = useState<readonly LabOrderTestWithRelations[]>([]);
+
+  const [newLabOrder] = useState<LabOrderWithRelations>({...labOrder});
 
   const isSelected = (id: number, type: string, drugName: string, indication: string) => {
     return selected?.some(item => item.TestId === id && item.Type === type && item.DrugName === drugName && item.Indication === indication)
@@ -55,7 +57,7 @@ const HitView = (props: any) => {
 
     console.log('hit :', hit, 'type :', testType, 'drugName :', drugName, 'indication :', indication)
 
-    let newLabOrder: LabOrderWithRelations = { ...labOrder }
+    // let newLabOrder: LabOrderWithRelations = { ...labOrder }
 
     if (testType === 'Sponsored Tests') {
       // remove billing step

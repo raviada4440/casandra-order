@@ -13,6 +13,68 @@ export type CustomCatalogType = {
   OrderLoinc: string | null
 }
 
+
+const getElasticSearch = async (params: {
+  casandraTestId: string;
+  type: string;
+  labName: string;
+  drugName: string;
+  indication: string;
+}): Promise<any> => {
+
+  const url = new URL(`${process.env.NEXT_PUBLIC_APP_URL}/api/search`)
+  const facetFilters = []
+
+  if (params.indication && params.indication.length > 0) {
+    facetFilters.push(`Indication:${params.indication}`)
+  }
+
+  if (params.labName && params.labName.length > 0) {
+    facetFilters.push(`Lab:${params.labName}`)
+  }
+
+  if (params.type && params.type.length > 0) {
+    facetFilters.push(`Type:${params.type}`)
+  }
+
+  if (params.drugName && params.drugName.length > 0) {
+    facetFilters.push(`DrugName:${params.drugName}`)
+  }
+
+  const requestPayload = [
+    {
+      "indexName": "casandratests",
+      "params": {
+      "facetFilters": facetFilters,
+      "facets": [
+        "*"
+      ],
+      "highlightPostTag": "__/ais-highlight__",
+      "highlightPreTag": "__ais-highlight__",
+      "hitsPerPage": 20,
+      "maxValuesPerFacet": 20,
+      "page": 0,
+        "query": params.casandraTestId
+      }
+    }
+  ]
+
+  console.log('requestPayload: ', JSON.stringify(requestPayload))
+
+  const response = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(requestPayload),
+    headers: {
+      Accept: "application/json",
+    },
+
+  });
+
+  const data = (await response.json());
+
+  return data;
+}
+
 export const testCatalogRouter = createTRPCRouter({
 
   // create: publicProcedure
@@ -92,38 +154,20 @@ export const testCatalogRouter = createTRPCRouter({
   }),
 
   getTestByCasandraTestId: publicProcedure
-  .input(z.object({ casandraTestId: z.string() }))
-  .query(async ({ ctx, input }) => {
-    return ctx.db.testCatalog.findFirst({
-      where: {
-        CasandraTestId: input.casandraTestId,
-      },
-      include: {
-        Lab: true,
-        TestCptCode: true,
-        TestOrderLoinc: {
-          include: {
-            LOINC: true,
-          },
-        },
-        TestResultLoinc: {
-          include: {
-            LOINC: true,
-          },
-        },
-        TestBiomarker: {
-          include: {
-            BIOMARKER: true,
-          },
-        },
-        SponsoredTest: {
-          include: {
-            SponsoredProgram: true,
-          },
-        },
-        CdxTest: true
-      }
-    })
+  .input(z.object({ casandraTestId: z.string(), type: z.string(), labName: z.string(), drugName: z.string(), indication: z.string() }))
+  .query(async ({ input }) => {
+
+    let elasticResults = { results: [{ hits: [] }] };
+
+    if (input.casandraTestId.length > 0 || input.type.length > 0 || input.labName.length > 0 || input.drugName.length > 0 || input.indication.length > 0) {
+      elasticResults = await getElasticSearch({ casandraTestId: input.casandraTestId, type: input.type, labName: input.labName, drugName: input.drugName, indication: input.indication })
+    }
+
+    console.log('data: ', JSON.stringify(elasticResults.results[0].hits))
+
+
+    return elasticResults.results[0].hits
+
   }),
 
   getFilteredTests: publicProcedure

@@ -103,10 +103,16 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
                     <div className="search-panel__filters">
                       <DynamicWidgets facets={['*']}>
                         <Panel header="Lab">
-                          <RefinementList attribute="Lab" />
+                          <RefinementList attribute="Lab" searchable/>
+                        </Panel>
+                        <Panel header="Type">
+                          <RefinementList attribute="Type" />
+                        </Panel>
+                        <Panel header="Indication">
+                          <RefinementList attribute="Indication" searchable/>
                         </Panel>
                         <Panel header="Drug Name">
-                          <RefinementList attribute="Drug Name" />
+                          <RefinementList attribute="Drug Name" searchable/>
                         </Panel>
                       </DynamicWidgets>
                     </div>

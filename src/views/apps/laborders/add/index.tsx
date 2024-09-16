@@ -54,15 +54,12 @@ import type {
   LabOrderTestWithRelations,
   LabOrderWithRelations,
   PatientWithRelations,
-  SponsoredTestWithPartialRelations,
 } from '~prisma/generated/zod'
 
 
 import { api } from '~trpc/react';
 import StepEligibility from './steps/StepEligibility';
 import Eligibility from './subtitle/Eligibility';
-import StepSpecimenKitDetails from './steps/StepSpecimenKitDetails';
-import StepSpecimenPSCDetails from './steps/StepSpecimenPSCDetails';
 import StepAccountDetails from './steps/StepAccountDetails';
 import StepBillingDetails from './steps/StepBillingDetails';
 
@@ -130,7 +127,6 @@ type LabOrderContextType = {
   setSteps: Dispatch<SetStateAction<Step[]>>
   moveToTop: (title: string) => void
   setActiveStep: Dispatch<SetStateAction<number>>
-  source: string
   activeStep: number
 };
 
@@ -155,10 +151,14 @@ const AddLabOrder = () => {
   const [labOrder, setLabOrder] = useState<LabOrderWithRelations>({ Id: uuid.v4() as string, OrderDate: new Date(), OrderNumber: generateOrderNumber(), LabOrderStatus: [labOrderStatus] } as LabOrderWithRelations)
   const [labOrderCopy, setLabOrderCopy] = useState<LabOrderWithRelations>({ ...labOrder } as LabOrderWithRelations)
   const [steps, setSteps] = useState<Step[]>(stepEntries)
-  const [tcQuery, setTcQuery] = useState<string>('')
-  const [labTestId, setLabTestId] = useState<string>('')
 
-  const [source, setSource] = useState<string>('')
+  // const [labTestId, setLabTestId] = useState<string>('')
+
+  const [casandraTestId, setCasandraTestId] = useState<string>('')
+  const [searchType, setSearchType] = useState<string>('')
+  const [labName, setLabName] = useState<string>('')
+  const [drugName, setDrugName] = useState<string>('')
+  const [indication, setIndication] = useState<string>('')
 
   // console.log('source: ', source)
 
@@ -184,12 +184,12 @@ const AddLabOrder = () => {
   }
 
   // rearrange steps
-  const rearrangeSteps = (steps: any[], stepToMove: number) => {
-    const newSteps = [...steps]
-    const targetObj = newSteps.splice(stepToMove, 1)
+  // const rearrangeSteps = (steps: any[], stepToMove: number) => {
+  //   const newSteps = [...steps]
+  //   const targetObj = newSteps.splice(stepToMove, 1)
 
-    return [...targetObj, ...newSteps]
-  }
+  //   return [...targetObj, ...newSteps]
+  // }
 
   const moveToTop = (title: string) => {
     const index = stepEntries.findIndex(entry => entry.title === title);
@@ -254,156 +254,162 @@ const AddLabOrder = () => {
       qParams = new URLSearchParams(location.search)
     }
 
-
     // Get a specific query parameter
-    const testCatalogQuery = qParams.get('casandratests[query]') as string;
+    const qCasandraTestId = qParams.get('casandratests[query]') as string;
+    const qSearchType = qParams.get('casandratests[refinementList][Type][0]') as string;
+    const qLabName = qParams.get('casandratests[refinementList][Lab][0]') as string;
+    const qDrugName = qParams.get('casandratests[refinementList][DrugName][0]') as string;
+    const qIndication = qParams.get('casandratests[refinementList][Indication][0]') as string;
 
-    const sourceQuery = qParams.get('casandratests[refinementList][Test Type][0]') as string;
+    console.log('qCasandraTestId: ', qCasandraTestId, 'qSearchType: ', qSearchType, 'qLabName: ', qLabName, 'qDrugName: ', qDrugName, 'qIndication: ', qIndication)
+    setCasandraTestId(qCasandraTestId)
+    setSearchType(qSearchType)
+    setLabName(qLabName)
+    setDrugName(qDrugName)
+    setIndication(qIndication)
 
-    console.log('testCatalogQuery', testCatalogQuery)
+    // setLabTestId(uuid.v4() as string)
 
-    console.log('sourceQuery', sourceQuery)
-
-    setTcQuery(testCatalogQuery)
-
-    setSource(sourceQuery)
-    setLabTestId(uuid.v4() as string)
-
-  }, [location, tcQuery, setTcQuery, setLabTestId])
-
-
-  // // console.log('testcatalog: ', testCatalogQuery);
-  // const { data: tcData, error: tcError, isLoading: tcIsLoading } = api.testcatalog.getTestByCasandraTestId.useQuery({ casandraTestId: tcQuery || '' })
-
-  // useEffect(() => {
-  //   if (tcData) {
-  //     const sponsoredTests = tcData?.SponsoredTest || []
-  //     const collectionOption = tcData?.CollectionMethod || ''
-
-  //     setCollectionMethod(collectionOption)
-
-  //     const specimenEntry = stepEntries.find(entry => entry.title === "Specimen")
-
-  //     if (specimenEntry) {
-  //       if (collectionOption === 'KIT') {
-  //         specimenEntry.stepDetails = StepSpecimenKitDetails
-  //       } else if (collectionOption === 'PSC') {
-  //         specimenEntry.stepDetails = StepSpecimenPSCDetails
-  //       }
-  //     }
-
-  //     if (sponsoredTests && sponsoredTests.length > 0 && tcQuery) {
-  //       sponsoredTests.forEach((sponsoredTest: SponsoredTestWithPartialRelations) => {
-  //         if (sponsoredTest?.TestId === tcData?.TestId && sponsoredTest?.SponsoredProgram?.ProgramEligibility) {
-  //           // console.log('Sponsored Test: ', sponsoredTest);
-
-  //           // Generate the LabOrderTest
-  //           const labOrderEligibilityConsent = [{
-  //             TestId: tcData.TestId,
-  //             SponsoredTest: tcData.SponsoredTest
-  //           }] as unknown as LabOrderSponsoredTestConsentWithRelations[];
-
-  //           const labOrderCopy = { ...labOrder, LabOrderSponsoredTestConsent: labOrderEligibilityConsent };
-
-  //           // Only update the state if labOrderCopy has changed
-  //           if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrder)) {
-  //             // console.log('LabOrderCopy: ', labOrderCopy);
-  //             setLabOrderCopy(labOrderCopy);
-  //           }
-
-  //         }
-  //       });
-  //     } else if (tcQuery && !sponsoredTests) {
-
-  //       //move test details to top
-  //       const newSteps = rearrangeSteps(stepEntries, 2);
-
-  //       setSteps(newSteps);
-
-  //       // set th test step as active
-  //       setActiveStep(0);
-  //     }
-  //   }
-  // }, [setActiveStep, tcData, tcQuery, labOrder, setLabOrderCopy, setSteps])
+  }, [location, setCasandraTestId, setSearchType, setLabName, setDrugName, setIndication])
 
 
-  // useEffect(() => {
-  //   if (tcError) {
-  //     console.error(tcError);
-  //   }
+  // console.log('testcatalog: ', testCatalogQuery);
+  const { data: tcData, error: tcError, isLoading: tcIsLoading } = api.testcatalog.getTestByCasandraTestId.useQuery({ casandraTestId: casandraTestId || '', type: searchType || '', labName: labName || '', drugName: drugName || '', indication: indication || '' })
 
-  //   if (tcIsLoading) {
-  //     return;
-  //   }
+  useEffect(() => {
+    if (tcError) {
+      console.error(tcError);
+    }
 
-  //   if (tcQuery && tcData && tcData?.TestId > 0) {
-  //     // Generate the LabOrderTest
-  //     const labOrderTest = [{
-  //       Id: labTestId,
-  //       TestId: tcData.TestId,
-  //       TestCatalog: tcData
-  //     }] as unknown as LabOrderTestWithRelations[];
+    if (tcIsLoading) {
+      return;
+    }
 
-  //     if (tcData?.SponsoredTest && tcData?.SponsoredTest?.length > 0 && source === 'Sponsored') {
-  //       const hasEligibility = stepEntries.some(entry => entry.title === 'Eligibility')
+    if (tcData && tcData.length === 1) {
 
-  //       if (!hasEligibility) {
-  //         const eligibilityStep = {
-  //           title: 'Eligibility',
-  //           subtitle: 'Eligibility',
-  //           stepDetails: StepEligibility,
-  //           subTitleDetails: Eligibility
-  //         }
+      const newLabOrderCopy = { ...labOrder }
 
-  //         stepEntries.push(eligibilityStep);
-  //         moveToTop('Eligibility');
-  //         moveToTop('Tests');
-  //         setSteps(stepEntries);
-  //         setActiveStep(0);
-  //       }
-  //     } else if (tcData?.CdxTest && tcData?.CdxTest?.length > 0 && source === 'CDx') {
-  //       const hasEligibility = stepEntries.some(entry => entry.title === 'Eligibility')
+      console.log('tcData inside useEffect: ', tcData)
 
-  //       if (hasEligibility) {
-  //         const index = stepEntries.findIndex(entry => entry.title === 'Eligibility');
+      const item: any = tcData[0]
 
-  //         if (index > -1) {
-  //           stepEntries.splice(index, 1);
-  //           setSteps(stepEntries);
-  //         }
-  //       }
+      if (item) {
+        let matchingLabTest: any = {}
 
-  //       const hasBilling = stepEntries.some(entry => entry.title === 'Billing')
+        if (labName && labName.length > 0) {
+          console.log('Lab Name useEffect: ', labName)
+          matchingLabTest = item.LabTests.find((test: any) => test.LabName === labName);
+        }
 
-  //       if (!hasBilling) {
-  //         const eligibilityStep = {
-  //           title: 'Billing',
-  //           subtitle: 'Billing',
-  //           stepDetails: StepBillingDetails,
-  //           subTitleDetails: BillingSubtitle
-  //         }
+        if (matchingLabTest) {
+          console.log('matchingLabTest useEffect: ', matchingLabTest)
 
-  //         stepEntries.push(eligibilityStep);
-  //         moveToTop('Tests');
-  //         setSteps(stepEntries);
-  //         setActiveStep(0);
-  //       }
-  //     }
+          const labOrderTest = {
+            Id: uuid.v4() as string,
+            Type: item.Type,
+            TestId: matchingLabTest.TestId,
+            DrugName: item.drugName,
+            Indication: item.indication,
+            TestCatalog: {
+              TestId: matchingLabTest.TestId,
+              TestName: matchingLabTest.TestName,
+              CasandraTestId: matchingLabTest.CasandraTestId,
+            }
+          } as unknown as LabOrderTestWithRelations
 
-  //     const labOrderCopy = { ...labOrder, LabOrderTest: labOrderTest };
+          newLabOrderCopy.LabOrderTest = [labOrderTest];
 
-  //     // Only update the state if labOrderCopy has changed
-  //     if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrder)) {
-  //       // console.log('LabOrderCopy: ', labOrderCopy);
-  //       setLabOrderCopy(labOrderCopy);
-  //     }
-  //   }
+          console.log('labOrderCopy useEffect: ', labOrderCopy)
 
-  // }, [tcQuery, tcData, tcError, tcIsLoading, labOrder, setLabOrderCopy, labTestId, source]);
+        }
 
-  // useEffect(() => {
-  //   setLabOrder(labOrderCopy);
-  // }, [labOrderCopy, setLabOrder])
+        console.log('item.Type useEffect: ', item.Type)
+
+        if (item.Type === 'Sponsored Tests') {
+          const hasEligibility = stepEntries.some(entry => entry.title === 'Eligibility')
+
+          if (!hasEligibility) {
+            const eligibilityStep = {
+              title: 'Eligibility',
+              subtitle: 'Eligibility',
+              stepDetails: StepEligibility,
+              subTitleDetails: Eligibility
+            }
+
+            stepEntries.push(eligibilityStep);
+            moveToTop('Eligibility');
+            moveToTop('Tests');
+            setSteps(stepEntries);
+            setActiveStep(0);
+          }
+
+          // Generate the LabOrderTest
+          const labOrderEligibilityConsent = [{
+            Id: uuid.v4() as string,
+            LabOrderId: labOrder.Id,
+            SponsoredCasandraTestId: matchingLabTest.CasandraTestId,
+            ProviderName: '',
+            ProviderNPI: '',
+            ConsentAt: new Date(),
+            SponsoredTest: [{
+              SponsoredProgram: {
+                ProgramEligibility: matchingLabTest.ProgramEligibility
+              }
+            }]
+          }] as unknown as LabOrderSponsoredTestConsentWithRelations[];
+
+          newLabOrderCopy.LabOrderSponsoredTestConsent = labOrderEligibilityConsent
+
+          console.log('labOrderCopy useEffect sponsored tests: ', labOrderCopy)
+
+        } else if (item.Type === 'Companion Diagnostics') {
+
+          const hasEligibility = stepEntries.some(entry => entry.title === 'Eligibility')
+
+          if (hasEligibility) {
+            const index = stepEntries.findIndex(entry => entry.title === 'Eligibility');
+
+            if (index > -1) {
+              stepEntries.splice(index, 1);
+              setSteps(stepEntries);
+            }
+          }
+
+          const hasBilling = stepEntries.some(entry => entry.title === 'Billing')
+
+          if (!hasBilling) {
+            const eligibilityStep = {
+              title: 'Billing',
+              subtitle: 'Billing',
+              stepDetails: StepBillingDetails,
+              subTitleDetails: BillingSubtitle
+            }
+
+            stepEntries.push(eligibilityStep);
+            moveToTop('Tests');
+
+            console.log('stepEntries useEffect Companion Diagnostics: ', stepEntries)
+
+            setSteps(stepEntries);
+            setActiveStep(0);
+          }
+        }
+
+
+
+        // Only update the state if labOrderCopy has changed
+        if (JSON.stringify(labOrderCopy) !== JSON.stringify(newLabOrderCopy)) {
+          setLabOrderCopy(newLabOrderCopy)
+          console.log('LabOrderCopy & LabOrdr are different: ', labOrderCopy);
+        }
+      }
+    }
+  }, [tcData, tcError, tcIsLoading, labOrder, setLabOrderCopy, setSteps, labName, labOrderCopy]);
+
+  useEffect(() => {
+    console.log('labOrderCopy in another useEffect: ', labOrderCopy)
+    setLabOrder(labOrderCopy);
+  }, [labOrderCopy, setLabOrder])
 
   const addQueryParam = (key: string, value: string) => {
     const url = new URL(window.location.href);
@@ -475,7 +481,7 @@ const AddLabOrder = () => {
   }
 
   return (
-    <LabOrderContext.Provider value={{ labOrder, setLabOrder, collectionMethod, setCollectionMethod, steps, setSteps, moveToTop, setActiveStep, source, activeStep}}>
+    <LabOrderContext.Provider value={{ labOrder, setLabOrder, collectionMethod, setCollectionMethod, steps, setSteps, moveToTop, setActiveStep, activeStep}}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Grid container spacing={6}>
           {/* <Grid item xs={12}>

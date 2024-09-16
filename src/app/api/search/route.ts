@@ -27,15 +27,20 @@ const apiClient = API(
 
       search_attributes: [
         { field: 'GroupName', weight: 3 },
-        { field: 'LabTests.LabName', weight: 3 },
-        { field: 'CasandraTestId', weight: 5 },
+        { field: 'LabTests.LabName', weight: 2 },
+        { field: 'LabTests.CasandraTestId', weight: 1 },
         { field: 'Type', weight: 2 },
         { field: 'Indication', weight: 2 },
         { field: 'DrugName', weight: 2 },
-        { field: 'IcdCode', weight: 2 },
+        { field: 'IcdCode', weight: 1 },
       ],
       result_attributes: ['GroupName', 'LabTests', 'Type', 'DrugName', 'Indication'],
       facet_attributes: [
+        {
+          attribute: 'Type',
+          field: 'Type.keyword',
+          type: 'string'
+        },
         {
           attribute: 'Lab',
           field: 'LabTests.LabName.keyword',
@@ -55,7 +60,7 @@ const apiClient = API(
       filter_attributes: [
         {
           attribute: 'CasandraTestId',
-          field: 'CasandraTestId',
+          field: 'LabTests.CasandraTestId.keyword',
           type: 'string'
         },
         {
@@ -68,23 +73,35 @@ const apiClient = API(
           field: 'Type.keyword',
           type: 'string'
         },
-      ],
-      query_rules: [
         {
-          id: 'default-state',
-          conditions: [[]],
-          actions: [
-            {
-              action: 'RenderFacetsOrder',
-              facetAttributesOrder: [
-                'Lab',
-                'Indication',
-                'Drug Name',
-              ]
-            }
-          ]
+          attribute: 'Indication',
+          field: 'Indication.keyword',
+          type: 'string'
         },
-      ]
+        {
+          attribute: 'DrugName',
+          field: 'DrugName.keyword',
+          type: 'string'
+        }
+      ],
+
+      // query_rules: [
+      //   {
+      //     id: 'default-state',
+      //     conditions: [[]],
+      //     actions: [
+      //       {
+      //         action: 'RenderFacetsOrder',
+      //         facetAttributesOrder: [
+      //           'Type',
+      //           'Indication',
+      //           // 'Lab',
+      //           // 'Drug Name',
+      //         ]
+      //       }
+      //     ]
+      //   },
+      // ]
     }
   },
   { debug: true }
@@ -92,6 +109,8 @@ const apiClient = API(
 
 export async function POST(req: NextRequest) {
   const data = await req.json()
+
+  console.log('payload data for elastic search: ', JSON.stringify(data))
 
   const results = await apiClient.handleRequest(data)
 
