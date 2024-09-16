@@ -1,5 +1,7 @@
 // React Imports
-import { useContext } from 'react'
+import React, { useContext } from 'react'
+
+import uuid from 'react-native-uuid'
 
 // MUI Imports
 import Typography from '@mui/material/Typography'
@@ -14,9 +16,10 @@ const BillingSubtitle = () => {
   const { labOrder } = useContext(LabOrderContext);
 
   return (
-    <div>
+    <div key={uuid.v4() as string}>
       {labOrder?.LabOrderBilling && labOrder?.LabOrderBilling.length > 0 ? labOrder?.LabOrderBilling?.map((billing) => (
-        <>
+        <React.Fragment key={uuid.v4() as string}>
+
         <div className='flex items-center gap-4'>
           <Typography className='step-subtitle min-is-[65px]'>Healthplan Id:</Typography>
           <Typography className={`step-subtitle`}> {`${billing.HealthPalnId}`}</Typography>
@@ -25,9 +28,10 @@ const BillingSubtitle = () => {
           <Typography className='step-subtitle min-is-[65px]'>Subscriber Id:</Typography>
           <Typography className={`step-subtitle`}> {`${billing.SubscriberId}`}</Typography>
         </div>
-        </>
+        </React.Fragment>
       )) : (
-        <>
+        <React.Fragment key={uuid.v4() as string}>
+
           <div className='flex items-center gap-4'>
             <Typography className='step-subtitle min-is-[65px]'>Healthplan Id: </Typography>
             <Typography className='step-subtitle'>&nbsp;</Typography>
@@ -36,7 +40,7 @@ const BillingSubtitle = () => {
             <Typography className='step-subtitle min-is-[65px]'>Subscriber Id: </Typography>
             <Typography className='step-subtitle'>&nbsp;</Typography>
           </div>
-        </>
+        </React.Fragment>
       )}
     </div>
   )

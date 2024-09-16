@@ -7,7 +7,7 @@ import { Grid, Typography, Checkbox } from "@mui/material";
 
 import { LabOrderContext } from "..";
 
-import type { LabOrderSponsoredTestConsentWithRelations, LabOrderTestWithRelations } from "~prisma/generated/zod";
+import type { LabOrderBillingWithRelations, LabOrderSponsoredTestConsentWithRelations, LabOrderTestWithRelations, LabOrderWithRelations } from "~prisma/generated/zod";
 import StepEligibility from './StepEligibility';
 import EligibilitySubtitle from '../subtitle/Eligibility';
 import StepBillingDetails from './StepBillingDetails';
@@ -55,7 +55,7 @@ const HitView = (props: any) => {
 
     console.log('hit :', hit, 'type :', testType, 'drugName :', drugName, 'indication :', indication)
 
-    let newLabOrder = { ...labOrder }
+    let newLabOrder: LabOrderWithRelations = { ...labOrder }
 
     if (testType === 'Sponsored Tests') {
       // remove billing step
@@ -79,6 +79,7 @@ const HitView = (props: any) => {
 
       // Generate the LabOrderTest
       const labOrderEligibilityConsent = [{
+        Id: uuid.v4() as string,
         LabOrderId: labOrder.Id,
         SponsoredCasandraTestId: hit.CasandraTestId,
         ProviderName: '',
@@ -92,6 +93,10 @@ const HitView = (props: any) => {
       }] as unknown as LabOrderSponsoredTestConsentWithRelations[];
 
       newLabOrder.LabOrderSponsoredTestConsent = labOrderEligibilityConsent
+
+      if(!hasBillingTypeInSelected) {
+        newLabOrder.LabOrderBilling = []
+      }
 
       console.log('labOrderCopy LabOrderSponsoredTestConsent:', newLabOrder)
 
@@ -128,12 +133,12 @@ const HitView = (props: any) => {
 
       // remove eligibility step
       const hasEligibilityInSteps = steps?.some(entry => entry.title === 'Eligibility')
-      const hasBillingTypeInSelected = isTypeSelected('Sponsored Tests')
+      const hasEligibilityInSelected = isTypeSelected('Sponsored Tests')
 
-      console.log('hasEligibilityInSteps :', hasEligibilityInSteps, 'hasBillingTypeInSelected :', hasBillingTypeInSelected)
+      console.log('hasEligibilityInSteps :', hasEligibilityInSteps, 'hasBillingTypeInSelected :', hasEligibilityInSelected)
 
       // if eligibility step is in steps and the selected tests do not contain a sponsored test type, remove the eligibility step
-      if (hasEligibilityInSteps && !hasBillingTypeInSelected) {
+      if (hasEligibilityInSteps && !hasEligibilityInSelected) {
         const index = steps?.findIndex(entry => entry.title === 'Eligibility');
 
         if (index > -1) {
@@ -144,6 +149,22 @@ const HitView = (props: any) => {
 
       // add billing step
       const hasBilling = steps?.some(entry => entry.title === 'Billing')
+
+      const labOrderBilling = [{
+        Id: uuid.v4() as string,
+        LabOrderId: labOrder.Id,
+        BillToId: '',
+        HealthPalnId: '',
+        PatientStatus: '',
+        SubscriberId: '',
+        SponoseredTestCouponCode: '',
+      }] as unknown as LabOrderBillingWithRelations[];
+
+      newLabOrder.LabOrderBilling = labOrderBilling
+
+      if(!hasEligibilityInSelected) {
+        newLabOrder.LabOrderSponsoredTestConsent = []
+      }
 
       if (!hasBilling) {
         const eligibilityStep = {

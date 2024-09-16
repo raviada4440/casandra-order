@@ -1,5 +1,7 @@
 // React Imports
-import { useContext, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
+
+import uuid from 'react-native-uuid'
 
 // MUI Imports
 import Typography from '@mui/material/Typography'
@@ -9,12 +11,7 @@ import dateFormat from 'date-fns/format'
 // Component Imports
 import { LabOrderContext } from '..';
 
-
-
-
 const EligibilitySubtitle = () => {
-
-
 
   // Vars
   const { labOrder } = useContext(LabOrderContext);
@@ -32,20 +29,20 @@ const EligibilitySubtitle = () => {
 
 
   return (
-    <div>
-      {labOrder?.LabOrderSponsoredTestConsent && labOrder?.LabOrderSponsoredTestConsent.length > 0 ? labOrder?.LabOrderSponsoredTestConsent?.map((consent, index) => (
-        <>
-        <div key={index} className='flex items-center gap-4'>
+    <div key={uuid.v4() as string}>
+      {labOrder?.LabOrderSponsoredTestConsent && labOrder?.LabOrderSponsoredTestConsent.length > 0 ? labOrder?.LabOrderSponsoredTestConsent?.map((consent) => (
+        <React.Fragment key={uuid.v4() as string}>
+        <div className='flex items-center gap-4'>
           <Typography className='step-subtitle min-is-[65px]'>Reviewd By:</Typography>
           <Typography className={'step-subtitle'}> {consent.ProviderName}</Typography>
         </div>
-        <div key={index} className='flex items-center gap-4'>
+        <div className='flex items-center gap-4'>
           <Typography className='step-subtitle min-is-[65px]'>Consented At:</Typography>
           <Typography className={'step-subtitle'}> {formatDate((consent?.ConsentAt || '').toString())} </Typography>
         </div>
-        </>
+        </React.Fragment>
       )) : (
-        <>
+        <React.Fragment key={uuid.v4() as string}>
           <div className='flex items-center gap-4'>
             <Typography className='step-subtitle min-is-[65px]'>Reviewd By: </Typography>
             <Typography className='step-subtitle'>&nbsp;</Typography>
@@ -54,7 +51,7 @@ const EligibilitySubtitle = () => {
             <Typography className='step-subtitle min-is-[65px]'>Consented At: </Typography>
             <Typography className='step-subtitle'>&nbsp;</Typography>
           </div>
-        </>
+        </React.Fragment>
       )}
     </div>
   )

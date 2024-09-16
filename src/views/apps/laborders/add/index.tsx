@@ -492,7 +492,7 @@ const AddLabOrder = () => {
                           <StepLabel className='p-0' StepIconComponent={StepperCustomDot}>
                             <div className='step-label cursor-pointer'>
                               {/* <Typography className='step-number' color='text.primary'>{`0${index + 1}`}</Typography> */}
-                              <div>
+                              <div key={uuid.v4() as string}>
                                 <Typography className='step-title' color='text.primary'>
                                   {step.title}
                                 </Typography>
