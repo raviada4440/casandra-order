@@ -1,5 +1,5 @@
 // React Imports
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 
 // MUI Imports
 import Typography from '@mui/material/Typography'
@@ -12,10 +12,17 @@ import { LabOrderContext } from '..';
 
 
 
-const BillingSubtitle = () => {
+const EligibilitySubtitle = () => {
+
+
 
   // Vars
   const { labOrder } = useContext(LabOrderContext);
+
+  useEffect(() => {
+    console.log('labOrder in EligibilitySubtitle:', labOrder)
+  }, [labOrder]);
+
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -53,4 +60,4 @@ const BillingSubtitle = () => {
   )
 }
 
-export default BillingSubtitle
+export default EligibilitySubtitle

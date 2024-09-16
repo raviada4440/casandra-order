@@ -9,7 +9,7 @@ import { LabOrderContext } from "..";
 
 import type { LabOrderSponsoredTestConsentWithRelations, LabOrderTestWithRelations } from "~prisma/generated/zod";
 import StepEligibility from './StepEligibility';
-import Eligibility from '../subtitle/Eligibility';
+import EligibilitySubtitle from '../subtitle/Eligibility';
 import StepBillingDetails from './StepBillingDetails';
 import BillingSubtitle from '../subtitle/Billing';
 import '@/app/globals.css'
@@ -23,7 +23,13 @@ const HitView = (props: any) => {
 
   const [selected, setSelected] = useState<readonly LabOrderTestWithRelations[]>([]);
 
-  const isSelected = (id: number, type: string, drugName: string, indication: string) => selected?.some(item => item.TestId === id && item.Type === type && item.DrugName === drugName && item.Indication === indication)
+  const isSelected = (id: number, type: string, drugName: string, indication: string) => {
+    return selected?.some(item => item.TestId === id && item.Type === type && item.DrugName === drugName && item.Indication === indication)
+  }
+
+  const isTypeSelected = (type: string): boolean => {
+    return selected?.some(item => item.Type === type);
+  }
 
   useEffect(() => {
 
@@ -35,20 +41,31 @@ const HitView = (props: any) => {
 
   }, [labOrder]);
 
-  const handleClick = (event: ChangeEvent<unknown>, type: string, drugName: string, indication: string, hit: any) => {
+  const handleClick = (event: ChangeEvent<HTMLInputElement>, testType: string, drugName: string, indication: string, hit: any) => {
+
+    const { type, checked } = event.target;
+
+    console.log(`Test ${type}  for TestId ${hit.TestId} is ${checked ? 'selected' : 'unselected'}`);
+
     event.preventDefault()
 
     // console.log('CollectionMethod :', hit.CollectionMethod)
 
     // setCollectionMethod(hit.CollectionMethod)
 
-    console.log('hit :', hit, 'type :', type, 'drugName :', drugName, 'indication :', indication)
+    console.log('hit :', hit, 'type :', testType, 'drugName :', drugName, 'indication :', indication)
 
-    if (type === 'Sponsored Tests') {
+    let newLabOrder = { ...labOrder }
+
+    if (testType === 'Sponsored Tests') {
       // remove billing step
-      const hasBilling = steps?.some(entry => entry.title === 'Billing')
+      const hasBillingInSteps = steps?.some(entry => entry.title === 'Billing')
+      const hasBillingTypeInSelected = isTypeSelected('Companion Diagnostics')
 
-      if (hasBilling) {
+      console.log('hasBillingInSteps :', hasBillingInSteps, 'hasBillingTypeInSelected :', hasBillingTypeInSelected)
+
+      // if billing step is in steps and the selected tests do not contain a billing type, remove the billing step
+      if (hasBillingInSteps && !hasBillingTypeInSelected) {
         const index = steps?.findIndex(entry => entry.title === 'Billing');
 
         if (index > -1) {
@@ -74,20 +91,22 @@ const HitView = (props: any) => {
         }]
       }] as unknown as LabOrderSponsoredTestConsentWithRelations[];
 
-      const labOrderCopy = { ...labOrder, LabOrderSponsoredTestConsent: labOrderEligibilityConsent };
+      newLabOrder.LabOrderSponsoredTestConsent = labOrderEligibilityConsent
 
-      // Only update the state if labOrderCopy has changed
-      if (JSON.stringify(labOrderCopy) !== JSON.stringify(labOrder)) {
-        // console.log('LabOrderCopy: ', labOrderCopy);
-        setLabOrder(labOrderCopy);
-      }
+      console.log('labOrderCopy LabOrderSponsoredTestConsent:', newLabOrder)
+
+      // // Only update the state if labOrderCopy has changed
+      // if (JSON.stringify(newLabOrder) !== JSON.stringify(labOrder)) {
+      //   console.log('newLabOrder is different from labOrder, updating labOrder with LabOrderSponsoredTestConsent: ', newLabOrder);
+      //   setLabOrder(newLabOrder);
+      // }
 
       if (!hasEligibility) {
         const eligibilityStep = {
           title: 'Eligibility',
           subtitle: 'Eligibility',
           stepDetails: StepEligibility,
-          subTitleDetails: Eligibility
+          subTitleDetails: EligibilitySubtitle
         }
 
         // Find the index of the step with the title 'Tests'
@@ -105,12 +124,16 @@ const HitView = (props: any) => {
         setSteps(steps);
         setActiveStep(activeStep);
       }
-    } else if (type === 'Companion Diagnostics') {
+    } else if (testType === 'Companion Diagnostics') {
 
       // remove eligibility step
-      const hasEligibility = steps?.some(entry => entry.title === 'Eligibility')
+      const hasEligibilityInSteps = steps?.some(entry => entry.title === 'Eligibility')
+      const hasBillingTypeInSelected = isTypeSelected('Sponsored Tests')
 
-      if (hasEligibility) {
+      console.log('hasEligibilityInSteps :', hasEligibilityInSteps, 'hasBillingTypeInSelected :', hasBillingTypeInSelected)
+
+      // if eligibility step is in steps and the selected tests do not contain a sponsored test type, remove the eligibility step
+      if (hasEligibilityInSteps && !hasBillingTypeInSelected) {
         const index = steps?.findIndex(entry => entry.title === 'Eligibility');
 
         if (index > -1) {
@@ -143,7 +166,7 @@ const HitView = (props: any) => {
 
     const labOrderTest = {
       Id: uuid.v4() as string,
-      Type: type,
+      Type: testType,
       TestId: hit.TestId,
       DrugName: drugName,
       Indication: indication,
@@ -175,11 +198,11 @@ const HitView = (props: any) => {
 
     // console.log(selected)
 
-    const labOrderCopy = { ...labOrder }
+    // const labOrderCopy = { ...labOrder }
 
-    labOrderCopy.LabOrderTest = newSelected as LabOrderTestWithRelations[]
+    newLabOrder.LabOrderTest = newSelected as LabOrderTestWithRelations[]
 
-    setLabOrder(labOrderCopy)
+    setLabOrder(newLabOrder)
 
     // setSelectedTestId(hit.TestId)
   }
