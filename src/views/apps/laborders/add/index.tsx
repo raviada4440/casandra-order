@@ -23,6 +23,8 @@ import { styled } from '@mui/material/styles'
 import Grid from '@mui/material/Grid'
 import { toast } from 'react-toastify'
 
+import isEqual from 'lodash/isEqual'
+
 // Component Imports
 import { useSession } from 'next-auth/react';
 import uuid from 'react-native-uuid'
@@ -148,7 +150,9 @@ const AddLabOrder = () => {
   const [activeStep, setActiveStep] = useState<number>(0)
   const [patientId, setPatientId] = useState<string>('')
   const [collectionMethod, setCollectionMethod] = useState<string>('')
-  const [labOrder, setLabOrder] = useState<LabOrderWithRelations>({ Id: uuid.v4() as string, OrderDate: new Date(), OrderNumber: generateOrderNumber(), LabOrderStatus: [labOrderStatus] } as LabOrderWithRelations)
+  const [labOrderId] = useState<string>(uuid.v4() as string)
+  const [consentAt] = useState<Date>(new Date())
+  const [labOrder, setLabOrder] = useState<LabOrderWithRelations>({ Id: labOrderId, OrderDate: new Date(), OrderNumber: generateOrderNumber(), LabOrderStatus: [labOrderStatus] } as LabOrderWithRelations)
   const [labOrderCopy, setLabOrderCopy] = useState<LabOrderWithRelations>({ ...labOrder } as LabOrderWithRelations)
   const [steps, setSteps] = useState<Step[]>(stepEntries)
 
@@ -159,6 +163,7 @@ const AddLabOrder = () => {
   const [labName, setLabName] = useState<string>('')
   const [drugName, setDrugName] = useState<string>('')
   const [indication, setIndication] = useState<string>('')
+  const [programName, setProgramName] = useState<string>('')
 
   // console.log('source: ', source)
 
@@ -260,6 +265,7 @@ const AddLabOrder = () => {
     const qLabName = qParams.get('casandratests[refinementList][Lab][0]') as string;
     const qDrugName = qParams.get('casandratests[refinementList][DrugName][0]') as string;
     const qIndication = qParams.get('casandratests[refinementList][Indication][0]') as string;
+    const qProgamName = qParams.get('casandratests[refinementList][ProgramName][0]') as string;
 
     console.log('qCasandraTestId: ', qCasandraTestId, 'qSearchType: ', qSearchType, 'qLabName: ', qLabName, 'qDrugName: ', qDrugName, 'qIndication: ', qIndication)
     setCasandraTestId(qCasandraTestId)
@@ -267,6 +273,7 @@ const AddLabOrder = () => {
     setLabName(qLabName)
     setDrugName(qDrugName)
     setIndication(qIndication)
+    setProgramName(qProgamName)
 
     // setLabTestId(uuid.v4() as string)
 
@@ -274,58 +281,37 @@ const AddLabOrder = () => {
 
 
   // console.log('testcatalog: ', testCatalogQuery);
-  const { data: tcData, error: tcError, isLoading: tcIsLoading } = api.testcatalog.getTestByCasandraTestId.useQuery({ casandraTestId: casandraTestId || '', type: searchType || '', labName: labName || '', drugName: drugName || '', indication: indication || '' })
+  const { data: tcData } = api.testcatalog.getTestByCasandraTestId.useQuery({ casandraTestId: casandraTestId || '', type: searchType || '', labName: labName || '', drugName: drugName || '', indication: indication || '', programName: programName || ''  })
 
   useEffect(() => {
-    if (tcError) {
-      console.error(tcError);
-    }
-
-    if (tcIsLoading) {
-      return;
-    }
-
     if (tcData && tcData.length === 1) {
-
-      const newLabOrderCopy = { ...labOrder }
-
-      console.log('tcData inside useEffect: ', tcData)
 
       const item: any = tcData[0]
 
-      if (item) {
-        let matchingLabTest: any = {}
+      const newLabOrder = { ...labOrderCopy }
 
-        if (labName && labName.length > 0) {
-          console.log('Lab Name useEffect: ', labName)
-          matchingLabTest = item.LabTests.find((test: any) => test.LabName === labName);
-        }
+      if (labName && labName.length > 0) {
+        console.log('Lab Name useEffect: ', labName)
+        const matchingLabTest = item.LabTests.find((test: any) => test.LabName === labName);
 
-        if (matchingLabTest) {
-          console.log('matchingLabTest useEffect: ', matchingLabTest)
-
-          const labOrderTest = {
-            Id: uuid.v4() as string,
-            Type: item.Type,
+        const labOrderTest = [{
+            LabOrderId: labOrderId,
             TestId: matchingLabTest.TestId,
-            DrugName: item.drugName,
-            Indication: item.indication,
+            Type: item.Type,
+            DrugName: item.DrugName,
+            Indication: item.Indication,
             TestCatalog: {
               TestId: matchingLabTest.TestId,
               TestName: matchingLabTest.TestName,
               CasandraTestId: matchingLabTest.CasandraTestId,
             }
-          } as unknown as LabOrderTestWithRelations
+          }] as unknown as LabOrderTestWithRelations[]
 
-          newLabOrderCopy.LabOrderTest = [labOrderTest];
+          newLabOrder.LabOrderTest = labOrderTest
 
-          console.log('labOrderCopy useEffect: ', labOrderCopy)
 
-        }
+        if (item && item.Type === 'Sponsored Tests') {
 
-        console.log('item.Type useEffect: ', item.Type)
-
-        if (item.Type === 'Sponsored Tests') {
           const hasEligibility = stepEntries.some(entry => entry.title === 'Eligibility')
 
           if (!hasEligibility) {
@@ -345,12 +331,11 @@ const AddLabOrder = () => {
 
           // Generate the LabOrderTest
           const labOrderEligibilityConsent = [{
-            Id: uuid.v4() as string,
-            LabOrderId: labOrder.Id,
+            LabOrderId: labOrderId,
             SponsoredCasandraTestId: matchingLabTest.CasandraTestId,
             ProviderName: '',
             ProviderNPI: '',
-            ConsentAt: new Date(),
+            ConsentAt: consentAt,
             SponsoredTest: [{
               SponsoredProgram: {
                 ProgramEligibility: matchingLabTest.ProgramEligibility
@@ -358,9 +343,8 @@ const AddLabOrder = () => {
             }]
           }] as unknown as LabOrderSponsoredTestConsentWithRelations[];
 
-          newLabOrderCopy.LabOrderSponsoredTestConsent = labOrderEligibilityConsent
+          newLabOrder.LabOrderSponsoredTestConsent = labOrderEligibilityConsent
 
-          console.log('labOrderCopy useEffect sponsored tests: ', labOrderCopy)
 
         } else if (item.Type === 'Companion Diagnostics') {
 
@@ -394,17 +378,72 @@ const AddLabOrder = () => {
             setActiveStep(0);
           }
         }
-
-
-
-        // Only update the state if labOrderCopy has changed
-        if (JSON.stringify(labOrderCopy) !== JSON.stringify(newLabOrderCopy)) {
-          setLabOrderCopy(newLabOrderCopy)
-          console.log('LabOrderCopy & LabOrdr are different: ', labOrderCopy);
-        }
       }
+
+      console.log('newLabOrder: ', newLabOrder)
+      console.log('labOrderCopy: ', labOrderCopy)
+
+      // Only update the state if labOrderCopy has changed
+      if (!isEqual(newLabOrder, labOrderCopy)) {
+        setLabOrderCopy(newLabOrder)
+      }
+    } else {
+      moveToTop('Tests');
+      setActiveStep(0);
     }
-  }, [tcData, tcError, tcIsLoading, labOrder, setLabOrderCopy, setSteps, labName, labOrderCopy]);
+  }, [labName, labOrderCopy, labOrderId, consentAt, tcData]);
+
+  // useEffect(() => {
+  //   // if (tcError) {
+  //   //   console.error(tcError);
+  //   // }
+
+  //   // if (tcIsLoading) {
+  //   //   return;
+  //   // }
+
+  //   if (tcData && tcData.length === 1) {
+
+  //     console.log('tcData inside useEffect: ', tcData)
+
+  //     const item: any = tcData[0]
+
+  //     if (item) {
+  //       let matchingLabTest: any = {}
+
+  //       if (labName && labName.length > 0) {
+  //         console.log('Lab Name useEffect: ', labName)
+  //         matchingLabTest = item.LabTests.find((test: any) => test.LabName === labName);
+  //       }
+
+  //       if (matchingLabTest) {
+  //         console.log('matchingLabTest useEffect: ', matchingLabTest)
+
+  //         const labOrderTest = [{
+  //           Id: uuid.v4() as string,
+  //           Type: item.Type,
+  //           TestId: matchingLabTest.TestId,
+  //           DrugName: item.drugName,
+  //           Indication: item.indication,
+  //           TestCatalog: {
+  //             TestId: matchingLabTest.TestId,
+  //             TestName: matchingLabTest.TestName,
+  //             CasandraTestId: matchingLabTest.CasandraTestId,
+  //           }
+  //         }] as unknown as LabOrderTestWithRelations[]
+
+  //         const newLabOrder = { ...labOrder, LabOrderTest: labOrderTest }
+
+  //         // Only update the state if newLabOrder has changed
+  //         if (!isEqual(newLabOrder, labOrder)) {
+  //           setLabOrderCopy(newLabOrder)
+  //         }
+
+  //       }
+
+  //     }
+  //   }
+  // }, [labName, labOrder, setLabOrderCopy, tcData]);
 
   useEffect(() => {
     console.log('labOrderCopy in another useEffect: ', labOrderCopy)

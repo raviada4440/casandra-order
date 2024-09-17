@@ -20,6 +20,7 @@ const getElasticSearch = async (params: {
   labName: string;
   drugName: string;
   indication: string;
+  programName: string;
 }): Promise<any> => {
 
   const url = new URL(`${process.env.NEXT_PUBLIC_APP_URL}/api/search`)
@@ -41,6 +42,10 @@ const getElasticSearch = async (params: {
     facetFilters.push(`DrugName:${params.drugName}`)
   }
 
+  if (params.programName && params.programName.length > 0) {
+    facetFilters.push(`DrugName:${params.programName}`)
+  }
+  
   const requestPayload = [
     {
       "indexName": "casandratests",
@@ -154,13 +159,13 @@ export const testCatalogRouter = createTRPCRouter({
   }),
 
   getTestByCasandraTestId: publicProcedure
-  .input(z.object({ casandraTestId: z.string(), type: z.string(), labName: z.string(), drugName: z.string(), indication: z.string() }))
+  .input(z.object({ casandraTestId: z.string(), type: z.string(), labName: z.string(), drugName: z.string(), indication: z.string(), programName: z.string() }))
   .query(async ({ input }) => {
 
     let elasticResults = { results: [{ hits: [] }] };
 
     if (input.casandraTestId.length > 0 || input.type.length > 0 || input.labName.length > 0 || input.drugName.length > 0 || input.indication.length > 0) {
-      elasticResults = await getElasticSearch({ casandraTestId: input.casandraTestId, type: input.type, labName: input.labName, drugName: input.drugName, indication: input.indication })
+      elasticResults = await getElasticSearch({ casandraTestId: input.casandraTestId, type: input.type, labName: input.labName, drugName: input.drugName, indication: input.indication, programName: input.programName })
     }
 
     console.log('data: ', JSON.stringify(elasticResults.results[0].hits))

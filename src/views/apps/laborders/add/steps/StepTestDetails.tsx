@@ -114,6 +114,9 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
                         <Panel header="Drug Name">
                           <RefinementList attribute="Drug Name" searchable/>
                         </Panel>
+                        <Panel header="Program Name">
+                          <RefinementList attribute="Program Name" searchable/>
+                        </Panel>
                       </DynamicWidgets>
                     </div>
                   </div>

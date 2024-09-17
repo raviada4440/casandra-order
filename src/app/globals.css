@@ -160,8 +160,12 @@ code {
 }
 
 .hit__details {
-  float: inline-end;
+  /* float: inline-end; */
   margin-inline-start: 0rem;
+  display: flex;
+  flex-direction: column; /* Ensure items are laid out in a column */
+  align-items: flex-start;
+  inline-size: 100%; /* Ensure the container takes up the full width */
 }
 
 li.ais-InfiniteHits-item {
@@ -283,4 +287,5 @@ li.ais-InfiniteHits-item {
   padding: 10px;
   border-radius: 4px;
   marginBottom: 15px;
+  inline-size: 100%;
 }

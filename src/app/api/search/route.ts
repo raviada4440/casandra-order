@@ -32,9 +32,10 @@ const apiClient = API(
         { field: 'Type', weight: 2 },
         { field: 'Indication', weight: 2 },
         { field: 'DrugName', weight: 2 },
+        { field: 'ProgramName', weight: 2 },
         { field: 'IcdCode', weight: 1 },
       ],
-      result_attributes: ['GroupName', 'LabTests', 'Type', 'DrugName', 'Indication'],
+      result_attributes: ['GroupName', 'LabTests', 'Type', 'DrugName', 'Indication', 'ProgramName'],
       facet_attributes: [
         {
           attribute: 'Type',
@@ -54,6 +55,11 @@ const apiClient = API(
         {
           attribute: 'Drug Name',
           field: 'DrugName.keyword',
+          type: 'string'
+        },
+        {
+          attribute: 'Program Name',
+          field: 'ProgramName.keyword',
           type: 'string'
         },
       ],
@@ -81,6 +87,11 @@ const apiClient = API(
         {
           attribute: 'DrugName',
           field: 'DrugName.keyword',
+          type: 'string'
+        },
+        {
+          attribute: 'ProgramName',
+          field: 'ProgramName.keyword',
           type: 'string'
         }
       ],
