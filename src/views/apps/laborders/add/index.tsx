@@ -388,10 +388,16 @@ const AddLabOrder = () => {
         setLabOrderCopy(newLabOrder)
       }
     } else {
-      moveToTop('Tests');
-      setActiveStep(0);
+      if (searchType && searchType.length > 0 || labName && labName.length > 0 || drugName && drugName.length > 0 || indication && indication.length > 0) {
+        moveToTop('Tests');
+        setActiveStep(0);
+      } else {
+        moveToTop('Account');
+        setActiveStep(0);
+      }
+
     }
-  }, [labName, labOrderCopy, labOrderId, consentAt, tcData]);
+  }, [labName, labOrderCopy, labOrderId, consentAt, tcData, searchType, drugName, indication]);
 
   // useEffect(() => {
   //   // if (tcError) {
