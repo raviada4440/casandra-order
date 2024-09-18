@@ -15,7 +15,7 @@ export type CustomCatalogType = {
 
 
 const getElasticSearch = async (params: {
-  casandraTestId: string;
+  searchQuery: string;
   type: string;
   labName: string;
   drugName: string;
@@ -45,7 +45,7 @@ const getElasticSearch = async (params: {
   if (params.programName && params.programName.length > 0) {
     facetFilters.push(`DrugName:${params.programName}`)
   }
-  
+
   const requestPayload = [
     {
       "indexName": "casandratests",
@@ -59,7 +59,7 @@ const getElasticSearch = async (params: {
       "hitsPerPage": 20,
       "maxValuesPerFacet": 20,
       "page": 0,
-        "query": params.casandraTestId
+        "query": params.searchQuery
       }
     }
   ]
@@ -159,13 +159,13 @@ export const testCatalogRouter = createTRPCRouter({
   }),
 
   getTestByCasandraTestId: publicProcedure
-  .input(z.object({ casandraTestId: z.string(), type: z.string(), labName: z.string(), drugName: z.string(), indication: z.string(), programName: z.string() }))
+  .input(z.object({ searchQuery: z.string(), type: z.string(), labName: z.string(), drugName: z.string(), indication: z.string(), programName: z.string() }))
   .query(async ({ input }) => {
 
     let elasticResults = { results: [{ hits: [] }] };
 
-    if (input.casandraTestId.length > 0 || input.type.length > 0 || input.labName.length > 0 || input.drugName.length > 0 || input.indication.length > 0) {
-      elasticResults = await getElasticSearch({ casandraTestId: input.casandraTestId, type: input.type, labName: input.labName, drugName: input.drugName, indication: input.indication, programName: input.programName })
+    if (input.searchQuery.length > 0 || input.type.length > 0 || input.labName.length > 0 || input.drugName.length > 0 || input.indication.length > 0) {
+      elasticResults = await getElasticSearch({ searchQuery: input.searchQuery, type: input.type, labName: input.labName, drugName: input.drugName, indication: input.indication, programName: input.programName })
     }
 
     console.log('data: ', JSON.stringify(elasticResults.results[0].hits))

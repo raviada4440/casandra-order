@@ -158,7 +158,7 @@ const AddLabOrder = () => {
 
   // const [labTestId, setLabTestId] = useState<string>('')
 
-  const [casandraTestId, setCasandraTestId] = useState<string>('')
+  const [searchQuery, setSearchQuery] = useState<string>('')
   const [searchType, setSearchType] = useState<string>('')
   const [labName, setLabName] = useState<string>('')
   const [drugName, setDrugName] = useState<string>('')
@@ -260,15 +260,15 @@ const AddLabOrder = () => {
     }
 
     // Get a specific query parameter
-    const qCasandraTestId = qParams.get('casandratests[query]') as string;
+    const qSearchQuery = qParams.get('casandratests[query]') as string;
     const qSearchType = qParams.get('casandratests[refinementList][Type][0]') as string;
     const qLabName = qParams.get('casandratests[refinementList][Lab][0]') as string;
     const qDrugName = qParams.get('casandratests[refinementList][DrugName][0]') as string;
     const qIndication = qParams.get('casandratests[refinementList][Indication][0]') as string;
     const qProgamName = qParams.get('casandratests[refinementList][ProgramName][0]') as string;
 
-    console.log('qCasandraTestId: ', qCasandraTestId, 'qSearchType: ', qSearchType, 'qLabName: ', qLabName, 'qDrugName: ', qDrugName, 'qIndication: ', qIndication)
-    setCasandraTestId(qCasandraTestId)
+    console.log('qSearchQuery: ', qSearchQuery, 'qSearchType: ', qSearchType, 'qLabName: ', qLabName, 'qDrugName: ', qDrugName, 'qIndication: ', qIndication)
+    setSearchQuery(qSearchQuery)
     setSearchType(qSearchType)
     setLabName(qLabName)
     setDrugName(qDrugName)
@@ -277,11 +277,11 @@ const AddLabOrder = () => {
 
     // setLabTestId(uuid.v4() as string)
 
-  }, [location, setCasandraTestId, setSearchType, setLabName, setDrugName, setIndication])
+  }, [location, setSearchQuery, setSearchType, setLabName, setDrugName, setIndication])
 
 
   // console.log('testcatalog: ', testCatalogQuery);
-  const { data: tcData } = api.testcatalog.getTestByCasandraTestId.useQuery({ casandraTestId: casandraTestId || '', type: searchType || '', labName: labName || '', drugName: drugName || '', indication: indication || '', programName: programName || ''  })
+  const { data: tcData } = api.testcatalog.getTestByCasandraTestId.useQuery({ searchQuery: searchQuery || '', type: searchType || '', labName: labName || '', drugName: drugName || '', indication: indication || '', programName: programName || ''  })
 
   useEffect(() => {
     if (tcData && tcData.length === 1) {
@@ -390,9 +390,6 @@ const AddLabOrder = () => {
     } else {
       if (searchType && searchType.length > 0 || labName && labName.length > 0 || drugName && drugName.length > 0 || indication && indication.length > 0) {
         moveToTop('Tests');
-        setActiveStep(0);
-      } else {
-        moveToTop('Account');
         setActiveStep(0);
       }
 
