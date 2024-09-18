@@ -140,6 +140,10 @@ const generateOrderNumber = () => {
   return `CS${randomNumber}`;
 };
 
+const labOrderId = uuid.v4() as string
+const labOrderTestId = uuid.v4() as string
+const labOrderEligibilityConsentId = uuid.v4() as string
+
 // Step 1: Create a new context
 export const LabOrderContext = createContext<LabOrderContextType>({} as LabOrderContextType)
 
@@ -150,7 +154,6 @@ const AddLabOrder = () => {
   const [activeStep, setActiveStep] = useState<number>(0)
   const [patientId, setPatientId] = useState<string>('')
   const [collectionMethod, setCollectionMethod] = useState<string>('')
-  const [labOrderId] = useState<string>(uuid.v4() as string)
   const [consentAt] = useState<Date>(new Date())
   const [labOrder, setLabOrder] = useState<LabOrderWithRelations>({ Id: labOrderId, OrderDate: new Date(), OrderNumber: generateOrderNumber(), LabOrderStatus: [labOrderStatus] } as LabOrderWithRelations)
   const [labOrderCopy, setLabOrderCopy] = useState<LabOrderWithRelations>({ ...labOrder } as LabOrderWithRelations)
@@ -277,7 +280,7 @@ const AddLabOrder = () => {
 
     // setLabTestId(uuid.v4() as string)
 
-  }, [location, setSearchQuery, setSearchType, setLabName, setDrugName, setIndication])
+  }, [location.href, location.search])
 
 
   // console.log('testcatalog: ', testCatalogQuery);
@@ -295,6 +298,7 @@ const AddLabOrder = () => {
         const matchingLabTest = item.LabTests.find((test: any) => test.LabName === labName);
 
         const labOrderTest = [{
+            Id: labOrderTestId,
             LabOrderId: labOrderId,
             TestId: matchingLabTest.TestId,
             Type: item.Type,
@@ -331,6 +335,7 @@ const AddLabOrder = () => {
 
           // Generate the LabOrderTest
           const labOrderEligibilityConsent = [{
+            Id: labOrderEligibilityConsentId,
             LabOrderId: labOrderId,
             SponsoredCasandraTestId: matchingLabTest.CasandraTestId,
             ProviderName: '',
@@ -394,64 +399,12 @@ const AddLabOrder = () => {
       }
 
     }
-  }, [labName, labOrderCopy, labOrderId, consentAt, tcData, searchType, drugName, indication]);
-
-  // useEffect(() => {
-  //   // if (tcError) {
-  //   //   console.error(tcError);
-  //   // }
-
-  //   // if (tcIsLoading) {
-  //   //   return;
-  //   // }
-
-  //   if (tcData && tcData.length === 1) {
-
-  //     console.log('tcData inside useEffect: ', tcData)
-
-  //     const item: any = tcData[0]
-
-  //     if (item) {
-  //       let matchingLabTest: any = {}
-
-  //       if (labName && labName.length > 0) {
-  //         console.log('Lab Name useEffect: ', labName)
-  //         matchingLabTest = item.LabTests.find((test: any) => test.LabName === labName);
-  //       }
-
-  //       if (matchingLabTest) {
-  //         console.log('matchingLabTest useEffect: ', matchingLabTest)
-
-  //         const labOrderTest = [{
-  //           Id: uuid.v4() as string,
-  //           Type: item.Type,
-  //           TestId: matchingLabTest.TestId,
-  //           DrugName: item.drugName,
-  //           Indication: item.indication,
-  //           TestCatalog: {
-  //             TestId: matchingLabTest.TestId,
-  //             TestName: matchingLabTest.TestName,
-  //             CasandraTestId: matchingLabTest.CasandraTestId,
-  //           }
-  //         }] as unknown as LabOrderTestWithRelations[]
-
-  //         const newLabOrder = { ...labOrder, LabOrderTest: labOrderTest }
-
-  //         // Only update the state if newLabOrder has changed
-  //         if (!isEqual(newLabOrder, labOrder)) {
-  //           setLabOrderCopy(newLabOrder)
-  //         }
-
-  //       }
-
-  //     }
-  //   }
-  // }, [labName, labOrder, setLabOrderCopy, tcData]);
+  }, [consentAt, drugName, indication, labName, labOrderCopy, searchType, tcData]);
 
   useEffect(() => {
     console.log('labOrderCopy in another useEffect: ', labOrderCopy)
     setLabOrder(labOrderCopy);
-  }, [labOrderCopy, setLabOrder])
+  }, [labOrderCopy])
 
   const addQueryParam = (key: string, value: string) => {
     const url = new URL(window.location.href);
