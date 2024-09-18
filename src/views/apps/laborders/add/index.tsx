@@ -2,9 +2,9 @@
 
 // React Imports
 import type { Dispatch, SetStateAction } from 'react';
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useCallback, useEffect, useState } from 'react'
 
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import { useLocation } from 'react-use';
 import { LocalizationProvider } from '@mui/x-date-pickers';
@@ -148,6 +148,10 @@ const labOrderEligibilityConsentId = uuid.v4() as string
 export const LabOrderContext = createContext<LabOrderContextType>({} as LabOrderContextType)
 
 const AddLabOrder = () => {
+
+  const pathname = usePathname()
+  const searchParams = useSearchParams()
+
   // States
   const labOrderStatus = { Id: uuid.v4() as string, Status: 'Order Created', StatusDate: new Date() }
 
@@ -406,30 +410,74 @@ const AddLabOrder = () => {
     setLabOrder(labOrderCopy);
   }, [labOrderCopy])
 
-  const addQueryParam = (key: string, value: string) => {
-    const url = new URL(window.location.href);
 
-    url.searchParams.set(key, value);
-    window.history.pushState({}, '', url.toString());
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString())
+
+      if(name && value) {
+        params.set(name, value)
+      }
+
+      const paramsString = params.toString()
+
+      console.log('paramsString: ', paramsString)
+
+      return paramsString
+    },
+    [searchParams]
+  )
+
+
+  const addQueryParam = (key: string, value: string) => {
+    window.history.pushState({}, '', pathname + '?' + createQueryString(key, value));
+  }
+
+  const addOriginalQueryParam = () => {
+    window.history.pushState({}, '', pathname + '?' + createQueryString('', ''));
+  }
+
+  const handleQueryParams = (index: number) => {
+    const currentStep = steps[index]
+
+    if (currentStep.title === 'Tests') {
+      console.log('Current Step: ', currentStep.title)
+
+      if (labOrder.LabOrderIcd?.length > 0 ) {
+        console.log('labOrder.LabOrderIcd.length: ', labOrder.LabOrderIcd?.length)
+        addQueryParam('casandratests[query]', labOrder.LabOrderIcd[0].ICD?.Code || '')
+      } else {
+        addOriginalQueryParam()
+      }
+    } else {
+      addOriginalQueryParam()
+    }
+
   }
 
   // Handlers
   const handleNext = () => {
     if (activeStep !== steps.length - 1) {
-      const currentStep = steps[activeStep+1]
 
-      console.log('Current Step: ', currentStep.title)
+      // const currentStep = steps[activeStep+1]
 
-      if (currentStep.title === 'Tests') {
-        console.log('Current Step: ', currentStep.title)
+      // console.log('Current Step: ', currentStep.title)
 
-        if (labOrder.LabOrderIcd.length > 0 ) {
-          console.log('labOrder.LabOrderIcd.length: ', labOrder.LabOrderIcd.length)
-          addQueryParam('casandratests[query]', labOrder.LabOrderIcd[0].ICD?.Code || '')
-        }
-      }
+      // if (currentStep.title === 'Tests') {
+      //   console.log('Current Step: ', currentStep.title)
+
+      //   if (labOrder.LabOrderIcd.length > 0 ) {
+      //     console.log('labOrder.LabOrderIcd.length: ', labOrder.LabOrderIcd.length)
+      //     addQueryParam('casandratests[query]', labOrder.LabOrderIcd[0].ICD?.Code || '')
+      //   } else {
+      //     addOriginalQueryParam()
+      //   }
+      // } else {
+      //   addOriginalQueryParam()
+      // }
 
       setActiveStep(activeStep + 1)
+      handleQueryParams(activeStep+1)
     } else {
       console.log('LabOrder: ', JSON.stringify(labOrder))
       saveLabOrder()
@@ -440,6 +488,11 @@ const AddLabOrder = () => {
     if (activeStep !== 0) {
       setActiveStep(activeStep - 1)
     }
+  }
+
+  const handleStepClick = (index: number) => {
+    setActiveStep(index)
+    handleQueryParams(index)
   }
 
   const saveLabOrder = () => {
@@ -479,9 +532,6 @@ const AddLabOrder = () => {
     <LabOrderContext.Provider value={{ labOrder, setLabOrder, collectionMethod, setCollectionMethod, steps, setSteps, moveToTop, setActiveStep, activeStep}}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Grid container spacing={6}>
-          {/* <Grid item xs={12}>
-            <AccountCard />
-          </Grid> */}
           <Grid item xs={12}>
             <Card className='flex flex-col lg:flex-row'>
               <CardContent className='border-be lg:border-be-0 lg:border-ie lg:min-is-[300px]'>
@@ -489,7 +539,7 @@ const AddLabOrder = () => {
                   <Stepper activeStep={activeStep} orientation='vertical' connector={<ConnectorHeight />}>
                     {steps.map((step, index) => {
                       return (
-                        <Step key={index} onClick={() => setActiveStep(index)}>
+                        <Step key={index} onClick={() => handleStepClick(index)}>
                           <StepLabel className='p-0' StepIconComponent={StepperCustomDot}>
                             <div className='step-label cursor-pointer'>
                               {/* <Typography className='step-number' color='text.primary'>{`0${index + 1}`}</Typography> */}
