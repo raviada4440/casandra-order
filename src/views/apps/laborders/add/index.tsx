@@ -266,31 +266,38 @@ const AddLabOrder = () => {
       qParams = new URLSearchParams(location.search)
     }
 
+    console.log('qParams: ', decodeURIComponent(qParams.toString()))
+
     // Get a specific query parameter
     const qSearchQuery = qParams.get('casandratests[query]') as string;
     const qSearchType = qParams.get('casandratests[refinementList][Type][0]') as string;
     const qLabName = qParams.get('casandratests[refinementList][Lab][0]') as string;
-    const qDrugName = qParams.get('casandratests[refinementList][DrugName][0]') as string;
+    const qDrugName = qParams.get('casandratests[refinementList][Drug Name][0]') as string;
     const qIndication = qParams.get('casandratests[refinementList][Indication][0]') as string;
     const qProgamName = qParams.get('casandratests[refinementList][ProgramName][0]') as string;
 
-    console.log('qSearchQuery: ', qSearchQuery, 'qSearchType: ', qSearchType, 'qLabName: ', qLabName, 'qDrugName: ', qDrugName, 'qIndication: ', qIndication)
-    setSearchQuery(qSearchQuery)
-    setSearchType(qSearchType)
-    setLabName(qLabName)
-    setDrugName(qDrugName)
-    setIndication(qIndication)
-    setProgramName(qProgamName)
+    console.log('qSearchQuery: ', decodeURIComponent(qSearchQuery), 'qSearchType: ', decodeURIComponent(qSearchType), 'qLabName: ', decodeURIComponent(qLabName), 'qDrugName: ', decodeURIComponent(qDrugName), 'qIndication: ', decodeURIComponent(qIndication))
+
+    if (qSearchQuery) { setSearchQuery(decodeURIComponent(qSearchQuery)) }
+    if (qSearchQuery) { setSearchType(decodeURIComponent(qSearchType)) }
+    if (qSearchQuery) { setLabName(decodeURIComponent(qLabName)) }
+    if (qSearchQuery) { setDrugName(decodeURIComponent(qDrugName)) }
+    if (qSearchQuery) { setIndication(decodeURIComponent(qIndication)) }
+    if (qSearchQuery) { setProgramName(decodeURIComponent(qProgamName)) }
 
     // setLabTestId(uuid.v4() as string)
 
   }, [location.href, location.search])
 
 
+
   // console.log('testcatalog: ', testCatalogQuery);
   const { data: tcData } = api.testcatalog.getTestByCasandraTestId.useQuery({ searchQuery: searchQuery || '', type: searchType || '', labName: labName || '', drugName: drugName || '', indication: indication || '', programName: programName || ''  })
 
   useEffect(() => {
+    
+    console.log('tcData: ', tcData)
+
     if (tcData && tcData.length === 1) {
 
       const item: any = tcData[0]

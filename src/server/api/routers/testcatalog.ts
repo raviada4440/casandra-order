@@ -26,40 +26,40 @@ const getElasticSearch = async (params: {
   const url = new URL(`${process.env.NEXT_PUBLIC_APP_URL}/api/search`)
   const facetFilters = []
 
-  if (params.indication && params.indication.length > 0) {
-    facetFilters.push(`Indication:${params.indication}`)
-  }
-
-  if (params.labName && params.labName.length > 0) {
-    facetFilters.push(`Lab:${params.labName}`)
-  }
-
-  if (params.type && params.type.length > 0) {
+  if (params.type && params.type.length > 0 && params.type !== 'null') {
     facetFilters.push(`Type:${params.type}`)
   }
 
-  if (params.drugName && params.drugName.length > 0) {
+  if (params.labName && params.labName.length > 0 && params.labName !== 'null') {
+    facetFilters.push(`Lab:${params.labName}`)
+  }
+
+  if (params.drugName && params.drugName.length > 0  && params.drugName !== 'null') {
     facetFilters.push(`DrugName:${params.drugName}`)
   }
 
-  if (params.programName && params.programName.length > 0) {
-    facetFilters.push(`DrugName:${params.programName}`)
+  if (params.indication && params.indication.length > 0 && params.indication !== 'null') {
+    facetFilters.push(`Indication:${params.indication}`)
+  }
+
+  if (params.programName && params.programName.length > 0 && params.programName !== 'null') {
+    facetFilters.push(`ProgramName:${params.programName}`)
   }
 
   const requestPayload = [
     {
       "indexName": "casandratests",
       "params": {
-      "facetFilters": facetFilters,
-      "facets": [
-        "*"
-      ],
-      "highlightPostTag": "__/ais-highlight__",
-      "highlightPreTag": "__ais-highlight__",
-      "hitsPerPage": 20,
-      "maxValuesPerFacet": 20,
-      "page": 0,
-        "query": params.searchQuery
+        "facetFilters": facetFilters,
+        "facets": [
+          "*"
+        ],
+        "highlightPostTag": "__/ais-highlight__",
+        "highlightPreTag": "__ais-highlight__",
+        "hitsPerPage": 20,
+        "maxValuesPerFacet": 20,
+        "page": 0,
+        "query": params.searchQuery && params.searchQuery.length > 0 && params.searchQuery != 'null' ? params.searchQuery : '',
       }
     }
   ]
@@ -162,13 +162,15 @@ export const testCatalogRouter = createTRPCRouter({
   .input(z.object({ searchQuery: z.string(), type: z.string(), labName: z.string(), drugName: z.string(), indication: z.string(), programName: z.string() }))
   .query(async ({ input }) => {
 
+    console.log('input getTestByCasandraTestId: ', JSON.stringify(input))
+
     let elasticResults = { results: [{ hits: [] }] };
 
     if (input.searchQuery.length > 0 || input.type.length > 0 || input.labName.length > 0 || input.drugName.length > 0 || input.indication.length > 0) {
       elasticResults = await getElasticSearch({ searchQuery: input.searchQuery, type: input.type, labName: input.labName, drugName: input.drugName, indication: input.indication, programName: input.programName })
     }
 
-    console.log('data: ', JSON.stringify(elasticResults.results[0].hits))
+    console.log('data: ', JSON.stringify(elasticResults))
 
 
     return elasticResults.results[0].hits
