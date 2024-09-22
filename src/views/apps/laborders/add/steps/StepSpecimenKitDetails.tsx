@@ -14,6 +14,7 @@ import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
+import CircularProgress from '@mui/material/CircularProgress'
 
 
 // Component Imports
@@ -38,7 +39,7 @@ type Props = {
 const StepSpecimenKitDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
 
   // Vars
-  const { labOrder, setLabOrder } = useContext(LabOrderContext);
+  const { labOrder, setLabOrder, loading } = useContext(LabOrderContext);
   const [formData, setFormData] = useState<LabOrderSpecimenWithRelations>(labOrder?.LabOrderSpecimen?.[0] as LabOrderSpecimenWithRelations)
 
   // const { data: session } = useSession()
@@ -152,7 +153,8 @@ const StepSpecimenKitDetails = ({ activeStep, handleNext, handlePrev, steps }: P
                       )
                     }
                   >
-                    {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
+                    { loading && <CircularProgress color="inherit" size={20} /> }
+                    { activeStep === steps.length - 1 ? 'Submit' : 'Next' }
                   </Button>
                 </div>
               </Grid>

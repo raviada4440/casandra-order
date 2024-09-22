@@ -6,6 +6,7 @@ import Button from '@mui/material/Button'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
+import CircularProgress from '@mui/material/CircularProgress'
 
 import "instantsearch.css/themes/satellite-min.css"
 
@@ -70,7 +71,7 @@ type Props = {
 
 const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
   // States
-  const { steps } = useContext(LabOrderContext);
+  const { steps, loading } = useContext(LabOrderContext);
 
   return (
     <Card>
@@ -147,7 +148,8 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
                   )
                 }
               >
-                {activeStep === steps?.length - 1 ? 'Submit' : 'Next'}
+                { loading && <CircularProgress color="inherit" size={20} /> }
+                { activeStep === steps.length - 1 ? 'Submit' : 'Next' }
               </Button>
             </div>
           </Grid>

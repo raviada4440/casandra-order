@@ -1,4 +1,6 @@
 
+import { useContext } from 'react'
+
 // MUI IMports
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -6,10 +8,12 @@ import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
+import CircularProgress from '@mui/material/CircularProgress'
 
 // Component Imports
 import DirectionalIcon from '@/components/DirectionalIcon'
 import AutocompleteIcd from '../autocomplete/AutocompleteIcd'
+import { LabOrderContext } from '..'
 
 type Props = {
   activeStep: number
@@ -19,6 +23,8 @@ type Props = {
 }
 
 const StepIcdDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
+  const { loading } = useContext(LabOrderContext);
+
   // Vars
   return (
     <Card>
@@ -65,7 +71,8 @@ const StepIcdDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) =>
                     )
                   }
                 >
-                  {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
+                  { loading && <CircularProgress color="inherit" size={20} /> }
+                  { activeStep === steps.length - 1 ? 'Submit' : 'Next' }
                 </Button>
               </div>
             </Grid>

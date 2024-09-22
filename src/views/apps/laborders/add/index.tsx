@@ -88,12 +88,13 @@ const stepEntries = [
     stepDetails: StepPatientDetails,
     subTitleDetails: PatientSubtitle
   },
-  {
-    title: 'ICD Codes',
-    subtitle: 'Patient History',
-    stepDetails: StepIcdDetails,
-    subTitleDetails: IcdSubtitle
-  },
+
+  // {
+  //   title: 'ICD Codes',
+  //   subtitle: 'Patient History',
+  //   stepDetails: StepIcdDetails,
+  //   subTitleDetails: IcdSubtitle
+  // },
   {
     title: 'Tests',
     subtitle: 'Test Selection',
@@ -130,6 +131,7 @@ type LabOrderContextType = {
   moveToTop: (title: string) => void
   setActiveStep: Dispatch<SetStateAction<number>>
   activeStep: number
+  loading: boolean
 };
 
 const generateOrderNumber = () => {
@@ -162,6 +164,7 @@ const AddLabOrder = () => {
   const [labOrder, setLabOrder] = useState<LabOrderWithRelations>({ Id: labOrderId, OrderDate: new Date(), OrderNumber: generateOrderNumber(), LabOrderStatus: [labOrderStatus] } as LabOrderWithRelations)
   const [labOrderCopy, setLabOrderCopy] = useState<LabOrderWithRelations>({ ...labOrder } as LabOrderWithRelations)
   const [steps, setSteps] = useState<Step[]>(stepEntries)
+  const [loading, setLoading] = useState(false);
 
   // const [labTestId, setLabTestId] = useState<string>('')
 
@@ -292,10 +295,16 @@ const AddLabOrder = () => {
 
 
   // console.log('testcatalog: ', testCatalogQuery);
-  const { data: tcData } = api.testcatalog.getTestByCasandraTestId.useQuery({ searchQuery: searchQuery || '', type: searchType || '', labName: labName || '', drugName: drugName || '', indication: indication || '', programName: programName || ''  })
+  const { data: tcData, refetch } = api.testcatalog.getTestByCasandraTestId.useQuery({ searchQuery: searchQuery || '', type: searchType || '', labName: labName || '', drugName: drugName || '', indication: indication || '', programName: programName || ''  }, {enabled: searchQuery.length > 0 || searchType.length > 0 || labName.length > 0 || drugName.length > 0 || indication.length > 0 || programName.length > 0})
 
   useEffect(() => {
-    
+    if (searchQuery.length > 0 || searchType.length > 0 || labName.length > 0 || drugName.length > 0 || indication.length > 0 || programName.length > 0) {
+      refetch()
+    }
+  }, [searchQuery, searchType, labName, drugName, indication, programName, refetch])
+
+  useEffect(() => {
+
     console.log('tcData: ', tcData)
 
     if (tcData && tcData.length === 1) {
@@ -437,12 +446,20 @@ const AddLabOrder = () => {
 
 
   const addQueryParam = (key: string, value: string) => {
-    window.history.pushState({}, '', pathname + '?' + createQueryString(key, value));
+    const queryString = createQueryString(key, value)
+
+    if (queryString && queryString.length > 0) {
+      window.history.pushState({}, '', `${pathname}?${queryString}` )
+    }
   }
 
   const addOriginalQueryParam = () => {
-    window.history.pushState({}, '', pathname + '?' + createQueryString('', ''));
-  }
+    const queryString = createQueryString('', '')
+
+    if (queryString && queryString.length > 0) {
+      window.history.pushState({}, '', `${pathname}?${queryString}`);
+    }
+}
 
   const handleQueryParams = (index: number) => {
     const currentStep = steps[index]
@@ -465,24 +482,6 @@ const AddLabOrder = () => {
   // Handlers
   const handleNext = () => {
     if (activeStep !== steps.length - 1) {
-
-      // const currentStep = steps[activeStep+1]
-
-      // console.log('Current Step: ', currentStep.title)
-
-      // if (currentStep.title === 'Tests') {
-      //   console.log('Current Step: ', currentStep.title)
-
-      //   if (labOrder.LabOrderIcd.length > 0 ) {
-      //     console.log('labOrder.LabOrderIcd.length: ', labOrder.LabOrderIcd.length)
-      //     addQueryParam('casandratests[query]', labOrder.LabOrderIcd[0].ICD?.Code || '')
-      //   } else {
-      //     addOriginalQueryParam()
-      //   }
-      // } else {
-      //   addOriginalQueryParam()
-      // }
-
       setActiveStep(activeStep + 1)
       handleQueryParams(activeStep+1)
     } else {
@@ -503,6 +502,7 @@ const AddLabOrder = () => {
   }
 
   const saveLabOrder = () => {
+    setLoading(true)
 
     const newLabOrder = {
       Id: labOrder.Id,
@@ -515,19 +515,21 @@ const AddLabOrder = () => {
       OrganizationId: labOrder.Organization?.Id,
       PatientId: labOrder.Patient?.Id,
       OrderDate: labOrder.OrderDate,
-      LabOrderIcd: { connectOrCreate: labOrder.LabOrderIcd.map(labIcd => ({ where: { Id: labIcd.Id }, create: { Id: labIcd.Id, ICDId: labIcd.ICD?.Id } })) },
-      LabOrderTest: { connectOrCreate: labOrder.LabOrderTest.map(labTest => ({ where: { Id: labTest.Id }, create: { Id: labTest.Id, TestId: labTest.TestId } })) },
-      LabOrderSpecimen: { connectOrCreate: labOrder.LabOrderSpecimen.map(labSpecimen => ({ where: { Id: labSpecimen.Id }, create: labSpecimen })) },
-      LabOrderStatus: { connectOrCreate: labOrder.LabOrderStatus.map(labOrderStatus => ({ where: { Id: labOrderStatus.Id }, create: labOrderStatus })) },
+      LabOrderIcd: { connectOrCreate: labOrder.LabOrderIcd?.map(labIcd => ({ where: { Id: labIcd.Id }, create: { Id: labIcd.Id, ICDId: labIcd.ICD?.Id } })) },
+      LabOrderTest: { connectOrCreate: labOrder.LabOrderTest?.map(labTest => ({ where: { Id: labTest.Id }, create: { Id: labTest.Id, TestId: labTest.TestId } })) },
+      LabOrderSpecimen: { connectOrCreate: labOrder.LabOrderSpecimen?.map(labSpecimen => ({ where: { Id: labSpecimen.Id }, create: labSpecimen })) },
+      LabOrderStatus: { connectOrCreate: labOrder.LabOrderStatus?.map(labOrderStatus => ({ where: { Id: labOrderStatus.Id }, create: labOrderStatus })) },
     }
 
     createLabOrder.mutate(newLabOrder, {
       onSuccess: (newData) => {
+        setLoading(false);
         console.log('Returned data:', newData)
         toast.success('Lab Order Created Successfully')
         router.push(getLocalizedUrl(`apps/laborders/list?refreshId=${new Date().getTime()}`, locale as Locale))
       },
       onError: (error) => {
+        setLoading(false);
         console.error('Error creating lab order:', error)
         toast.error('Error creating lab order')
       }
@@ -536,7 +538,7 @@ const AddLabOrder = () => {
   }
 
   return (
-    <LabOrderContext.Provider value={{ labOrder, setLabOrder, collectionMethod, setCollectionMethod, steps, setSteps, moveToTop, setActiveStep, activeStep}}>
+    <LabOrderContext.Provider value={{ labOrder, setLabOrder, collectionMethod, setCollectionMethod, steps, setSteps, moveToTop, setActiveStep, activeStep, loading}}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Grid container spacing={6}>
           <Grid item xs={12}>

@@ -10,6 +10,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
+import CircularProgress from '@mui/material/CircularProgress'
 
 import Button from '@mui/material/Button'
 
@@ -29,7 +30,7 @@ type Props = {
 
 const StepBillingDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
   // Vars
-  const { labOrder, setLabOrder } = useContext(LabOrderContext);
+  const { labOrder, setLabOrder, loading } = useContext(LabOrderContext);
   const billingId = uuid.v4()
 
   if (!labOrder.LabOrderBilling) {
@@ -146,7 +147,8 @@ const StepBillingDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
                       )
                     }
                   >
-                    {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
+                    { loading && <CircularProgress color="inherit" size={20} /> }
+                    { activeStep === steps.length - 1 ? 'Submit' : 'Next' }
                   </Button>
                 </div>
               </Grid>

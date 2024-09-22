@@ -26,13 +26,15 @@ const TestSubtitle = () => {
   // Vars
   const { labOrder, setLabOrder } = useContext(LabOrderContext);
   const classes = useStyles();
-  const [deleteId, setDeleteId] = useState(undefined as string | undefined)
+  const [deleteId, setDeleteId] = useState<string | undefined>(undefined);
   const [open, setOpen] = useState(false)
 
   const handleOpen = (id: string) => {
     console.log('Deleting with id: ', id)
     setDeleteId(id)
     setOpen(true)
+    console.log('Deleting with deleteId: ', deleteId)
+    console.log('open : ', open)
   }
 
   const handleClose = () => {

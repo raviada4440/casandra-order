@@ -10,6 +10,7 @@ import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
+import CircularProgress from '@mui/material/CircularProgress'
 
 // import type { SelectChangeEvent } from '@mui/material/Select';
 
@@ -35,7 +36,7 @@ type Props = {
 const StepEligibility = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
 
   // Vars
-  const { labOrder, setLabOrder } = useContext(LabOrderContext);
+  const { labOrder, setLabOrder, loading } = useContext(LabOrderContext);
   const [formData, setFormData] = useState<LabOrderSponsoredTestConsentWithRelations>({} as LabOrderSponsoredTestConsentWithRelations)
 
   const [htmlContent, setHtmlContent] = useState('');
@@ -150,7 +151,8 @@ const StepEligibility = ({ activeStep, handleNext, handlePrev, steps }: Props) =
                       )
                     }
                   >
-                    {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
+                    { loading && <CircularProgress color="inherit" size={20} /> }
+                    { activeStep === steps.length - 1 ? 'Submit' : 'Next' }
                   </Button>
                 </div>
               </Grid>

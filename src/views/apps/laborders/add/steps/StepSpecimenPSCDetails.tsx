@@ -1,5 +1,5 @@
 // React Imports
-// import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 
 // import { useSession } from 'next-auth/react'
 
@@ -9,10 +9,12 @@ import CardContent from '@mui/material/CardContent'
 import Grid from '@mui/material/Grid'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
+import CircularProgress from '@mui/material/CircularProgress'
 
 
 // Component Imports
 import DirectionalIcon from '@/components/DirectionalIcon'
+import { LabOrderContext } from '..'
 
 // import { LabOrderContext } from '.'
 // import type { LabOrderSpecimenWithRelations } from '~prisma/generated/zod'
@@ -28,7 +30,7 @@ type Props = {
 const StepSpecimenPSCDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
 
   // Vars
-  // const { labOrder } = useContext(LabOrderContext);
+  const { loading } = useContext(LabOrderContext);
 
   // const { data: session } = useSession()
 
@@ -91,7 +93,8 @@ const StepSpecimenPSCDetails = ({ activeStep, handleNext, handlePrev, steps }: P
                       )
                     }
                   >
-                    {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
+                    { loading && <CircularProgress color="inherit" size={20} /> }
+                    { activeStep === steps.length - 1 ? 'Submit' : 'Next' }
                   </Button>
                 </div>
               </Grid>

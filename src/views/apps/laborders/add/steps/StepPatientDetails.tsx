@@ -15,6 +15,7 @@ import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
+import CircularProgress from '@mui/material/CircularProgress'
 
 // Styled Component Imports
 import uuid from 'react-native-uuid'
@@ -43,7 +44,7 @@ type Props = {
 const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
 
   // Vars
-  const { labOrder, setLabOrder } = useContext(LabOrderContext);
+  const { labOrder, setLabOrder, loading } = useContext(LabOrderContext);
   const patientId = uuid.v4()
 
   if (!labOrder.Patient) {
@@ -243,7 +244,8 @@ const StepPatientDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
                       )
                     }
                   >
-                    {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
+                    { loading && <CircularProgress color="inherit" size={20} /> }
+                    { activeStep === steps.length - 1 ? 'Submit' : 'Next' }
                   </Button>
                 </div>
               </Grid>

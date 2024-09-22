@@ -13,7 +13,7 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
 import type { ButtonProps } from '@mui/material'
-import { Button, CardHeader, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, CardContent, } from '@mui/material'
+import { Button, CardHeader, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, CardContent, CircularProgress, } from '@mui/material'
 
 import styles from '@core/styles/table.module.css'
 
@@ -48,7 +48,7 @@ const convertDate = (collectionDate: Date | null) => collectionDate ? new Date(c
 const StepSpecimenDetails = ({ activeStep, handleNext, handlePrev, steps }: Props) => {
 
   // States
-  const { labOrder, setLabOrder, collectionMethod } = useContext(LabOrderContext)
+  const { labOrder, setLabOrder, collectionMethod, loading } = useContext(LabOrderContext)
 
   console.log('collectionMethod ', collectionMethod)
 
@@ -256,7 +256,8 @@ const StepSpecimenDetails = ({ activeStep, handleNext, handlePrev, steps }: Prop
                   )
                 }
               >
-                {activeStep === steps.length - 1 ? 'Submit' : 'Next'}
+                { loading && <CircularProgress color="inherit" size={20} /> }
+                { activeStep === steps.length - 1 ? 'Submit' : 'Next' }
               </Button>
             </div>
           </Grid>
