@@ -24,6 +24,7 @@ import uuid from 'react-native-uuid'
 import DirectionalIcon from '@/components/DirectionalIcon'
 import { LabOrderContext } from '..'
 import type { LabOrderBillingWithRelations } from '~prisma/generated/zod'
+import CptDetails from './CptDetails'
 
 
 type Props = {
@@ -143,6 +144,7 @@ const StepBillingDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
                   </Grid>
                 </TabPanel>
                 <TabPanel sx={{ width: '100%' }} value='2'>
+                  <CptDetails />
                 </TabPanel>
               </div>
             </TabContext>

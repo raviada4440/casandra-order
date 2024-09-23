@@ -86,36 +86,16 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
         <Configure hitsPerPage={20} />
         <div className="container">
           <div className="searchbox">
+            <CurrentRefinements />
             <SearchBox placeholder='Search for tests by name, testcode or biomarker'/>
             <Typography variant='body2' className='text-textSecondary'>Please clear the searchbox contents to see more choices</Typography>
-          </div>
+            </div>
           <div className="search-panel">
             <div className="search-panel__results">
-
-              <CurrentRefinements />
               <QueryRulesBanner />
               <CustomInfiniteHits />
             </div>
 
-            <div className="search-panel__filters">
-              <DynamicWidgets facets={['*']}>
-                <Panel header="Lab">
-                  <RefinementList attribute="Lab" searchable/>
-                </Panel>
-                <Panel header="Type">
-                  <RefinementList attribute="Type" />
-                </Panel>
-                <Panel header="Indication">
-                  <RefinementList attribute="Indication" searchable/>
-                </Panel>
-                <Panel header="Drug Name">
-                  <RefinementList attribute="Drug Name" searchable/>
-                </Panel>
-                <Panel header="Program Name">
-                  <RefinementList attribute="Program Name" searchable/>
-                </Panel>
-              </DynamicWidgets>
-            </div>
           </div>
         </div>
       </React.Fragment>
@@ -133,14 +113,32 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
         </div>
 
         <Grid container spacing={5}>
-          <Grid item xs={12}>
-            <div className="">
-
-              <InstantSearch indexName='casandratests' searchClient={searchClient} routing>
+            <InstantSearch indexName='casandratests' searchClient={searchClient} routing>
+              <Grid item xs={9}>
                 <SearchContent />
-              </InstantSearch>
-            </div>
-          </Grid>
+              </Grid>
+              <Grid item xs={3}>
+                <div className="search-panel__filters">
+                  <DynamicWidgets facets={['*']}>
+                    <Panel header="Lab">
+                      <RefinementList attribute="Lab" searchable/>
+                    </Panel>
+                    <Panel header="Type">
+                      <RefinementList attribute="Type" />
+                    </Panel>
+                    <Panel header="Indication">
+                      <RefinementList attribute="Indication" searchable/>
+                    </Panel>
+                    <Panel header="Drug Name">
+                      <RefinementList attribute="Drug Name" searchable/>
+                    </Panel>
+                    <Panel header="Program Name">
+                      <RefinementList attribute="Program Name" searchable/>
+                    </Panel>
+                  </DynamicWidgets>
+                </div>
+              </Grid>
+            </InstantSearch>
           <Grid item xs={12}>
             <div className='flex items-center justify-between'>
               <Button
