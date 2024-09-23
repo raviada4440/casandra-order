@@ -95,24 +95,24 @@ const apiClient = API(
           type: 'string'
         }
       ],
-
-      // query_rules: [
-      //   {
-      //     id: 'default-state',
-      //     conditions: [[]],
-      //     actions: [
-      //       {
-      //         action: 'RenderFacetsOrder',
-      //         facetAttributesOrder: [
-      //           'Type',
-      //           'Indication',
-      //           // 'Lab',
-      //           // 'Drug Name',
-      //         ]
-      //       }
-      //     ]
-      //   },
-      // ]
+      query_rules: [
+        {
+          id: 'default-state',
+          conditions: [[]],
+          actions: [
+            {
+              action: 'RenderFacetsOrder',
+              facetAttributesOrder: [
+                'Type',
+                'Indication',
+                'Lab',
+                'Drug Name',
+                'Program Name',
+              ]
+            }
+          ]
+        },
+      ]
     }
   },
   { debug: true }

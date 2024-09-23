@@ -82,11 +82,10 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
 
     return (
       <React.Fragment>
-        {(status === 'loading'  || status === 'stalled') && <CircularProgress  color="inherit" size={50} />}
+        {(status === 'loading'  || status === 'stalled') && <CircularProgress  color="inherit" size={30} />}
         <Configure hitsPerPage={20} />
         <div className="container">
           <div className="searchbox">
-            <CurrentRefinements />
             <SearchBox placeholder='Search for tests by name, testcode or biomarker'/>
             <Typography variant='body2' className='text-textSecondary'>Please clear the searchbox contents to see more choices</Typography>
             </div>
@@ -111,23 +110,27 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
             Tests
           </Typography>
         </div>
-
-        <Grid container spacing={5}>
-            <InstantSearch indexName='casandratests' searchClient={searchClient} routing>
+          <InstantSearch indexName='casandratests' searchClient={searchClient} routing>
+            <Grid container spacing={5}>
+              <Grid item xs={12}>
+                <CurrentRefinements />
+              </Grid>
+            </Grid>
+            <Grid container spacing={5}>
               <Grid item xs={9}>
                 <SearchContent />
               </Grid>
               <Grid item xs={3}>
                 <div className="search-panel__filters">
                   <DynamicWidgets facets={['*']}>
-                    <Panel header="Lab">
-                      <RefinementList attribute="Lab" searchable/>
-                    </Panel>
                     <Panel header="Type">
                       <RefinementList attribute="Type" />
                     </Panel>
                     <Panel header="Indication">
                       <RefinementList attribute="Indication" searchable/>
+                    </Panel>
+                    <Panel header="Lab">
+                      <RefinementList attribute="Lab" searchable/>
                     </Panel>
                     <Panel header="Drug Name">
                       <RefinementList attribute="Drug Name" searchable/>
@@ -138,35 +141,37 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
                   </DynamicWidgets>
                 </div>
               </Grid>
-            </InstantSearch>
-          <Grid item xs={12}>
-            <div className='flex items-center justify-between'>
-              <Button
-                variant='outlined'
-                color='primary'
-                disabled={activeStep === 0}
-                onClick={handlePrev}
-                startIcon={<DirectionalIcon ltrIconClass='ri-arrow-left-line' rtlIconClass='ri-arrow-right-line' />}
-              >
-                Previous
-              </Button>
-              <Button
-                variant='contained'
-                color={activeStep === steps?.length - 1 ? 'success' : 'primary'}
-                onClick={handleNext}
-                endIcon={
-                  activeStep === steps?.length - 1 ? (
-                    <i className='ri-check-line' />
-                  ) : (
-                    <DirectionalIcon ltrIconClass='ri-arrow-right-line' rtlIconClass='ri-arrow-left-line' />
-                  )
-                }
-              >
-                { loading && <CircularProgress color="inherit" size={20} /> }
-                { activeStep === steps.length - 1 ? 'Submit' : 'Next' }
-              </Button>
-            </div>
-          </Grid>
+            </Grid>
+          </InstantSearch>
+          <Grid container spacing={5}>
+            <Grid item xs={12}>
+              <div className='flex items-center justify-between'>
+                <Button
+                  variant='outlined'
+                  color='primary'
+                  disabled={activeStep === 0}
+                  onClick={handlePrev}
+                  startIcon={<DirectionalIcon ltrIconClass='ri-arrow-left-line' rtlIconClass='ri-arrow-right-line' />}
+                >
+                  Previous
+                </Button>
+                <Button
+                  variant='contained'
+                  color={activeStep === steps?.length - 1 ? 'success' : 'primary'}
+                  onClick={handleNext}
+                  endIcon={
+                    activeStep === steps?.length - 1 ? (
+                      <i className='ri-check-line' />
+                    ) : (
+                      <DirectionalIcon ltrIconClass='ri-arrow-right-line' rtlIconClass='ri-arrow-left-line' />
+                    )
+                  }
+                >
+                  { loading && <CircularProgress color="inherit" size={20} /> }
+                  { activeStep === steps.length - 1 ? 'Submit' : 'Next' }
+                </Button>
+              </div>
+            </Grid>
         </Grid>
       </CardContent>
     </Card>

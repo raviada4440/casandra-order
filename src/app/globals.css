@@ -147,11 +147,12 @@ code {
 
 .search-panel__results {
   flex: 3;
-  margin-inline-end: 20px;
+  margin-inline-end: 10px;
 }
 
 .searchbox {
-  margin-block-end: 2rem;
+  margin-block-end: 1rem;
+  margin-inline-end: 10px;
 }
 
 .pagination {
@@ -242,18 +243,22 @@ li.ais-InfiniteHits-item {
 } */
 
 .ais-CurrentRefinements {
+  margin-block-end: 10px;
   .ais-CurrentRefinements-list {
-      .ais-CurrentRefinements-item {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px; /* Adjust the gap between items as needed */
+        .ais-CurrentRefinements-item {
           background-color: #831c78;
           color: #fff;
           font-size: .75rem;
-          margin-block-end: 10px;
+          margin-block-end: 5px;
+          white-space: nowrap;
           .ais-CurrentRefinements-category {
             .ais-CurrentRefinements-categoryLabel {
               max-width: 150px;
               overflow: hidden;
               text-overflow: ellipsis;
-              white-space: nowrap;
             },
             .ais-CurrentRefinements-delete {
                 color: #fff;

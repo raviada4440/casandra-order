@@ -30,14 +30,18 @@ const AutocompleteIcd = () => {
     // Create a copy of labOrder
     const labOrderCopy = { ...labOrder }
 
+    const labOrderCpt = labOrderCopy.LabOrderCpt
+
     // delete all prior LabOrderIcd
-    labOrderCopy.LabOrderIcd = [];
+    if (labOrderCpt && labOrderCpt[0]) {
+      labOrderCpt[0].LabOrderIcd = [] as LabOrderIcdWithRelations[];
+    }
 
     // For each value in values array
     values.forEach((value) => {
 
       // Check if the ICD already exists in the LabOrderIcd array
-      const exists = labOrderCopy.LabOrderIcd.some((labOrderIcd) => labOrderIcd && labOrderIcd.ICD ? labOrderIcd.ICD.Code === value.Code : false);
+      const exists = labOrderCpt && labOrderCpt[0]?.LabOrderIcd.some((labOrderIcd) => labOrderIcd && labOrderIcd.ICD ? labOrderIcd.ICD.Code === value.Code : false);
 
       if (!exists) {
 
@@ -48,7 +52,7 @@ const AutocompleteIcd = () => {
         }
 
         // Push the new object to the LabOrderIcd array
-        labOrderCopy.LabOrderIcd.push(newLabOrderIcdEntry as LabOrderIcdWithRelations)
+        labOrderCpt[0]?.LabOrderIcd.push(newLabOrderIcdEntry as LabOrderIcdWithRelations)
       }
     })
 
