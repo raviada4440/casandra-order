@@ -89,7 +89,7 @@ const CptDetails = () => {
       cell: info => info.getValue(),
       header: 'CPT Code'
     }),
-    columnHelper.accessor('LabOrderIcd.Code', {
+    columnHelper.accessor(row => row.LabOrderIcd?.[0]?.ICD?.Code, {
       cell: info => info.getValue(),
       header: 'ICD Code'
     }),

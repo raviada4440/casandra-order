@@ -49,6 +49,10 @@ const AddCptDetails = ({ open, setOpen, cptRecord }: AddCptProps) => {
     setFormData(updatedFormData as LabOrderCptWithRelations);
   }
 
+  const handleUpdateFormData = (updatedRecord: LabOrderCptWithRelations) => {
+    setFormData(updatedRecord);
+  }
+
   const handleSave = (cpt: LabOrderCptWithRelations) => {
     if (cpt) {
       // console.log('cpt: ', cpt)
@@ -82,22 +86,22 @@ const AddCptDetails = ({ open, setOpen, cptRecord }: AddCptProps) => {
           <i className='ri-close-line' />
         </IconButton>
           <div className='flex flex-col gap-2 mt-4'>
-            <form onSubmit={e => e.preventDefault()}>
             <Grid container spacing={5}>
-            <Grid item xs={12} md={12}>
-            <TextField
-                  fullWidth
-                  label='CPT Code'
-                  value={formData?.CPTCode || ''}
-                  placeholder='CPT Code'
-                  onChange={e => handleFormChange('CPTCode', e.target.value)}
-                />
+              <Grid item xs={12}>
+                <form onSubmit={e => e.preventDefault()}>
+                  <TextField
+                    fullWidth
+                    label='CPT Code'
+                    value={formData?.CPTCode || ''}
+                    placeholder='CPT Code'
+                    onChange={e => handleFormChange('CPTCode', e.target.value)}
+                  />
+                </form>
               </Grid>
-              <Grid item xs={12} md={12}>
-                <AutocompleteIcd />
+              <Grid item xs={12}>
+                <AutocompleteIcd cptRecord={formData} onUpdateFormData={handleUpdateFormData}/>
               </Grid>
             </Grid>
-            </form>
           </div>
 
         <DialogActions className='gap-2 justify-center pbs-0 pbe-10 pli-10 sm:pbe-16 sm:pli-16'>

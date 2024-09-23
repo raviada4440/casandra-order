@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import uuid from 'react-native-uuid';
 
@@ -8,13 +8,19 @@ import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { Chip, CircularProgress, Grid } from '@mui/material';
 
-import type { ICD, ICDWithRelations, LabOrderIcdWithRelations } from '~prisma/generated/zod';
+import type { ICD, ICDWithRelations, LabOrderCptWithRelations, LabOrderIcdWithRelations } from '~prisma/generated/zod';
 import { api } from '~trpc/react';
-import { LabOrderContext } from '..';
 
-const AutocompleteIcd = () => {
+// import { LabOrderContext } from '..';
 
-  const { labOrder, setLabOrder } = useContext(LabOrderContext);
+type AutocompleteIcdProps = {
+  cptRecord: LabOrderCptWithRelations;
+  onUpdateFormData: (updatedRecord: LabOrderCptWithRelations) => void;
+};
+
+const AutocompleteIcd = ({ cptRecord, onUpdateFormData }: AutocompleteIcdProps) => {
+
+  // const { labOrder, setLabOrder } = useContext(LabOrderContext);
 
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState<ICD[]>([]);
@@ -25,40 +31,17 @@ const AutocompleteIcd = () => {
   const { data, error, isLoading } = api.laborders.getIcdCodes.useQuery({ searchStr: inputValue })
 
   const onIcdChange = (values: ICD[]) => {
-    // console.log('value', values)
+    const updatedLabOrderIcd = values.map((value) => ({
+      Id: uuid.v4() as string,
+      ICD: value as ICDWithRelations,
+    }));
 
-    // Create a copy of labOrder
-    const labOrderCopy = { ...labOrder }
+    const updatedRecord: LabOrderCptWithRelations = {
+      ...cptRecord,
+      LabOrderIcd: updatedLabOrderIcd as LabOrderIcdWithRelations[],
+    };
 
-    const labOrderCpt = labOrderCopy.LabOrderCpt
-
-    // delete all prior LabOrderIcd
-    if (labOrderCpt && labOrderCpt[0]) {
-      labOrderCpt[0].LabOrderIcd = [] as LabOrderIcdWithRelations[];
-    }
-
-    // For each value in values array
-    values.forEach((value) => {
-
-      // Check if the ICD already exists in the LabOrderIcd array
-      const exists = labOrderCpt && labOrderCpt[0]?.LabOrderIcd.some((labOrderIcd) => labOrderIcd && labOrderIcd.ICD ? labOrderIcd.ICD.Code === value.Code : false);
-
-      if (!exists) {
-
-        // Create an object of type LabOrderIcdWithRelations
-        const newLabOrderIcdEntry = {
-          Id: uuid.v4() as string,
-          ICD: value as ICDWithRelations
-        }
-
-        // Push the new object to the LabOrderIcd array
-        labOrderCpt[0]?.LabOrderIcd.push(newLabOrderIcdEntry as LabOrderIcdWithRelations)
-      }
-    })
-
-    // Update the labOrder state
-    setLabOrder(labOrderCopy)
-
+    onUpdateFormData(updatedRecord);
   }
 
   useEffect(() => {
@@ -74,7 +57,7 @@ const AutocompleteIcd = () => {
       setOptions(data);
     }
 
-  }, [data, labOrder, error, isLoading]);
+  }, [data, error, isLoading]);
 
   return (
     <Autocomplete
