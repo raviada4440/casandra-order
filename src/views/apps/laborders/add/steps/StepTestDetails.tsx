@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import React,{ useContext } from 'react'
 
 // MUI Imports
 import Grid from '@mui/material/Grid'
@@ -17,7 +17,8 @@ import {
   CurrentRefinements,
   Configure,
   DynamicWidgets,
-  useQueryRules
+  useQueryRules,
+  useInstantSearch
 } from 'react-instantsearch'
 
 import Client from '@searchkit/instantsearch-client'
@@ -69,9 +70,57 @@ type Props = {
   steps: { title: string; subtitle: string }[]
 }
 
+
 const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
   // States
   const { steps, loading } = useContext(LabOrderContext);
+
+  const SearchContent = () => {
+    const { status } = useInstantSearch();
+
+    console.log('search status ', status)
+
+    return (
+      <React.Fragment>
+        {(status === 'loading'  || status === 'stalled') && <CircularProgress  color="inherit" size={50} />}
+        <Configure hitsPerPage={20} />
+        <div className="container">
+          <div className="searchbox">
+            <SearchBox placeholder='Search for tests by name, testcode or biomarker'/>
+            <Typography variant='body2' className='text-textSecondary'>Please clear the searchbox contents to see more choices</Typography>
+          </div>
+          <div className="search-panel">
+            <div className="search-panel__results">
+
+              <CurrentRefinements />
+              <QueryRulesBanner />
+              <CustomInfiniteHits />
+            </div>
+
+            <div className="search-panel__filters">
+              <DynamicWidgets facets={['*']}>
+                <Panel header="Lab">
+                  <RefinementList attribute="Lab" searchable/>
+                </Panel>
+                <Panel header="Type">
+                  <RefinementList attribute="Type" />
+                </Panel>
+                <Panel header="Indication">
+                  <RefinementList attribute="Indication" searchable/>
+                </Panel>
+                <Panel header="Drug Name">
+                  <RefinementList attribute="Drug Name" searchable/>
+                </Panel>
+                <Panel header="Program Name">
+                  <RefinementList attribute="Program Name" searchable/>
+                </Panel>
+              </DynamicWidgets>
+            </div>
+          </div>
+        </div>
+      </React.Fragment>
+    )
+  };
 
   return (
     <Card>
@@ -86,42 +135,9 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
         <Grid container spacing={5}>
           <Grid item xs={12}>
             <div className="">
+
               <InstantSearch indexName='casandratests' searchClient={searchClient} routing>
-                <Configure hitsPerPage={20} />
-                <div className="container">
-                  <div className="searchbox">
-                    <SearchBox placeholder='Search for tests by name, testcode or biomarker'/>
-                    <Typography variant='body2' className='text-textSecondary'>Please clear the searchbox contents to see more choices</Typography>
-                  </div>
-                  <div className="search-panel">
-                    <div className="search-panel__results">
-
-                      <CurrentRefinements />
-                      <QueryRulesBanner />
-                      <CustomInfiniteHits />
-                    </div>
-
-                    <div className="search-panel__filters">
-                      <DynamicWidgets facets={['*']}>
-                        <Panel header="Lab">
-                          <RefinementList attribute="Lab" searchable/>
-                        </Panel>
-                        <Panel header="Type">
-                          <RefinementList attribute="Type" />
-                        </Panel>
-                        <Panel header="Indication">
-                          <RefinementList attribute="Indication" searchable/>
-                        </Panel>
-                        <Panel header="Drug Name">
-                          <RefinementList attribute="Drug Name" searchable/>
-                        </Panel>
-                        <Panel header="Program Name">
-                          <RefinementList attribute="Program Name" searchable/>
-                        </Panel>
-                      </DynamicWidgets>
-                    </div>
-                  </div>
-                </div>
+                <SearchContent />
               </InstantSearch>
             </div>
           </Grid>

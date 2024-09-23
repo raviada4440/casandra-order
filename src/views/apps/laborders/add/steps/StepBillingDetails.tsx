@@ -11,6 +11,10 @@ import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import Typography from '@mui/material/Typography'
 import CircularProgress from '@mui/material/CircularProgress'
+import Tab from '@mui/material/Tab'
+import TabList from '@mui/lab/TabList'
+import TabPanel from '@mui/lab/TabPanel'
+import TabContext from '@mui/lab/TabContext'
 
 import Button from '@mui/material/Button'
 
@@ -20,6 +24,7 @@ import uuid from 'react-native-uuid'
 import DirectionalIcon from '@/components/DirectionalIcon'
 import { LabOrderContext } from '..'
 import type { LabOrderBillingWithRelations } from '~prisma/generated/zod'
+
 
 type Props = {
   activeStep: number
@@ -32,6 +37,12 @@ const StepBillingDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
   // Vars
   const { labOrder, setLabOrder, loading } = useContext(LabOrderContext);
   const billingId = uuid.v4()
+
+  const [value, setValue] = useState<string>('1')
+
+  const handleChange = (event: SyntheticEvent, newValue: string) => {
+    setValue(newValue)
+  }
 
   if (!labOrder.LabOrderBilling) {
     labOrder.LabOrderBilling = [{ Id: billingId }] as LabOrderBillingWithRelations[]
@@ -61,69 +72,81 @@ const StepBillingDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
                 Billing
               </Typography>
             </div>
+            <TabContext value={value}>
+              <div className='flex flex-col gap-2 mt-4'>
+                <TabList variant="fullWidth" onChange={handleChange} aria-label='vertical tabs example'>
+                  <Tab value='1' icon={<i className='ri-test-tube-line text-3xl text-primary' />} label='Billing Details' />
+                  <Tab value='2' icon={<i className='ri-building-4-line text-3xl text-primary' />} label='CPT/ICD Codes' />
+                </TabList>
+                <TabPanel sx={{ width: '100%' }} value='1'>
+                  <Grid container spacing={1}>
+                    <Grid item xs={12} md={6}>
+                      <FormControl fullWidth>
+                        <InputLabel id='select-billto'>Bill To</InputLabel>
+                        <Select
+                          id='billto-select'
+                          label='Bill To'
+                          labelId='select-billto'
+                          value={formData?.BillToId || ''}
+                          onChange={e => handleFormChange('BillToId', e.target.value)}
+                        >
+                          <MenuItem value='ins'>Insurance</MenuItem>
+                          <MenuItem value='self'>Patient</MenuItem>
+                          <MenuItem value='pharma'>Pharma</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <FormControl fullWidth>
+                        <InputLabel id='select-patientstatus'>Patient Status</InputLabel>
+                        <Select
+                          id='patientstatus-select'
+                          label='Patient Status'
+                          labelId='select-patientstatus'
+                          value={formData?.PatientStatus || ''}
+                          onChange={e => handleFormChange('PatientStatus', e.target.value)}
+                        >
+                          <MenuItem value='inpatient'>Outpatient</MenuItem>
+                          <MenuItem value='inpatient'>Hospital Inpatient</MenuItem>
+                          <MenuItem value='hchb'>Home Care</MenuItem>
+                          <MenuItem value='longterm'>Longterm Care</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={12}>
+                      <FormControl fullWidth>
+                        <InputLabel id='select-healthplan'>Health Plan</InputLabel>
+                        <Select
+                          id='healthplan-select'
+                          label='Health Plan'
+                          labelId='select-healthplan'
+                          value={formData?.HealthPalnId || ''}
+                          onChange={e => handleFormChange('HealthPalnId', e.target.value)}
+                        >
+                          <MenuItem value='bcbsnc'>BCBS of North Carolina</MenuItem>
+                          <MenuItem value='bcbstx'>BCBS of Texas</MenuItem>
+                          <MenuItem value='aetna'>Aetna CVS</MenuItem>
+                          <MenuItem value='united'>United Healthcare</MenuItem>
+                          <MenuItem value='ambetter'>Ambetter</MenuItem>
+                        </Select>
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <TextField
+                        fullWidth
+                        label='Subscriber ID'
+                        value={formData?.SubscriberId || ''}
+                        placeholder='Subscriber ID'
+                        onChange={e => handleFormChange('SubscriberId', e.target.value)}
+                      />
+                    </Grid>
+                  </Grid>
+                </TabPanel>
+                <TabPanel sx={{ width: '100%' }} value='2'>
+                </TabPanel>
+              </div>
+            </TabContext>
             <Grid container spacing={5}>
-              <Grid item xs={12} md={6}>
-                <FormControl fullWidth>
-                  <InputLabel id='select-billto'>Bill To</InputLabel>
-                  <Select
-                    id='billto-select'
-                    label='Bill To'
-                    labelId='select-billto'
-                    value={formData?.BillToId || ''}
-                    onChange={e => handleFormChange('BillToId', e.target.value)}
-                  >
-                    <MenuItem value='ins'>Insurance</MenuItem>
-                    <MenuItem value='self'>Patient</MenuItem>
-                    <MenuItem value='pharma'>Pharma</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <FormControl fullWidth>
-                  <InputLabel id='select-patientstatus'>Patient Status</InputLabel>
-                  <Select
-                    id='patientstatus-select'
-                    label='Patient Status'
-                    labelId='select-patientstatus'
-                    value={formData?.PatientStatus || ''}
-                    onChange={e => handleFormChange('PatientStatus', e.target.value)}
-                  >
-                    <MenuItem value='inpatient'>Outpatient</MenuItem>
-                    <MenuItem value='inpatient'>Hospital Inpatient</MenuItem>
-                    <MenuItem value='hchb'>Home Care</MenuItem>
-                    <MenuItem value='longterm'>Longterm Care</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-
-              <Grid item xs={12} md={12}>
-                <FormControl fullWidth>
-                  <InputLabel id='select-healthplan'>Health Plan</InputLabel>
-                  <Select
-                    id='healthplan-select'
-                    label='Health Plan'
-                    labelId='select-healthplan'
-                    value={formData?.HealthPalnId || ''}
-                    onChange={e => handleFormChange('HealthPalnId', e.target.value)}
-                  >
-                    <MenuItem value='bcbsnc'>BCBS of North Carolina</MenuItem>
-                    <MenuItem value='bcbstx'>BCBS of Texas</MenuItem>
-                    <MenuItem value='aetna'>Aetna CVS</MenuItem>
-                    <MenuItem value='united'>United Healthcare</MenuItem>
-                    <MenuItem value='ambetter'>Ambetter</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-
-              <Grid item xs={12} md={6}>
-                <TextField
-                  fullWidth
-                  label='Subscriber ID'
-                  value={formData?.SubscriberId || ''}
-                  placeholder='Subscriber ID'
-                  onChange={e => handleFormChange('SubscriberId', e.target.value)}
-                />
-              </Grid>
               <Grid item xs={12}>
                 <div className='flex items-center justify-between'>
                   <Button
@@ -153,6 +176,7 @@ const StepBillingDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
                 </div>
               </Grid>
             </Grid>
+
           </CardContent>
         </Card>
       </form>
