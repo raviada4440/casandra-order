@@ -1,9 +1,20 @@
 // React Imports
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useMemo, useState } from 'react'
 
 // MUI Imports
-import type { ColumnDef} from '@tanstack/react-table';
-import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+  getExpandedRowModel
+} from '@tanstack/react-table'
+
+import type {
+  ColumnDef,
+  ExpandedState
+} from '@tanstack/react-table'
+
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import uuid from 'react-native-uuid'
@@ -11,7 +22,10 @@ import uuid from 'react-native-uuid'
 import type { ButtonProps } from '@mui/material'
 import { Button, CardHeader, IconButton, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, CardContent } from '@mui/material'
 
-import styles from '@core/styles/table.module.css'
+import classnames from 'classnames'
+
+import tableStyles from '@core/styles/table.module.css'
+
 
 // Styled Component Imports
 import OpenDialogOnElementClick from '@/components/dialogs/OpenDialogOnElementClick'
@@ -23,7 +37,7 @@ import AddCptDetails from '../dialogs/AddCptDetails'
 import type { LabOrderCptWithPartialRelations, LabOrderIcdWithPartialRelations } from '~prisma/generated/zod'
 
 
-const columnHelper = createColumnHelper<LabOrderCptWithPartialRelations>()
+const columnHelper = createColumnHelper<any>()
 
 
 const CptDetails = () => {
@@ -31,10 +45,10 @@ const CptDetails = () => {
   // States
   const { labOrder, setLabOrder } = useContext(LabOrderContext)
 
-
   const [data, setData] = useState(labOrder.LabOrderCpt ?? [] as LabOrderCptWithPartialRelations[])
   const [deleteId, setDeleteId] = useState(undefined as string | undefined)
   const [open, setOpen] = useState(false)
+  const [expanded, setExpanded] = useState<ExpandedState>({})
 
   const getEmptyCptRecord = () => {
     return {
@@ -84,37 +98,86 @@ const CptDetails = () => {
     setOpen(false)
   }
 
-  const columns: ColumnDef<LabOrderCptWithPartialRelations, any>[] = [
-    columnHelper.accessor('CPTCode', {
-      cell: info => info.getValue(),
-      header: 'CPT Code'
-    }),
-    columnHelper.accessor(row => row.LabOrderIcd?.[0]?.ICD?.Code, {
-      cell: info => info.getValue(),
-      header: 'ICD Code'
-    }),
-    columnHelper.accessor(row => row.LabOrderIcd?.[0]?.ICD?.ShortDescription, {
-      cell: info => info.getValue(),
-      header: 'Short Description'
-    }),
-    columnHelper.accessor('Id', {
-      header: 'Action',
-      cell: (info) => (
-        <div className='flex items-center'>
-          <IconButton onClick={() => handleOpen(info.row.original.Id ?? 0)}>
-            <i className='ri-delete-bin-7-line text-[22px] text-textSecondary' />
-          </IconButton>
-        </div>
-      ),
-      enableSorting: false
-    })
-  ]
+  const columns = useMemo<ColumnDef<any, any>[]>(
+    () => [
+      columnHelper.accessor('CPTCode', {
+        header: 'CPT Code',
+        enableColumnFilter: false,
+        enableGlobalFilter: false,
+        size: 450,
+        cell: ({ row }) => (
+          <div
+            style={{
+              // Since rows are flattened by default,
+              // we can use the row.depth property
+              // and paddingLeft to visually indicate the depth
+              // of the row
+              paddingLeft: `${row.depth * 2}rem`,
+              minHeight: '1rem',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              {row.getCanExpand() ? (
+                <button
+                  {...{
+                    onClick: row.getToggleExpandedHandler(),
+                    style: { cursor: 'pointer', backgroundColor: 'transparent' },
+                  }}
+                >
+                  {row.getIsExpanded() ? <i className='ri-arrow-down-s-line text-2xl' /> : <i className='ri-arrow-right-s-line text-2xl' />}
+                </button>
+              ) : (
+                ''
+              )}{' '}
+              <Typography>{`${row.original.CPTCode}`}</Typography>
+            </div>
+          </div>
+
+        )
+      }),
+      columnHelper.accessor(row => row.ICDCode, {
+        cell: info => info.getValue(),
+        header: 'ICD Code'
+      }),
+      columnHelper.accessor(row => row.Desc, {
+        cell: info => info.getValue(),
+        header: 'Short Description'
+      }),
+      columnHelper.accessor('Id', {
+        header: 'Action',
+        cell: (info) => (
+          <div className='flex items-center'>
+            <IconButton onClick={() => handleOpen(info.row.original.Id ?? 0)}>
+              <i className='ri-delete-bin-7-line text-[22px] text-textSecondary' />
+            </IconButton>
+          </div>
+        ),
+        enableSorting: false
+      })
+    ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
+
+
 
   // Hooks
   const table = useReactTable({
     data: data as LabOrderCptWithPartialRelations[],
     columns,
+    state: {
+      expanded
+    },
     getCoreRowModel: getCoreRowModel(),
+    onExpandedChange: setExpanded,
+    getSubRows: (row) =>
+      row.LabOrderIcd?.map((icd: LabOrderIcdWithPartialRelations) => ({
+        CPTCode: row.CPTCode,
+        ICDCode: icd.ICD?.Code,
+        Desc: icd.ICD?.ShortDescription,
+        LabOrderIcd: []
+      })),
+    getExpandedRowModel: getExpandedRowModel(),
     filterFns: {
       fuzzy: () => false
     },
@@ -155,40 +218,62 @@ const CptDetails = () => {
         />
         <CardContent>
           <div className='overflow-x-auto mb-20'>
-            <table className={styles.table}>
-              <thead>
-                {table.getHeaderGroups().map(headerGroup => (
-                  <tr key={headerGroup.id}>
-                    {headerGroup.headers.map(header => (
-                      <th key={header.id}>
-                        {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                      </th>
-                    ))}
-                  </tr>
+          <table className={tableStyles.table}>
+          <thead>
+            {table.getHeaderGroups().map(headerGroup => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map(header => (
+                  <th key={header.id}
+                    colSpan={header.colSpan}
+                    style={{ width: `${header.getSize()}px` }}
+                  >
+                    {header.isPlaceholder ? null : (
+                      <>
+                        <div
+                          className={classnames({
+                            'flex items-center': header.column.getIsSorted(),
+                            'cursor-pointer select-none': header.column.getCanSort()
+                          })}
+                          onClick={header.column.getToggleSortingHandler()}
+                        >
+                          {flexRender(header.column.columnDef.header, header.getContext())}
+                          {{
+                            asc: <i className='ri-arrow-up-s-line text-xl' />,
+                            desc: <i className='ri-arrow-down-s-line text-xl' />
+                          }[header.column.getIsSorted() as 'asc' | 'desc'] ?? null}
+                        </div>
+                      </>
+                    )}
+                  </th>
                 ))}
-              </thead>
-              {table.getCoreRowModel().rows.length === 0 ? (
-                <tbody>
-                  <tr>
-                    <td colSpan={table.getVisibleFlatColumns().length} className='text-center'>
-                      No CPT Codes are added
-                    </td>
-                  </tr>
-                </tbody>
-              ) : (
-                <tbody>
-                  {table
-                    .getRowModel()
-                    .rows.map(row => (
-                      <tr key={row.id}>
-                        {row.getVisibleCells().map(cell => (
-                          <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
-                        ))}
-                      </tr>
-                    ))}
-                </tbody>
-              )}
-            </table>
+              </tr>
+            ))}
+          </thead>
+          {table.getFilteredRowModel().rows.length === 0 ? (
+            <tbody>
+              <tr>
+                <td colSpan={table.getVisibleFlatColumns().length} className='text-center'>
+                  No data available
+                </td>
+              </tr>
+            </tbody>
+          ) : (
+            <tbody>
+              {table
+                .getRowModel()
+                .rows.slice(0, table.getState().pagination.pageSize)
+                .map(row => {
+                  return (
+                    <tr key={row.id} className={classnames({ selected: row.getIsSelected() })}>
+                      {row.getVisibleCells().map(cell => (
+                        <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                      ))}
+                    </tr>
+                  )
+                })}
+            </tbody>
+          )}
+        </table>
           </div>
         </CardContent>
       </Card>
@@ -217,3 +302,5 @@ const CptDetails = () => {
 }
 
 export default CptDetails
+
+

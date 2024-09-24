@@ -63,7 +63,7 @@ const AddCptDetails = ({ open, setOpen, cptRecord }: AddCptProps) => {
       // Add the cpt to LabOrderCpt
       labOrderCopy.LabOrderCpt = [...(labOrderCopy.LabOrderCpt || []), cpt]
 
-      // console.log('labOrderCopy: ', labOrderCopy)
+      console.log('labOrderCopy: ', labOrderCopy)
 
       // Update labOrder
       setLabOrder(labOrderCopy)
