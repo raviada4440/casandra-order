@@ -7,7 +7,6 @@ import { useParams } from 'next/navigation';
 import type { ColumnDef} from '@tanstack/react-table';
 import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import Card from '@mui/material/Card'
-import Typography from '@mui/material/Typography'
 import uuid from 'react-native-uuid'
 
 import type { ButtonProps } from '@mui/material'
@@ -107,7 +106,7 @@ const CptDetails = () => {
           </IconButton>
           <IconButton>
               <Link
-                href={getLocalizedUrl(`apps/invoice/preview/${info.row.original.Id}`, locale as Locale)}
+                href={getLocalizedUrl(`apps/laborders/edit/${info.row.original.Id}`, locale as Locale)}
                 className='flex'
               >
                 <i className='ri-eye-line text-[22px] text-textSecondary' />
@@ -152,7 +151,7 @@ const CptDetails = () => {
     <>
       <Card>
         <CardHeader
-        
+
           // avatar={<i className='ri-test-tube-line text-3xl text-primary' />}
           // title={
           //   <Typography variant='h5' className='text-primary'>
