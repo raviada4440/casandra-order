@@ -17,8 +17,6 @@ import {
   CurrentRefinements,
   Configure,
   DynamicWidgets,
-  useQueryRules,
-  useInstantSearch
 } from 'react-instantsearch'
 
 import Client from '@searchkit/instantsearch-client'
@@ -41,26 +39,26 @@ const Panel = ({ header, children }: any) => (
   </div>
 )
 
-const QueryRulesBanner = () => {
-  const { items } = useQueryRules({})
+// const QueryRulesBanner = () => {
+//   const { items } = useQueryRules({})
 
-  if (items.length === 0) {
-    return null
-  }
+//   if (items.length === 0) {
+//     return null
+//   }
 
-  return (
-    <div className="query-rules">
-      {items.map((item) => (
-        <div key={item.objectID} className="query-rules__item">
-          <a href={item.url}>
-            <b className="query-rules__item-title">{item.title}</b>
-            <span className="query-rules__item-description">{item.body}</span>
-          </a>
-        </div>
-      ))}
-    </div>
-  )
-}
+//   return (
+//     <div className="query-rules">
+//       {items.map((item) => (
+//         <div key={item.objectID} className="query-rules__item">
+//           <a href={item.url}>
+//             <b className="query-rules__item-title">{item.title}</b>
+//             <span className="query-rules__item-description">{item.body}</span>
+//           </a>
+//         </div>
+//       ))}
+//     </div>
+//   )
+// }
 
 
 type Props = {
@@ -75,31 +73,19 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
   // States
   const { steps, loading } = useContext(LabOrderContext);
 
-  const SearchContent = () => {
-    const { status } = useInstantSearch();
 
-    console.log('search status ', status)
+  // const SearchContent = () => {
+  //   const { status } = useInstantSearch();
 
-    return (
-      <React.Fragment>
-        {(status === 'loading'  || status === 'stalled') && <CircularProgress  color="inherit" size={30} />}
-        <Configure hitsPerPage={20} />
-        <div className="container">
-          <div className="searchbox">
-            <SearchBox placeholder='Search for tests by name, testcode or biomarker'/>
-            <Typography variant='body2' className='text-textSecondary'>Please clear the searchbox contents to see more choices</Typography>
-            </div>
-          <div className="search-panel">
-            <div className="search-panel__results">
-              <QueryRulesBanner />
-              <CustomInfiniteHits />
-            </div>
+  //   console.log('search status ', status)
 
-          </div>
-        </div>
-      </React.Fragment>
-    )
-  };
+  //   return (
+  //     <React.Fragment>
+  //       {(status === 'stalled') && <CircularProgress  color="inherit" size={30} />}
+  //       <CustomInfiniteHits />
+  //     </React.Fragment>
+  //   )
+  // };
 
   return (
     <Card>
@@ -118,7 +104,18 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
             </Grid>
             <Grid container spacing={5}>
               <Grid item xs={9}>
-                <SearchContent />
+                <Configure hitsPerPage={20} />
+                <div className="container">
+                  <div className="searchbox">
+                    <SearchBox placeholder='Search for tests by name, testcode or biomarker'/>
+                    <Typography variant='body2' className='text-textSecondary'>Please clear the searchbox contents to see more choices</Typography>
+                  </div>
+                  <div className="search-panel">
+                    <div className="search-panel__results">
+                      <CustomInfiniteHits />
+                    </div>
+                  </div>
+                </div>
               </Grid>
               <Grid item xs={3}>
                 <div className="search-panel__filters">

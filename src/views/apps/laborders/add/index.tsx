@@ -34,12 +34,10 @@ import { getLocalizedUrl } from '@/utils/i18n'
 
 
 import StepPatientDetails from './steps/StepPatientDetails'
-import StepIcdDetails from './steps/StepIcdDetails'
 import StepTestDetails from './steps/StepTestDetails'
 import StepSpecimenCollectionDetails from './steps/StepSpecimenCollectionDetails'
 
 import PatientSubtitle from './subtitle/Patient';
-import IcdSubtitle from './subtitle/IcdCodes';
 import TestSubtitle from './subtitle/Tests';
 import SpecimenSubtitle from './subtitle/Specimen';
 import AccountSubtitle from './subtitle/Account';
@@ -313,7 +311,7 @@ const AddLabOrder = () => {
 
       const newLabOrder = { ...labOrderCopy }
 
-      if (labName && labName.length > 0) {
+      if (item && labName && labName.length > 0) {
         console.log('Lab Name useEffect: ', labName)
         const matchingLabTest = item.LabTests.find((test: any) => test.LabName === labName);
 
@@ -467,9 +465,12 @@ const AddLabOrder = () => {
     if (currentStep.title === 'Tests') {
       console.log('Current Step: ', currentStep.title)
 
-      if (labOrder.LabOrderIcd?.length > 0 ) {
-        console.log('labOrder.LabOrderIcd.length: ', labOrder.LabOrderIcd?.length)
-        addQueryParam('casandratests[query]', labOrder.LabOrderIcd[0].ICD?.Code || '')
+      if (labOrder.LabOrderCpt?.length > 0 ) {
+        console.log('labOrder.LabOrderCpt.length: ', labOrder.LabOrderCpt?.length)
+
+        if (labOrder.LabOrderCpt && labOrder.LabOrderCpt.length > 0) {
+          addQueryParam('casandratests[query]', labOrder.LabOrderCpt[0].CPTCode || '')
+        }
       } else {
         addOriginalQueryParam()
       }
@@ -515,7 +516,7 @@ const AddLabOrder = () => {
       OrganizationId: labOrder.Organization?.Id,
       PatientId: labOrder.Patient?.Id,
       OrderDate: labOrder.OrderDate,
-      LabOrderIcd: { connectOrCreate: labOrder.LabOrderIcd?.map(labIcd => ({ where: { Id: labIcd.Id }, create: { Id: labIcd.Id, ICDId: labIcd.ICD?.Id } })) },
+      LabOrderCpt: { connectOrCreate: labOrder.LabOrderCpt?.map(labCpt => ({ where: { Id: labCpt.Id }, create: { Id: labCpt.Id, CPTCode: labCpt.CPTCode } })) },
       LabOrderTest: { connectOrCreate: labOrder.LabOrderTest?.map(labTest => ({ where: { Id: labTest.Id }, create: { Id: labTest.Id, TestId: labTest.TestId } })) },
       LabOrderSpecimen: { connectOrCreate: labOrder.LabOrderSpecimen?.map(labSpecimen => ({ where: { Id: labSpecimen.Id }, create: labSpecimen })) },
       LabOrderStatus: { connectOrCreate: labOrder.LabOrderStatus?.map(labOrderStatus => ({ where: { Id: labOrderStatus.Id }, create: labOrderStatus })) },
