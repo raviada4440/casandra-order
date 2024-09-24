@@ -109,7 +109,7 @@ const CptDetails = () => {
                 href={getLocalizedUrl(`apps/laborders/edit/${info.row.original.Id}`, locale as Locale)}
                 className='flex'
               >
-                <i className='ri-eye-line text-[22px] text-textSecondary' />
+                <i className='ri-edit-box-line text-[22px] text-textSecondary' />
               </Link>
             </IconButton>
         </div>
