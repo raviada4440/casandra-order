@@ -10,13 +10,15 @@ import CircularProgress from '@mui/material/CircularProgress'
 
 import "instantsearch.css/themes/satellite-min.css"
 
+import type {
+  ConfigureProps} from 'react-instantsearch';
 import {
   InstantSearch,
   SearchBox,
   RefinementList,
   CurrentRefinements,
   Configure,
-  DynamicWidgets,
+  DynamicWidgets
 } from 'react-instantsearch'
 
 import Client from '@searchkit/instantsearch-client'
@@ -39,28 +41,6 @@ const Panel = ({ header, children }: any) => (
   </div>
 )
 
-// const QueryRulesBanner = () => {
-//   const { items } = useQueryRules({})
-
-//   if (items.length === 0) {
-//     return null
-//   }
-
-//   return (
-//     <div className="query-rules">
-//       {items.map((item) => (
-//         <div key={item.objectID} className="query-rules__item">
-//           <a href={item.url}>
-//             <b className="query-rules__item-title">{item.title}</b>
-//             <span className="query-rules__item-description">{item.body}</span>
-//           </a>
-//         </div>
-//       ))}
-//     </div>
-//   )
-// }
-
-
 type Props = {
   activeStep: number
   handleNext: () => void
@@ -73,19 +53,11 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
   // States
   const { steps, loading } = useContext(LabOrderContext);
 
-
-  // const SearchContent = () => {
-  //   const { status } = useInstantSearch();
-
-  //   console.log('search status ', status)
-
-  //   return (
-  //     <React.Fragment>
-  //       {(status === 'stalled') && <CircularProgress  color="inherit" size={30} />}
-  //       <CustomInfiniteHits />
-  //     </React.Fragment>
-  //   )
-  // };
+  const configureProps = {
+    facets: ['*'],
+    facetingAfterDistinct: true,
+    hitsPerPage: 20,
+  } as ConfigureProps
 
   return (
     <Card>
@@ -104,7 +76,7 @@ const StepTestDetails = ({ activeStep, handleNext, handlePrev }: Props) => {
             </Grid>
             <Grid container spacing={5}>
               <Grid item xs={9}>
-                <Configure hitsPerPage={20} />
+                <Configure {...configureProps} />
                 <div className="container">
                   <div className="searchbox">
                     <SearchBox placeholder='Search for tests by name, testcode or biomarker'/>
