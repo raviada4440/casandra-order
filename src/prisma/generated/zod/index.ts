@@ -36,9 +36,7 @@ export const LabOrderAttachmentScalarFieldEnumSchema = z.enum(['Id','LabOrderId'
 
 export const LabOrderBillingScalarFieldEnumSchema = z.enum(['Id','LabOrderId','BillToId','HealthPalnId','PatientStatus','SubscriberId','SponoseredTestCouponCode','CreatedAt','UpdatedAt']);
 
-export const LabOrderCptScalarFieldEnumSchema = z.enum(['Id','LabOrderId','CPTCode','CreatedAt','UpdatedAt']);
-
-export const LabOrderIcdScalarFieldEnumSchema = z.enum(['Id','LabOrderCptId','ICDId','CreatedAt','UpdatedAt']);
+export const LabOrderCptScalarFieldEnumSchema = z.enum(['Id','LabOrderId','CPTCode','ICDCodes','CreatedAt','UpdatedAt']);
 
 export const LabOrderSpecimenScalarFieldEnumSchema = z.enum(['Id','LabOrderId','SpecimenType','SpecimenCount','CollectedDate','CollectedTime','SpecimenID','BodySite','TumorType','Fixative','FixativeDuration','ColdIschemicTime','PatientAddress1','PatientAddress2','PatientCity','PatientState','PatientZip','SpecimenLocation','SpecimenAddress1','SpecimenAddress2','SpecimenCity','SpecimenState','SpecimenZip','PscLab','PscLocation','PscAppointmentAt','PscAppointmentTime','CreatedAt','UpdatedAt']);
 
@@ -128,9 +126,7 @@ export const LabOrderAttachmentOrderByRelevanceFieldEnumSchema = z.enum(['Id','L
 
 export const LabOrderBillingOrderByRelevanceFieldEnumSchema = z.enum(['Id','LabOrderId','BillToId','HealthPalnId','PatientStatus','SubscriberId','SponoseredTestCouponCode']);
 
-export const LabOrderCptOrderByRelevanceFieldEnumSchema = z.enum(['Id','LabOrderId','CPTCode']);
-
-export const LabOrderIcdOrderByRelevanceFieldEnumSchema = z.enum(['Id','LabOrderCptId','ICDId']);
+export const LabOrderCptOrderByRelevanceFieldEnumSchema = z.enum(['Id','LabOrderId','CPTCode','ICDCodes']);
 
 export const LabOrderSpecimenOrderByRelevanceFieldEnumSchema = z.enum(['Id','LabOrderId','SpecimenType','SpecimenCount','CollectedTime','SpecimenID','BodySite','TumorType','Fixative','FixativeDuration','ColdIschemicTime','PatientAddress1','PatientAddress2','PatientCity','PatientState','PatientZip','SpecimenLocation','SpecimenAddress1','SpecimenAddress2','SpecimenCity','SpecimenState','SpecimenZip','PscLab','PscLocation','PscAppointmentTime']);
 
@@ -591,38 +587,6 @@ export const ICDPartialSchema = ICDSchema.partial()
 
 export type ICDPartial = z.infer<typeof ICDPartialSchema>
 
-// ICD RELATION SCHEMA
-//------------------------------------------------------
-
-export type ICDRelations = {
-  LabOrderIcd: LabOrderIcdWithRelations[];
-};
-
-export type ICDWithRelations = z.infer<typeof ICDSchema> & ICDRelations
-
-export const ICDWithRelationsSchema: z.ZodType<ICDWithRelations> = ICDSchema.merge(z.object({
-  LabOrderIcd: z.lazy(() => LabOrderIcdWithRelationsSchema).array(),
-}))
-
-// ICD PARTIAL RELATION SCHEMA
-//------------------------------------------------------
-
-export type ICDPartialRelations = {
-  LabOrderIcd?: LabOrderIcdPartialWithRelations[];
-};
-
-export type ICDPartialWithRelations = z.infer<typeof ICDPartialSchema> & ICDPartialRelations
-
-export const ICDPartialWithRelationsSchema: z.ZodType<ICDPartialWithRelations> = ICDPartialSchema.merge(z.object({
-  LabOrderIcd: z.lazy(() => LabOrderIcdPartialWithRelationsSchema).array(),
-})).partial()
-
-export type ICDWithPartialRelations = z.infer<typeof ICDSchema> & ICDPartialRelations
-
-export const ICDWithPartialRelationsSchema: z.ZodType<ICDWithPartialRelations> = ICDSchema.merge(z.object({
-  LabOrderIcd: z.lazy(() => LabOrderIcdPartialWithRelationsSchema).array(),
-}).partial())
-
 /////////////////////////////////////////
 // LOINC SCHEMA
 /////////////////////////////////////////
@@ -1011,6 +975,7 @@ export const LabOrderCptSchema = z.object({
   Id: z.string(),
   LabOrderId: z.string().nullable(),
   CPTCode: z.string().nullable(),
+  ICDCodes: z.string().nullable(),
   CreatedAt: z.date().nullable(),
   UpdatedAt: z.date().nullable(),
 })
@@ -1030,14 +995,12 @@ export type LabOrderCptPartial = z.infer<typeof LabOrderCptPartialSchema>
 
 export type LabOrderCptRelations = {
   LabOrder?: LabOrderWithRelations | null;
-  LabOrderIcd: LabOrderIcdWithRelations[];
 };
 
 export type LabOrderCptWithRelations = z.infer<typeof LabOrderCptSchema> & LabOrderCptRelations
 
 export const LabOrderCptWithRelationsSchema: z.ZodType<LabOrderCptWithRelations> = LabOrderCptSchema.merge(z.object({
   LabOrder: z.lazy(() => LabOrderWithRelationsSchema).nullable(),
-  LabOrderIcd: z.lazy(() => LabOrderIcdWithRelationsSchema).array(),
 }))
 
 // LAB ORDER CPT PARTIAL RELATION SCHEMA
@@ -1045,80 +1008,18 @@ export const LabOrderCptWithRelationsSchema: z.ZodType<LabOrderCptWithRelations>
 
 export type LabOrderCptPartialRelations = {
   LabOrder?: LabOrderPartialWithRelations | null;
-  LabOrderIcd?: LabOrderIcdPartialWithRelations[];
 };
 
 export type LabOrderCptPartialWithRelations = z.infer<typeof LabOrderCptPartialSchema> & LabOrderCptPartialRelations
 
 export const LabOrderCptPartialWithRelationsSchema: z.ZodType<LabOrderCptPartialWithRelations> = LabOrderCptPartialSchema.merge(z.object({
   LabOrder: z.lazy(() => LabOrderPartialWithRelationsSchema).nullable(),
-  LabOrderIcd: z.lazy(() => LabOrderIcdPartialWithRelationsSchema).array(),
 })).partial()
 
 export type LabOrderCptWithPartialRelations = z.infer<typeof LabOrderCptSchema> & LabOrderCptPartialRelations
 
 export const LabOrderCptWithPartialRelationsSchema: z.ZodType<LabOrderCptWithPartialRelations> = LabOrderCptSchema.merge(z.object({
   LabOrder: z.lazy(() => LabOrderPartialWithRelationsSchema).nullable(),
-  LabOrderIcd: z.lazy(() => LabOrderIcdPartialWithRelationsSchema).array(),
-}).partial())
-
-/////////////////////////////////////////
-// LAB ORDER ICD SCHEMA
-/////////////////////////////////////////
-
-export const LabOrderIcdSchema = z.object({
-  Id: z.string(),
-  LabOrderCptId: z.string().nullable(),
-  ICDId: z.string().nullable(),
-  CreatedAt: z.date().nullable(),
-  UpdatedAt: z.date().nullable(),
-})
-
-export type LabOrderIcd = z.infer<typeof LabOrderIcdSchema>
-
-/////////////////////////////////////////
-// LAB ORDER ICD PARTIAL SCHEMA
-/////////////////////////////////////////
-
-export const LabOrderIcdPartialSchema = LabOrderIcdSchema.partial()
-
-export type LabOrderIcdPartial = z.infer<typeof LabOrderIcdPartialSchema>
-
-// LAB ORDER ICD RELATION SCHEMA
-//------------------------------------------------------
-
-export type LabOrderIcdRelations = {
-  LabOrderCpt?: LabOrderCptWithRelations | null;
-  ICD?: ICDWithRelations | null;
-};
-
-export type LabOrderIcdWithRelations = z.infer<typeof LabOrderIcdSchema> & LabOrderIcdRelations
-
-export const LabOrderIcdWithRelationsSchema: z.ZodType<LabOrderIcdWithRelations> = LabOrderIcdSchema.merge(z.object({
-  LabOrderCpt: z.lazy(() => LabOrderCptWithRelationsSchema).nullable(),
-  ICD: z.lazy(() => ICDWithRelationsSchema).nullable(),
-}))
-
-// LAB ORDER ICD PARTIAL RELATION SCHEMA
-//------------------------------------------------------
-
-export type LabOrderIcdPartialRelations = {
-  LabOrderCpt?: LabOrderCptPartialWithRelations | null;
-  ICD?: ICDPartialWithRelations | null;
-};
-
-export type LabOrderIcdPartialWithRelations = z.infer<typeof LabOrderIcdPartialSchema> & LabOrderIcdPartialRelations
-
-export const LabOrderIcdPartialWithRelationsSchema: z.ZodType<LabOrderIcdPartialWithRelations> = LabOrderIcdPartialSchema.merge(z.object({
-  LabOrderCpt: z.lazy(() => LabOrderCptPartialWithRelationsSchema).nullable(),
-  ICD: z.lazy(() => ICDPartialWithRelationsSchema).nullable(),
-})).partial()
-
-export type LabOrderIcdWithPartialRelations = z.infer<typeof LabOrderIcdSchema> & LabOrderIcdPartialRelations
-
-export const LabOrderIcdWithPartialRelationsSchema: z.ZodType<LabOrderIcdWithPartialRelations> = LabOrderIcdSchema.merge(z.object({
-  LabOrderCpt: z.lazy(() => LabOrderCptPartialWithRelationsSchema).nullable(),
-  ICD: z.lazy(() => ICDPartialWithRelationsSchema).nullable(),
 }).partial())
 
 /////////////////////////////////////////
@@ -3081,24 +2982,6 @@ export const CompanionDiagnosticDevicesSelectSchema: z.ZodType<Prisma.CompanionD
 // ICD
 //------------------------------------------------------
 
-export const ICDIncludeSchema: z.ZodType<Prisma.ICDInclude> = z.object({
-  LabOrderIcd: z.union([z.boolean(),z.lazy(() => LabOrderIcdFindManyArgsSchema)]).optional(),
-  _count: z.union([z.boolean(),z.lazy(() => ICDCountOutputTypeArgsSchema)]).optional(),
-}).strict()
-
-export const ICDArgsSchema: z.ZodType<Prisma.ICDDefaultArgs> = z.object({
-  select: z.lazy(() => ICDSelectSchema).optional(),
-  include: z.lazy(() => ICDIncludeSchema).optional(),
-}).strict();
-
-export const ICDCountOutputTypeArgsSchema: z.ZodType<Prisma.ICDCountOutputTypeDefaultArgs> = z.object({
-  select: z.lazy(() => ICDCountOutputTypeSelectSchema).nullish(),
-}).strict();
-
-export const ICDCountOutputTypeSelectSchema: z.ZodType<Prisma.ICDCountOutputTypeSelect> = z.object({
-  LabOrderIcd: z.boolean().optional(),
-}).strict();
-
 export const ICDSelectSchema: z.ZodType<Prisma.ICDSelect> = z.object({
   Id: z.boolean().optional(),
   Code: z.boolean().optional(),
@@ -3109,8 +2992,6 @@ export const ICDSelectSchema: z.ZodType<Prisma.ICDSelect> = z.object({
   Alias4: z.boolean().optional(),
   CreatedAt: z.boolean().optional(),
   UpdatedAt: z.boolean().optional(),
-  LabOrderIcd: z.union([z.boolean(),z.lazy(() => LabOrderIcdFindManyArgsSchema)]).optional(),
-  _count: z.union([z.boolean(),z.lazy(() => ICDCountOutputTypeArgsSchema)]).optional(),
 }).strict()
 
 // LOINC
@@ -3334,8 +3215,6 @@ export const LabOrderBillingSelectSchema: z.ZodType<Prisma.LabOrderBillingSelect
 
 export const LabOrderCptIncludeSchema: z.ZodType<Prisma.LabOrderCptInclude> = z.object({
   LabOrder: z.union([z.boolean(),z.lazy(() => LabOrderArgsSchema)]).optional(),
-  LabOrderIcd: z.union([z.boolean(),z.lazy(() => LabOrderIcdFindManyArgsSchema)]).optional(),
-  _count: z.union([z.boolean(),z.lazy(() => LabOrderCptCountOutputTypeArgsSchema)]).optional(),
 }).strict()
 
 export const LabOrderCptArgsSchema: z.ZodType<Prisma.LabOrderCptDefaultArgs> = z.object({
@@ -3343,46 +3222,14 @@ export const LabOrderCptArgsSchema: z.ZodType<Prisma.LabOrderCptDefaultArgs> = z
   include: z.lazy(() => LabOrderCptIncludeSchema).optional(),
 }).strict();
 
-export const LabOrderCptCountOutputTypeArgsSchema: z.ZodType<Prisma.LabOrderCptCountOutputTypeDefaultArgs> = z.object({
-  select: z.lazy(() => LabOrderCptCountOutputTypeSelectSchema).nullish(),
-}).strict();
-
-export const LabOrderCptCountOutputTypeSelectSchema: z.ZodType<Prisma.LabOrderCptCountOutputTypeSelect> = z.object({
-  LabOrderIcd: z.boolean().optional(),
-}).strict();
-
 export const LabOrderCptSelectSchema: z.ZodType<Prisma.LabOrderCptSelect> = z.object({
   Id: z.boolean().optional(),
   LabOrderId: z.boolean().optional(),
   CPTCode: z.boolean().optional(),
+  ICDCodes: z.boolean().optional(),
   CreatedAt: z.boolean().optional(),
   UpdatedAt: z.boolean().optional(),
   LabOrder: z.union([z.boolean(),z.lazy(() => LabOrderArgsSchema)]).optional(),
-  LabOrderIcd: z.union([z.boolean(),z.lazy(() => LabOrderIcdFindManyArgsSchema)]).optional(),
-  _count: z.union([z.boolean(),z.lazy(() => LabOrderCptCountOutputTypeArgsSchema)]).optional(),
-}).strict()
-
-// LAB ORDER ICD
-//------------------------------------------------------
-
-export const LabOrderIcdIncludeSchema: z.ZodType<Prisma.LabOrderIcdInclude> = z.object({
-  LabOrderCpt: z.union([z.boolean(),z.lazy(() => LabOrderCptArgsSchema)]).optional(),
-  ICD: z.union([z.boolean(),z.lazy(() => ICDArgsSchema)]).optional(),
-}).strict()
-
-export const LabOrderIcdArgsSchema: z.ZodType<Prisma.LabOrderIcdDefaultArgs> = z.object({
-  select: z.lazy(() => LabOrderIcdSelectSchema).optional(),
-  include: z.lazy(() => LabOrderIcdIncludeSchema).optional(),
-}).strict();
-
-export const LabOrderIcdSelectSchema: z.ZodType<Prisma.LabOrderIcdSelect> = z.object({
-  Id: z.boolean().optional(),
-  LabOrderCptId: z.boolean().optional(),
-  ICDId: z.boolean().optional(),
-  CreatedAt: z.boolean().optional(),
-  UpdatedAt: z.boolean().optional(),
-  LabOrderCpt: z.union([z.boolean(),z.lazy(() => LabOrderCptArgsSchema)]).optional(),
-  ICD: z.union([z.boolean(),z.lazy(() => ICDArgsSchema)]).optional(),
 }).strict()
 
 // LAB ORDER SPECIMEN
@@ -5035,7 +4882,6 @@ export const ICDWhereInputSchema: z.ZodType<Prisma.ICDWhereInput> = z.object({
   Alias4: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
-  LabOrderIcd: z.lazy(() => LabOrderIcdListRelationFilterSchema).optional()
 }).strict();
 
 export const ICDOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.ICDOrderByWithRelationAndSearchRelevanceInput> = z.object({
@@ -5048,7 +4894,6 @@ export const ICDOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Pris
   Alias4: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  LabOrderIcd: z.lazy(() => LabOrderIcdOrderByRelationAggregateInputSchema).optional(),
   _relevance: z.lazy(() => ICDOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -5068,7 +4913,6 @@ export const ICDWhereUniqueInputSchema: z.ZodType<Prisma.ICDWhereUniqueInput> = 
   Alias4: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
-  LabOrderIcd: z.lazy(() => LabOrderIcdListRelationFilterSchema).optional()
 }).strict());
 
 export const ICDOrderByWithAggregationInputSchema: z.ZodType<Prisma.ICDOrderByWithAggregationInput> = z.object({
@@ -5693,20 +5537,20 @@ export const LabOrderCptWhereInputSchema: z.ZodType<Prisma.LabOrderCptWhereInput
   Id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   LabOrderId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CPTCode: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  ICDCodes: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   LabOrder: z.union([ z.lazy(() => LabOrderNullableRelationFilterSchema),z.lazy(() => LabOrderWhereInputSchema) ]).optional().nullable(),
-  LabOrderIcd: z.lazy(() => LabOrderIcdListRelationFilterSchema).optional()
 }).strict();
 
 export const LabOrderCptOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LabOrderCptOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CPTCode: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  ICDCodes: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   LabOrder: z.lazy(() => LabOrderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
-  LabOrderIcd: z.lazy(() => LabOrderIcdOrderByRelationAggregateInputSchema).optional(),
   _relevance: z.lazy(() => LabOrderCptOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -5720,16 +5564,17 @@ export const LabOrderCptWhereUniqueInputSchema: z.ZodType<Prisma.LabOrderCptWher
   NOT: z.union([ z.lazy(() => LabOrderCptWhereInputSchema),z.lazy(() => LabOrderCptWhereInputSchema).array() ]).optional(),
   LabOrderId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CPTCode: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  ICDCodes: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   LabOrder: z.union([ z.lazy(() => LabOrderNullableRelationFilterSchema),z.lazy(() => LabOrderWhereInputSchema) ]).optional().nullable(),
-  LabOrderIcd: z.lazy(() => LabOrderIcdListRelationFilterSchema).optional()
 }).strict());
 
 export const LabOrderCptOrderByWithAggregationInputSchema: z.ZodType<Prisma.LabOrderCptOrderByWithAggregationInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CPTCode: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  ICDCodes: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   _count: z.lazy(() => LabOrderCptCountOrderByAggregateInputSchema).optional(),
@@ -5744,68 +5589,7 @@ export const LabOrderCptScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.L
   Id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   LabOrderId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   CPTCode: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
-  CreatedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
-  UpdatedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
-}).strict();
-
-export const LabOrderIcdWhereInputSchema: z.ZodType<Prisma.LabOrderIcdWhereInput> = z.object({
-  AND: z.union([ z.lazy(() => LabOrderIcdWhereInputSchema),z.lazy(() => LabOrderIcdWhereInputSchema).array() ]).optional(),
-  OR: z.lazy(() => LabOrderIcdWhereInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => LabOrderIcdWhereInputSchema),z.lazy(() => LabOrderIcdWhereInputSchema).array() ]).optional(),
-  Id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  LabOrderCptId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  ICDId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
-  UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
-  LabOrderCpt: z.union([ z.lazy(() => LabOrderCptNullableRelationFilterSchema),z.lazy(() => LabOrderCptWhereInputSchema) ]).optional().nullable(),
-  ICD: z.union([ z.lazy(() => ICDNullableRelationFilterSchema),z.lazy(() => ICDWhereInputSchema) ]).optional().nullable(),
-}).strict();
-
-export const LabOrderIcdOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LabOrderIcdOrderByWithRelationAndSearchRelevanceInput> = z.object({
-  Id: z.lazy(() => SortOrderSchema).optional(),
-  LabOrderCptId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  ICDId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  LabOrderCpt: z.lazy(() => LabOrderCptOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
-  ICD: z.lazy(() => ICDOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
-  _relevance: z.lazy(() => LabOrderIcdOrderByRelevanceInputSchema).optional()
-}).strict();
-
-export const LabOrderIcdWhereUniqueInputSchema: z.ZodType<Prisma.LabOrderIcdWhereUniqueInput> = z.object({
-  Id: z.string()
-})
-.and(z.object({
-  Id: z.string().optional(),
-  AND: z.union([ z.lazy(() => LabOrderIcdWhereInputSchema),z.lazy(() => LabOrderIcdWhereInputSchema).array() ]).optional(),
-  OR: z.lazy(() => LabOrderIcdWhereInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => LabOrderIcdWhereInputSchema),z.lazy(() => LabOrderIcdWhereInputSchema).array() ]).optional(),
-  LabOrderCptId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  ICDId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
-  UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
-  LabOrderCpt: z.union([ z.lazy(() => LabOrderCptNullableRelationFilterSchema),z.lazy(() => LabOrderCptWhereInputSchema) ]).optional().nullable(),
-  ICD: z.union([ z.lazy(() => ICDNullableRelationFilterSchema),z.lazy(() => ICDWhereInputSchema) ]).optional().nullable(),
-}).strict());
-
-export const LabOrderIcdOrderByWithAggregationInputSchema: z.ZodType<Prisma.LabOrderIcdOrderByWithAggregationInput> = z.object({
-  Id: z.lazy(() => SortOrderSchema).optional(),
-  LabOrderCptId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  ICDId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  _count: z.lazy(() => LabOrderIcdCountOrderByAggregateInputSchema).optional(),
-  _max: z.lazy(() => LabOrderIcdMaxOrderByAggregateInputSchema).optional(),
-  _min: z.lazy(() => LabOrderIcdMinOrderByAggregateInputSchema).optional()
-}).strict();
-
-export const LabOrderIcdScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.LabOrderIcdScalarWhereWithAggregatesInput> = z.object({
-  AND: z.union([ z.lazy(() => LabOrderIcdScalarWhereWithAggregatesInputSchema),z.lazy(() => LabOrderIcdScalarWhereWithAggregatesInputSchema).array() ]).optional(),
-  OR: z.lazy(() => LabOrderIcdScalarWhereWithAggregatesInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => LabOrderIcdScalarWhereWithAggregatesInputSchema),z.lazy(() => LabOrderIcdScalarWhereWithAggregatesInputSchema).array() ]).optional(),
-  Id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
-  LabOrderCptId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
-  ICDId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  ICDCodes: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
 }).strict();
@@ -9325,8 +9109,7 @@ export const ICDCreateInputSchema: z.ZodType<Prisma.ICDCreateInput> = z.object({
   Alias3: z.string().optional().nullable(),
   Alias4: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
-  UpdatedAt: z.date().optional().nullable(),
-  LabOrderIcd: z.lazy(() => LabOrderIcdCreateNestedManyWithoutICDInputSchema).optional()
+  UpdatedAt: z.date().optional().nullable()
 }).strict();
 
 export const ICDUncheckedCreateInputSchema: z.ZodType<Prisma.ICDUncheckedCreateInput> = z.object({
@@ -9338,8 +9121,7 @@ export const ICDUncheckedCreateInputSchema: z.ZodType<Prisma.ICDUncheckedCreateI
   Alias3: z.string().optional().nullable(),
   Alias4: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
-  UpdatedAt: z.date().optional().nullable(),
-  LabOrderIcd: z.lazy(() => LabOrderIcdUncheckedCreateNestedManyWithoutICDInputSchema).optional()
+  UpdatedAt: z.date().optional().nullable()
 }).strict();
 
 export const ICDUpdateInputSchema: z.ZodType<Prisma.ICDUpdateInput> = z.object({
@@ -9352,7 +9134,6 @@ export const ICDUpdateInputSchema: z.ZodType<Prisma.ICDUpdateInput> = z.object({
   Alias4: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  LabOrderIcd: z.lazy(() => LabOrderIcdUpdateManyWithoutICDNestedInputSchema).optional()
 }).strict();
 
 export const ICDUncheckedUpdateInputSchema: z.ZodType<Prisma.ICDUncheckedUpdateInput> = z.object({
@@ -9365,7 +9146,6 @@ export const ICDUncheckedUpdateInputSchema: z.ZodType<Prisma.ICDUncheckedUpdateI
   Alias4: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  LabOrderIcd: z.lazy(() => LabOrderIcdUncheckedUpdateManyWithoutICDNestedInputSchema).optional()
 }).strict();
 
 export const ICDCreateManyInputSchema: z.ZodType<Prisma.ICDCreateManyInput> = z.object({
@@ -10067,43 +9847,44 @@ export const LabOrderBillingUncheckedUpdateManyInputSchema: z.ZodType<Prisma.Lab
 export const LabOrderCptCreateInputSchema: z.ZodType<Prisma.LabOrderCptCreateInput> = z.object({
   Id: z.string().optional(),
   CPTCode: z.string().optional().nullable(),
+  ICDCodes: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable(),
-  LabOrder: z.lazy(() => LabOrderCreateNestedOneWithoutLabOrderCptInputSchema).optional(),
-  LabOrderIcd: z.lazy(() => LabOrderIcdCreateNestedManyWithoutLabOrderCptInputSchema).optional()
+  LabOrder: z.lazy(() => LabOrderCreateNestedOneWithoutLabOrderCptInputSchema).optional()
 }).strict();
 
 export const LabOrderCptUncheckedCreateInputSchema: z.ZodType<Prisma.LabOrderCptUncheckedCreateInput> = z.object({
   Id: z.string().optional(),
   LabOrderId: z.string().optional().nullable(),
   CPTCode: z.string().optional().nullable(),
+  ICDCodes: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
-  UpdatedAt: z.date().optional().nullable(),
-  LabOrderIcd: z.lazy(() => LabOrderIcdUncheckedCreateNestedManyWithoutLabOrderCptInputSchema).optional()
+  UpdatedAt: z.date().optional().nullable()
 }).strict();
 
 export const LabOrderCptUpdateInputSchema: z.ZodType<Prisma.LabOrderCptUpdateInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   CPTCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ICDCodes: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  LabOrder: z.lazy(() => LabOrderUpdateOneWithoutLabOrderCptNestedInputSchema).optional(),
-  LabOrderIcd: z.lazy(() => LabOrderIcdUpdateManyWithoutLabOrderCptNestedInputSchema).optional()
+  LabOrder: z.lazy(() => LabOrderUpdateOneWithoutLabOrderCptNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderCptUncheckedUpdateInputSchema: z.ZodType<Prisma.LabOrderCptUncheckedUpdateInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CPTCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ICDCodes: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  LabOrderIcd: z.lazy(() => LabOrderIcdUncheckedUpdateManyWithoutLabOrderCptNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderCptCreateManyInputSchema: z.ZodType<Prisma.LabOrderCptCreateManyInput> = z.object({
   Id: z.string().optional(),
   LabOrderId: z.string().optional().nullable(),
   CPTCode: z.string().optional().nullable(),
+  ICDCodes: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable()
 }).strict();
@@ -10111,6 +9892,7 @@ export const LabOrderCptCreateManyInputSchema: z.ZodType<Prisma.LabOrderCptCreat
 export const LabOrderCptUpdateManyMutationInputSchema: z.ZodType<Prisma.LabOrderCptUpdateManyMutationInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   CPTCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ICDCodes: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
@@ -10119,60 +9901,7 @@ export const LabOrderCptUncheckedUpdateManyInputSchema: z.ZodType<Prisma.LabOrde
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CPTCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-}).strict();
-
-export const LabOrderIcdCreateInputSchema: z.ZodType<Prisma.LabOrderIcdCreateInput> = z.object({
-  Id: z.string().optional(),
-  CreatedAt: z.date().optional().nullable(),
-  UpdatedAt: z.date().optional().nullable(),
-  LabOrderCpt: z.lazy(() => LabOrderCptCreateNestedOneWithoutLabOrderIcdInputSchema).optional(),
-  ICD: z.lazy(() => ICDCreateNestedOneWithoutLabOrderIcdInputSchema).optional()
-}).strict();
-
-export const LabOrderIcdUncheckedCreateInputSchema: z.ZodType<Prisma.LabOrderIcdUncheckedCreateInput> = z.object({
-  Id: z.string().optional(),
-  LabOrderCptId: z.string().optional().nullable(),
-  ICDId: z.string().optional().nullable(),
-  CreatedAt: z.date().optional().nullable(),
-  UpdatedAt: z.date().optional().nullable()
-}).strict();
-
-export const LabOrderIcdUpdateInputSchema: z.ZodType<Prisma.LabOrderIcdUpdateInput> = z.object({
-  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  LabOrderCpt: z.lazy(() => LabOrderCptUpdateOneWithoutLabOrderIcdNestedInputSchema).optional(),
-  ICD: z.lazy(() => ICDUpdateOneWithoutLabOrderIcdNestedInputSchema).optional()
-}).strict();
-
-export const LabOrderIcdUncheckedUpdateInputSchema: z.ZodType<Prisma.LabOrderIcdUncheckedUpdateInput> = z.object({
-  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  LabOrderCptId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  ICDId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-}).strict();
-
-export const LabOrderIcdCreateManyInputSchema: z.ZodType<Prisma.LabOrderIcdCreateManyInput> = z.object({
-  Id: z.string().optional(),
-  LabOrderCptId: z.string().optional().nullable(),
-  ICDId: z.string().optional().nullable(),
-  CreatedAt: z.date().optional().nullable(),
-  UpdatedAt: z.date().optional().nullable()
-}).strict();
-
-export const LabOrderIcdUpdateManyMutationInputSchema: z.ZodType<Prisma.LabOrderIcdUpdateManyMutationInput> = z.object({
-  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-}).strict();
-
-export const LabOrderIcdUncheckedUpdateManyInputSchema: z.ZodType<Prisma.LabOrderIcdUncheckedUpdateManyInput> = z.object({
-  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  LabOrderCptId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  ICDId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ICDCodes: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
@@ -13467,16 +13196,6 @@ export const CompanionDiagnosticDevicesSumOrderByAggregateInputSchema: z.ZodType
   TimeDecision: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
-export const LabOrderIcdListRelationFilterSchema: z.ZodType<Prisma.LabOrderIcdListRelationFilter> = z.object({
-  every: z.lazy(() => LabOrderIcdWhereInputSchema).optional(),
-  some: z.lazy(() => LabOrderIcdWhereInputSchema).optional(),
-  none: z.lazy(() => LabOrderIcdWhereInputSchema).optional()
-}).strict();
-
-export const LabOrderIcdOrderByRelationAggregateInputSchema: z.ZodType<Prisma.LabOrderIcdOrderByRelationAggregateInput> = z.object({
-  _count: z.lazy(() => SortOrderSchema).optional()
-}).strict();
-
 export const ICDOrderByRelevanceInputSchema: z.ZodType<Prisma.ICDOrderByRelevanceInput> = z.object({
   fields: z.union([ z.lazy(() => ICDOrderByRelevanceFieldEnumSchema),z.lazy(() => ICDOrderByRelevanceFieldEnumSchema).array() ]),
   sort: z.lazy(() => SortOrderSchema),
@@ -13964,6 +13683,7 @@ export const LabOrderCptCountOrderByAggregateInputSchema: z.ZodType<Prisma.LabOr
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.lazy(() => SortOrderSchema).optional(),
   CPTCode: z.lazy(() => SortOrderSchema).optional(),
+  ICDCodes: z.lazy(() => SortOrderSchema).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -13972,6 +13692,7 @@ export const LabOrderCptMaxOrderByAggregateInputSchema: z.ZodType<Prisma.LabOrde
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.lazy(() => SortOrderSchema).optional(),
   CPTCode: z.lazy(() => SortOrderSchema).optional(),
+  ICDCodes: z.lazy(() => SortOrderSchema).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -13980,46 +13701,7 @@ export const LabOrderCptMinOrderByAggregateInputSchema: z.ZodType<Prisma.LabOrde
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.lazy(() => SortOrderSchema).optional(),
   CPTCode: z.lazy(() => SortOrderSchema).optional(),
-  CreatedAt: z.lazy(() => SortOrderSchema).optional(),
-  UpdatedAt: z.lazy(() => SortOrderSchema).optional()
-}).strict();
-
-export const LabOrderCptNullableRelationFilterSchema: z.ZodType<Prisma.LabOrderCptNullableRelationFilter> = z.object({
-  is: z.lazy(() => LabOrderCptWhereInputSchema).optional().nullable(),
-  isNot: z.lazy(() => LabOrderCptWhereInputSchema).optional().nullable()
-}).strict();
-
-export const ICDNullableRelationFilterSchema: z.ZodType<Prisma.ICDNullableRelationFilter> = z.object({
-  is: z.lazy(() => ICDWhereInputSchema).optional().nullable(),
-  isNot: z.lazy(() => ICDWhereInputSchema).optional().nullable()
-}).strict();
-
-export const LabOrderIcdOrderByRelevanceInputSchema: z.ZodType<Prisma.LabOrderIcdOrderByRelevanceInput> = z.object({
-  fields: z.union([ z.lazy(() => LabOrderIcdOrderByRelevanceFieldEnumSchema),z.lazy(() => LabOrderIcdOrderByRelevanceFieldEnumSchema).array() ]),
-  sort: z.lazy(() => SortOrderSchema),
-  search: z.string()
-}).strict();
-
-export const LabOrderIcdCountOrderByAggregateInputSchema: z.ZodType<Prisma.LabOrderIcdCountOrderByAggregateInput> = z.object({
-  Id: z.lazy(() => SortOrderSchema).optional(),
-  LabOrderCptId: z.lazy(() => SortOrderSchema).optional(),
-  ICDId: z.lazy(() => SortOrderSchema).optional(),
-  CreatedAt: z.lazy(() => SortOrderSchema).optional(),
-  UpdatedAt: z.lazy(() => SortOrderSchema).optional()
-}).strict();
-
-export const LabOrderIcdMaxOrderByAggregateInputSchema: z.ZodType<Prisma.LabOrderIcdMaxOrderByAggregateInput> = z.object({
-  Id: z.lazy(() => SortOrderSchema).optional(),
-  LabOrderCptId: z.lazy(() => SortOrderSchema).optional(),
-  ICDId: z.lazy(() => SortOrderSchema).optional(),
-  CreatedAt: z.lazy(() => SortOrderSchema).optional(),
-  UpdatedAt: z.lazy(() => SortOrderSchema).optional()
-}).strict();
-
-export const LabOrderIcdMinOrderByAggregateInputSchema: z.ZodType<Prisma.LabOrderIcdMinOrderByAggregateInput> = z.object({
-  Id: z.lazy(() => SortOrderSchema).optional(),
-  LabOrderCptId: z.lazy(() => SortOrderSchema).optional(),
-  ICDId: z.lazy(() => SortOrderSchema).optional(),
+  ICDCodes: z.lazy(() => SortOrderSchema).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -15953,48 +15635,6 @@ export const IntFieldUpdateOperationsInputSchema: z.ZodType<Prisma.IntFieldUpdat
   divide: z.number().optional()
 }).strict();
 
-export const LabOrderIcdCreateNestedManyWithoutICDInputSchema: z.ZodType<Prisma.LabOrderIcdCreateNestedManyWithoutICDInput> = z.object({
-  create: z.union([ z.lazy(() => LabOrderIcdCreateWithoutICDInputSchema),z.lazy(() => LabOrderIcdCreateWithoutICDInputSchema).array(),z.lazy(() => LabOrderIcdUncheckedCreateWithoutICDInputSchema),z.lazy(() => LabOrderIcdUncheckedCreateWithoutICDInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => LabOrderIcdCreateOrConnectWithoutICDInputSchema),z.lazy(() => LabOrderIcdCreateOrConnectWithoutICDInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => LabOrderIcdCreateManyICDInputEnvelopeSchema).optional(),
-  connect: z.union([ z.lazy(() => LabOrderIcdWhereUniqueInputSchema),z.lazy(() => LabOrderIcdWhereUniqueInputSchema).array() ]).optional(),
-}).strict();
-
-export const LabOrderIcdUncheckedCreateNestedManyWithoutICDInputSchema: z.ZodType<Prisma.LabOrderIcdUncheckedCreateNestedManyWithoutICDInput> = z.object({
-  create: z.union([ z.lazy(() => LabOrderIcdCreateWithoutICDInputSchema),z.lazy(() => LabOrderIcdCreateWithoutICDInputSchema).array(),z.lazy(() => LabOrderIcdUncheckedCreateWithoutICDInputSchema),z.lazy(() => LabOrderIcdUncheckedCreateWithoutICDInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => LabOrderIcdCreateOrConnectWithoutICDInputSchema),z.lazy(() => LabOrderIcdCreateOrConnectWithoutICDInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => LabOrderIcdCreateManyICDInputEnvelopeSchema).optional(),
-  connect: z.union([ z.lazy(() => LabOrderIcdWhereUniqueInputSchema),z.lazy(() => LabOrderIcdWhereUniqueInputSchema).array() ]).optional(),
-}).strict();
-
-export const LabOrderIcdUpdateManyWithoutICDNestedInputSchema: z.ZodType<Prisma.LabOrderIcdUpdateManyWithoutICDNestedInput> = z.object({
-  create: z.union([ z.lazy(() => LabOrderIcdCreateWithoutICDInputSchema),z.lazy(() => LabOrderIcdCreateWithoutICDInputSchema).array(),z.lazy(() => LabOrderIcdUncheckedCreateWithoutICDInputSchema),z.lazy(() => LabOrderIcdUncheckedCreateWithoutICDInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => LabOrderIcdCreateOrConnectWithoutICDInputSchema),z.lazy(() => LabOrderIcdCreateOrConnectWithoutICDInputSchema).array() ]).optional(),
-  upsert: z.union([ z.lazy(() => LabOrderIcdUpsertWithWhereUniqueWithoutICDInputSchema),z.lazy(() => LabOrderIcdUpsertWithWhereUniqueWithoutICDInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => LabOrderIcdCreateManyICDInputEnvelopeSchema).optional(),
-  set: z.union([ z.lazy(() => LabOrderIcdWhereUniqueInputSchema),z.lazy(() => LabOrderIcdWhereUniqueInputSchema).array() ]).optional(),
-  disconnect: z.union([ z.lazy(() => LabOrderIcdWhereUniqueInputSchema),z.lazy(() => LabOrderIcdWhereUniqueInputSchema).array() ]).optional(),
-  delete: z.union([ z.lazy(() => LabOrderIcdWhereUniqueInputSchema),z.lazy(() => LabOrderIcdWhereUniqueInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => LabOrderIcdWhereUniqueInputSchema),z.lazy(() => LabOrderIcdWhereUniqueInputSchema).array() ]).optional(),
-  update: z.union([ z.lazy(() => LabOrderIcdUpdateWithWhereUniqueWithoutICDInputSchema),z.lazy(() => LabOrderIcdUpdateWithWhereUniqueWithoutICDInputSchema).array() ]).optional(),
-  updateMany: z.union([ z.lazy(() => LabOrderIcdUpdateManyWithWhereWithoutICDInputSchema),z.lazy(() => LabOrderIcdUpdateManyWithWhereWithoutICDInputSchema).array() ]).optional(),
-  deleteMany: z.union([ z.lazy(() => LabOrderIcdScalarWhereInputSchema),z.lazy(() => LabOrderIcdScalarWhereInputSchema).array() ]).optional(),
-}).strict();
-
-export const LabOrderIcdUncheckedUpdateManyWithoutICDNestedInputSchema: z.ZodType<Prisma.LabOrderIcdUncheckedUpdateManyWithoutICDNestedInput> = z.object({
-  create: z.union([ z.lazy(() => LabOrderIcdCreateWithoutICDInputSchema),z.lazy(() => LabOrderIcdCreateWithoutICDInputSchema).array(),z.lazy(() => LabOrderIcdUncheckedCreateWithoutICDInputSchema),z.lazy(() => LabOrderIcdUncheckedCreateWithoutICDInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => LabOrderIcdCreateOrConnectWithoutICDInputSchema),z.lazy(() => LabOrderIcdCreateOrConnectWithoutICDInputSchema).array() ]).optional(),
-  upsert: z.union([ z.lazy(() => LabOrderIcdUpsertWithWhereUniqueWithoutICDInputSchema),z.lazy(() => LabOrderIcdUpsertWithWhereUniqueWithoutICDInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => LabOrderIcdCreateManyICDInputEnvelopeSchema).optional(),
-  set: z.union([ z.lazy(() => LabOrderIcdWhereUniqueInputSchema),z.lazy(() => LabOrderIcdWhereUniqueInputSchema).array() ]).optional(),
-  disconnect: z.union([ z.lazy(() => LabOrderIcdWhereUniqueInputSchema),z.lazy(() => LabOrderIcdWhereUniqueInputSchema).array() ]).optional(),
-  delete: z.union([ z.lazy(() => LabOrderIcdWhereUniqueInputSchema),z.lazy(() => LabOrderIcdWhereUniqueInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => LabOrderIcdWhereUniqueInputSchema),z.lazy(() => LabOrderIcdWhereUniqueInputSchema).array() ]).optional(),
-  update: z.union([ z.lazy(() => LabOrderIcdUpdateWithWhereUniqueWithoutICDInputSchema),z.lazy(() => LabOrderIcdUpdateWithWhereUniqueWithoutICDInputSchema).array() ]).optional(),
-  updateMany: z.union([ z.lazy(() => LabOrderIcdUpdateManyWithWhereWithoutICDInputSchema),z.lazy(() => LabOrderIcdUpdateManyWithWhereWithoutICDInputSchema).array() ]).optional(),
-  deleteMany: z.union([ z.lazy(() => LabOrderIcdScalarWhereInputSchema),z.lazy(() => LabOrderIcdScalarWhereInputSchema).array() ]).optional(),
-}).strict();
-
 export const TestOrderLoincCreateNestedManyWithoutLOINCInputSchema: z.ZodType<Prisma.TestOrderLoincCreateNestedManyWithoutLOINCInput> = z.object({
   create: z.union([ z.lazy(() => TestOrderLoincCreateWithoutLOINCInputSchema),z.lazy(() => TestOrderLoincCreateWithoutLOINCInputSchema).array(),z.lazy(() => TestOrderLoincUncheckedCreateWithoutLOINCInputSchema),z.lazy(() => TestOrderLoincUncheckedCreateWithoutLOINCInputSchema).array() ]).optional(),
   connectOrCreate: z.union([ z.lazy(() => TestOrderLoincCreateOrConnectWithoutLOINCInputSchema),z.lazy(() => TestOrderLoincCreateOrConnectWithoutLOINCInputSchema).array() ]).optional(),
@@ -16533,20 +16173,6 @@ export const LabOrderCreateNestedOneWithoutLabOrderCptInputSchema: z.ZodType<Pri
   connect: z.lazy(() => LabOrderWhereUniqueInputSchema).optional()
 }).strict();
 
-export const LabOrderIcdCreateNestedManyWithoutLabOrderCptInputSchema: z.ZodType<Prisma.LabOrderIcdCreateNestedManyWithoutLabOrderCptInput> = z.object({
-  create: z.union([ z.lazy(() => LabOrderIcdCreateWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdCreateWithoutLabOrderCptInputSchema).array(),z.lazy(() => LabOrderIcdUncheckedCreateWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdUncheckedCreateWithoutLabOrderCptInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => LabOrderIcdCreateOrConnectWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdCreateOrConnectWithoutLabOrderCptInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => LabOrderIcdCreateManyLabOrderCptInputEnvelopeSchema).optional(),
-  connect: z.union([ z.lazy(() => LabOrderIcdWhereUniqueInputSchema),z.lazy(() => LabOrderIcdWhereUniqueInputSchema).array() ]).optional(),
-}).strict();
-
-export const LabOrderIcdUncheckedCreateNestedManyWithoutLabOrderCptInputSchema: z.ZodType<Prisma.LabOrderIcdUncheckedCreateNestedManyWithoutLabOrderCptInput> = z.object({
-  create: z.union([ z.lazy(() => LabOrderIcdCreateWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdCreateWithoutLabOrderCptInputSchema).array(),z.lazy(() => LabOrderIcdUncheckedCreateWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdUncheckedCreateWithoutLabOrderCptInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => LabOrderIcdCreateOrConnectWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdCreateOrConnectWithoutLabOrderCptInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => LabOrderIcdCreateManyLabOrderCptInputEnvelopeSchema).optional(),
-  connect: z.union([ z.lazy(() => LabOrderIcdWhereUniqueInputSchema),z.lazy(() => LabOrderIcdWhereUniqueInputSchema).array() ]).optional(),
-}).strict();
-
 export const LabOrderUpdateOneWithoutLabOrderCptNestedInputSchema: z.ZodType<Prisma.LabOrderUpdateOneWithoutLabOrderCptNestedInput> = z.object({
   create: z.union([ z.lazy(() => LabOrderCreateWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderUncheckedCreateWithoutLabOrderCptInputSchema) ]).optional(),
   connectOrCreate: z.lazy(() => LabOrderCreateOrConnectWithoutLabOrderCptInputSchema).optional(),
@@ -16555,66 +16181,6 @@ export const LabOrderUpdateOneWithoutLabOrderCptNestedInputSchema: z.ZodType<Pri
   delete: z.union([ z.boolean(),z.lazy(() => LabOrderWhereInputSchema) ]).optional(),
   connect: z.lazy(() => LabOrderWhereUniqueInputSchema).optional(),
   update: z.union([ z.lazy(() => LabOrderUpdateToOneWithWhereWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderUpdateWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderUncheckedUpdateWithoutLabOrderCptInputSchema) ]).optional(),
-}).strict();
-
-export const LabOrderIcdUpdateManyWithoutLabOrderCptNestedInputSchema: z.ZodType<Prisma.LabOrderIcdUpdateManyWithoutLabOrderCptNestedInput> = z.object({
-  create: z.union([ z.lazy(() => LabOrderIcdCreateWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdCreateWithoutLabOrderCptInputSchema).array(),z.lazy(() => LabOrderIcdUncheckedCreateWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdUncheckedCreateWithoutLabOrderCptInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => LabOrderIcdCreateOrConnectWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdCreateOrConnectWithoutLabOrderCptInputSchema).array() ]).optional(),
-  upsert: z.union([ z.lazy(() => LabOrderIcdUpsertWithWhereUniqueWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdUpsertWithWhereUniqueWithoutLabOrderCptInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => LabOrderIcdCreateManyLabOrderCptInputEnvelopeSchema).optional(),
-  set: z.union([ z.lazy(() => LabOrderIcdWhereUniqueInputSchema),z.lazy(() => LabOrderIcdWhereUniqueInputSchema).array() ]).optional(),
-  disconnect: z.union([ z.lazy(() => LabOrderIcdWhereUniqueInputSchema),z.lazy(() => LabOrderIcdWhereUniqueInputSchema).array() ]).optional(),
-  delete: z.union([ z.lazy(() => LabOrderIcdWhereUniqueInputSchema),z.lazy(() => LabOrderIcdWhereUniqueInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => LabOrderIcdWhereUniqueInputSchema),z.lazy(() => LabOrderIcdWhereUniqueInputSchema).array() ]).optional(),
-  update: z.union([ z.lazy(() => LabOrderIcdUpdateWithWhereUniqueWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdUpdateWithWhereUniqueWithoutLabOrderCptInputSchema).array() ]).optional(),
-  updateMany: z.union([ z.lazy(() => LabOrderIcdUpdateManyWithWhereWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdUpdateManyWithWhereWithoutLabOrderCptInputSchema).array() ]).optional(),
-  deleteMany: z.union([ z.lazy(() => LabOrderIcdScalarWhereInputSchema),z.lazy(() => LabOrderIcdScalarWhereInputSchema).array() ]).optional(),
-}).strict();
-
-export const LabOrderIcdUncheckedUpdateManyWithoutLabOrderCptNestedInputSchema: z.ZodType<Prisma.LabOrderIcdUncheckedUpdateManyWithoutLabOrderCptNestedInput> = z.object({
-  create: z.union([ z.lazy(() => LabOrderIcdCreateWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdCreateWithoutLabOrderCptInputSchema).array(),z.lazy(() => LabOrderIcdUncheckedCreateWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdUncheckedCreateWithoutLabOrderCptInputSchema).array() ]).optional(),
-  connectOrCreate: z.union([ z.lazy(() => LabOrderIcdCreateOrConnectWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdCreateOrConnectWithoutLabOrderCptInputSchema).array() ]).optional(),
-  upsert: z.union([ z.lazy(() => LabOrderIcdUpsertWithWhereUniqueWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdUpsertWithWhereUniqueWithoutLabOrderCptInputSchema).array() ]).optional(),
-  createMany: z.lazy(() => LabOrderIcdCreateManyLabOrderCptInputEnvelopeSchema).optional(),
-  set: z.union([ z.lazy(() => LabOrderIcdWhereUniqueInputSchema),z.lazy(() => LabOrderIcdWhereUniqueInputSchema).array() ]).optional(),
-  disconnect: z.union([ z.lazy(() => LabOrderIcdWhereUniqueInputSchema),z.lazy(() => LabOrderIcdWhereUniqueInputSchema).array() ]).optional(),
-  delete: z.union([ z.lazy(() => LabOrderIcdWhereUniqueInputSchema),z.lazy(() => LabOrderIcdWhereUniqueInputSchema).array() ]).optional(),
-  connect: z.union([ z.lazy(() => LabOrderIcdWhereUniqueInputSchema),z.lazy(() => LabOrderIcdWhereUniqueInputSchema).array() ]).optional(),
-  update: z.union([ z.lazy(() => LabOrderIcdUpdateWithWhereUniqueWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdUpdateWithWhereUniqueWithoutLabOrderCptInputSchema).array() ]).optional(),
-  updateMany: z.union([ z.lazy(() => LabOrderIcdUpdateManyWithWhereWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdUpdateManyWithWhereWithoutLabOrderCptInputSchema).array() ]).optional(),
-  deleteMany: z.union([ z.lazy(() => LabOrderIcdScalarWhereInputSchema),z.lazy(() => LabOrderIcdScalarWhereInputSchema).array() ]).optional(),
-}).strict();
-
-export const LabOrderCptCreateNestedOneWithoutLabOrderIcdInputSchema: z.ZodType<Prisma.LabOrderCptCreateNestedOneWithoutLabOrderIcdInput> = z.object({
-  create: z.union([ z.lazy(() => LabOrderCptCreateWithoutLabOrderIcdInputSchema),z.lazy(() => LabOrderCptUncheckedCreateWithoutLabOrderIcdInputSchema) ]).optional(),
-  connectOrCreate: z.lazy(() => LabOrderCptCreateOrConnectWithoutLabOrderIcdInputSchema).optional(),
-  connect: z.lazy(() => LabOrderCptWhereUniqueInputSchema).optional()
-}).strict();
-
-export const ICDCreateNestedOneWithoutLabOrderIcdInputSchema: z.ZodType<Prisma.ICDCreateNestedOneWithoutLabOrderIcdInput> = z.object({
-  create: z.union([ z.lazy(() => ICDCreateWithoutLabOrderIcdInputSchema),z.lazy(() => ICDUncheckedCreateWithoutLabOrderIcdInputSchema) ]).optional(),
-  connectOrCreate: z.lazy(() => ICDCreateOrConnectWithoutLabOrderIcdInputSchema).optional(),
-  connect: z.lazy(() => ICDWhereUniqueInputSchema).optional()
-}).strict();
-
-export const LabOrderCptUpdateOneWithoutLabOrderIcdNestedInputSchema: z.ZodType<Prisma.LabOrderCptUpdateOneWithoutLabOrderIcdNestedInput> = z.object({
-  create: z.union([ z.lazy(() => LabOrderCptCreateWithoutLabOrderIcdInputSchema),z.lazy(() => LabOrderCptUncheckedCreateWithoutLabOrderIcdInputSchema) ]).optional(),
-  connectOrCreate: z.lazy(() => LabOrderCptCreateOrConnectWithoutLabOrderIcdInputSchema).optional(),
-  upsert: z.lazy(() => LabOrderCptUpsertWithoutLabOrderIcdInputSchema).optional(),
-  disconnect: z.union([ z.boolean(),z.lazy(() => LabOrderCptWhereInputSchema) ]).optional(),
-  delete: z.union([ z.boolean(),z.lazy(() => LabOrderCptWhereInputSchema) ]).optional(),
-  connect: z.lazy(() => LabOrderCptWhereUniqueInputSchema).optional(),
-  update: z.union([ z.lazy(() => LabOrderCptUpdateToOneWithWhereWithoutLabOrderIcdInputSchema),z.lazy(() => LabOrderCptUpdateWithoutLabOrderIcdInputSchema),z.lazy(() => LabOrderCptUncheckedUpdateWithoutLabOrderIcdInputSchema) ]).optional(),
-}).strict();
-
-export const ICDUpdateOneWithoutLabOrderIcdNestedInputSchema: z.ZodType<Prisma.ICDUpdateOneWithoutLabOrderIcdNestedInput> = z.object({
-  create: z.union([ z.lazy(() => ICDCreateWithoutLabOrderIcdInputSchema),z.lazy(() => ICDUncheckedCreateWithoutLabOrderIcdInputSchema) ]).optional(),
-  connectOrCreate: z.lazy(() => ICDCreateOrConnectWithoutLabOrderIcdInputSchema).optional(),
-  upsert: z.lazy(() => ICDUpsertWithoutLabOrderIcdInputSchema).optional(),
-  disconnect: z.union([ z.boolean(),z.lazy(() => ICDWhereInputSchema) ]).optional(),
-  delete: z.union([ z.boolean(),z.lazy(() => ICDWhereInputSchema) ]).optional(),
-  connect: z.lazy(() => ICDWhereUniqueInputSchema).optional(),
-  update: z.union([ z.lazy(() => ICDUpdateToOneWithWhereWithoutLabOrderIcdInputSchema),z.lazy(() => ICDUpdateWithoutLabOrderIcdInputSchema),z.lazy(() => ICDUncheckedUpdateWithoutLabOrderIcdInputSchema) ]).optional(),
 }).strict();
 
 export const LabOrderCreateNestedOneWithoutLabOrderSpecimenInputSchema: z.ZodType<Prisma.LabOrderCreateNestedOneWithoutLabOrderSpecimenInput> = z.object({
@@ -19029,57 +18595,6 @@ export const TestCatalogUncheckedUpdateWithoutCdxTestInputSchema: z.ZodType<Pris
   TestResultLoinc: z.lazy(() => TestResultLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional()
 }).strict();
 
-export const LabOrderIcdCreateWithoutICDInputSchema: z.ZodType<Prisma.LabOrderIcdCreateWithoutICDInput> = z.object({
-  Id: z.string().optional(),
-  CreatedAt: z.date().optional().nullable(),
-  UpdatedAt: z.date().optional().nullable(),
-  LabOrderCpt: z.lazy(() => LabOrderCptCreateNestedOneWithoutLabOrderIcdInputSchema).optional()
-}).strict();
-
-export const LabOrderIcdUncheckedCreateWithoutICDInputSchema: z.ZodType<Prisma.LabOrderIcdUncheckedCreateWithoutICDInput> = z.object({
-  Id: z.string().optional(),
-  LabOrderCptId: z.string().optional().nullable(),
-  CreatedAt: z.date().optional().nullable(),
-  UpdatedAt: z.date().optional().nullable()
-}).strict();
-
-export const LabOrderIcdCreateOrConnectWithoutICDInputSchema: z.ZodType<Prisma.LabOrderIcdCreateOrConnectWithoutICDInput> = z.object({
-  where: z.lazy(() => LabOrderIcdWhereUniqueInputSchema),
-  create: z.union([ z.lazy(() => LabOrderIcdCreateWithoutICDInputSchema),z.lazy(() => LabOrderIcdUncheckedCreateWithoutICDInputSchema) ]),
-}).strict();
-
-export const LabOrderIcdCreateManyICDInputEnvelopeSchema: z.ZodType<Prisma.LabOrderIcdCreateManyICDInputEnvelope> = z.object({
-  data: z.union([ z.lazy(() => LabOrderIcdCreateManyICDInputSchema),z.lazy(() => LabOrderIcdCreateManyICDInputSchema).array() ]),
-  skipDuplicates: z.boolean().optional()
-}).strict();
-
-export const LabOrderIcdUpsertWithWhereUniqueWithoutICDInputSchema: z.ZodType<Prisma.LabOrderIcdUpsertWithWhereUniqueWithoutICDInput> = z.object({
-  where: z.lazy(() => LabOrderIcdWhereUniqueInputSchema),
-  update: z.union([ z.lazy(() => LabOrderIcdUpdateWithoutICDInputSchema),z.lazy(() => LabOrderIcdUncheckedUpdateWithoutICDInputSchema) ]),
-  create: z.union([ z.lazy(() => LabOrderIcdCreateWithoutICDInputSchema),z.lazy(() => LabOrderIcdUncheckedCreateWithoutICDInputSchema) ]),
-}).strict();
-
-export const LabOrderIcdUpdateWithWhereUniqueWithoutICDInputSchema: z.ZodType<Prisma.LabOrderIcdUpdateWithWhereUniqueWithoutICDInput> = z.object({
-  where: z.lazy(() => LabOrderIcdWhereUniqueInputSchema),
-  data: z.union([ z.lazy(() => LabOrderIcdUpdateWithoutICDInputSchema),z.lazy(() => LabOrderIcdUncheckedUpdateWithoutICDInputSchema) ]),
-}).strict();
-
-export const LabOrderIcdUpdateManyWithWhereWithoutICDInputSchema: z.ZodType<Prisma.LabOrderIcdUpdateManyWithWhereWithoutICDInput> = z.object({
-  where: z.lazy(() => LabOrderIcdScalarWhereInputSchema),
-  data: z.union([ z.lazy(() => LabOrderIcdUpdateManyMutationInputSchema),z.lazy(() => LabOrderIcdUncheckedUpdateManyWithoutICDInputSchema) ]),
-}).strict();
-
-export const LabOrderIcdScalarWhereInputSchema: z.ZodType<Prisma.LabOrderIcdScalarWhereInput> = z.object({
-  AND: z.union([ z.lazy(() => LabOrderIcdScalarWhereInputSchema),z.lazy(() => LabOrderIcdScalarWhereInputSchema).array() ]).optional(),
-  OR: z.lazy(() => LabOrderIcdScalarWhereInputSchema).array().optional(),
-  NOT: z.union([ z.lazy(() => LabOrderIcdScalarWhereInputSchema),z.lazy(() => LabOrderIcdScalarWhereInputSchema).array() ]).optional(),
-  Id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
-  LabOrderCptId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  ICDId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
-  UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
-}).strict();
-
 export const TestOrderLoincCreateWithoutLOINCInputSchema: z.ZodType<Prisma.TestOrderLoincCreateWithoutLOINCInput> = z.object({
   LabTestId: z.string().optional().nullable(),
   CreatedAt: z.date().optional(),
@@ -19612,17 +19127,17 @@ export const LabOrderBillingCreateManyLabOrderInputEnvelopeSchema: z.ZodType<Pri
 export const LabOrderCptCreateWithoutLabOrderInputSchema: z.ZodType<Prisma.LabOrderCptCreateWithoutLabOrderInput> = z.object({
   Id: z.string().optional(),
   CPTCode: z.string().optional().nullable(),
+  ICDCodes: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
-  UpdatedAt: z.date().optional().nullable(),
-  LabOrderIcd: z.lazy(() => LabOrderIcdCreateNestedManyWithoutLabOrderCptInputSchema).optional()
+  UpdatedAt: z.date().optional().nullable()
 }).strict();
 
 export const LabOrderCptUncheckedCreateWithoutLabOrderInputSchema: z.ZodType<Prisma.LabOrderCptUncheckedCreateWithoutLabOrderInput> = z.object({
   Id: z.string().optional(),
   CPTCode: z.string().optional().nullable(),
+  ICDCodes: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
-  UpdatedAt: z.date().optional().nullable(),
-  LabOrderIcd: z.lazy(() => LabOrderIcdUncheckedCreateNestedManyWithoutLabOrderCptInputSchema).optional()
+  UpdatedAt: z.date().optional().nullable()
 }).strict();
 
 export const LabOrderCptCreateOrConnectWithoutLabOrderInputSchema: z.ZodType<Prisma.LabOrderCptCreateOrConnectWithoutLabOrderInput> = z.object({
@@ -20055,6 +19570,7 @@ export const LabOrderCptScalarWhereInputSchema: z.ZodType<Prisma.LabOrderCptScal
   Id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   LabOrderId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CPTCode: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  ICDCodes: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
 }).strict();
@@ -20513,30 +20029,6 @@ export const LabOrderCreateOrConnectWithoutLabOrderCptInputSchema: z.ZodType<Pri
   create: z.union([ z.lazy(() => LabOrderCreateWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderUncheckedCreateWithoutLabOrderCptInputSchema) ]),
 }).strict();
 
-export const LabOrderIcdCreateWithoutLabOrderCptInputSchema: z.ZodType<Prisma.LabOrderIcdCreateWithoutLabOrderCptInput> = z.object({
-  Id: z.string().optional(),
-  CreatedAt: z.date().optional().nullable(),
-  UpdatedAt: z.date().optional().nullable(),
-  ICD: z.lazy(() => ICDCreateNestedOneWithoutLabOrderIcdInputSchema).optional()
-}).strict();
-
-export const LabOrderIcdUncheckedCreateWithoutLabOrderCptInputSchema: z.ZodType<Prisma.LabOrderIcdUncheckedCreateWithoutLabOrderCptInput> = z.object({
-  Id: z.string().optional(),
-  ICDId: z.string().optional().nullable(),
-  CreatedAt: z.date().optional().nullable(),
-  UpdatedAt: z.date().optional().nullable()
-}).strict();
-
-export const LabOrderIcdCreateOrConnectWithoutLabOrderCptInputSchema: z.ZodType<Prisma.LabOrderIcdCreateOrConnectWithoutLabOrderCptInput> = z.object({
-  where: z.lazy(() => LabOrderIcdWhereUniqueInputSchema),
-  create: z.union([ z.lazy(() => LabOrderIcdCreateWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdUncheckedCreateWithoutLabOrderCptInputSchema) ]),
-}).strict();
-
-export const LabOrderIcdCreateManyLabOrderCptInputEnvelopeSchema: z.ZodType<Prisma.LabOrderIcdCreateManyLabOrderCptInputEnvelope> = z.object({
-  data: z.union([ z.lazy(() => LabOrderIcdCreateManyLabOrderCptInputSchema),z.lazy(() => LabOrderIcdCreateManyLabOrderCptInputSchema).array() ]),
-  skipDuplicates: z.boolean().optional()
-}).strict();
-
 export const LabOrderUpsertWithoutLabOrderCptInputSchema: z.ZodType<Prisma.LabOrderUpsertWithoutLabOrderCptInput> = z.object({
   update: z.union([ z.lazy(() => LabOrderUpdateWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderUncheckedUpdateWithoutLabOrderCptInputSchema) ]),
   create: z.union([ z.lazy(() => LabOrderCreateWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderUncheckedCreateWithoutLabOrderCptInputSchema) ]),
@@ -20592,134 +20084,6 @@ export const LabOrderUncheckedUpdateWithoutLabOrderCptInputSchema: z.ZodType<Pri
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
-}).strict();
-
-export const LabOrderIcdUpsertWithWhereUniqueWithoutLabOrderCptInputSchema: z.ZodType<Prisma.LabOrderIcdUpsertWithWhereUniqueWithoutLabOrderCptInput> = z.object({
-  where: z.lazy(() => LabOrderIcdWhereUniqueInputSchema),
-  update: z.union([ z.lazy(() => LabOrderIcdUpdateWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdUncheckedUpdateWithoutLabOrderCptInputSchema) ]),
-  create: z.union([ z.lazy(() => LabOrderIcdCreateWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdUncheckedCreateWithoutLabOrderCptInputSchema) ]),
-}).strict();
-
-export const LabOrderIcdUpdateWithWhereUniqueWithoutLabOrderCptInputSchema: z.ZodType<Prisma.LabOrderIcdUpdateWithWhereUniqueWithoutLabOrderCptInput> = z.object({
-  where: z.lazy(() => LabOrderIcdWhereUniqueInputSchema),
-  data: z.union([ z.lazy(() => LabOrderIcdUpdateWithoutLabOrderCptInputSchema),z.lazy(() => LabOrderIcdUncheckedUpdateWithoutLabOrderCptInputSchema) ]),
-}).strict();
-
-export const LabOrderIcdUpdateManyWithWhereWithoutLabOrderCptInputSchema: z.ZodType<Prisma.LabOrderIcdUpdateManyWithWhereWithoutLabOrderCptInput> = z.object({
-  where: z.lazy(() => LabOrderIcdScalarWhereInputSchema),
-  data: z.union([ z.lazy(() => LabOrderIcdUpdateManyMutationInputSchema),z.lazy(() => LabOrderIcdUncheckedUpdateManyWithoutLabOrderCptInputSchema) ]),
-}).strict();
-
-export const LabOrderCptCreateWithoutLabOrderIcdInputSchema: z.ZodType<Prisma.LabOrderCptCreateWithoutLabOrderIcdInput> = z.object({
-  Id: z.string().optional(),
-  CPTCode: z.string().optional().nullable(),
-  CreatedAt: z.date().optional().nullable(),
-  UpdatedAt: z.date().optional().nullable(),
-  LabOrder: z.lazy(() => LabOrderCreateNestedOneWithoutLabOrderCptInputSchema).optional()
-}).strict();
-
-export const LabOrderCptUncheckedCreateWithoutLabOrderIcdInputSchema: z.ZodType<Prisma.LabOrderCptUncheckedCreateWithoutLabOrderIcdInput> = z.object({
-  Id: z.string().optional(),
-  LabOrderId: z.string().optional().nullable(),
-  CPTCode: z.string().optional().nullable(),
-  CreatedAt: z.date().optional().nullable(),
-  UpdatedAt: z.date().optional().nullable()
-}).strict();
-
-export const LabOrderCptCreateOrConnectWithoutLabOrderIcdInputSchema: z.ZodType<Prisma.LabOrderCptCreateOrConnectWithoutLabOrderIcdInput> = z.object({
-  where: z.lazy(() => LabOrderCptWhereUniqueInputSchema),
-  create: z.union([ z.lazy(() => LabOrderCptCreateWithoutLabOrderIcdInputSchema),z.lazy(() => LabOrderCptUncheckedCreateWithoutLabOrderIcdInputSchema) ]),
-}).strict();
-
-export const ICDCreateWithoutLabOrderIcdInputSchema: z.ZodType<Prisma.ICDCreateWithoutLabOrderIcdInput> = z.object({
-  Id: z.string().optional(),
-  Code: z.string().optional().nullable(),
-  ShortDescription: z.string().optional().nullable(),
-  Alias1: z.string().optional().nullable(),
-  Alias2: z.string().optional().nullable(),
-  Alias3: z.string().optional().nullable(),
-  Alias4: z.string().optional().nullable(),
-  CreatedAt: z.date().optional().nullable(),
-  UpdatedAt: z.date().optional().nullable()
-}).strict();
-
-export const ICDUncheckedCreateWithoutLabOrderIcdInputSchema: z.ZodType<Prisma.ICDUncheckedCreateWithoutLabOrderIcdInput> = z.object({
-  Id: z.string().optional(),
-  Code: z.string().optional().nullable(),
-  ShortDescription: z.string().optional().nullable(),
-  Alias1: z.string().optional().nullable(),
-  Alias2: z.string().optional().nullable(),
-  Alias3: z.string().optional().nullable(),
-  Alias4: z.string().optional().nullable(),
-  CreatedAt: z.date().optional().nullable(),
-  UpdatedAt: z.date().optional().nullable()
-}).strict();
-
-export const ICDCreateOrConnectWithoutLabOrderIcdInputSchema: z.ZodType<Prisma.ICDCreateOrConnectWithoutLabOrderIcdInput> = z.object({
-  where: z.lazy(() => ICDWhereUniqueInputSchema),
-  create: z.union([ z.lazy(() => ICDCreateWithoutLabOrderIcdInputSchema),z.lazy(() => ICDUncheckedCreateWithoutLabOrderIcdInputSchema) ]),
-}).strict();
-
-export const LabOrderCptUpsertWithoutLabOrderIcdInputSchema: z.ZodType<Prisma.LabOrderCptUpsertWithoutLabOrderIcdInput> = z.object({
-  update: z.union([ z.lazy(() => LabOrderCptUpdateWithoutLabOrderIcdInputSchema),z.lazy(() => LabOrderCptUncheckedUpdateWithoutLabOrderIcdInputSchema) ]),
-  create: z.union([ z.lazy(() => LabOrderCptCreateWithoutLabOrderIcdInputSchema),z.lazy(() => LabOrderCptUncheckedCreateWithoutLabOrderIcdInputSchema) ]),
-  where: z.lazy(() => LabOrderCptWhereInputSchema).optional()
-}).strict();
-
-export const LabOrderCptUpdateToOneWithWhereWithoutLabOrderIcdInputSchema: z.ZodType<Prisma.LabOrderCptUpdateToOneWithWhereWithoutLabOrderIcdInput> = z.object({
-  where: z.lazy(() => LabOrderCptWhereInputSchema).optional(),
-  data: z.union([ z.lazy(() => LabOrderCptUpdateWithoutLabOrderIcdInputSchema),z.lazy(() => LabOrderCptUncheckedUpdateWithoutLabOrderIcdInputSchema) ]),
-}).strict();
-
-export const LabOrderCptUpdateWithoutLabOrderIcdInputSchema: z.ZodType<Prisma.LabOrderCptUpdateWithoutLabOrderIcdInput> = z.object({
-  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  CPTCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  LabOrder: z.lazy(() => LabOrderUpdateOneWithoutLabOrderCptNestedInputSchema).optional()
-}).strict();
-
-export const LabOrderCptUncheckedUpdateWithoutLabOrderIcdInputSchema: z.ZodType<Prisma.LabOrderCptUncheckedUpdateWithoutLabOrderIcdInput> = z.object({
-  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  LabOrderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  CPTCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-}).strict();
-
-export const ICDUpsertWithoutLabOrderIcdInputSchema: z.ZodType<Prisma.ICDUpsertWithoutLabOrderIcdInput> = z.object({
-  update: z.union([ z.lazy(() => ICDUpdateWithoutLabOrderIcdInputSchema),z.lazy(() => ICDUncheckedUpdateWithoutLabOrderIcdInputSchema) ]),
-  create: z.union([ z.lazy(() => ICDCreateWithoutLabOrderIcdInputSchema),z.lazy(() => ICDUncheckedCreateWithoutLabOrderIcdInputSchema) ]),
-  where: z.lazy(() => ICDWhereInputSchema).optional()
-}).strict();
-
-export const ICDUpdateToOneWithWhereWithoutLabOrderIcdInputSchema: z.ZodType<Prisma.ICDUpdateToOneWithWhereWithoutLabOrderIcdInput> = z.object({
-  where: z.lazy(() => ICDWhereInputSchema).optional(),
-  data: z.union([ z.lazy(() => ICDUpdateWithoutLabOrderIcdInputSchema),z.lazy(() => ICDUncheckedUpdateWithoutLabOrderIcdInputSchema) ]),
-}).strict();
-
-export const ICDUpdateWithoutLabOrderIcdInputSchema: z.ZodType<Prisma.ICDUpdateWithoutLabOrderIcdInput> = z.object({
-  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  Code: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  ShortDescription: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  Alias1: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  Alias2: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  Alias3: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  Alias4: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-}).strict();
-
-export const ICDUncheckedUpdateWithoutLabOrderIcdInputSchema: z.ZodType<Prisma.ICDUncheckedUpdateWithoutLabOrderIcdInput> = z.object({
-  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  Code: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  ShortDescription: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  Alias1: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  Alias2: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  Alias3: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  Alias4: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
 export const LabOrderCreateWithoutLabOrderSpecimenInputSchema: z.ZodType<Prisma.LabOrderCreateWithoutLabOrderSpecimenInput> = z.object({
@@ -26799,34 +26163,6 @@ export const TestBiomarkerUncheckedUpdateManyWithoutBIOMARKERInputSchema: z.ZodT
   UpdatedAt: z.union([ z.date(),z.lazy(() => DateTimeFieldUpdateOperationsInputSchema) ]).optional(),
 }).strict();
 
-export const LabOrderIcdCreateManyICDInputSchema: z.ZodType<Prisma.LabOrderIcdCreateManyICDInput> = z.object({
-  Id: z.string().optional(),
-  LabOrderCptId: z.string().optional().nullable(),
-  CreatedAt: z.date().optional().nullable(),
-  UpdatedAt: z.date().optional().nullable()
-}).strict();
-
-export const LabOrderIcdUpdateWithoutICDInputSchema: z.ZodType<Prisma.LabOrderIcdUpdateWithoutICDInput> = z.object({
-  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  LabOrderCpt: z.lazy(() => LabOrderCptUpdateOneWithoutLabOrderIcdNestedInputSchema).optional()
-}).strict();
-
-export const LabOrderIcdUncheckedUpdateWithoutICDInputSchema: z.ZodType<Prisma.LabOrderIcdUncheckedUpdateWithoutICDInput> = z.object({
-  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  LabOrderCptId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-}).strict();
-
-export const LabOrderIcdUncheckedUpdateManyWithoutICDInputSchema: z.ZodType<Prisma.LabOrderIcdUncheckedUpdateManyWithoutICDInput> = z.object({
-  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  LabOrderCptId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-}).strict();
-
 export const TestOrderLoincCreateManyLOINCInputSchema: z.ZodType<Prisma.TestOrderLoincCreateManyLOINCInput> = z.object({
   Id: z.number().optional(),
   TestId: z.number(),
@@ -27129,6 +26465,7 @@ export const LabOrderBillingCreateManyLabOrderInputSchema: z.ZodType<Prisma.LabO
 export const LabOrderCptCreateManyLabOrderInputSchema: z.ZodType<Prisma.LabOrderCptCreateManyLabOrderInput> = z.object({
   Id: z.string().optional(),
   CPTCode: z.string().optional().nullable(),
+  ICDCodes: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable()
 }).strict();
@@ -27249,22 +26586,23 @@ export const LabOrderBillingUncheckedUpdateManyWithoutLabOrderInputSchema: z.Zod
 export const LabOrderCptUpdateWithoutLabOrderInputSchema: z.ZodType<Prisma.LabOrderCptUpdateWithoutLabOrderInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   CPTCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ICDCodes: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  LabOrderIcd: z.lazy(() => LabOrderIcdUpdateManyWithoutLabOrderCptNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderCptUncheckedUpdateWithoutLabOrderInputSchema: z.ZodType<Prisma.LabOrderCptUncheckedUpdateWithoutLabOrderInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   CPTCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ICDCodes: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  LabOrderIcd: z.lazy(() => LabOrderIcdUncheckedUpdateManyWithoutLabOrderCptNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderCptUncheckedUpdateManyWithoutLabOrderInputSchema: z.ZodType<Prisma.LabOrderCptUncheckedUpdateManyWithoutLabOrderInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   CPTCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ICDCodes: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
@@ -27442,34 +26780,6 @@ export const LabOrderTestUncheckedUpdateManyWithoutLabOrderInputSchema: z.ZodTyp
   Type: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   DrugName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Indication: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-}).strict();
-
-export const LabOrderIcdCreateManyLabOrderCptInputSchema: z.ZodType<Prisma.LabOrderIcdCreateManyLabOrderCptInput> = z.object({
-  Id: z.string().optional(),
-  ICDId: z.string().optional().nullable(),
-  CreatedAt: z.date().optional().nullable(),
-  UpdatedAt: z.date().optional().nullable()
-}).strict();
-
-export const LabOrderIcdUpdateWithoutLabOrderCptInputSchema: z.ZodType<Prisma.LabOrderIcdUpdateWithoutLabOrderCptInput> = z.object({
-  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  ICD: z.lazy(() => ICDUpdateOneWithoutLabOrderIcdNestedInputSchema).optional()
-}).strict();
-
-export const LabOrderIcdUncheckedUpdateWithoutLabOrderCptInputSchema: z.ZodType<Prisma.LabOrderIcdUncheckedUpdateWithoutLabOrderCptInput> = z.object({
-  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  ICDId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-}).strict();
-
-export const LabOrderIcdUncheckedUpdateManyWithoutLabOrderCptInputSchema: z.ZodType<Prisma.LabOrderIcdUncheckedUpdateManyWithoutLabOrderCptInput> = z.object({
-  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
-  ICDId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
@@ -29065,7 +28375,6 @@ export const CompanionDiagnosticDevicesFindUniqueOrThrowArgsSchema: z.ZodType<Pr
 
 export const ICDFindFirstArgsSchema: z.ZodType<Prisma.ICDFindFirstArgs> = z.object({
   select: ICDSelectSchema.optional(),
-  include: ICDIncludeSchema.optional(),
   where: ICDWhereInputSchema.optional(),
   orderBy: z.union([ ICDOrderByWithRelationAndSearchRelevanceInputSchema.array(),ICDOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ICDWhereUniqueInputSchema.optional(),
@@ -29076,7 +28385,6 @@ export const ICDFindFirstArgsSchema: z.ZodType<Prisma.ICDFindFirstArgs> = z.obje
 
 export const ICDFindFirstOrThrowArgsSchema: z.ZodType<Prisma.ICDFindFirstOrThrowArgs> = z.object({
   select: ICDSelectSchema.optional(),
-  include: ICDIncludeSchema.optional(),
   where: ICDWhereInputSchema.optional(),
   orderBy: z.union([ ICDOrderByWithRelationAndSearchRelevanceInputSchema.array(),ICDOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ICDWhereUniqueInputSchema.optional(),
@@ -29087,7 +28395,6 @@ export const ICDFindFirstOrThrowArgsSchema: z.ZodType<Prisma.ICDFindFirstOrThrow
 
 export const ICDFindManyArgsSchema: z.ZodType<Prisma.ICDFindManyArgs> = z.object({
   select: ICDSelectSchema.optional(),
-  include: ICDIncludeSchema.optional(),
   where: ICDWhereInputSchema.optional(),
   orderBy: z.union([ ICDOrderByWithRelationAndSearchRelevanceInputSchema.array(),ICDOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ICDWhereUniqueInputSchema.optional(),
@@ -29115,13 +28422,11 @@ export const ICDGroupByArgsSchema: z.ZodType<Prisma.ICDGroupByArgs> = z.object({
 
 export const ICDFindUniqueArgsSchema: z.ZodType<Prisma.ICDFindUniqueArgs> = z.object({
   select: ICDSelectSchema.optional(),
-  include: ICDIncludeSchema.optional(),
   where: ICDWhereUniqueInputSchema,
 }).strict() ;
 
 export const ICDFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.ICDFindUniqueOrThrowArgs> = z.object({
   select: ICDSelectSchema.optional(),
-  include: ICDIncludeSchema.optional(),
   where: ICDWhereUniqueInputSchema,
 }).strict() ;
 
@@ -29495,68 +28800,6 @@ export const LabOrderCptFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.LabOrderCp
   select: LabOrderCptSelectSchema.optional(),
   include: LabOrderCptIncludeSchema.optional(),
   where: LabOrderCptWhereUniqueInputSchema,
-}).strict() ;
-
-export const LabOrderIcdFindFirstArgsSchema: z.ZodType<Prisma.LabOrderIcdFindFirstArgs> = z.object({
-  select: LabOrderIcdSelectSchema.optional(),
-  include: LabOrderIcdIncludeSchema.optional(),
-  where: LabOrderIcdWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderIcdOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderIcdOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
-  cursor: LabOrderIcdWhereUniqueInputSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.union([ LabOrderIcdScalarFieldEnumSchema,LabOrderIcdScalarFieldEnumSchema.array() ]).optional(),
-}).strict() ;
-
-export const LabOrderIcdFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LabOrderIcdFindFirstOrThrowArgs> = z.object({
-  select: LabOrderIcdSelectSchema.optional(),
-  include: LabOrderIcdIncludeSchema.optional(),
-  where: LabOrderIcdWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderIcdOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderIcdOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
-  cursor: LabOrderIcdWhereUniqueInputSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.union([ LabOrderIcdScalarFieldEnumSchema,LabOrderIcdScalarFieldEnumSchema.array() ]).optional(),
-}).strict() ;
-
-export const LabOrderIcdFindManyArgsSchema: z.ZodType<Prisma.LabOrderIcdFindManyArgs> = z.object({
-  select: LabOrderIcdSelectSchema.optional(),
-  include: LabOrderIcdIncludeSchema.optional(),
-  where: LabOrderIcdWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderIcdOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderIcdOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
-  cursor: LabOrderIcdWhereUniqueInputSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-  distinct: z.union([ LabOrderIcdScalarFieldEnumSchema,LabOrderIcdScalarFieldEnumSchema.array() ]).optional(),
-}).strict() ;
-
-export const LabOrderIcdAggregateArgsSchema: z.ZodType<Prisma.LabOrderIcdAggregateArgs> = z.object({
-  where: LabOrderIcdWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderIcdOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderIcdOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
-  cursor: LabOrderIcdWhereUniqueInputSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-}).strict() ;
-
-export const LabOrderIcdGroupByArgsSchema: z.ZodType<Prisma.LabOrderIcdGroupByArgs> = z.object({
-  where: LabOrderIcdWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderIcdOrderByWithAggregationInputSchema.array(),LabOrderIcdOrderByWithAggregationInputSchema ]).optional(),
-  by: LabOrderIcdScalarFieldEnumSchema.array(),
-  having: LabOrderIcdScalarWhereWithAggregatesInputSchema.optional(),
-  take: z.number().optional(),
-  skip: z.number().optional(),
-}).strict() ;
-
-export const LabOrderIcdFindUniqueArgsSchema: z.ZodType<Prisma.LabOrderIcdFindUniqueArgs> = z.object({
-  select: LabOrderIcdSelectSchema.optional(),
-  include: LabOrderIcdIncludeSchema.optional(),
-  where: LabOrderIcdWhereUniqueInputSchema,
-}).strict() ;
-
-export const LabOrderIcdFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.LabOrderIcdFindUniqueOrThrowArgs> = z.object({
-  select: LabOrderIcdSelectSchema.optional(),
-  include: LabOrderIcdIncludeSchema.optional(),
-  where: LabOrderIcdWhereUniqueInputSchema,
 }).strict() ;
 
 export const LabOrderSpecimenFindFirstArgsSchema: z.ZodType<Prisma.LabOrderSpecimenFindFirstArgs> = z.object({
@@ -31633,13 +30876,11 @@ export const CompanionDiagnosticDevicesDeleteManyArgsSchema: z.ZodType<Prisma.Co
 
 export const ICDCreateArgsSchema: z.ZodType<Prisma.ICDCreateArgs> = z.object({
   select: ICDSelectSchema.optional(),
-  include: ICDIncludeSchema.optional(),
   data: z.union([ ICDCreateInputSchema,ICDUncheckedCreateInputSchema ]).optional(),
 }).strict() ;
 
 export const ICDUpsertArgsSchema: z.ZodType<Prisma.ICDUpsertArgs> = z.object({
   select: ICDSelectSchema.optional(),
-  include: ICDIncludeSchema.optional(),
   where: ICDWhereUniqueInputSchema,
   create: z.union([ ICDCreateInputSchema,ICDUncheckedCreateInputSchema ]),
   update: z.union([ ICDUpdateInputSchema,ICDUncheckedUpdateInputSchema ]),
@@ -31652,13 +30893,11 @@ export const ICDCreateManyArgsSchema: z.ZodType<Prisma.ICDCreateManyArgs> = z.ob
 
 export const ICDDeleteArgsSchema: z.ZodType<Prisma.ICDDeleteArgs> = z.object({
   select: ICDSelectSchema.optional(),
-  include: ICDIncludeSchema.optional(),
   where: ICDWhereUniqueInputSchema,
 }).strict() ;
 
 export const ICDUpdateArgsSchema: z.ZodType<Prisma.ICDUpdateArgs> = z.object({
   select: ICDSelectSchema.optional(),
-  include: ICDIncludeSchema.optional(),
   data: z.union([ ICDUpdateInputSchema,ICDUncheckedUpdateInputSchema ]),
   where: ICDWhereUniqueInputSchema,
 }).strict() ;
@@ -31916,47 +31155,6 @@ export const LabOrderCptUpdateManyArgsSchema: z.ZodType<Prisma.LabOrderCptUpdate
 
 export const LabOrderCptDeleteManyArgsSchema: z.ZodType<Prisma.LabOrderCptDeleteManyArgs> = z.object({
   where: LabOrderCptWhereInputSchema.optional(),
-}).strict() ;
-
-export const LabOrderIcdCreateArgsSchema: z.ZodType<Prisma.LabOrderIcdCreateArgs> = z.object({
-  select: LabOrderIcdSelectSchema.optional(),
-  include: LabOrderIcdIncludeSchema.optional(),
-  data: z.union([ LabOrderIcdCreateInputSchema,LabOrderIcdUncheckedCreateInputSchema ]).optional(),
-}).strict() ;
-
-export const LabOrderIcdUpsertArgsSchema: z.ZodType<Prisma.LabOrderIcdUpsertArgs> = z.object({
-  select: LabOrderIcdSelectSchema.optional(),
-  include: LabOrderIcdIncludeSchema.optional(),
-  where: LabOrderIcdWhereUniqueInputSchema,
-  create: z.union([ LabOrderIcdCreateInputSchema,LabOrderIcdUncheckedCreateInputSchema ]),
-  update: z.union([ LabOrderIcdUpdateInputSchema,LabOrderIcdUncheckedUpdateInputSchema ]),
-}).strict() ;
-
-export const LabOrderIcdCreateManyArgsSchema: z.ZodType<Prisma.LabOrderIcdCreateManyArgs> = z.object({
-  data: z.union([ LabOrderIcdCreateManyInputSchema,LabOrderIcdCreateManyInputSchema.array() ]),
-  skipDuplicates: z.boolean().optional(),
-}).strict() ;
-
-export const LabOrderIcdDeleteArgsSchema: z.ZodType<Prisma.LabOrderIcdDeleteArgs> = z.object({
-  select: LabOrderIcdSelectSchema.optional(),
-  include: LabOrderIcdIncludeSchema.optional(),
-  where: LabOrderIcdWhereUniqueInputSchema,
-}).strict() ;
-
-export const LabOrderIcdUpdateArgsSchema: z.ZodType<Prisma.LabOrderIcdUpdateArgs> = z.object({
-  select: LabOrderIcdSelectSchema.optional(),
-  include: LabOrderIcdIncludeSchema.optional(),
-  data: z.union([ LabOrderIcdUpdateInputSchema,LabOrderIcdUncheckedUpdateInputSchema ]),
-  where: LabOrderIcdWhereUniqueInputSchema,
-}).strict() ;
-
-export const LabOrderIcdUpdateManyArgsSchema: z.ZodType<Prisma.LabOrderIcdUpdateManyArgs> = z.object({
-  data: z.union([ LabOrderIcdUpdateManyMutationInputSchema,LabOrderIcdUncheckedUpdateManyInputSchema ]),
-  where: LabOrderIcdWhereInputSchema.optional(),
-}).strict() ;
-
-export const LabOrderIcdDeleteManyArgsSchema: z.ZodType<Prisma.LabOrderIcdDeleteManyArgs> = z.object({
-  where: LabOrderIcdWhereInputSchema.optional(),
 }).strict() ;
 
 export const LabOrderSpecimenCreateArgsSchema: z.ZodType<Prisma.LabOrderSpecimenCreateArgs> = z.object({

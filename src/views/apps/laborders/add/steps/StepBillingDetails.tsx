@@ -77,10 +77,10 @@ const StepBillingDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
               <div className='flex flex-col gap-2 mt-4'>
                 <TabList variant="fullWidth" onChange={handleChange} aria-label='vertical tabs example'>
                   <Tab value='1' icon={<i className='ri-test-tube-line text-3xl text-primary' />} label='Billing Details' />
-                  <Tab value='2' icon={<i className='ri-building-4-line text-3xl text-primary' />} label='CPT/ICD Codes' />
+                  <Tab value='2' icon={<i className='ri-building-4-line text-3xl text-primary' />} label='CPT / ICD Codes' />
                 </TabList>
                 <TabPanel sx={{ width: '100%' }} value='1'>
-                  <Grid container spacing={1}>
+                  <Grid container spacing={5}>
                     <Grid item xs={12} md={6}>
                       <FormControl fullWidth>
                         <InputLabel id='select-billto'>Bill To</InputLabel>

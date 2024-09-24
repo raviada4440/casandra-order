@@ -162,7 +162,6 @@ model ICD {
   Alias4           String?       @db.Text
   CreatedAt        DateTime?     @default(now()) @db.DateTime(0)
   UpdatedAt        DateTime?     @default(now()) @db.DateTime(0)
-  LabOrderIcd      LabOrderIcd[]
 }
 
 model LOINC {
@@ -287,25 +286,11 @@ model LabOrderCpt {
   Id          String        @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
   LabOrderId  String?       @db.VarChar(45)
   CPTCode     String?       @db.VarChar(45)
+  ICDCodes     String?      @db.VarChar(512)
   CreatedAt   DateTime?     @default(now()) @db.DateTime(0)
   UpdatedAt   DateTime?     @default(now()) @db.DateTime(0)
   LabOrder    LabOrder?     @relation(fields: [LabOrderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "labordercpt_ibfk_1")
-  LabOrderIcd LabOrderIcd[]
-
-  @@index([LabOrderId], map: "laborder_icd_idx")
-}
-
-model LabOrderIcd {
-  Id            String       @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
-  LabOrderCptId String?      @db.VarChar(45)
-  ICDId         String?      @db.VarChar(45)
-  CreatedAt     DateTime?    @default(now()) @db.DateTime(0)
-  UpdatedAt     DateTime?    @default(now()) @db.DateTime(0)
-  LabOrderCpt   LabOrderCpt? @relation(fields: [LabOrderCptId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "labordericd_ibfk_1")
-  ICD           ICD?         @relation(fields: [ICDId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "labordericd_ibfk_2")
-
-  @@index([LabOrderCptId], map: "laborder_icd_cpt_id_idx")
-  @@index([ICDId], map: "laborder_icd_icd_idx")
+  @@index([LabOrderId], map: "labordercpt_laborder_id_idx")
 }
 
 model LabOrderSpecimen {

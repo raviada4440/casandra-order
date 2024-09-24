@@ -2,13 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 
-import uuid from 'react-native-uuid';
-
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { Chip, CircularProgress, Grid } from '@mui/material';
 
-import type { ICD, ICDWithRelations, LabOrderCptWithRelations, LabOrderIcdWithRelations } from '~prisma/generated/zod';
+import type { ICD, LabOrderCptWithRelations } from '~prisma/generated/zod';
 import { api } from '~trpc/react';
 
 // import { LabOrderContext } from '..';
@@ -31,14 +29,12 @@ const AutocompleteIcd = ({ cptRecord, onUpdateFormData }: AutocompleteIcdProps) 
   const { data, error, isLoading } = api.laborders.getIcdCodes.useQuery({ searchStr: inputValue })
 
   const onIcdChange = (values: ICD[]) => {
-    const updatedLabOrderIcd = values.map((value) => ({
-      Id: uuid.v4() as string,
-      ICD: value as ICDWithRelations,
-    }));
+
+    const icdCodesString = values.map(value => value.Code).join(', ')
 
     const updatedRecord: LabOrderCptWithRelations = {
       ...cptRecord,
-      LabOrderIcd: updatedLabOrderIcd as LabOrderIcdWithRelations[],
+      ICDCodes: icdCodesString
     };
 
     onUpdateFormData(updatedRecord);
