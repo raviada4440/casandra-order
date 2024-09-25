@@ -23,6 +23,9 @@ const OpenDialogOnElementClick = (props: OpenDialogOnElementClickProps) => {
 
   // Handle onClick event
   const handleOnClick = (e: MouseEvent) => {
+    
+    console.log('Element clicked')
+
     elementOnClick && elementOnClick(e)
     setOpen(true)
   }

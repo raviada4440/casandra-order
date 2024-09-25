@@ -516,7 +516,7 @@ const AddLabOrder = () => {
       OrganizationId: labOrder.Organization?.Id,
       PatientId: labOrder.Patient?.Id,
       OrderDate: labOrder.OrderDate,
-      LabOrderCpt: { connectOrCreate: labOrder.LabOrderCpt?.map(labCpt => ({ where: { Id: labCpt.Id }, create: { Id: labCpt.Id, CPTCode: labCpt.CPTCode } })) },
+      LabOrderCpt: { connectOrCreate: labOrder.LabOrderCpt?.map(labCpt => ({ where: { Id: labCpt.Id }, create: { Id: labCpt.Id, CPTCode: labCpt.CPTCode, ICDCodes: JSON.parse(labCpt.ICDCodes as string) } })) },
       LabOrderTest: { connectOrCreate: labOrder.LabOrderTest?.map(labTest => ({ where: { Id: labTest.Id }, create: { Id: labTest.Id, TestId: labTest.TestId } })) },
       LabOrderSpecimen: { connectOrCreate: labOrder.LabOrderSpecimen?.map(labSpecimen => ({ where: { Id: labSpecimen.Id }, create: labSpecimen })) },
       LabOrderStatus: { connectOrCreate: labOrder.LabOrderStatus?.map(labOrderStatus => ({ where: { Id: labOrderStatus.Id }, create: labOrderStatus })) },

@@ -14,7 +14,7 @@ import { DialogActions } from '@mui/material'
 
 // Styled Component Imports
 
-import type { LabOrderCptWithRelations } from '~prisma/generated/zod'
+import type { LabOrderCptWithRelations, LabOrderWithRelations } from '~prisma/generated/zod'
 import { LabOrderContext } from '..'
 import AutocompleteIcd from '../autocomplete/AutocompleteIcd';
 
@@ -53,6 +53,18 @@ const AddCptDetails = ({ open, setOpen, cptRecord }: AddCptProps) => {
     setFormData(updatedRecord);
   }
 
+  const updateLabOrderCpt = (labOrderCopy: LabOrderWithRelations, cpt: LabOrderCptWithRelations) => {
+    // Replace existing item if Id matches
+    labOrderCopy.LabOrderCpt = (labOrderCopy.LabOrderCpt || []).map(existingCpt =>
+      existingCpt.Id === cpt.Id ? cpt : existingCpt
+    );
+
+    // If the item was not found and replaced, add the new item
+    if (!labOrderCopy.LabOrderCpt.some(existingCpt => existingCpt.Id === cpt.Id)) {
+      labOrderCopy.LabOrderCpt.push(cpt);
+    }
+  }
+
   const handleSave = (cpt: LabOrderCptWithRelations) => {
     if (cpt) {
       // console.log('cpt: ', cpt)
@@ -61,7 +73,9 @@ const AddCptDetails = ({ open, setOpen, cptRecord }: AddCptProps) => {
       const labOrderCopy = { ...labOrder }
 
       // Add the cpt to LabOrderCpt
-      labOrderCopy.LabOrderCpt = [...(labOrderCopy.LabOrderCpt || []), cpt]
+      updateLabOrderCpt(labOrderCopy, cpt)
+
+      // labOrderCopy.LabOrderCpt = [...(labOrderCopy.LabOrderCpt || []), cpt]
 
       console.log('labOrderCopy: ', labOrderCopy)
 

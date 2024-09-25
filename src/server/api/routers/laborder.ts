@@ -100,11 +100,7 @@ export const labOrderRouter = createTRPCRouter({
           },
         },
         LabOrderBilling: true,
-        LabOrderIcd: {
-          include: {
-            ICD: true,
-          },
-        },
+        LabOrderCpt: true,
         LabOrderSpecimen: true,
         LabOrderStatus: true,
         LabOrderTest: {

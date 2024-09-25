@@ -16,6 +16,7 @@ type AutocompleteIcdProps = {
   onUpdateFormData: (updatedRecord: LabOrderCptWithRelations) => void;
 };
 
+
 const AutocompleteIcd = ({ cptRecord, onUpdateFormData }: AutocompleteIcdProps) => {
 
   // const { labOrder, setLabOrder } = useContext(LabOrderContext);
@@ -30,12 +31,14 @@ const AutocompleteIcd = ({ cptRecord, onUpdateFormData }: AutocompleteIcdProps) 
 
   const onIcdChange = (values: ICD[]) => {
 
-    const icdCodesString = values.map(value => value.Code).join(', ')
+    // const icdCodesString = values.map(value => value.Code).join(', ')
+    const icdCodesJsonArray = JSON.stringify(values);
 
-    const updatedRecord: LabOrderCptWithRelations = {
-      ...cptRecord,
-      ICDCodes: icdCodesString
-    };
+    const updatedRecord: LabOrderCptWithRelations = { ...cptRecord }
+
+    updatedRecord.ICDCodes  = icdCodesJsonArray
+
+    console.log('updatedRecord - AutocompleteIcd: ', updatedRecord)
 
     onUpdateFormData(updatedRecord);
   }
@@ -55,6 +58,9 @@ const AutocompleteIcd = ({ cptRecord, onUpdateFormData }: AutocompleteIcdProps) 
 
   }, [data, error, isLoading]);
 
+
+
+
   return (
     <Autocomplete
       id="icd-autocomplete"
@@ -71,11 +77,12 @@ const AutocompleteIcd = ({ cptRecord, onUpdateFormData }: AutocompleteIcdProps) 
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
       }}
+      value={cptRecord.ICDCodes ? JSON.parse(cptRecord.ICDCodes as string) : []}
       onChange={(event, newValue) => {
         onIcdChange(newValue as ICD[]);
         setOpen(false);
       }}
-      isOptionEqualToValue={(option, value) => option.Id === value.Id}
+      isOptionEqualToValue={(option: ICD, value: ICD) => option.Code === value.Code}
       getOptionLabel={(option: string | ICD) => typeof option === 'string' ? option : option.Code || ''}
       renderTags={(value: ICD[], getTagProps) =>
         value.map((option: ICD, index: number) => (

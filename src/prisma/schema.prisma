@@ -283,13 +283,14 @@ model LabOrderBilling {
 
 
 model LabOrderCpt {
-  Id          String        @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
-  LabOrderId  String?       @db.VarChar(45)
-  CPTCode     String?       @db.VarChar(45)
-  ICDCodes     String?      @db.VarChar(512)
-  CreatedAt   DateTime?     @default(now()) @db.DateTime(0)
-  UpdatedAt   DateTime?     @default(now()) @db.DateTime(0)
-  LabOrder    LabOrder?     @relation(fields: [LabOrderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "labordercpt_ibfk_1")
+  Id         String    @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  LabOrderId String?   @db.VarChar(45)
+  CPTCode    String?   @db.VarChar(45)
+  ICDCodes   Json?
+  CreatedAt  DateTime? @default(now()) @db.DateTime(0)
+  UpdatedAt  DateTime? @default(now()) @db.DateTime(0)
+  LabOrder   LabOrder? @relation(fields: [LabOrderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "labordercpt_ibfk_1")
+
   @@index([LabOrderId], map: "labordercpt_laborder_id_idx")
 }
 
