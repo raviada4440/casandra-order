@@ -13,7 +13,6 @@ export type NullableJsonInput = Prisma.JsonValue | null | 'JsonNull' | 'DbNull' 
 export const transformJsonNull = (v?: NullableJsonInput) => {
   if (!v || v === 'DbNull') return Prisma.DbNull;
   if (v === 'JsonNull') return Prisma.JsonNull;
-  
   return v;
 };
 

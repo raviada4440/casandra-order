@@ -49,7 +49,6 @@ module.exports = {
         next: '*'
       }
     ],
-    'newline-before-return': 'error',
     'import/newline-after-import': [
       'error',
       {
