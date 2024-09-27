@@ -123,10 +123,6 @@ const fuzzyFilter: FilterFn<any> = (row, columnId, value, addMeta) => {
   return itemRank.passed
 }
 
-const handleEditPermission = (orderNumber: string) => {
-  console.log('Order Number:', orderNumber)
-}
-
 const Filter = ({ column, table }: { column: Column<any, unknown>; table: Table<any> }) => {
   // Vars
   const firstValue = table.getPreFilteredRowModel().flatRows[0]?.getValue(column.id)
