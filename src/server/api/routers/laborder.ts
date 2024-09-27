@@ -16,6 +16,7 @@ export type CustomLabOrderType = {
   LabName: string | null | undefined
   OrderingPhysician: string | null
   TreatingPhysician: string | null
+  ResultPdfUrl?: string | null
 }
 
 export const labOrderRouter = createTRPCRouter({
@@ -43,9 +44,18 @@ export const labOrderRouter = createTRPCRouter({
           },
         },
         LabOrderStatus: {
+          orderBy: {
+            StatusDate: 'desc',
+          },
+          take: 1,
           select: {
             Status: true,
             StatusDate: true,
+          },
+        },
+        LabResults: {
+          select: {
+            ResultPdfUrl: true,
           },
         },
         OrderingProvider: {
@@ -76,6 +86,7 @@ export const labOrderRouter = createTRPCRouter({
       Status: labOrder.LabOrderStatus?.map(status => status.Status).join(', '),
       TestName: labOrder.LabOrderTest?.map(test => test.TestCatalog?.TestName).join(', '),
       LabName: labOrder.LabOrderTest?.map(test => test.TestCatalog?.Lab?.LabName).join(', '),
+      ResultPdfUrl: labOrder.LabResults?.map(result => result.ResultPdfUrl).join(', '),
       OrderingPhysician: labOrder.OrderingProvider?.Name,
       TreatingPhysician: labOrder.TreatingProvider?.Name,
     } as CustomLabOrderType)))

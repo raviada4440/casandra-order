@@ -246,7 +246,7 @@ model LabOrder {
   LabOrderSponsoredTestConsent                   LabOrderSponsoredTestConsent[]
   LabOrderStatus                                 LabOrderStatus[]
   LabOrderTest                                   LabOrderTest[]
-
+  LabResults                                     LabResults[]
   @@index([OrderingProviderId], map: "ordering_provider_order_idx")
   @@index([OrganizationId], map: "organization_order_idx")
   @@index([PatientId], map: "patient_order_idx")
@@ -372,6 +372,20 @@ model LabOrderTest {
 
   @@index([LabOrderId], map: "laborder_test_idx")
   @@index([TestId], map: "laborder_test_test_id_idx")
+}
+
+model LabResults {
+  Id              String    @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
+  LabOrderId      String?   @db.VarChar(45)
+  ResultDate      DateTime? @db.DateTime(0)
+  ResultPdfUrl    String?   @db.VarChar(256)
+  PathologistName String?   @db.VarChar(128)
+  PathologistNPI  String?   @db.VarChar(64)
+  CreatedAt       DateTime? @default(now()) @db.DateTime(0)
+  UpdatedAt       DateTime? @default(now()) @db.DateTime(0)
+  LabOrder        LabOrder? @relation(fields: [LabOrderId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "labresults_ibfk_1")
+
+  @@index([LabOrderId], map: "laborder_status_idx")
 }
 
 model LoincComponentHierarchy {

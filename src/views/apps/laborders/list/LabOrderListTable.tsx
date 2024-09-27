@@ -56,6 +56,7 @@ import type { CustomLabOrderType } from '@server/api/routers/laborder'
 
 // Hook Imports
 import { useSettings } from '@core/hooks/useSettings'
+import DisplayLabResults from './dialogs/DisplayLabResults'
 
 
 declare module '@tanstack/table-core' {
@@ -103,6 +104,9 @@ const useStyles = makeStyles({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
+  },
+  greenText: {
+    color: 'green',
   },
 });
 
@@ -210,12 +214,9 @@ const columnHelper = createColumnHelper<CustomLabOrderTypeWithAction>()
 const LabOrderListTable = ({ labOrdersData, columnFiltersData }: { labOrdersData: CustomLabOrderType[], columnFiltersData: ColumnFiltersState }) => {
 
   // States
-  // const [lab, setLab] = useState<Lab | null>(null)
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [data, setData] = useState(...[labOrdersData])
-
-  // const [labs, setLabs] = useState(...[labsData])
+  const [open, setOpen] = useState(false)
+  const [selectedRecord, setSelectedRecord] = useState(undefined as CustomLabOrderType | undefined)
 
   const [globalFilter, setGlobalFilter] = useState('')
   const { updateSettings } = useSettings()
@@ -226,7 +227,35 @@ const LabOrderListTable = ({ labOrdersData, columnFiltersData }: { labOrdersData
 
   const classes = useStyles();
 
-  // href={getLocalizedUrl(`/apps/laborders/edit/${row.original.Id}`, locale as Locale)}
+  const getEmptyLabOrderRecord = () => {
+    return {
+      Id: undefined,
+      OrderNumber: undefined,
+      AccessionNumber: undefined,
+      OrderDate: undefined,
+      PatientMRN: undefined,
+      PatientName: undefined,
+      Status: undefined,
+      TestName: undefined,
+      LabName: undefined,
+      OrderingPhysician: undefined,
+      TreatingPhysician: undefined,
+      ResultPdfUrl: undefined
+    } as unknown as CustomLabOrderType
+  }
+
+  const findRecordById = (id: string): CustomLabOrderType => {
+    const labOrdersDataRecord = labOrdersData.find(record => record.Id === id)
+
+    console.log('labOrdersDataRecord: ', labOrdersDataRecord)
+
+    return labOrdersDataRecord ?? getEmptyLabOrderRecord()
+  };
+
+  const showResults = (id: string) => {
+    setOpen(true)
+    setSelectedRecord(findRecordById(id))
+  }
 
   const columns = useMemo<ColumnDef<CustomLabOrderTypeWithAction, any>[]>(
     () => [
@@ -286,8 +315,19 @@ const LabOrderListTable = ({ labOrdersData, columnFiltersData }: { labOrdersData
       }),
       columnHelper.accessor('Status', {
         header: 'Status',
-        cell: ({ row }) => <Typography className={`${classes.cell150}`}>{row.original.Status}</Typography>
+        cell: ({ row }) => (
+          <Typography
+            className={`${classes.cell150} ${row.original.Status === 'Order Resulted' ? classes.greenText : ''}`}
+          >
+            {row.original.Status}
+          </Typography>
+        ),
       }),
+      
+      // columnHelper.accessor('Status', {
+      //   header: 'Status',
+      //   cell: ({ row }) => <Typography className={`${classes.cell150}`}>{row.original.Status}</Typography>
+      // }),
       columnHelper.accessor('action', {
         header: 'Actions',
         enableColumnFilter:false,
@@ -296,9 +336,11 @@ const LabOrderListTable = ({ labOrdersData, columnFiltersData }: { labOrdersData
             <IconButton onClick={() => handleEditPermission(row.original.OrderNumber as string)}>
               <i className='ri-edit-box-line text-[22px] text-textSecondary' />
             </IconButton>
-            <IconButton>
-              <i className='ri-bank-card-line text-[22px] text-textSecondary' />
-            </IconButton>
+            {row.original.Status === 'Order Resulted' &&
+              <IconButton onClick={() => showResults(row.original.Id)}>
+                <i className='ri-bank-card-line text-[22px] text-textSecondary' />
+              </IconButton>
+            }
           </div>
         ),
         enableSorting: false
@@ -460,6 +502,7 @@ const LabOrderListTable = ({ labOrdersData, columnFiltersData }: { labOrdersData
         }}
         onRowsPerPageChange={e => table.setPageSize(Number(e.target.value))}
       />
+      <DisplayLabResults open={open} setOpen={setOpen} labOrderRecord={selectedRecord as CustomLabOrderType} />
     </Card>
   )
 }

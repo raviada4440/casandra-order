@@ -90,6 +90,8 @@ export const LabOrderStatusScalarFieldEnumSchema = z.enum(['Id','LabOrderId','St
 
 export const LabOrderTestScalarFieldEnumSchema = z.enum(['Id','LabOrderId','TestId','Type','DrugName','Indication','CreatedAt','UpdatedAt']);
 
+export const LabResultsScalarFieldEnumSchema = z.enum(['Id','LabOrderId','ResultDate','ResultPdfUrl','PathologistName','PathologistNPI','CreatedAt','UpdatedAt']);
+
 export const LoincComponentHierarchyScalarFieldEnumSchema = z.enum(['Id','ParentId','Level','Code','Sequence','CodeText','Component','Property','Timing','Scale','Method']);
 
 export const LoincPanelHierarchyScalarFieldEnumSchema = z.enum(['Id','ParentId','Level','Code','Sequence','CodeText','Component','Property','Timing','Scale','Method']);
@@ -183,6 +185,8 @@ export const LabOrderSponsoredTestConsentOrderByRelevanceFieldEnumSchema = z.enu
 export const LabOrderStatusOrderByRelevanceFieldEnumSchema = z.enum(['Id','LabOrderId','Status']);
 
 export const LabOrderTestOrderByRelevanceFieldEnumSchema = z.enum(['Id','LabOrderId','Type','DrugName','Indication']);
+
+export const LabResultsOrderByRelevanceFieldEnumSchema = z.enum(['Id','LabOrderId','ResultPdfUrl','PathologistName','PathologistNPI']);
 
 export const LoincComponentHierarchyOrderByRelevanceFieldEnumSchema = z.enum(['Code','Sequence','CodeText','Component','Property','Timing','Scale','Method']);
 
@@ -831,6 +835,7 @@ export type LabOrderRelations = {
   LabOrderSponsoredTestConsent: LabOrderSponsoredTestConsentWithRelations[];
   LabOrderStatus: LabOrderStatusWithRelations[];
   LabOrderTest: LabOrderTestWithRelations[];
+  LabResults: LabResultsWithRelations[];
 };
 
 export type LabOrderWithRelations = z.infer<typeof LabOrderSchema> & LabOrderRelations
@@ -847,6 +852,7 @@ export const LabOrderWithRelationsSchema: z.ZodType<LabOrderWithRelations> = Lab
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentWithRelationsSchema).array(),
   LabOrderStatus: z.lazy(() => LabOrderStatusWithRelationsSchema).array(),
   LabOrderTest: z.lazy(() => LabOrderTestWithRelationsSchema).array(),
+  LabResults: z.lazy(() => LabResultsWithRelationsSchema).array(),
 }))
 
 // LAB ORDER PARTIAL RELATION SCHEMA
@@ -864,6 +870,7 @@ export type LabOrderPartialRelations = {
   LabOrderSponsoredTestConsent?: LabOrderSponsoredTestConsentPartialWithRelations[];
   LabOrderStatus?: LabOrderStatusPartialWithRelations[];
   LabOrderTest?: LabOrderTestPartialWithRelations[];
+  LabResults?: LabResultsPartialWithRelations[];
 };
 
 export type LabOrderPartialWithRelations = z.infer<typeof LabOrderPartialSchema> & LabOrderPartialRelations
@@ -880,6 +887,7 @@ export const LabOrderPartialWithRelationsSchema: z.ZodType<LabOrderPartialWithRe
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentPartialWithRelationsSchema).array(),
   LabOrderStatus: z.lazy(() => LabOrderStatusPartialWithRelationsSchema).array(),
   LabOrderTest: z.lazy(() => LabOrderTestPartialWithRelationsSchema).array(),
+  LabResults: z.lazy(() => LabResultsPartialWithRelationsSchema).array(),
 })).partial()
 
 export type LabOrderWithPartialRelations = z.infer<typeof LabOrderSchema> & LabOrderPartialRelations
@@ -896,6 +904,7 @@ export const LabOrderWithPartialRelationsSchema: z.ZodType<LabOrderWithPartialRe
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentPartialWithRelationsSchema).array(),
   LabOrderStatus: z.lazy(() => LabOrderStatusPartialWithRelationsSchema).array(),
   LabOrderTest: z.lazy(() => LabOrderTestPartialWithRelationsSchema).array(),
+  LabResults: z.lazy(() => LabResultsPartialWithRelationsSchema).array(),
 }).partial())
 
 /////////////////////////////////////////
@@ -1331,6 +1340,63 @@ export type LabOrderTestWithPartialRelations = z.infer<typeof LabOrderTestSchema
 export const LabOrderTestWithPartialRelationsSchema: z.ZodType<LabOrderTestWithPartialRelations> = LabOrderTestSchema.merge(z.object({
   LabOrder: z.lazy(() => LabOrderPartialWithRelationsSchema).nullable(),
   TestCatalog: z.lazy(() => TestCatalogPartialWithRelationsSchema).nullable(),
+}).partial())
+
+/////////////////////////////////////////
+// LAB RESULTS SCHEMA
+/////////////////////////////////////////
+
+export const LabResultsSchema = z.object({
+  Id: z.string(),
+  LabOrderId: z.string().nullable(),
+  ResultDate: z.date().nullable(),
+  ResultPdfUrl: z.string().nullable(),
+  PathologistName: z.string().nullable(),
+  PathologistNPI: z.string().nullable(),
+  CreatedAt: z.date().nullable(),
+  UpdatedAt: z.date().nullable(),
+})
+
+export type LabResults = z.infer<typeof LabResultsSchema>
+
+/////////////////////////////////////////
+// LAB RESULTS PARTIAL SCHEMA
+/////////////////////////////////////////
+
+export const LabResultsPartialSchema = LabResultsSchema.partial()
+
+export type LabResultsPartial = z.infer<typeof LabResultsPartialSchema>
+
+// LAB RESULTS RELATION SCHEMA
+//------------------------------------------------------
+
+export type LabResultsRelations = {
+  LabOrder?: LabOrderWithRelations | null;
+};
+
+export type LabResultsWithRelations = z.infer<typeof LabResultsSchema> & LabResultsRelations
+
+export const LabResultsWithRelationsSchema: z.ZodType<LabResultsWithRelations> = LabResultsSchema.merge(z.object({
+  LabOrder: z.lazy(() => LabOrderWithRelationsSchema).nullable(),
+}))
+
+// LAB RESULTS PARTIAL RELATION SCHEMA
+//------------------------------------------------------
+
+export type LabResultsPartialRelations = {
+  LabOrder?: LabOrderPartialWithRelations | null;
+};
+
+export type LabResultsPartialWithRelations = z.infer<typeof LabResultsPartialSchema> & LabResultsPartialRelations
+
+export const LabResultsPartialWithRelationsSchema: z.ZodType<LabResultsPartialWithRelations> = LabResultsPartialSchema.merge(z.object({
+  LabOrder: z.lazy(() => LabOrderPartialWithRelationsSchema).nullable(),
+})).partial()
+
+export type LabResultsWithPartialRelations = z.infer<typeof LabResultsSchema> & LabResultsPartialRelations
+
+export const LabResultsWithPartialRelationsSchema: z.ZodType<LabResultsWithPartialRelations> = LabResultsSchema.merge(z.object({
+  LabOrder: z.lazy(() => LabOrderPartialWithRelationsSchema).nullable(),
 }).partial())
 
 /////////////////////////////////////////
@@ -3165,6 +3231,7 @@ export const LabOrderIncludeSchema: z.ZodType<Prisma.LabOrderInclude> = z.object
   LabOrderSponsoredTestConsent: z.union([z.boolean(),z.lazy(() => LabOrderSponsoredTestConsentFindManyArgsSchema)]).optional(),
   LabOrderStatus: z.union([z.boolean(),z.lazy(() => LabOrderStatusFindManyArgsSchema)]).optional(),
   LabOrderTest: z.union([z.boolean(),z.lazy(() => LabOrderTestFindManyArgsSchema)]).optional(),
+  LabResults: z.union([z.boolean(),z.lazy(() => LabResultsFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => LabOrderCountOutputTypeArgsSchema)]).optional(),
 }).strict()
 
@@ -3185,6 +3252,7 @@ export const LabOrderCountOutputTypeSelectSchema: z.ZodType<Prisma.LabOrderCount
   LabOrderSponsoredTestConsent: z.boolean().optional(),
   LabOrderStatus: z.boolean().optional(),
   LabOrderTest: z.boolean().optional(),
+  LabResults: z.boolean().optional(),
 }).strict();
 
 export const LabOrderSelectSchema: z.ZodType<Prisma.LabOrderSelect> = z.object({
@@ -3213,6 +3281,7 @@ export const LabOrderSelectSchema: z.ZodType<Prisma.LabOrderSelect> = z.object({
   LabOrderSponsoredTestConsent: z.union([z.boolean(),z.lazy(() => LabOrderSponsoredTestConsentFindManyArgsSchema)]).optional(),
   LabOrderStatus: z.union([z.boolean(),z.lazy(() => LabOrderStatusFindManyArgsSchema)]).optional(),
   LabOrderTest: z.union([z.boolean(),z.lazy(() => LabOrderTestFindManyArgsSchema)]).optional(),
+  LabResults: z.union([z.boolean(),z.lazy(() => LabResultsFindManyArgsSchema)]).optional(),
   _count: z.union([z.boolean(),z.lazy(() => LabOrderCountOutputTypeArgsSchema)]).optional(),
 }).strict()
 
@@ -3403,6 +3472,30 @@ export const LabOrderTestSelectSchema: z.ZodType<Prisma.LabOrderTestSelect> = z.
   UpdatedAt: z.boolean().optional(),
   LabOrder: z.union([z.boolean(),z.lazy(() => LabOrderArgsSchema)]).optional(),
   TestCatalog: z.union([z.boolean(),z.lazy(() => TestCatalogArgsSchema)]).optional(),
+}).strict()
+
+// LAB RESULTS
+//------------------------------------------------------
+
+export const LabResultsIncludeSchema: z.ZodType<Prisma.LabResultsInclude> = z.object({
+  LabOrder: z.union([z.boolean(),z.lazy(() => LabOrderArgsSchema)]).optional(),
+}).strict()
+
+export const LabResultsArgsSchema: z.ZodType<Prisma.LabResultsDefaultArgs> = z.object({
+  select: z.lazy(() => LabResultsSelectSchema).optional(),
+  include: z.lazy(() => LabResultsIncludeSchema).optional(),
+}).strict();
+
+export const LabResultsSelectSchema: z.ZodType<Prisma.LabResultsSelect> = z.object({
+  Id: z.boolean().optional(),
+  LabOrderId: z.boolean().optional(),
+  ResultDate: z.boolean().optional(),
+  ResultPdfUrl: z.boolean().optional(),
+  PathologistName: z.boolean().optional(),
+  PathologistNPI: z.boolean().optional(),
+  CreatedAt: z.boolean().optional(),
+  UpdatedAt: z.boolean().optional(),
+  LabOrder: z.union([z.boolean(),z.lazy(() => LabOrderArgsSchema)]).optional(),
 }).strict()
 
 // LOINC COMPONENT HIERARCHY
@@ -4204,7 +4297,7 @@ export const AccountWhereInputSchema: z.ZodType<Prisma.AccountWhereInput> = z.ob
   user: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
 }).strict();
 
-export const AccountOrderByWithRelationInputSchema: z.ZodType<Prisma.AccountOrderByWithRelationInput> = z.object({
+export const AccountOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.AccountOrderByWithRelationAndSearchRelevanceInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   userId: z.lazy(() => SortOrderSchema).optional(),
   type: z.lazy(() => SortOrderSchema).optional(),
@@ -4234,7 +4327,7 @@ export const AccountOrderByWithRelationInputSchema: z.ZodType<Prisma.AccountOrde
   tenant: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   createdAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   updatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  user: z.lazy(() => UserOrderByWithRelationInputSchema).optional(),
+  user: z.lazy(() => UserOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => AccountOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -4386,12 +4479,12 @@ export const AdminWhereInputSchema: z.ZodType<Prisma.AdminWhereInput> = z.object
   UserAttribute: z.union([ z.lazy(() => UserAttributeRelationFilterSchema),z.lazy(() => UserAttributeWhereInputSchema) ]).optional(),
 }).strict();
 
-export const AdminOrderByWithRelationInputSchema: z.ZodType<Prisma.AdminOrderByWithRelationInput> = z.object({
+export const AdminOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.AdminOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   Name: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   Email: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UserAttributeId: z.lazy(() => SortOrderSchema).optional(),
-  UserAttribute: z.lazy(() => UserAttributeOrderByWithRelationInputSchema).optional(),
+  UserAttribute: z.lazy(() => UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => AdminOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -4450,7 +4543,7 @@ export const AttachmentWhereInputSchema: z.ZodType<Prisma.AttachmentWhereInput> 
   LabOrderAttachment: z.lazy(() => LabOrderAttachmentListRelationFilterSchema).optional()
 }).strict();
 
-export const AttachmentOrderByWithRelationInputSchema: z.ZodType<Prisma.AttachmentOrderByWithRelationInput> = z.object({
+export const AttachmentOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.AttachmentOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   AttachmentType: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   AttachmentUrl: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -4508,7 +4601,7 @@ export const BIOMARKERWhereInputSchema: z.ZodType<Prisma.BIOMARKERWhereInput> = 
   TestBiomarker: z.lazy(() => TestBiomarkerListRelationFilterSchema).optional()
 }).strict();
 
-export const BIOMARKEROrderByWithRelationInputSchema: z.ZodType<Prisma.BIOMARKEROrderByWithRelationInput> = z.object({
+export const BIOMARKEROrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.BIOMARKEROrderByWithRelationAndSearchRelevanceInput> = z.object({
   HGNCId: z.lazy(() => SortOrderSchema).optional(),
   HGNCStatus: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   HGNCApprovedSymbol: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -4578,7 +4671,7 @@ export const CdxTestWhereInputSchema: z.ZodType<Prisma.CdxTestWhereInput> = z.ob
   TestCatalog: z.union([ z.lazy(() => TestCatalogRelationFilterSchema),z.lazy(() => TestCatalogWhereInputSchema) ]).optional(),
 }).strict();
 
-export const CdxTestOrderByWithRelationInputSchema: z.ZodType<Prisma.CdxTestOrderByWithRelationInput> = z.object({
+export const CdxTestOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.CdxTestOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   TestId: z.lazy(() => SortOrderSchema).optional(),
   CasandraTestId: z.lazy(() => SortOrderSchema).optional(),
@@ -4590,7 +4683,7 @@ export const CdxTestOrderByWithRelationInputSchema: z.ZodType<Prisma.CdxTestOrde
   RequiredBiomarkers: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => CdxTestOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -4712,7 +4805,7 @@ export const CompanionDiagnosticDevicesWhereInputSchema: z.ZodType<Prisma.Compan
   ApprovalOrderStatement: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
 }).strict();
 
-export const CompanionDiagnosticDevicesOrderByWithRelationInputSchema: z.ZodType<Prisma.CompanionDiagnosticDevicesOrderByWithRelationInput> = z.object({
+export const CompanionDiagnosticDevicesOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.CompanionDiagnosticDevicesOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   DiagnosticName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ReplacedBy: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -4938,7 +5031,7 @@ export const ICDWhereInputSchema: z.ZodType<Prisma.ICDWhereInput> = z.object({
   UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
 }).strict();
 
-export const ICDOrderByWithRelationInputSchema: z.ZodType<Prisma.ICDOrderByWithRelationInput> = z.object({
+export const ICDOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.ICDOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   Code: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ShortDescription: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -5047,7 +5140,7 @@ export const LOINCWhereInputSchema: z.ZodType<Prisma.LOINCWhereInput> = z.object
   TestResultLoinc: z.lazy(() => TestResultLoincListRelationFilterSchema).optional()
 }).strict();
 
-export const LOINCOrderByWithRelationInputSchema: z.ZodType<Prisma.LOINCOrderByWithRelationInput> = z.object({
+export const LOINCOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LOINCOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Loinc_Num: z.lazy(() => SortOrderSchema).optional(),
   COMPONENT: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   PROPERTY: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -5252,7 +5345,7 @@ export const LabWhereInputSchema: z.ZodType<Prisma.LabWhereInput> = z.object({
   TestCatalog: z.lazy(() => TestCatalogListRelationFilterSchema).optional()
 }).strict();
 
-export const LabOrderByWithRelationInputSchema: z.ZodType<Prisma.LabOrderByWithRelationInput> = z.object({
+export const LabOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LabOrderByWithRelationAndSearchRelevanceInput> = z.object({
   LabId: z.lazy(() => SortOrderSchema).optional(),
   LabName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   LabCode: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -5337,10 +5430,11 @@ export const LabOrderWhereInputSchema: z.ZodType<Prisma.LabOrderWhereInput> = z.
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenListRelationFilterSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentListRelationFilterSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusListRelationFilterSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestListRelationFilterSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestListRelationFilterSchema).optional(),
+  LabResults: z.lazy(() => LabResultsListRelationFilterSchema).optional()
 }).strict();
 
-export const LabOrderOrderByWithRelationInputSchema: z.ZodType<Prisma.LabOrderOrderByWithRelationInput> = z.object({
+export const LabOrderOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LabOrderOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   OrderNumber: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   AccessionNumber: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -5355,10 +5449,10 @@ export const LabOrderOrderByWithRelationInputSchema: z.ZodType<Prisma.LabOrderOr
   OrderNotes: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  OrderingProvider: z.lazy(() => ProviderOrderByWithRelationInputSchema).optional(),
-  TreatingProvider: z.lazy(() => ProviderOrderByWithRelationInputSchema).optional(),
-  Patient: z.lazy(() => PatientOrderByWithRelationInputSchema).optional(),
-  Organization: z.lazy(() => OrganizationOrderByWithRelationInputSchema).optional(),
+  OrderingProvider: z.lazy(() => ProviderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  TreatingProvider: z.lazy(() => ProviderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  Patient: z.lazy(() => PatientOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  Organization: z.lazy(() => OrganizationOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   LabOrderAttachment: z.lazy(() => LabOrderAttachmentOrderByRelationAggregateInputSchema).optional(),
   LabOrderBilling: z.lazy(() => LabOrderBillingOrderByRelationAggregateInputSchema).optional(),
   LabOrderCpt: z.lazy(() => LabOrderCptOrderByRelationAggregateInputSchema).optional(),
@@ -5366,6 +5460,7 @@ export const LabOrderOrderByWithRelationInputSchema: z.ZodType<Prisma.LabOrderOr
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentOrderByRelationAggregateInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusOrderByRelationAggregateInputSchema).optional(),
   LabOrderTest: z.lazy(() => LabOrderTestOrderByRelationAggregateInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsOrderByRelationAggregateInputSchema).optional(),
   _relevance: z.lazy(() => LabOrderOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -5400,7 +5495,8 @@ export const LabOrderWhereUniqueInputSchema: z.ZodType<Prisma.LabOrderWhereUniqu
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenListRelationFilterSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentListRelationFilterSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusListRelationFilterSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestListRelationFilterSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestListRelationFilterSchema).optional(),
+  LabResults: z.lazy(() => LabResultsListRelationFilterSchema).optional()
 }).strict());
 
 export const LabOrderOrderByWithAggregationInputSchema: z.ZodType<Prisma.LabOrderOrderByWithAggregationInput> = z.object({
@@ -5456,14 +5552,14 @@ export const LabOrderAttachmentWhereInputSchema: z.ZodType<Prisma.LabOrderAttach
   Attachment: z.union([ z.lazy(() => AttachmentNullableRelationFilterSchema),z.lazy(() => AttachmentWhereInputSchema) ]).optional().nullable(),
 }).strict();
 
-export const LabOrderAttachmentOrderByWithRelationInputSchema: z.ZodType<Prisma.LabOrderAttachmentOrderByWithRelationInput> = z.object({
+export const LabOrderAttachmentOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LabOrderAttachmentOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   AttachmentId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  LabOrder: z.lazy(() => LabOrderOrderByWithRelationInputSchema).optional(),
-  Attachment: z.lazy(() => AttachmentOrderByWithRelationInputSchema).optional(),
+  LabOrder: z.lazy(() => LabOrderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  Attachment: z.lazy(() => AttachmentOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => LabOrderAttachmentOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -5521,7 +5617,7 @@ export const LabOrderBillingWhereInputSchema: z.ZodType<Prisma.LabOrderBillingWh
   LabOrder: z.union([ z.lazy(() => LabOrderNullableRelationFilterSchema),z.lazy(() => LabOrderWhereInputSchema) ]).optional().nullable(),
 }).strict();
 
-export const LabOrderBillingOrderByWithRelationInputSchema: z.ZodType<Prisma.LabOrderBillingOrderByWithRelationInput> = z.object({
+export const LabOrderBillingOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LabOrderBillingOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   BillToId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -5531,7 +5627,7 @@ export const LabOrderBillingOrderByWithRelationInputSchema: z.ZodType<Prisma.Lab
   SponoseredTestCouponCode: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  LabOrder: z.lazy(() => LabOrderOrderByWithRelationInputSchema).optional(),
+  LabOrder: z.lazy(() => LabOrderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => LabOrderBillingOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -5597,14 +5693,14 @@ export const LabOrderCptWhereInputSchema: z.ZodType<Prisma.LabOrderCptWhereInput
   LabOrder: z.union([ z.lazy(() => LabOrderNullableRelationFilterSchema),z.lazy(() => LabOrderWhereInputSchema) ]).optional().nullable(),
 }).strict();
 
-export const LabOrderCptOrderByWithRelationInputSchema: z.ZodType<Prisma.LabOrderCptOrderByWithRelationInput> = z.object({
+export const LabOrderCptOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LabOrderCptOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CPTCode: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ICDCodes: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  LabOrder: z.lazy(() => LabOrderOrderByWithRelationInputSchema).optional(),
+  LabOrder: z.lazy(() => LabOrderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => LabOrderCptOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -5684,7 +5780,7 @@ export const LabOrderSpecimenWhereInputSchema: z.ZodType<Prisma.LabOrderSpecimen
   LabOrder: z.union([ z.lazy(() => LabOrderNullableRelationFilterSchema),z.lazy(() => LabOrderWhereInputSchema) ]).optional().nullable(),
 }).strict();
 
-export const LabOrderSpecimenOrderByWithRelationInputSchema: z.ZodType<Prisma.LabOrderSpecimenOrderByWithRelationInput> = z.object({
+export const LabOrderSpecimenOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LabOrderSpecimenOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   SpecimenType: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -5714,7 +5810,7 @@ export const LabOrderSpecimenOrderByWithRelationInputSchema: z.ZodType<Prisma.La
   PscAppointmentTime: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  LabOrder: z.lazy(() => LabOrderOrderByWithRelationInputSchema).optional(),
+  LabOrder: z.lazy(() => LabOrderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => LabOrderSpecimenOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -5843,7 +5939,7 @@ export const LabOrderSponsoredTestConsentWhereInputSchema: z.ZodType<Prisma.LabO
   LabOrder: z.union([ z.lazy(() => LabOrderNullableRelationFilterSchema),z.lazy(() => LabOrderWhereInputSchema) ]).optional().nullable(),
 }).strict();
 
-export const LabOrderSponsoredTestConsentOrderByWithRelationInputSchema: z.ZodType<Prisma.LabOrderSponsoredTestConsentOrderByWithRelationInput> = z.object({
+export const LabOrderSponsoredTestConsentOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LabOrderSponsoredTestConsentOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   SponsoredCasandraTestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -5852,8 +5948,8 @@ export const LabOrderSponsoredTestConsentOrderByWithRelationInputSchema: z.ZodTy
   ConsentAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  SponsoredTest: z.lazy(() => SponsoredTestOrderByWithRelationInputSchema).optional(),
-  LabOrder: z.lazy(() => LabOrderOrderByWithRelationInputSchema).optional(),
+  SponsoredTest: z.lazy(() => SponsoredTestOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  LabOrder: z.lazy(() => LabOrderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => LabOrderSponsoredTestConsentOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -5917,14 +6013,14 @@ export const LabOrderStatusWhereInputSchema: z.ZodType<Prisma.LabOrderStatusWher
   LabOrder: z.union([ z.lazy(() => LabOrderNullableRelationFilterSchema),z.lazy(() => LabOrderWhereInputSchema) ]).optional().nullable(),
 }).strict();
 
-export const LabOrderStatusOrderByWithRelationInputSchema: z.ZodType<Prisma.LabOrderStatusOrderByWithRelationInput> = z.object({
+export const LabOrderStatusOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LabOrderStatusOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   Status: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   StatusDate: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  LabOrder: z.lazy(() => LabOrderOrderByWithRelationInputSchema).optional(),
+  LabOrder: z.lazy(() => LabOrderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => LabOrderStatusOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -5984,7 +6080,7 @@ export const LabOrderTestWhereInputSchema: z.ZodType<Prisma.LabOrderTestWhereInp
   TestCatalog: z.union([ z.lazy(() => TestCatalogNullableRelationFilterSchema),z.lazy(() => TestCatalogWhereInputSchema) ]).optional().nullable(),
 }).strict();
 
-export const LabOrderTestOrderByWithRelationInputSchema: z.ZodType<Prisma.LabOrderTestOrderByWithRelationInput> = z.object({
+export const LabOrderTestOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LabOrderTestOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   TestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -5993,8 +6089,8 @@ export const LabOrderTestOrderByWithRelationInputSchema: z.ZodType<Prisma.LabOrd
   Indication: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  LabOrder: z.lazy(() => LabOrderOrderByWithRelationInputSchema).optional(),
-  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationInputSchema).optional(),
+  LabOrder: z.lazy(() => LabOrderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => LabOrderTestOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -6047,6 +6143,80 @@ export const LabOrderTestScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.
   UpdatedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
 }).strict();
 
+export const LabResultsWhereInputSchema: z.ZodType<Prisma.LabResultsWhereInput> = z.object({
+  AND: z.union([ z.lazy(() => LabResultsWhereInputSchema),z.lazy(() => LabResultsWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => LabResultsWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => LabResultsWhereInputSchema),z.lazy(() => LabResultsWhereInputSchema).array() ]).optional(),
+  Id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  LabOrderId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  ResultDate: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  ResultPdfUrl: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  PathologistName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  PathologistNPI: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  LabOrder: z.union([ z.lazy(() => LabOrderNullableRelationFilterSchema),z.lazy(() => LabOrderWhereInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const LabResultsOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LabResultsOrderByWithRelationAndSearchRelevanceInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  LabOrderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  ResultDate: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  ResultPdfUrl: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  PathologistName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  PathologistNPI: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  LabOrder: z.lazy(() => LabOrderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  _relevance: z.lazy(() => LabResultsOrderByRelevanceInputSchema).optional()
+}).strict();
+
+export const LabResultsWhereUniqueInputSchema: z.ZodType<Prisma.LabResultsWhereUniqueInput> = z.object({
+  Id: z.string()
+})
+.and(z.object({
+  Id: z.string().optional(),
+  AND: z.union([ z.lazy(() => LabResultsWhereInputSchema),z.lazy(() => LabResultsWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => LabResultsWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => LabResultsWhereInputSchema),z.lazy(() => LabResultsWhereInputSchema).array() ]).optional(),
+  LabOrderId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  ResultDate: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  ResultPdfUrl: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  PathologistName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  PathologistNPI: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  LabOrder: z.union([ z.lazy(() => LabOrderNullableRelationFilterSchema),z.lazy(() => LabOrderWhereInputSchema) ]).optional().nullable(),
+}).strict());
+
+export const LabResultsOrderByWithAggregationInputSchema: z.ZodType<Prisma.LabResultsOrderByWithAggregationInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  LabOrderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  ResultDate: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  ResultPdfUrl: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  PathologistName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  PathologistNPI: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  _count: z.lazy(() => LabResultsCountOrderByAggregateInputSchema).optional(),
+  _max: z.lazy(() => LabResultsMaxOrderByAggregateInputSchema).optional(),
+  _min: z.lazy(() => LabResultsMinOrderByAggregateInputSchema).optional()
+}).strict();
+
+export const LabResultsScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.LabResultsScalarWhereWithAggregatesInput> = z.object({
+  AND: z.union([ z.lazy(() => LabResultsScalarWhereWithAggregatesInputSchema),z.lazy(() => LabResultsScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  OR: z.lazy(() => LabResultsScalarWhereWithAggregatesInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => LabResultsScalarWhereWithAggregatesInputSchema),z.lazy(() => LabResultsScalarWhereWithAggregatesInputSchema).array() ]).optional(),
+  Id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
+  LabOrderId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  ResultDate: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
+  ResultPdfUrl: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  PathologistName: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  PathologistNPI: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  CreatedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
+  UpdatedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
+}).strict();
+
 export const LoincComponentHierarchyWhereInputSchema: z.ZodType<Prisma.LoincComponentHierarchyWhereInput> = z.object({
   AND: z.union([ z.lazy(() => LoincComponentHierarchyWhereInputSchema),z.lazy(() => LoincComponentHierarchyWhereInputSchema).array() ]).optional(),
   OR: z.lazy(() => LoincComponentHierarchyWhereInputSchema).array().optional(),
@@ -6064,7 +6234,7 @@ export const LoincComponentHierarchyWhereInputSchema: z.ZodType<Prisma.LoincComp
   Method: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
 }).strict();
 
-export const LoincComponentHierarchyOrderByWithRelationInputSchema: z.ZodType<Prisma.LoincComponentHierarchyOrderByWithRelationInput> = z.object({
+export const LoincComponentHierarchyOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LoincComponentHierarchyOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   ParentId: z.lazy(() => SortOrderSchema).optional(),
   Level: z.lazy(() => SortOrderSchema).optional(),
@@ -6152,7 +6322,7 @@ export const LoincPanelHierarchyWhereInputSchema: z.ZodType<Prisma.LoincPanelHie
   Method: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
 }).strict();
 
-export const LoincPanelHierarchyOrderByWithRelationInputSchema: z.ZodType<Prisma.LoincPanelHierarchyOrderByWithRelationInput> = z.object({
+export const LoincPanelHierarchyOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LoincPanelHierarchyOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   ParentId: z.lazy(() => SortOrderSchema).optional(),
   Level: z.lazy(() => SortOrderSchema).optional(),
@@ -6232,7 +6402,7 @@ export const LoincUniveralLabOrdersWhereInputSchema: z.ZodType<Prisma.LoincUnive
   ORDER_OBS: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
 }).strict();
 
-export const LoincUniveralLabOrdersOrderByWithRelationInputSchema: z.ZodType<Prisma.LoincUniveralLabOrdersOrderByWithRelationInput> = z.object({
+export const LoincUniveralLabOrdersOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.LoincUniveralLabOrdersOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Loinc_Num: z.lazy(() => SortOrderSchema).optional(),
   Long_Common_Name: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ORDER_OBS: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -6293,7 +6463,7 @@ export const OrganizationWhereInputSchema: z.ZodType<Prisma.OrganizationWhereInp
   ProviderOrganization: z.lazy(() => ProviderOrganizationListRelationFilterSchema).optional()
 }).strict();
 
-export const OrganizationOrderByWithRelationInputSchema: z.ZodType<Prisma.OrganizationOrderByWithRelationInput> = z.object({
+export const OrganizationOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.OrganizationOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   href: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ParentId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -6307,7 +6477,7 @@ export const OrganizationOrderByWithRelationInputSchema: z.ZodType<Prisma.Organi
   OrgState: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   OrgZip: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   LabOrder: z.lazy(() => LabOrderOrderByRelationAggregateInputSchema).optional(),
-  Organization: z.lazy(() => OrganizationOrderByWithRelationInputSchema).optional(),
+  Organization: z.lazy(() => OrganizationOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   ChildOrganization: z.lazy(() => OrganizationOrderByRelationAggregateInputSchema).optional(),
   OrganizationFavoriteTest: z.lazy(() => OrganizationFavoriteTestOrderByRelationAggregateInputSchema).optional(),
   PatientOrganization: z.lazy(() => PatientOrganizationOrderByRelationAggregateInputSchema).optional(),
@@ -6391,7 +6561,7 @@ export const OrganizationEndpointWhereInputSchema: z.ZodType<Prisma.Organization
   Endpoint: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
 }).strict();
 
-export const OrganizationEndpointOrderByWithRelationInputSchema: z.ZodType<Prisma.OrganizationEndpointOrderByWithRelationInput> = z.object({
+export const OrganizationEndpointOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.OrganizationEndpointOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   OrgName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   EHRVendor: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -6452,7 +6622,7 @@ export const OrganizationFavoriteTestWhereInputSchema: z.ZodType<Prisma.Organiza
   TestCatalog: z.union([ z.lazy(() => TestCatalogNullableRelationFilterSchema),z.lazy(() => TestCatalogWhereInputSchema) ]).optional().nullable(),
 }).strict();
 
-export const OrganizationFavoriteTestOrderByWithRelationInputSchema: z.ZodType<Prisma.OrganizationFavoriteTestOrderByWithRelationInput> = z.object({
+export const OrganizationFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.OrganizationFavoriteTestOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   OrganizationId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ParentId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -6461,8 +6631,8 @@ export const OrganizationFavoriteTestOrderByWithRelationInputSchema: z.ZodType<P
   TestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  Organization: z.lazy(() => OrganizationOrderByWithRelationInputSchema).optional(),
-  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationInputSchema).optional(),
+  Organization: z.lazy(() => OrganizationOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => OrganizationFavoriteTestOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -6532,7 +6702,7 @@ export const PatientWhereInputSchema: z.ZodType<Prisma.PatientWhereInput> = z.ob
   PatientOrganization: z.lazy(() => PatientOrganizationListRelationFilterSchema).optional()
 }).strict();
 
-export const PatientOrderByWithRelationInputSchema: z.ZodType<Prisma.PatientOrderByWithRelationInput> = z.object({
+export const PatientOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.PatientOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   FirstName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   LastName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -6611,15 +6781,15 @@ export const PatientOrganizationWhereInputSchema: z.ZodType<Prisma.PatientOrgani
   Patient: z.union([ z.lazy(() => PatientRelationFilterSchema),z.lazy(() => PatientWhereInputSchema) ]).optional(),
 }).strict();
 
-export const PatientOrganizationOrderByWithRelationInputSchema: z.ZodType<Prisma.PatientOrganizationOrderByWithRelationInput> = z.object({
+export const PatientOrganizationOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.PatientOrganizationOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   PatientId: z.lazy(() => SortOrderSchema).optional(),
   OrganizationId: z.lazy(() => SortOrderSchema).optional(),
   MRN: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   Mobile: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   Email: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  Organization: z.lazy(() => OrganizationOrderByWithRelationInputSchema).optional(),
-  Patient: z.lazy(() => PatientOrderByWithRelationInputSchema).optional(),
+  Organization: z.lazy(() => OrganizationOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  Patient: z.lazy(() => PatientOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => PatientOrganizationOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -6674,7 +6844,7 @@ export const PostWhereInputSchema: z.ZodType<Prisma.PostWhereInput> = z.object({
   updatedAt: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
 }).strict();
 
-export const PostOrderByWithRelationInputSchema: z.ZodType<Prisma.PostOrderByWithRelationInput> = z.object({
+export const PostOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.PostOrderByWithRelationAndSearchRelevanceInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   name: z.lazy(() => SortOrderSchema).optional(),
   createdAt: z.lazy(() => SortOrderSchema).optional(),
@@ -6743,7 +6913,7 @@ export const ProviderWhereInputSchema: z.ZodType<Prisma.ProviderWhereInput> = z.
   ProviderOrganization: z.lazy(() => ProviderOrganizationListRelationFilterSchema).optional()
 }).strict();
 
-export const ProviderOrderByWithRelationInputSchema: z.ZodType<Prisma.ProviderOrderByWithRelationInput> = z.object({
+export const ProviderOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.ProviderOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   href: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   NPI: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -6760,7 +6930,7 @@ export const ProviderOrderByWithRelationInputSchema: z.ZodType<Prisma.ProviderOr
   UserAttributeId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   OrderingProviderLabOrder: z.lazy(() => LabOrderOrderByRelationAggregateInputSchema).optional(),
   TreatingProviderLabOrder: z.lazy(() => LabOrderOrderByRelationAggregateInputSchema).optional(),
-  UserAttribute: z.lazy(() => UserAttributeOrderByWithRelationInputSchema).optional(),
+  UserAttribute: z.lazy(() => UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   ProviderEducation: z.lazy(() => ProviderEducationOrderByRelationAggregateInputSchema).optional(),
   ProviderFavoriteTest: z.lazy(() => ProviderFavoriteTestOrderByRelationAggregateInputSchema).optional(),
   ProviderOrganization: z.lazy(() => ProviderOrganizationOrderByRelationAggregateInputSchema).optional(),
@@ -6859,7 +7029,7 @@ export const ProviderEducationWhereInputSchema: z.ZodType<Prisma.ProviderEducati
   Provider: z.union([ z.lazy(() => ProviderRelationFilterSchema),z.lazy(() => ProviderWhereInputSchema) ]).optional(),
 }).strict();
 
-export const ProviderEducationOrderByWithRelationInputSchema: z.ZodType<Prisma.ProviderEducationOrderByWithRelationInput> = z.object({
+export const ProviderEducationOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.ProviderEducationOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   ProviderId: z.lazy(() => SortOrderSchema).optional(),
   ProviderNPI: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -6867,7 +7037,7 @@ export const ProviderEducationOrderByWithRelationInputSchema: z.ZodType<Prisma.P
   EducationType: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   SchoolName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   AreaOfEducation: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  Provider: z.lazy(() => ProviderOrderByWithRelationInputSchema).optional(),
+  Provider: z.lazy(() => ProviderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => ProviderEducationOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -6930,7 +7100,7 @@ export const ProviderFavoriteTestWhereInputSchema: z.ZodType<Prisma.ProviderFavo
   TestCatalog: z.union([ z.lazy(() => TestCatalogNullableRelationFilterSchema),z.lazy(() => TestCatalogWhereInputSchema) ]).optional().nullable(),
 }).strict();
 
-export const ProviderFavoriteTestOrderByWithRelationInputSchema: z.ZodType<Prisma.ProviderFavoriteTestOrderByWithRelationInput> = z.object({
+export const ProviderFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.ProviderFavoriteTestOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   ProviderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ParentId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -6939,8 +7109,8 @@ export const ProviderFavoriteTestOrderByWithRelationInputSchema: z.ZodType<Prism
   TestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  Provider: z.lazy(() => ProviderOrderByWithRelationInputSchema).optional(),
-  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationInputSchema).optional(),
+  Provider: z.lazy(() => ProviderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => ProviderFavoriteTestOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -7012,7 +7182,7 @@ export const ProviderOrganizationWhereInputSchema: z.ZodType<Prisma.ProviderOrga
   Provider: z.union([ z.lazy(() => ProviderRelationFilterSchema),z.lazy(() => ProviderWhereInputSchema) ]).optional(),
 }).strict();
 
-export const ProviderOrganizationOrderByWithRelationInputSchema: z.ZodType<Prisma.ProviderOrganizationOrderByWithRelationInput> = z.object({
+export const ProviderOrganizationOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.ProviderOrganizationOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   ProviderId: z.lazy(() => SortOrderSchema).optional(),
   OrganizationId: z.lazy(() => SortOrderSchema).optional(),
@@ -7024,8 +7194,8 @@ export const ProviderOrganizationOrderByWithRelationInputSchema: z.ZodType<Prism
   OrgCity: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   OrgState: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   OrgZip: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  Organization: z.lazy(() => OrganizationOrderByWithRelationInputSchema).optional(),
-  Provider: z.lazy(() => ProviderOrderByWithRelationInputSchema).optional(),
+  Organization: z.lazy(() => OrganizationOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  Provider: z.lazy(() => ProviderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => ProviderOrganizationOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -7096,12 +7266,12 @@ export const SessionWhereInputSchema: z.ZodType<Prisma.SessionWhereInput> = z.ob
   User: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
 }).strict();
 
-export const SessionOrderByWithRelationInputSchema: z.ZodType<Prisma.SessionOrderByWithRelationInput> = z.object({
+export const SessionOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.SessionOrderByWithRelationAndSearchRelevanceInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   sessionToken: z.lazy(() => SortOrderSchema).optional(),
   userId: z.lazy(() => SortOrderSchema).optional(),
   expires: z.lazy(() => SortOrderSchema).optional(),
-  User: z.lazy(() => UserOrderByWithRelationInputSchema).optional(),
+  User: z.lazy(() => UserOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => SessionOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -7164,7 +7334,7 @@ export const SponsorWhereInputSchema: z.ZodType<Prisma.SponsorWhereInput> = z.ob
   SponsoredProgram: z.lazy(() => SponsoredProgramListRelationFilterSchema).optional()
 }).strict();
 
-export const SponsorOrderByWithRelationInputSchema: z.ZodType<Prisma.SponsorOrderByWithRelationInput> = z.object({
+export const SponsorOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.SponsorOrderByWithRelationAndSearchRelevanceInput> = z.object({
   SponsorId: z.lazy(() => SortOrderSchema).optional(),
   SponsorName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   SponsorCode: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -7246,7 +7416,7 @@ export const SponsoredProgramWhereInputSchema: z.ZodType<Prisma.SponsoredProgram
   SponsoredTest: z.lazy(() => SponsoredTestListRelationFilterSchema).optional()
 }).strict();
 
-export const SponsoredProgramOrderByWithRelationInputSchema: z.ZodType<Prisma.SponsoredProgramOrderByWithRelationInput> = z.object({
+export const SponsoredProgramOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.SponsoredProgramOrderByWithRelationAndSearchRelevanceInput> = z.object({
   ProgramId: z.lazy(() => SortOrderSchema).optional(),
   SponsorId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   ProgramName: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -7256,7 +7426,7 @@ export const SponsoredProgramOrderByWithRelationInputSchema: z.ZodType<Prisma.Sp
   ProgramEligibility: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  Sponsor: z.lazy(() => SponsorOrderByWithRelationInputSchema).optional(),
+  Sponsor: z.lazy(() => SponsorOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   SponsoredTest: z.lazy(() => SponsoredTestOrderByRelationAggregateInputSchema).optional(),
   _relevance: z.lazy(() => SponsoredProgramOrderByRelevanceInputSchema).optional()
 }).strict();
@@ -7331,7 +7501,7 @@ export const SponsoredTestWhereInputSchema: z.ZodType<Prisma.SponsoredTestWhereI
   TestCatalog: z.union([ z.lazy(() => TestCatalogRelationFilterSchema),z.lazy(() => TestCatalogWhereInputSchema) ]).optional(),
 }).strict();
 
-export const SponsoredTestOrderByWithRelationInputSchema: z.ZodType<Prisma.SponsoredTestOrderByWithRelationInput> = z.object({
+export const SponsoredTestOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.SponsoredTestOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   TestId: z.lazy(() => SortOrderSchema).optional(),
   CasandraTestId: z.lazy(() => SortOrderSchema).optional(),
@@ -7342,8 +7512,8 @@ export const SponsoredTestOrderByWithRelationInputSchema: z.ZodType<Prisma.Spons
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentOrderByRelationAggregateInputSchema).optional(),
-  SponsoredProgram: z.lazy(() => SponsoredProgramOrderByWithRelationInputSchema).optional(),
-  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationInputSchema).optional(),
+  SponsoredProgram: z.lazy(() => SponsoredProgramOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => SponsoredTestOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -7441,7 +7611,7 @@ export const TestBiomarkerWhereInputSchema: z.ZodType<Prisma.TestBiomarkerWhereI
   TestCatalog: z.union([ z.lazy(() => TestCatalogRelationFilterSchema),z.lazy(() => TestCatalogWhereInputSchema) ]).optional(),
 }).strict();
 
-export const TestBiomarkerOrderByWithRelationInputSchema: z.ZodType<Prisma.TestBiomarkerOrderByWithRelationInput> = z.object({
+export const TestBiomarkerOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.TestBiomarkerOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   TestId: z.lazy(() => SortOrderSchema).optional(),
   LabTestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -7449,8 +7619,8 @@ export const TestBiomarkerOrderByWithRelationInputSchema: z.ZodType<Prisma.TestB
   TranscriptReference: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional(),
-  BIOMARKER: z.lazy(() => BIOMARKEROrderByWithRelationInputSchema).optional(),
-  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationInputSchema).optional(),
+  BIOMARKER: z.lazy(() => BIOMARKEROrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => TestBiomarkerOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -7572,7 +7742,7 @@ export const TestCatalogWhereInputSchema: z.ZodType<Prisma.TestCatalogWhereInput
   TestResultLoinc: z.lazy(() => TestResultLoincListRelationFilterSchema).optional()
 }).strict();
 
-export const TestCatalogOrderByWithRelationInputSchema: z.ZodType<Prisma.TestCatalogOrderByWithRelationInput> = z.object({
+export const TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.TestCatalogOrderByWithRelationAndSearchRelevanceInput> = z.object({
   TestId: z.lazy(() => SortOrderSchema).optional(),
   LabId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   href: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -7624,7 +7794,7 @@ export const TestCatalogOrderByWithRelationInputSchema: z.ZodType<Prisma.TestCat
   CdxTest: z.lazy(() => CdxTestOrderByRelationAggregateInputSchema).optional(),
   SponsoredTest: z.lazy(() => SponsoredTestOrderByRelationAggregateInputSchema).optional(),
   TestBiomarker: z.lazy(() => TestBiomarkerOrderByRelationAggregateInputSchema).optional(),
-  Lab: z.lazy(() => LabOrderByWithRelationInputSchema).optional(),
+  Lab: z.lazy(() => LabOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   TestCptCode: z.lazy(() => TestCptCodeOrderByRelationAggregateInputSchema).optional(),
   TestGene: z.lazy(() => TestGeneOrderByRelationAggregateInputSchema).optional(),
   TestOrderLoinc: z.lazy(() => TestOrderLoincOrderByRelationAggregateInputSchema).optional(),
@@ -7826,7 +7996,7 @@ export const TestCptCodeWhereInputSchema: z.ZodType<Prisma.TestCptCodeWhereInput
   TestCatalog: z.union([ z.lazy(() => TestCatalogRelationFilterSchema),z.lazy(() => TestCatalogWhereInputSchema) ]).optional(),
 }).strict();
 
-export const TestCptCodeOrderByWithRelationInputSchema: z.ZodType<Prisma.TestCptCodeOrderByWithRelationInput> = z.object({
+export const TestCptCodeOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.TestCptCodeOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   TestId: z.lazy(() => SortOrderSchema).optional(),
   LabTestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -7835,7 +8005,7 @@ export const TestCptCodeOrderByWithRelationInputSchema: z.ZodType<Prisma.TestCpt
   Comments: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional(),
-  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => TestCptCodeOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -7901,7 +8071,7 @@ export const TestGeneWhereInputSchema: z.ZodType<Prisma.TestGeneWhereInput> = z.
   TestCatalog: z.union([ z.lazy(() => TestCatalogRelationFilterSchema),z.lazy(() => TestCatalogWhereInputSchema) ]).optional(),
 }).strict();
 
-export const TestGeneOrderByWithRelationInputSchema: z.ZodType<Prisma.TestGeneOrderByWithRelationInput> = z.object({
+export const TestGeneOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.TestGeneOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   TestId: z.lazy(() => SortOrderSchema).optional(),
   LabTestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -7909,7 +8079,7 @@ export const TestGeneOrderByWithRelationInputSchema: z.ZodType<Prisma.TestGeneOr
   TranscriptReference: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional(),
-  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => TestGeneOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -7982,15 +8152,15 @@ export const TestOrderLoincWhereInputSchema: z.ZodType<Prisma.TestOrderLoincWher
   TestCatalog: z.union([ z.lazy(() => TestCatalogRelationFilterSchema),z.lazy(() => TestCatalogWhereInputSchema) ]).optional(),
 }).strict();
 
-export const TestOrderLoincOrderByWithRelationInputSchema: z.ZodType<Prisma.TestOrderLoincOrderByWithRelationInput> = z.object({
+export const TestOrderLoincOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.TestOrderLoincOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   TestId: z.lazy(() => SortOrderSchema).optional(),
   LabTestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   OrderLoinc: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional(),
-  LOINC: z.lazy(() => LOINCOrderByWithRelationInputSchema).optional(),
-  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationInputSchema).optional(),
+  LOINC: z.lazy(() => LOINCOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => TestOrderLoincOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -8064,7 +8234,7 @@ export const TestResultLoincWhereInputSchema: z.ZodType<Prisma.TestResultLoincWh
   TestCatalog: z.union([ z.lazy(() => TestCatalogRelationFilterSchema),z.lazy(() => TestCatalogWhereInputSchema) ]).optional(),
 }).strict();
 
-export const TestResultLoincOrderByWithRelationInputSchema: z.ZodType<Prisma.TestResultLoincOrderByWithRelationInput> = z.object({
+export const TestResultLoincOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.TestResultLoincOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   TestId: z.lazy(() => SortOrderSchema).optional(),
   LabTestId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -8074,8 +8244,8 @@ export const TestResultLoincOrderByWithRelationInputSchema: z.ZodType<Prisma.Tes
   ResultLoinc: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional(),
-  LOINC: z.lazy(() => LOINCOrderByWithRelationInputSchema).optional(),
-  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationInputSchema).optional(),
+  LOINC: z.lazy(() => LOINCOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  TestCatalog: z.lazy(() => TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => TestResultLoincOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -8146,16 +8316,16 @@ export const UserWhereInputSchema: z.ZodType<Prisma.UserWhereInput> = z.object({
   UserAttribute: z.union([ z.lazy(() => UserAttributeNullableRelationFilterSchema),z.lazy(() => UserAttributeWhereInputSchema) ]).optional().nullable(),
 }).strict();
 
-export const UserOrderByWithRelationInputSchema: z.ZodType<Prisma.UserOrderByWithRelationInput> = z.object({
+export const UserOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.UserOrderByWithRelationAndSearchRelevanceInput> = z.object({
   id: z.lazy(() => SortOrderSchema).optional(),
   name: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   email: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   password: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   emailVerified: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   image: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  Account: z.lazy(() => AccountOrderByWithRelationInputSchema).optional(),
+  Account: z.lazy(() => AccountOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   Session: z.lazy(() => SessionOrderByRelationAggregateInputSchema).optional(),
-  UserAttribute: z.lazy(() => UserAttributeOrderByWithRelationInputSchema).optional(),
+  UserAttribute: z.lazy(() => UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => UserOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -8222,13 +8392,13 @@ export const UserAttributeWhereInputSchema: z.ZodType<Prisma.UserAttributeWhereI
   User: z.union([ z.lazy(() => UserRelationFilterSchema),z.lazy(() => UserWhereInputSchema) ]).optional(),
 }).strict();
 
-export const UserAttributeOrderByWithRelationInputSchema: z.ZodType<Prisma.UserAttributeOrderByWithRelationInput> = z.object({
+export const UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.UserAttributeOrderByWithRelationAndSearchRelevanceInput> = z.object({
   Id: z.lazy(() => SortOrderSchema).optional(),
   UserId: z.lazy(() => SortOrderSchema).optional(),
   UserType: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  Admin: z.lazy(() => AdminOrderByWithRelationInputSchema).optional(),
-  Provider: z.lazy(() => ProviderOrderByWithRelationInputSchema).optional(),
-  User: z.lazy(() => UserOrderByWithRelationInputSchema).optional(),
+  Admin: z.lazy(() => AdminOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  Provider: z.lazy(() => ProviderOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
+  User: z.lazy(() => UserOrderByWithRelationAndSearchRelevanceInputSchema).optional(),
   _relevance: z.lazy(() => UserAttributeOrderByRelevanceInputSchema).optional()
 }).strict();
 
@@ -8283,7 +8453,7 @@ export const VerificationTokenWhereInputSchema: z.ZodType<Prisma.VerificationTok
   expires: z.union([ z.lazy(() => DateTimeFilterSchema),z.date() ]).optional(),
 }).strict();
 
-export const VerificationTokenOrderByWithRelationInputSchema: z.ZodType<Prisma.VerificationTokenOrderByWithRelationInput> = z.object({
+export const VerificationTokenOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<Prisma.VerificationTokenOrderByWithRelationAndSearchRelevanceInput> = z.object({
   identifier: z.lazy(() => SortOrderSchema).optional(),
   token: z.lazy(() => SortOrderSchema).optional(),
   expires: z.lazy(() => SortOrderSchema).optional(),
@@ -9639,7 +9809,8 @@ export const LabOrderCreateInputSchema: z.ZodType<Prisma.LabOrderCreateInput> = 
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedCreateInputSchema: z.ZodType<Prisma.LabOrderUncheckedCreateInput> = z.object({
@@ -9663,7 +9834,8 @@ export const LabOrderUncheckedCreateInputSchema: z.ZodType<Prisma.LabOrderUnchec
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderUpdateInputSchema: z.ZodType<Prisma.LabOrderUpdateInput> = z.object({
@@ -9687,7 +9859,8 @@ export const LabOrderUpdateInputSchema: z.ZodType<Prisma.LabOrderUpdateInput> = 
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedUpdateInputSchema: z.ZodType<Prisma.LabOrderUncheckedUpdateInput> = z.object({
@@ -9711,7 +9884,8 @@ export const LabOrderUncheckedUpdateInputSchema: z.ZodType<Prisma.LabOrderUnchec
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderCreateManyInputSchema: z.ZodType<Prisma.LabOrderCreateManyInput> = z.object({
@@ -10391,6 +10565,82 @@ export const LabOrderTestUncheckedUpdateManyInputSchema: z.ZodType<Prisma.LabOrd
   Type: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   DrugName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Indication: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const LabResultsCreateInputSchema: z.ZodType<Prisma.LabResultsCreateInput> = z.object({
+  Id: z.string().optional(),
+  ResultDate: z.date().optional().nullable(),
+  ResultPdfUrl: z.string().optional().nullable(),
+  PathologistName: z.string().optional().nullable(),
+  PathologistNPI: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable(),
+  LabOrder: z.lazy(() => LabOrderCreateNestedOneWithoutLabResultsInputSchema).optional()
+}).strict();
+
+export const LabResultsUncheckedCreateInputSchema: z.ZodType<Prisma.LabResultsUncheckedCreateInput> = z.object({
+  Id: z.string().optional(),
+  LabOrderId: z.string().optional().nullable(),
+  ResultDate: z.date().optional().nullable(),
+  ResultPdfUrl: z.string().optional().nullable(),
+  PathologistName: z.string().optional().nullable(),
+  PathologistNPI: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable()
+}).strict();
+
+export const LabResultsUpdateInputSchema: z.ZodType<Prisma.LabResultsUpdateInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  ResultDate: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ResultPdfUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PathologistName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PathologistNPI: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LabOrder: z.lazy(() => LabOrderUpdateOneWithoutLabResultsNestedInputSchema).optional()
+}).strict();
+
+export const LabResultsUncheckedUpdateInputSchema: z.ZodType<Prisma.LabResultsUncheckedUpdateInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  LabOrderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ResultDate: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ResultPdfUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PathologistName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PathologistNPI: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const LabResultsCreateManyInputSchema: z.ZodType<Prisma.LabResultsCreateManyInput> = z.object({
+  Id: z.string().optional(),
+  LabOrderId: z.string().optional().nullable(),
+  ResultDate: z.date().optional().nullable(),
+  ResultPdfUrl: z.string().optional().nullable(),
+  PathologistName: z.string().optional().nullable(),
+  PathologistNPI: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable()
+}).strict();
+
+export const LabResultsUpdateManyMutationInputSchema: z.ZodType<Prisma.LabResultsUpdateManyMutationInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  ResultDate: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ResultPdfUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PathologistName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PathologistNPI: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const LabResultsUncheckedUpdateManyInputSchema: z.ZodType<Prisma.LabResultsUncheckedUpdateManyInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  LabOrderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ResultDate: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ResultPdfUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PathologistName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PathologistNPI: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
@@ -13564,6 +13814,12 @@ export const LabOrderTestListRelationFilterSchema: z.ZodType<Prisma.LabOrderTest
   none: z.lazy(() => LabOrderTestWhereInputSchema).optional()
 }).strict();
 
+export const LabResultsListRelationFilterSchema: z.ZodType<Prisma.LabResultsListRelationFilter> = z.object({
+  every: z.lazy(() => LabResultsWhereInputSchema).optional(),
+  some: z.lazy(() => LabResultsWhereInputSchema).optional(),
+  none: z.lazy(() => LabResultsWhereInputSchema).optional()
+}).strict();
+
 export const LabOrderBillingOrderByRelationAggregateInputSchema: z.ZodType<Prisma.LabOrderBillingOrderByRelationAggregateInput> = z.object({
   _count: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -13585,6 +13841,10 @@ export const LabOrderStatusOrderByRelationAggregateInputSchema: z.ZodType<Prisma
 }).strict();
 
 export const LabOrderTestOrderByRelationAggregateInputSchema: z.ZodType<Prisma.LabOrderTestOrderByRelationAggregateInput> = z.object({
+  _count: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const LabResultsOrderByRelationAggregateInputSchema: z.ZodType<Prisma.LabResultsOrderByRelationAggregateInput> = z.object({
   _count: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
@@ -14022,6 +14282,45 @@ export const LabOrderTestMinOrderByAggregateInputSchema: z.ZodType<Prisma.LabOrd
 
 export const LabOrderTestSumOrderByAggregateInputSchema: z.ZodType<Prisma.LabOrderTestSumOrderByAggregateInput> = z.object({
   TestId: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const LabResultsOrderByRelevanceInputSchema: z.ZodType<Prisma.LabResultsOrderByRelevanceInput> = z.object({
+  fields: z.union([ z.lazy(() => LabResultsOrderByRelevanceFieldEnumSchema),z.lazy(() => LabResultsOrderByRelevanceFieldEnumSchema).array() ]),
+  sort: z.lazy(() => SortOrderSchema),
+  search: z.string()
+}).strict();
+
+export const LabResultsCountOrderByAggregateInputSchema: z.ZodType<Prisma.LabResultsCountOrderByAggregateInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  LabOrderId: z.lazy(() => SortOrderSchema).optional(),
+  ResultDate: z.lazy(() => SortOrderSchema).optional(),
+  ResultPdfUrl: z.lazy(() => SortOrderSchema).optional(),
+  PathologistName: z.lazy(() => SortOrderSchema).optional(),
+  PathologistNPI: z.lazy(() => SortOrderSchema).optional(),
+  CreatedAt: z.lazy(() => SortOrderSchema).optional(),
+  UpdatedAt: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const LabResultsMaxOrderByAggregateInputSchema: z.ZodType<Prisma.LabResultsMaxOrderByAggregateInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  LabOrderId: z.lazy(() => SortOrderSchema).optional(),
+  ResultDate: z.lazy(() => SortOrderSchema).optional(),
+  ResultPdfUrl: z.lazy(() => SortOrderSchema).optional(),
+  PathologistName: z.lazy(() => SortOrderSchema).optional(),
+  PathologistNPI: z.lazy(() => SortOrderSchema).optional(),
+  CreatedAt: z.lazy(() => SortOrderSchema).optional(),
+  UpdatedAt: z.lazy(() => SortOrderSchema).optional()
+}).strict();
+
+export const LabResultsMinOrderByAggregateInputSchema: z.ZodType<Prisma.LabResultsMinOrderByAggregateInput> = z.object({
+  Id: z.lazy(() => SortOrderSchema).optional(),
+  LabOrderId: z.lazy(() => SortOrderSchema).optional(),
+  ResultDate: z.lazy(() => SortOrderSchema).optional(),
+  ResultPdfUrl: z.lazy(() => SortOrderSchema).optional(),
+  PathologistName: z.lazy(() => SortOrderSchema).optional(),
+  PathologistNPI: z.lazy(() => SortOrderSchema).optional(),
+  CreatedAt: z.lazy(() => SortOrderSchema).optional(),
+  UpdatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
 
 export const BigIntFilterSchema: z.ZodType<Prisma.BigIntFilter> = z.object({
@@ -15921,6 +16220,13 @@ export const LabOrderTestCreateNestedManyWithoutLabOrderInputSchema: z.ZodType<P
   connect: z.union([ z.lazy(() => LabOrderTestWhereUniqueInputSchema),z.lazy(() => LabOrderTestWhereUniqueInputSchema).array() ]).optional(),
 }).strict();
 
+export const LabResultsCreateNestedManyWithoutLabOrderInputSchema: z.ZodType<Prisma.LabResultsCreateNestedManyWithoutLabOrderInput> = z.object({
+  create: z.union([ z.lazy(() => LabResultsCreateWithoutLabOrderInputSchema),z.lazy(() => LabResultsCreateWithoutLabOrderInputSchema).array(),z.lazy(() => LabResultsUncheckedCreateWithoutLabOrderInputSchema),z.lazy(() => LabResultsUncheckedCreateWithoutLabOrderInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => LabResultsCreateOrConnectWithoutLabOrderInputSchema),z.lazy(() => LabResultsCreateOrConnectWithoutLabOrderInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => LabResultsCreateManyLabOrderInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => LabResultsWhereUniqueInputSchema),z.lazy(() => LabResultsWhereUniqueInputSchema).array() ]).optional(),
+}).strict();
+
 export const LabOrderAttachmentUncheckedCreateNestedManyWithoutLabOrderInputSchema: z.ZodType<Prisma.LabOrderAttachmentUncheckedCreateNestedManyWithoutLabOrderInput> = z.object({
   create: z.union([ z.lazy(() => LabOrderAttachmentCreateWithoutLabOrderInputSchema),z.lazy(() => LabOrderAttachmentCreateWithoutLabOrderInputSchema).array(),z.lazy(() => LabOrderAttachmentUncheckedCreateWithoutLabOrderInputSchema),z.lazy(() => LabOrderAttachmentUncheckedCreateWithoutLabOrderInputSchema).array() ]).optional(),
   connectOrCreate: z.union([ z.lazy(() => LabOrderAttachmentCreateOrConnectWithoutLabOrderInputSchema),z.lazy(() => LabOrderAttachmentCreateOrConnectWithoutLabOrderInputSchema).array() ]).optional(),
@@ -15968,6 +16274,13 @@ export const LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema: z.
   connectOrCreate: z.union([ z.lazy(() => LabOrderTestCreateOrConnectWithoutLabOrderInputSchema),z.lazy(() => LabOrderTestCreateOrConnectWithoutLabOrderInputSchema).array() ]).optional(),
   createMany: z.lazy(() => LabOrderTestCreateManyLabOrderInputEnvelopeSchema).optional(),
   connect: z.union([ z.lazy(() => LabOrderTestWhereUniqueInputSchema),z.lazy(() => LabOrderTestWhereUniqueInputSchema).array() ]).optional(),
+}).strict();
+
+export const LabResultsUncheckedCreateNestedManyWithoutLabOrderInputSchema: z.ZodType<Prisma.LabResultsUncheckedCreateNestedManyWithoutLabOrderInput> = z.object({
+  create: z.union([ z.lazy(() => LabResultsCreateWithoutLabOrderInputSchema),z.lazy(() => LabResultsCreateWithoutLabOrderInputSchema).array(),z.lazy(() => LabResultsUncheckedCreateWithoutLabOrderInputSchema),z.lazy(() => LabResultsUncheckedCreateWithoutLabOrderInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => LabResultsCreateOrConnectWithoutLabOrderInputSchema),z.lazy(() => LabResultsCreateOrConnectWithoutLabOrderInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => LabResultsCreateManyLabOrderInputEnvelopeSchema).optional(),
+  connect: z.union([ z.lazy(() => LabResultsWhereUniqueInputSchema),z.lazy(() => LabResultsWhereUniqueInputSchema).array() ]).optional(),
 }).strict();
 
 export const ProviderUpdateOneWithoutOrderingProviderLabOrderNestedInputSchema: z.ZodType<Prisma.ProviderUpdateOneWithoutOrderingProviderLabOrderNestedInput> = z.object({
@@ -16108,6 +16421,20 @@ export const LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema: z.ZodType<P
   deleteMany: z.union([ z.lazy(() => LabOrderTestScalarWhereInputSchema),z.lazy(() => LabOrderTestScalarWhereInputSchema).array() ]).optional(),
 }).strict();
 
+export const LabResultsUpdateManyWithoutLabOrderNestedInputSchema: z.ZodType<Prisma.LabResultsUpdateManyWithoutLabOrderNestedInput> = z.object({
+  create: z.union([ z.lazy(() => LabResultsCreateWithoutLabOrderInputSchema),z.lazy(() => LabResultsCreateWithoutLabOrderInputSchema).array(),z.lazy(() => LabResultsUncheckedCreateWithoutLabOrderInputSchema),z.lazy(() => LabResultsUncheckedCreateWithoutLabOrderInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => LabResultsCreateOrConnectWithoutLabOrderInputSchema),z.lazy(() => LabResultsCreateOrConnectWithoutLabOrderInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => LabResultsUpsertWithWhereUniqueWithoutLabOrderInputSchema),z.lazy(() => LabResultsUpsertWithWhereUniqueWithoutLabOrderInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => LabResultsCreateManyLabOrderInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => LabResultsWhereUniqueInputSchema),z.lazy(() => LabResultsWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => LabResultsWhereUniqueInputSchema),z.lazy(() => LabResultsWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => LabResultsWhereUniqueInputSchema),z.lazy(() => LabResultsWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => LabResultsWhereUniqueInputSchema),z.lazy(() => LabResultsWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => LabResultsUpdateWithWhereUniqueWithoutLabOrderInputSchema),z.lazy(() => LabResultsUpdateWithWhereUniqueWithoutLabOrderInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => LabResultsUpdateManyWithWhereWithoutLabOrderInputSchema),z.lazy(() => LabResultsUpdateManyWithWhereWithoutLabOrderInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => LabResultsScalarWhereInputSchema),z.lazy(() => LabResultsScalarWhereInputSchema).array() ]).optional(),
+}).strict();
+
 export const LabOrderAttachmentUncheckedUpdateManyWithoutLabOrderNestedInputSchema: z.ZodType<Prisma.LabOrderAttachmentUncheckedUpdateManyWithoutLabOrderNestedInput> = z.object({
   create: z.union([ z.lazy(() => LabOrderAttachmentCreateWithoutLabOrderInputSchema),z.lazy(() => LabOrderAttachmentCreateWithoutLabOrderInputSchema).array(),z.lazy(() => LabOrderAttachmentUncheckedCreateWithoutLabOrderInputSchema),z.lazy(() => LabOrderAttachmentUncheckedCreateWithoutLabOrderInputSchema).array() ]).optional(),
   connectOrCreate: z.union([ z.lazy(() => LabOrderAttachmentCreateOrConnectWithoutLabOrderInputSchema),z.lazy(() => LabOrderAttachmentCreateOrConnectWithoutLabOrderInputSchema).array() ]).optional(),
@@ -16204,6 +16531,20 @@ export const LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema: z.
   update: z.union([ z.lazy(() => LabOrderTestUpdateWithWhereUniqueWithoutLabOrderInputSchema),z.lazy(() => LabOrderTestUpdateWithWhereUniqueWithoutLabOrderInputSchema).array() ]).optional(),
   updateMany: z.union([ z.lazy(() => LabOrderTestUpdateManyWithWhereWithoutLabOrderInputSchema),z.lazy(() => LabOrderTestUpdateManyWithWhereWithoutLabOrderInputSchema).array() ]).optional(),
   deleteMany: z.union([ z.lazy(() => LabOrderTestScalarWhereInputSchema),z.lazy(() => LabOrderTestScalarWhereInputSchema).array() ]).optional(),
+}).strict();
+
+export const LabResultsUncheckedUpdateManyWithoutLabOrderNestedInputSchema: z.ZodType<Prisma.LabResultsUncheckedUpdateManyWithoutLabOrderNestedInput> = z.object({
+  create: z.union([ z.lazy(() => LabResultsCreateWithoutLabOrderInputSchema),z.lazy(() => LabResultsCreateWithoutLabOrderInputSchema).array(),z.lazy(() => LabResultsUncheckedCreateWithoutLabOrderInputSchema),z.lazy(() => LabResultsUncheckedCreateWithoutLabOrderInputSchema).array() ]).optional(),
+  connectOrCreate: z.union([ z.lazy(() => LabResultsCreateOrConnectWithoutLabOrderInputSchema),z.lazy(() => LabResultsCreateOrConnectWithoutLabOrderInputSchema).array() ]).optional(),
+  upsert: z.union([ z.lazy(() => LabResultsUpsertWithWhereUniqueWithoutLabOrderInputSchema),z.lazy(() => LabResultsUpsertWithWhereUniqueWithoutLabOrderInputSchema).array() ]).optional(),
+  createMany: z.lazy(() => LabResultsCreateManyLabOrderInputEnvelopeSchema).optional(),
+  set: z.union([ z.lazy(() => LabResultsWhereUniqueInputSchema),z.lazy(() => LabResultsWhereUniqueInputSchema).array() ]).optional(),
+  disconnect: z.union([ z.lazy(() => LabResultsWhereUniqueInputSchema),z.lazy(() => LabResultsWhereUniqueInputSchema).array() ]).optional(),
+  delete: z.union([ z.lazy(() => LabResultsWhereUniqueInputSchema),z.lazy(() => LabResultsWhereUniqueInputSchema).array() ]).optional(),
+  connect: z.union([ z.lazy(() => LabResultsWhereUniqueInputSchema),z.lazy(() => LabResultsWhereUniqueInputSchema).array() ]).optional(),
+  update: z.union([ z.lazy(() => LabResultsUpdateWithWhereUniqueWithoutLabOrderInputSchema),z.lazy(() => LabResultsUpdateWithWhereUniqueWithoutLabOrderInputSchema).array() ]).optional(),
+  updateMany: z.union([ z.lazy(() => LabResultsUpdateManyWithWhereWithoutLabOrderInputSchema),z.lazy(() => LabResultsUpdateManyWithWhereWithoutLabOrderInputSchema).array() ]).optional(),
+  deleteMany: z.union([ z.lazy(() => LabResultsScalarWhereInputSchema),z.lazy(() => LabResultsScalarWhereInputSchema).array() ]).optional(),
 }).strict();
 
 export const LabOrderCreateNestedOneWithoutLabOrderAttachmentInputSchema: z.ZodType<Prisma.LabOrderCreateNestedOneWithoutLabOrderAttachmentInput> = z.object({
@@ -16364,6 +16705,22 @@ export const TestCatalogUpdateOneWithoutLabOrderTestNestedInputSchema: z.ZodType
   delete: z.union([ z.boolean(),z.lazy(() => TestCatalogWhereInputSchema) ]).optional(),
   connect: z.lazy(() => TestCatalogWhereUniqueInputSchema).optional(),
   update: z.union([ z.lazy(() => TestCatalogUpdateToOneWithWhereWithoutLabOrderTestInputSchema),z.lazy(() => TestCatalogUpdateWithoutLabOrderTestInputSchema),z.lazy(() => TestCatalogUncheckedUpdateWithoutLabOrderTestInputSchema) ]).optional(),
+}).strict();
+
+export const LabOrderCreateNestedOneWithoutLabResultsInputSchema: z.ZodType<Prisma.LabOrderCreateNestedOneWithoutLabResultsInput> = z.object({
+  create: z.union([ z.lazy(() => LabOrderCreateWithoutLabResultsInputSchema),z.lazy(() => LabOrderUncheckedCreateWithoutLabResultsInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => LabOrderCreateOrConnectWithoutLabResultsInputSchema).optional(),
+  connect: z.lazy(() => LabOrderWhereUniqueInputSchema).optional()
+}).strict();
+
+export const LabOrderUpdateOneWithoutLabResultsNestedInputSchema: z.ZodType<Prisma.LabOrderUpdateOneWithoutLabResultsNestedInput> = z.object({
+  create: z.union([ z.lazy(() => LabOrderCreateWithoutLabResultsInputSchema),z.lazy(() => LabOrderUncheckedCreateWithoutLabResultsInputSchema) ]).optional(),
+  connectOrCreate: z.lazy(() => LabOrderCreateOrConnectWithoutLabResultsInputSchema).optional(),
+  upsert: z.lazy(() => LabOrderUpsertWithoutLabResultsInputSchema).optional(),
+  disconnect: z.union([ z.boolean(),z.lazy(() => LabOrderWhereInputSchema) ]).optional(),
+  delete: z.union([ z.boolean(),z.lazy(() => LabOrderWhereInputSchema) ]).optional(),
+  connect: z.lazy(() => LabOrderWhereUniqueInputSchema).optional(),
+  update: z.union([ z.lazy(() => LabOrderUpdateToOneWithWhereWithoutLabResultsInputSchema),z.lazy(() => LabOrderUpdateWithoutLabResultsInputSchema),z.lazy(() => LabOrderUncheckedUpdateWithoutLabResultsInputSchema) ]).optional(),
 }).strict();
 
 export const BigIntFieldUpdateOperationsInputSchema: z.ZodType<Prisma.BigIntFieldUpdateOperationsInput> = z.object({
@@ -19411,6 +19768,36 @@ export const LabOrderTestCreateManyLabOrderInputEnvelopeSchema: z.ZodType<Prisma
   skipDuplicates: z.boolean().optional()
 }).strict();
 
+export const LabResultsCreateWithoutLabOrderInputSchema: z.ZodType<Prisma.LabResultsCreateWithoutLabOrderInput> = z.object({
+  Id: z.string().optional(),
+  ResultDate: z.date().optional().nullable(),
+  ResultPdfUrl: z.string().optional().nullable(),
+  PathologistName: z.string().optional().nullable(),
+  PathologistNPI: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable()
+}).strict();
+
+export const LabResultsUncheckedCreateWithoutLabOrderInputSchema: z.ZodType<Prisma.LabResultsUncheckedCreateWithoutLabOrderInput> = z.object({
+  Id: z.string().optional(),
+  ResultDate: z.date().optional().nullable(),
+  ResultPdfUrl: z.string().optional().nullable(),
+  PathologistName: z.string().optional().nullable(),
+  PathologistNPI: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable()
+}).strict();
+
+export const LabResultsCreateOrConnectWithoutLabOrderInputSchema: z.ZodType<Prisma.LabResultsCreateOrConnectWithoutLabOrderInput> = z.object({
+  where: z.lazy(() => LabResultsWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => LabResultsCreateWithoutLabOrderInputSchema),z.lazy(() => LabResultsUncheckedCreateWithoutLabOrderInputSchema) ]),
+}).strict();
+
+export const LabResultsCreateManyLabOrderInputEnvelopeSchema: z.ZodType<Prisma.LabResultsCreateManyLabOrderInputEnvelope> = z.object({
+  data: z.union([ z.lazy(() => LabResultsCreateManyLabOrderInputSchema),z.lazy(() => LabResultsCreateManyLabOrderInputSchema).array() ]),
+  skipDuplicates: z.boolean().optional()
+}).strict();
+
 export const ProviderUpsertWithoutOrderingProviderLabOrderInputSchema: z.ZodType<Prisma.ProviderUpsertWithoutOrderingProviderLabOrderInput> = z.object({
   update: z.union([ z.lazy(() => ProviderUpdateWithoutOrderingProviderLabOrderInputSchema),z.lazy(() => ProviderUncheckedUpdateWithoutOrderingProviderLabOrderInputSchema) ]),
   create: z.union([ z.lazy(() => ProviderCreateWithoutOrderingProviderLabOrderInputSchema),z.lazy(() => ProviderUncheckedCreateWithoutOrderingProviderLabOrderInputSchema) ]),
@@ -19817,6 +20204,36 @@ export const LabOrderTestScalarWhereInputSchema: z.ZodType<Prisma.LabOrderTestSc
   UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
 }).strict();
 
+export const LabResultsUpsertWithWhereUniqueWithoutLabOrderInputSchema: z.ZodType<Prisma.LabResultsUpsertWithWhereUniqueWithoutLabOrderInput> = z.object({
+  where: z.lazy(() => LabResultsWhereUniqueInputSchema),
+  update: z.union([ z.lazy(() => LabResultsUpdateWithoutLabOrderInputSchema),z.lazy(() => LabResultsUncheckedUpdateWithoutLabOrderInputSchema) ]),
+  create: z.union([ z.lazy(() => LabResultsCreateWithoutLabOrderInputSchema),z.lazy(() => LabResultsUncheckedCreateWithoutLabOrderInputSchema) ]),
+}).strict();
+
+export const LabResultsUpdateWithWhereUniqueWithoutLabOrderInputSchema: z.ZodType<Prisma.LabResultsUpdateWithWhereUniqueWithoutLabOrderInput> = z.object({
+  where: z.lazy(() => LabResultsWhereUniqueInputSchema),
+  data: z.union([ z.lazy(() => LabResultsUpdateWithoutLabOrderInputSchema),z.lazy(() => LabResultsUncheckedUpdateWithoutLabOrderInputSchema) ]),
+}).strict();
+
+export const LabResultsUpdateManyWithWhereWithoutLabOrderInputSchema: z.ZodType<Prisma.LabResultsUpdateManyWithWhereWithoutLabOrderInput> = z.object({
+  where: z.lazy(() => LabResultsScalarWhereInputSchema),
+  data: z.union([ z.lazy(() => LabResultsUpdateManyMutationInputSchema),z.lazy(() => LabResultsUncheckedUpdateManyWithoutLabOrderInputSchema) ]),
+}).strict();
+
+export const LabResultsScalarWhereInputSchema: z.ZodType<Prisma.LabResultsScalarWhereInput> = z.object({
+  AND: z.union([ z.lazy(() => LabResultsScalarWhereInputSchema),z.lazy(() => LabResultsScalarWhereInputSchema).array() ]).optional(),
+  OR: z.lazy(() => LabResultsScalarWhereInputSchema).array().optional(),
+  NOT: z.union([ z.lazy(() => LabResultsScalarWhereInputSchema),z.lazy(() => LabResultsScalarWhereInputSchema).array() ]).optional(),
+  Id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
+  LabOrderId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  ResultDate: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  ResultPdfUrl: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  PathologistName: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  PathologistNPI: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+  UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
+}).strict();
+
 export const LabOrderCreateWithoutLabOrderAttachmentInputSchema: z.ZodType<Prisma.LabOrderCreateWithoutLabOrderAttachmentInput> = z.object({
   Id: z.string().optional(),
   OrderNumber: z.string().optional().nullable(),
@@ -19837,7 +20254,8 @@ export const LabOrderCreateWithoutLabOrderAttachmentInputSchema: z.ZodType<Prism
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedCreateWithoutLabOrderAttachmentInputSchema: z.ZodType<Prisma.LabOrderUncheckedCreateWithoutLabOrderAttachmentInput> = z.object({
@@ -19860,7 +20278,8 @@ export const LabOrderUncheckedCreateWithoutLabOrderAttachmentInputSchema: z.ZodT
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderCreateOrConnectWithoutLabOrderAttachmentInputSchema: z.ZodType<Prisma.LabOrderCreateOrConnectWithoutLabOrderAttachmentInput> = z.object({
@@ -19920,7 +20339,8 @@ export const LabOrderUpdateWithoutLabOrderAttachmentInputSchema: z.ZodType<Prism
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedUpdateWithoutLabOrderAttachmentInputSchema: z.ZodType<Prisma.LabOrderUncheckedUpdateWithoutLabOrderAttachmentInput> = z.object({
@@ -19943,7 +20363,8 @@ export const LabOrderUncheckedUpdateWithoutLabOrderAttachmentInputSchema: z.ZodT
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const AttachmentUpsertWithoutLabOrderAttachmentInputSchema: z.ZodType<Prisma.AttachmentUpsertWithoutLabOrderAttachmentInput> = z.object({
@@ -19993,7 +20414,8 @@ export const LabOrderCreateWithoutLabOrderBillingInputSchema: z.ZodType<Prisma.L
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedCreateWithoutLabOrderBillingInputSchema: z.ZodType<Prisma.LabOrderUncheckedCreateWithoutLabOrderBillingInput> = z.object({
@@ -20016,7 +20438,8 @@ export const LabOrderUncheckedCreateWithoutLabOrderBillingInputSchema: z.ZodType
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderCreateOrConnectWithoutLabOrderBillingInputSchema: z.ZodType<Prisma.LabOrderCreateOrConnectWithoutLabOrderBillingInput> = z.object({
@@ -20055,7 +20478,8 @@ export const LabOrderUpdateWithoutLabOrderBillingInputSchema: z.ZodType<Prisma.L
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedUpdateWithoutLabOrderBillingInputSchema: z.ZodType<Prisma.LabOrderUncheckedUpdateWithoutLabOrderBillingInput> = z.object({
@@ -20078,7 +20502,8 @@ export const LabOrderUncheckedUpdateWithoutLabOrderBillingInputSchema: z.ZodType
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderCreateWithoutLabOrderCptInputSchema: z.ZodType<Prisma.LabOrderCreateWithoutLabOrderCptInput> = z.object({
@@ -20101,7 +20526,8 @@ export const LabOrderCreateWithoutLabOrderCptInputSchema: z.ZodType<Prisma.LabOr
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedCreateWithoutLabOrderCptInputSchema: z.ZodType<Prisma.LabOrderUncheckedCreateWithoutLabOrderCptInput> = z.object({
@@ -20124,7 +20550,8 @@ export const LabOrderUncheckedCreateWithoutLabOrderCptInputSchema: z.ZodType<Pri
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderCreateOrConnectWithoutLabOrderCptInputSchema: z.ZodType<Prisma.LabOrderCreateOrConnectWithoutLabOrderCptInput> = z.object({
@@ -20163,7 +20590,8 @@ export const LabOrderUpdateWithoutLabOrderCptInputSchema: z.ZodType<Prisma.LabOr
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedUpdateWithoutLabOrderCptInputSchema: z.ZodType<Prisma.LabOrderUncheckedUpdateWithoutLabOrderCptInput> = z.object({
@@ -20186,7 +20614,8 @@ export const LabOrderUncheckedUpdateWithoutLabOrderCptInputSchema: z.ZodType<Pri
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderCreateWithoutLabOrderSpecimenInputSchema: z.ZodType<Prisma.LabOrderCreateWithoutLabOrderSpecimenInput> = z.object({
@@ -20209,7 +20638,8 @@ export const LabOrderCreateWithoutLabOrderSpecimenInputSchema: z.ZodType<Prisma.
   LabOrderCpt: z.lazy(() => LabOrderCptCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedCreateWithoutLabOrderSpecimenInputSchema: z.ZodType<Prisma.LabOrderUncheckedCreateWithoutLabOrderSpecimenInput> = z.object({
@@ -20232,7 +20662,8 @@ export const LabOrderUncheckedCreateWithoutLabOrderSpecimenInputSchema: z.ZodTyp
   LabOrderCpt: z.lazy(() => LabOrderCptUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderCreateOrConnectWithoutLabOrderSpecimenInputSchema: z.ZodType<Prisma.LabOrderCreateOrConnectWithoutLabOrderSpecimenInput> = z.object({
@@ -20271,7 +20702,8 @@ export const LabOrderUpdateWithoutLabOrderSpecimenInputSchema: z.ZodType<Prisma.
   LabOrderCpt: z.lazy(() => LabOrderCptUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedUpdateWithoutLabOrderSpecimenInputSchema: z.ZodType<Prisma.LabOrderUncheckedUpdateWithoutLabOrderSpecimenInput> = z.object({
@@ -20294,7 +20726,8 @@ export const LabOrderUncheckedUpdateWithoutLabOrderSpecimenInputSchema: z.ZodTyp
   LabOrderCpt: z.lazy(() => LabOrderCptUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const SponsoredTestCreateWithoutLabOrderSponsoredTestConsentInputSchema: z.ZodType<Prisma.SponsoredTestCreateWithoutLabOrderSponsoredTestConsentInput> = z.object({
@@ -20346,7 +20779,8 @@ export const LabOrderCreateWithoutLabOrderSponsoredTestConsentInputSchema: z.Zod
   LabOrderCpt: z.lazy(() => LabOrderCptCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedCreateWithoutLabOrderSponsoredTestConsentInputSchema: z.ZodType<Prisma.LabOrderUncheckedCreateWithoutLabOrderSponsoredTestConsentInput> = z.object({
@@ -20369,7 +20803,8 @@ export const LabOrderUncheckedCreateWithoutLabOrderSponsoredTestConsentInputSche
   LabOrderCpt: z.lazy(() => LabOrderCptUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderCreateOrConnectWithoutLabOrderSponsoredTestConsentInputSchema: z.ZodType<Prisma.LabOrderCreateOrConnectWithoutLabOrderSponsoredTestConsentInput> = z.object({
@@ -20443,7 +20878,8 @@ export const LabOrderUpdateWithoutLabOrderSponsoredTestConsentInputSchema: z.Zod
   LabOrderCpt: z.lazy(() => LabOrderCptUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedUpdateWithoutLabOrderSponsoredTestConsentInputSchema: z.ZodType<Prisma.LabOrderUncheckedUpdateWithoutLabOrderSponsoredTestConsentInput> = z.object({
@@ -20466,7 +20902,8 @@ export const LabOrderUncheckedUpdateWithoutLabOrderSponsoredTestConsentInputSche
   LabOrderCpt: z.lazy(() => LabOrderCptUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderCreateWithoutLabOrderStatusInputSchema: z.ZodType<Prisma.LabOrderCreateWithoutLabOrderStatusInput> = z.object({
@@ -20489,7 +20926,8 @@ export const LabOrderCreateWithoutLabOrderStatusInputSchema: z.ZodType<Prisma.La
   LabOrderCpt: z.lazy(() => LabOrderCptCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedCreateWithoutLabOrderStatusInputSchema: z.ZodType<Prisma.LabOrderUncheckedCreateWithoutLabOrderStatusInput> = z.object({
@@ -20512,7 +20950,8 @@ export const LabOrderUncheckedCreateWithoutLabOrderStatusInputSchema: z.ZodType<
   LabOrderCpt: z.lazy(() => LabOrderCptUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderCreateOrConnectWithoutLabOrderStatusInputSchema: z.ZodType<Prisma.LabOrderCreateOrConnectWithoutLabOrderStatusInput> = z.object({
@@ -20551,7 +20990,8 @@ export const LabOrderUpdateWithoutLabOrderStatusInputSchema: z.ZodType<Prisma.La
   LabOrderCpt: z.lazy(() => LabOrderCptUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedUpdateWithoutLabOrderStatusInputSchema: z.ZodType<Prisma.LabOrderUncheckedUpdateWithoutLabOrderStatusInput> = z.object({
@@ -20574,7 +21014,8 @@ export const LabOrderUncheckedUpdateWithoutLabOrderStatusInputSchema: z.ZodType<
   LabOrderCpt: z.lazy(() => LabOrderCptUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderCreateWithoutLabOrderTestInputSchema: z.ZodType<Prisma.LabOrderCreateWithoutLabOrderTestInput> = z.object({
@@ -20597,7 +21038,8 @@ export const LabOrderCreateWithoutLabOrderTestInputSchema: z.ZodType<Prisma.LabO
   LabOrderCpt: z.lazy(() => LabOrderCptCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderStatus: z.lazy(() => LabOrderStatusCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderStatus: z.lazy(() => LabOrderStatusCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedCreateWithoutLabOrderTestInputSchema: z.ZodType<Prisma.LabOrderUncheckedCreateWithoutLabOrderTestInput> = z.object({
@@ -20620,7 +21062,8 @@ export const LabOrderUncheckedCreateWithoutLabOrderTestInputSchema: z.ZodType<Pr
   LabOrderCpt: z.lazy(() => LabOrderCptUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderCreateOrConnectWithoutLabOrderTestInputSchema: z.ZodType<Prisma.LabOrderCreateOrConnectWithoutLabOrderTestInput> = z.object({
@@ -20777,7 +21220,8 @@ export const LabOrderUpdateWithoutLabOrderTestInputSchema: z.ZodType<Prisma.LabO
   LabOrderCpt: z.lazy(() => LabOrderCptUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderStatus: z.lazy(() => LabOrderStatusUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderStatus: z.lazy(() => LabOrderStatusUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedUpdateWithoutLabOrderTestInputSchema: z.ZodType<Prisma.LabOrderUncheckedUpdateWithoutLabOrderTestInput> = z.object({
@@ -20800,7 +21244,8 @@ export const LabOrderUncheckedUpdateWithoutLabOrderTestInputSchema: z.ZodType<Pr
   LabOrderCpt: z.lazy(() => LabOrderCptUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const TestCatalogUpsertWithoutLabOrderTestInputSchema: z.ZodType<Prisma.TestCatalogUpsertWithoutLabOrderTestInput> = z.object({
@@ -20927,6 +21372,118 @@ export const TestCatalogUncheckedUpdateWithoutLabOrderTestInputSchema: z.ZodType
   TestResultLoinc: z.lazy(() => TestResultLoincUncheckedUpdateManyWithoutTestCatalogNestedInputSchema).optional()
 }).strict();
 
+export const LabOrderCreateWithoutLabResultsInputSchema: z.ZodType<Prisma.LabOrderCreateWithoutLabResultsInput> = z.object({
+  Id: z.string().optional(),
+  OrderNumber: z.string().optional().nullable(),
+  AccessionNumber: z.string().optional().nullable(),
+  PatientMRN: z.string().optional().nullable(),
+  PatientMobile: z.string().optional().nullable(),
+  PatientEmail: z.string().optional().nullable(),
+  OrderDate: z.date().optional().nullable(),
+  OrderNotes: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable(),
+  OrderingProvider: z.lazy(() => ProviderCreateNestedOneWithoutOrderingProviderLabOrderInputSchema).optional(),
+  TreatingProvider: z.lazy(() => ProviderCreateNestedOneWithoutTreatingProviderLabOrderInputSchema).optional(),
+  Patient: z.lazy(() => PatientCreateNestedOneWithoutLabOrderInputSchema).optional(),
+  Organization: z.lazy(() => OrganizationCreateNestedOneWithoutLabOrderInputSchema).optional(),
+  LabOrderAttachment: z.lazy(() => LabOrderAttachmentCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabOrderBilling: z.lazy(() => LabOrderBillingCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabOrderCpt: z.lazy(() => LabOrderCptCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabOrderSpecimen: z.lazy(() => LabOrderSpecimenCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabOrderStatus: z.lazy(() => LabOrderStatusCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional()
+}).strict();
+
+export const LabOrderUncheckedCreateWithoutLabResultsInputSchema: z.ZodType<Prisma.LabOrderUncheckedCreateWithoutLabResultsInput> = z.object({
+  Id: z.string().optional(),
+  OrderNumber: z.string().optional().nullable(),
+  AccessionNumber: z.string().optional().nullable(),
+  OrderingProviderId: z.string().optional().nullable(),
+  TreatingProviderId: z.string().optional().nullable(),
+  PatientId: z.string().optional().nullable(),
+  PatientMRN: z.string().optional().nullable(),
+  PatientMobile: z.string().optional().nullable(),
+  PatientEmail: z.string().optional().nullable(),
+  OrganizationId: z.string().optional().nullable(),
+  OrderDate: z.date().optional().nullable(),
+  OrderNotes: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable(),
+  LabOrderAttachment: z.lazy(() => LabOrderAttachmentUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabOrderBilling: z.lazy(() => LabOrderBillingUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabOrderCpt: z.lazy(() => LabOrderCptUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
+}).strict();
+
+export const LabOrderCreateOrConnectWithoutLabResultsInputSchema: z.ZodType<Prisma.LabOrderCreateOrConnectWithoutLabResultsInput> = z.object({
+  where: z.lazy(() => LabOrderWhereUniqueInputSchema),
+  create: z.union([ z.lazy(() => LabOrderCreateWithoutLabResultsInputSchema),z.lazy(() => LabOrderUncheckedCreateWithoutLabResultsInputSchema) ]),
+}).strict();
+
+export const LabOrderUpsertWithoutLabResultsInputSchema: z.ZodType<Prisma.LabOrderUpsertWithoutLabResultsInput> = z.object({
+  update: z.union([ z.lazy(() => LabOrderUpdateWithoutLabResultsInputSchema),z.lazy(() => LabOrderUncheckedUpdateWithoutLabResultsInputSchema) ]),
+  create: z.union([ z.lazy(() => LabOrderCreateWithoutLabResultsInputSchema),z.lazy(() => LabOrderUncheckedCreateWithoutLabResultsInputSchema) ]),
+  where: z.lazy(() => LabOrderWhereInputSchema).optional()
+}).strict();
+
+export const LabOrderUpdateToOneWithWhereWithoutLabResultsInputSchema: z.ZodType<Prisma.LabOrderUpdateToOneWithWhereWithoutLabResultsInput> = z.object({
+  where: z.lazy(() => LabOrderWhereInputSchema).optional(),
+  data: z.union([ z.lazy(() => LabOrderUpdateWithoutLabResultsInputSchema),z.lazy(() => LabOrderUncheckedUpdateWithoutLabResultsInputSchema) ]),
+}).strict();
+
+export const LabOrderUpdateWithoutLabResultsInputSchema: z.ZodType<Prisma.LabOrderUpdateWithoutLabResultsInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  OrderNumber: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AccessionNumber: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PatientMRN: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PatientMobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PatientEmail: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrderDate: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrderNotes: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrderingProvider: z.lazy(() => ProviderUpdateOneWithoutOrderingProviderLabOrderNestedInputSchema).optional(),
+  TreatingProvider: z.lazy(() => ProviderUpdateOneWithoutTreatingProviderLabOrderNestedInputSchema).optional(),
+  Patient: z.lazy(() => PatientUpdateOneWithoutLabOrderNestedInputSchema).optional(),
+  Organization: z.lazy(() => OrganizationUpdateOneWithoutLabOrderNestedInputSchema).optional(),
+  LabOrderAttachment: z.lazy(() => LabOrderAttachmentUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabOrderBilling: z.lazy(() => LabOrderBillingUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabOrderCpt: z.lazy(() => LabOrderCptUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabOrderStatus: z.lazy(() => LabOrderStatusUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional()
+}).strict();
+
+export const LabOrderUncheckedUpdateWithoutLabResultsInputSchema: z.ZodType<Prisma.LabOrderUncheckedUpdateWithoutLabResultsInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  OrderNumber: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  AccessionNumber: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrderingProviderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  TreatingProviderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PatientId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PatientMRN: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PatientMobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PatientEmail: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrganizationId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrderDate: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  OrderNotes: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  LabOrderAttachment: z.lazy(() => LabOrderAttachmentUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabOrderBilling: z.lazy(() => LabOrderBillingUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabOrderCpt: z.lazy(() => LabOrderCptUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
+}).strict();
+
 export const LabOrderCreateWithoutOrganizationInputSchema: z.ZodType<Prisma.LabOrderCreateWithoutOrganizationInput> = z.object({
   Id: z.string().optional(),
   OrderNumber: z.string().optional().nullable(),
@@ -20947,7 +21504,8 @@ export const LabOrderCreateWithoutOrganizationInputSchema: z.ZodType<Prisma.LabO
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedCreateWithoutOrganizationInputSchema: z.ZodType<Prisma.LabOrderUncheckedCreateWithoutOrganizationInput> = z.object({
@@ -20970,7 +21528,8 @@ export const LabOrderUncheckedCreateWithoutOrganizationInputSchema: z.ZodType<Pr
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderCreateOrConnectWithoutOrganizationInputSchema: z.ZodType<Prisma.LabOrderCreateOrConnectWithoutOrganizationInput> = z.object({
@@ -21730,7 +22289,8 @@ export const LabOrderCreateWithoutPatientInputSchema: z.ZodType<Prisma.LabOrderC
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedCreateWithoutPatientInputSchema: z.ZodType<Prisma.LabOrderUncheckedCreateWithoutPatientInput> = z.object({
@@ -21753,7 +22313,8 @@ export const LabOrderUncheckedCreateWithoutPatientInputSchema: z.ZodType<Prisma.
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderCreateOrConnectWithoutPatientInputSchema: z.ZodType<Prisma.LabOrderCreateOrConnectWithoutPatientInput> = z.object({
@@ -22004,7 +22565,8 @@ export const LabOrderCreateWithoutOrderingProviderInputSchema: z.ZodType<Prisma.
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedCreateWithoutOrderingProviderInputSchema: z.ZodType<Prisma.LabOrderUncheckedCreateWithoutOrderingProviderInput> = z.object({
@@ -22027,7 +22589,8 @@ export const LabOrderUncheckedCreateWithoutOrderingProviderInputSchema: z.ZodTyp
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderCreateOrConnectWithoutOrderingProviderInputSchema: z.ZodType<Prisma.LabOrderCreateOrConnectWithoutOrderingProviderInput> = z.object({
@@ -22060,7 +22623,8 @@ export const LabOrderCreateWithoutTreatingProviderInputSchema: z.ZodType<Prisma.
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedCreateWithoutTreatingProviderInputSchema: z.ZodType<Prisma.LabOrderUncheckedCreateWithoutTreatingProviderInput> = z.object({
@@ -22083,7 +22647,8 @@ export const LabOrderUncheckedCreateWithoutTreatingProviderInputSchema: z.ZodTyp
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedCreateNestedManyWithoutLabOrderInputSchema).optional()
 }).strict();
 
 export const LabOrderCreateOrConnectWithoutTreatingProviderInputSchema: z.ZodType<Prisma.LabOrderCreateOrConnectWithoutTreatingProviderInput> = z.object({
@@ -26632,6 +27197,16 @@ export const LabOrderTestCreateManyLabOrderInputSchema: z.ZodType<Prisma.LabOrde
   UpdatedAt: z.date().optional().nullable()
 }).strict();
 
+export const LabResultsCreateManyLabOrderInputSchema: z.ZodType<Prisma.LabResultsCreateManyLabOrderInput> = z.object({
+  Id: z.string().optional(),
+  ResultDate: z.date().optional().nullable(),
+  ResultPdfUrl: z.string().optional().nullable(),
+  PathologistName: z.string().optional().nullable(),
+  PathologistNPI: z.string().optional().nullable(),
+  CreatedAt: z.date().optional().nullable(),
+  UpdatedAt: z.date().optional().nullable()
+}).strict();
+
 export const LabOrderAttachmentUpdateWithoutLabOrderInputSchema: z.ZodType<Prisma.LabOrderAttachmentUpdateWithoutLabOrderInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -26887,6 +27462,36 @@ export const LabOrderTestUncheckedUpdateManyWithoutLabOrderInputSchema: z.ZodTyp
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
 
+export const LabResultsUpdateWithoutLabOrderInputSchema: z.ZodType<Prisma.LabResultsUpdateWithoutLabOrderInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  ResultDate: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ResultPdfUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PathologistName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PathologistNPI: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const LabResultsUncheckedUpdateWithoutLabOrderInputSchema: z.ZodType<Prisma.LabResultsUncheckedUpdateWithoutLabOrderInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  ResultDate: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ResultPdfUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PathologistName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PathologistNPI: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
+export const LabResultsUncheckedUpdateManyWithoutLabOrderInputSchema: z.ZodType<Prisma.LabResultsUncheckedUpdateManyWithoutLabOrderInput> = z.object({
+  Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
+  ResultDate: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  ResultPdfUrl: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PathologistName: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  PathologistNPI: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+}).strict();
+
 export const LabOrderCreateManyOrganizationInputSchema: z.ZodType<Prisma.LabOrderCreateManyOrganizationInput> = z.object({
   Id: z.string().optional(),
   OrderNumber: z.string().optional().nullable(),
@@ -26968,7 +27573,8 @@ export const LabOrderUpdateWithoutOrganizationInputSchema: z.ZodType<Prisma.LabO
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedUpdateWithoutOrganizationInputSchema: z.ZodType<Prisma.LabOrderUncheckedUpdateWithoutOrganizationInput> = z.object({
@@ -26991,7 +27597,8 @@ export const LabOrderUncheckedUpdateWithoutOrganizationInputSchema: z.ZodType<Pr
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedUpdateManyWithoutOrganizationInputSchema: z.ZodType<Prisma.LabOrderUncheckedUpdateManyWithoutOrganizationInput> = z.object({
@@ -27199,7 +27806,8 @@ export const LabOrderUpdateWithoutPatientInputSchema: z.ZodType<Prisma.LabOrderU
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedUpdateWithoutPatientInputSchema: z.ZodType<Prisma.LabOrderUncheckedUpdateWithoutPatientInput> = z.object({
@@ -27222,7 +27830,8 @@ export const LabOrderUncheckedUpdateWithoutPatientInputSchema: z.ZodType<Prisma.
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedUpdateManyWithoutPatientInputSchema: z.ZodType<Prisma.LabOrderUncheckedUpdateManyWithoutPatientInput> = z.object({
@@ -27349,7 +27958,8 @@ export const LabOrderUpdateWithoutOrderingProviderInputSchema: z.ZodType<Prisma.
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedUpdateWithoutOrderingProviderInputSchema: z.ZodType<Prisma.LabOrderUncheckedUpdateWithoutOrderingProviderInput> = z.object({
@@ -27372,7 +27982,8 @@ export const LabOrderUncheckedUpdateWithoutOrderingProviderInputSchema: z.ZodTyp
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedUpdateManyWithoutOrderingProviderInputSchema: z.ZodType<Prisma.LabOrderUncheckedUpdateManyWithoutOrderingProviderInput> = z.object({
@@ -27411,7 +28022,8 @@ export const LabOrderUpdateWithoutTreatingProviderInputSchema: z.ZodType<Prisma.
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedUpdateWithoutTreatingProviderInputSchema: z.ZodType<Prisma.LabOrderUncheckedUpdateWithoutTreatingProviderInput> = z.object({
@@ -27434,7 +28046,8 @@ export const LabOrderUncheckedUpdateWithoutTreatingProviderInputSchema: z.ZodTyp
   LabOrderSpecimen: z.lazy(() => LabOrderSpecimenUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderSponsoredTestConsent: z.lazy(() => LabOrderSponsoredTestConsentUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
   LabOrderStatus: z.lazy(() => LabOrderStatusUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
-  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
+  LabOrderTest: z.lazy(() => LabOrderTestUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional(),
+  LabResults: z.lazy(() => LabResultsUncheckedUpdateManyWithoutLabOrderNestedInputSchema).optional()
 }).strict();
 
 export const LabOrderUncheckedUpdateManyWithoutTreatingProviderInputSchema: z.ZodType<Prisma.LabOrderUncheckedUpdateManyWithoutTreatingProviderInput> = z.object({
@@ -28113,7 +28726,7 @@ export const AccountFindFirstArgsSchema: z.ZodType<Prisma.AccountFindFirstArgs> 
   select: AccountSelectSchema.optional(),
   include: AccountIncludeSchema.optional(),
   where: AccountWhereInputSchema.optional(),
-  orderBy: z.union([ AccountOrderByWithRelationInputSchema.array(),AccountOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ AccountOrderByWithRelationAndSearchRelevanceInputSchema.array(),AccountOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: AccountWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28124,7 +28737,7 @@ export const AccountFindFirstOrThrowArgsSchema: z.ZodType<Prisma.AccountFindFirs
   select: AccountSelectSchema.optional(),
   include: AccountIncludeSchema.optional(),
   where: AccountWhereInputSchema.optional(),
-  orderBy: z.union([ AccountOrderByWithRelationInputSchema.array(),AccountOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ AccountOrderByWithRelationAndSearchRelevanceInputSchema.array(),AccountOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: AccountWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28135,7 +28748,7 @@ export const AccountFindManyArgsSchema: z.ZodType<Prisma.AccountFindManyArgs> = 
   select: AccountSelectSchema.optional(),
   include: AccountIncludeSchema.optional(),
   where: AccountWhereInputSchema.optional(),
-  orderBy: z.union([ AccountOrderByWithRelationInputSchema.array(),AccountOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ AccountOrderByWithRelationAndSearchRelevanceInputSchema.array(),AccountOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: AccountWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28144,7 +28757,7 @@ export const AccountFindManyArgsSchema: z.ZodType<Prisma.AccountFindManyArgs> = 
 
 export const AccountAggregateArgsSchema: z.ZodType<Prisma.AccountAggregateArgs> = z.object({
   where: AccountWhereInputSchema.optional(),
-  orderBy: z.union([ AccountOrderByWithRelationInputSchema.array(),AccountOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ AccountOrderByWithRelationAndSearchRelevanceInputSchema.array(),AccountOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: AccountWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28175,7 +28788,7 @@ export const AdminFindFirstArgsSchema: z.ZodType<Prisma.AdminFindFirstArgs> = z.
   select: AdminSelectSchema.optional(),
   include: AdminIncludeSchema.optional(),
   where: AdminWhereInputSchema.optional(),
-  orderBy: z.union([ AdminOrderByWithRelationInputSchema.array(),AdminOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ AdminOrderByWithRelationAndSearchRelevanceInputSchema.array(),AdminOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: AdminWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28186,7 +28799,7 @@ export const AdminFindFirstOrThrowArgsSchema: z.ZodType<Prisma.AdminFindFirstOrT
   select: AdminSelectSchema.optional(),
   include: AdminIncludeSchema.optional(),
   where: AdminWhereInputSchema.optional(),
-  orderBy: z.union([ AdminOrderByWithRelationInputSchema.array(),AdminOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ AdminOrderByWithRelationAndSearchRelevanceInputSchema.array(),AdminOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: AdminWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28197,7 +28810,7 @@ export const AdminFindManyArgsSchema: z.ZodType<Prisma.AdminFindManyArgs> = z.ob
   select: AdminSelectSchema.optional(),
   include: AdminIncludeSchema.optional(),
   where: AdminWhereInputSchema.optional(),
-  orderBy: z.union([ AdminOrderByWithRelationInputSchema.array(),AdminOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ AdminOrderByWithRelationAndSearchRelevanceInputSchema.array(),AdminOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: AdminWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28206,7 +28819,7 @@ export const AdminFindManyArgsSchema: z.ZodType<Prisma.AdminFindManyArgs> = z.ob
 
 export const AdminAggregateArgsSchema: z.ZodType<Prisma.AdminAggregateArgs> = z.object({
   where: AdminWhereInputSchema.optional(),
-  orderBy: z.union([ AdminOrderByWithRelationInputSchema.array(),AdminOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ AdminOrderByWithRelationAndSearchRelevanceInputSchema.array(),AdminOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: AdminWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28237,7 +28850,7 @@ export const AttachmentFindFirstArgsSchema: z.ZodType<Prisma.AttachmentFindFirst
   select: AttachmentSelectSchema.optional(),
   include: AttachmentIncludeSchema.optional(),
   where: AttachmentWhereInputSchema.optional(),
-  orderBy: z.union([ AttachmentOrderByWithRelationInputSchema.array(),AttachmentOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ AttachmentOrderByWithRelationAndSearchRelevanceInputSchema.array(),AttachmentOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: AttachmentWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28248,7 +28861,7 @@ export const AttachmentFindFirstOrThrowArgsSchema: z.ZodType<Prisma.AttachmentFi
   select: AttachmentSelectSchema.optional(),
   include: AttachmentIncludeSchema.optional(),
   where: AttachmentWhereInputSchema.optional(),
-  orderBy: z.union([ AttachmentOrderByWithRelationInputSchema.array(),AttachmentOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ AttachmentOrderByWithRelationAndSearchRelevanceInputSchema.array(),AttachmentOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: AttachmentWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28259,7 +28872,7 @@ export const AttachmentFindManyArgsSchema: z.ZodType<Prisma.AttachmentFindManyAr
   select: AttachmentSelectSchema.optional(),
   include: AttachmentIncludeSchema.optional(),
   where: AttachmentWhereInputSchema.optional(),
-  orderBy: z.union([ AttachmentOrderByWithRelationInputSchema.array(),AttachmentOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ AttachmentOrderByWithRelationAndSearchRelevanceInputSchema.array(),AttachmentOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: AttachmentWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28268,7 +28881,7 @@ export const AttachmentFindManyArgsSchema: z.ZodType<Prisma.AttachmentFindManyAr
 
 export const AttachmentAggregateArgsSchema: z.ZodType<Prisma.AttachmentAggregateArgs> = z.object({
   where: AttachmentWhereInputSchema.optional(),
-  orderBy: z.union([ AttachmentOrderByWithRelationInputSchema.array(),AttachmentOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ AttachmentOrderByWithRelationAndSearchRelevanceInputSchema.array(),AttachmentOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: AttachmentWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28299,7 +28912,7 @@ export const BIOMARKERFindFirstArgsSchema: z.ZodType<Prisma.BIOMARKERFindFirstAr
   select: BIOMARKERSelectSchema.optional(),
   include: BIOMARKERIncludeSchema.optional(),
   where: BIOMARKERWhereInputSchema.optional(),
-  orderBy: z.union([ BIOMARKEROrderByWithRelationInputSchema.array(),BIOMARKEROrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ BIOMARKEROrderByWithRelationAndSearchRelevanceInputSchema.array(),BIOMARKEROrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: BIOMARKERWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28310,7 +28923,7 @@ export const BIOMARKERFindFirstOrThrowArgsSchema: z.ZodType<Prisma.BIOMARKERFind
   select: BIOMARKERSelectSchema.optional(),
   include: BIOMARKERIncludeSchema.optional(),
   where: BIOMARKERWhereInputSchema.optional(),
-  orderBy: z.union([ BIOMARKEROrderByWithRelationInputSchema.array(),BIOMARKEROrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ BIOMARKEROrderByWithRelationAndSearchRelevanceInputSchema.array(),BIOMARKEROrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: BIOMARKERWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28321,7 +28934,7 @@ export const BIOMARKERFindManyArgsSchema: z.ZodType<Prisma.BIOMARKERFindManyArgs
   select: BIOMARKERSelectSchema.optional(),
   include: BIOMARKERIncludeSchema.optional(),
   where: BIOMARKERWhereInputSchema.optional(),
-  orderBy: z.union([ BIOMARKEROrderByWithRelationInputSchema.array(),BIOMARKEROrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ BIOMARKEROrderByWithRelationAndSearchRelevanceInputSchema.array(),BIOMARKEROrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: BIOMARKERWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28330,7 +28943,7 @@ export const BIOMARKERFindManyArgsSchema: z.ZodType<Prisma.BIOMARKERFindManyArgs
 
 export const BIOMARKERAggregateArgsSchema: z.ZodType<Prisma.BIOMARKERAggregateArgs> = z.object({
   where: BIOMARKERWhereInputSchema.optional(),
-  orderBy: z.union([ BIOMARKEROrderByWithRelationInputSchema.array(),BIOMARKEROrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ BIOMARKEROrderByWithRelationAndSearchRelevanceInputSchema.array(),BIOMARKEROrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: BIOMARKERWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28361,7 +28974,7 @@ export const CdxTestFindFirstArgsSchema: z.ZodType<Prisma.CdxTestFindFirstArgs> 
   select: CdxTestSelectSchema.optional(),
   include: CdxTestIncludeSchema.optional(),
   where: CdxTestWhereInputSchema.optional(),
-  orderBy: z.union([ CdxTestOrderByWithRelationInputSchema.array(),CdxTestOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ CdxTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),CdxTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: CdxTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28372,7 +28985,7 @@ export const CdxTestFindFirstOrThrowArgsSchema: z.ZodType<Prisma.CdxTestFindFirs
   select: CdxTestSelectSchema.optional(),
   include: CdxTestIncludeSchema.optional(),
   where: CdxTestWhereInputSchema.optional(),
-  orderBy: z.union([ CdxTestOrderByWithRelationInputSchema.array(),CdxTestOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ CdxTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),CdxTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: CdxTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28383,7 +28996,7 @@ export const CdxTestFindManyArgsSchema: z.ZodType<Prisma.CdxTestFindManyArgs> = 
   select: CdxTestSelectSchema.optional(),
   include: CdxTestIncludeSchema.optional(),
   where: CdxTestWhereInputSchema.optional(),
-  orderBy: z.union([ CdxTestOrderByWithRelationInputSchema.array(),CdxTestOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ CdxTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),CdxTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: CdxTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28392,7 +29005,7 @@ export const CdxTestFindManyArgsSchema: z.ZodType<Prisma.CdxTestFindManyArgs> = 
 
 export const CdxTestAggregateArgsSchema: z.ZodType<Prisma.CdxTestAggregateArgs> = z.object({
   where: CdxTestWhereInputSchema.optional(),
-  orderBy: z.union([ CdxTestOrderByWithRelationInputSchema.array(),CdxTestOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ CdxTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),CdxTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: CdxTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28422,7 +29035,7 @@ export const CdxTestFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.CdxTestFindUni
 export const CompanionDiagnosticDevicesFindFirstArgsSchema: z.ZodType<Prisma.CompanionDiagnosticDevicesFindFirstArgs> = z.object({
   select: CompanionDiagnosticDevicesSelectSchema.optional(),
   where: CompanionDiagnosticDevicesWhereInputSchema.optional(),
-  orderBy: z.union([ CompanionDiagnosticDevicesOrderByWithRelationInputSchema.array(),CompanionDiagnosticDevicesOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ CompanionDiagnosticDevicesOrderByWithRelationAndSearchRelevanceInputSchema.array(),CompanionDiagnosticDevicesOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: CompanionDiagnosticDevicesWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28432,7 +29045,7 @@ export const CompanionDiagnosticDevicesFindFirstArgsSchema: z.ZodType<Prisma.Com
 export const CompanionDiagnosticDevicesFindFirstOrThrowArgsSchema: z.ZodType<Prisma.CompanionDiagnosticDevicesFindFirstOrThrowArgs> = z.object({
   select: CompanionDiagnosticDevicesSelectSchema.optional(),
   where: CompanionDiagnosticDevicesWhereInputSchema.optional(),
-  orderBy: z.union([ CompanionDiagnosticDevicesOrderByWithRelationInputSchema.array(),CompanionDiagnosticDevicesOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ CompanionDiagnosticDevicesOrderByWithRelationAndSearchRelevanceInputSchema.array(),CompanionDiagnosticDevicesOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: CompanionDiagnosticDevicesWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28442,7 +29055,7 @@ export const CompanionDiagnosticDevicesFindFirstOrThrowArgsSchema: z.ZodType<Pri
 export const CompanionDiagnosticDevicesFindManyArgsSchema: z.ZodType<Prisma.CompanionDiagnosticDevicesFindManyArgs> = z.object({
   select: CompanionDiagnosticDevicesSelectSchema.optional(),
   where: CompanionDiagnosticDevicesWhereInputSchema.optional(),
-  orderBy: z.union([ CompanionDiagnosticDevicesOrderByWithRelationInputSchema.array(),CompanionDiagnosticDevicesOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ CompanionDiagnosticDevicesOrderByWithRelationAndSearchRelevanceInputSchema.array(),CompanionDiagnosticDevicesOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: CompanionDiagnosticDevicesWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28451,7 +29064,7 @@ export const CompanionDiagnosticDevicesFindManyArgsSchema: z.ZodType<Prisma.Comp
 
 export const CompanionDiagnosticDevicesAggregateArgsSchema: z.ZodType<Prisma.CompanionDiagnosticDevicesAggregateArgs> = z.object({
   where: CompanionDiagnosticDevicesWhereInputSchema.optional(),
-  orderBy: z.union([ CompanionDiagnosticDevicesOrderByWithRelationInputSchema.array(),CompanionDiagnosticDevicesOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ CompanionDiagnosticDevicesOrderByWithRelationAndSearchRelevanceInputSchema.array(),CompanionDiagnosticDevicesOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: CompanionDiagnosticDevicesWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28479,7 +29092,7 @@ export const CompanionDiagnosticDevicesFindUniqueOrThrowArgsSchema: z.ZodType<Pr
 export const ICDFindFirstArgsSchema: z.ZodType<Prisma.ICDFindFirstArgs> = z.object({
   select: ICDSelectSchema.optional(),
   where: ICDWhereInputSchema.optional(),
-  orderBy: z.union([ ICDOrderByWithRelationInputSchema.array(),ICDOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ ICDOrderByWithRelationAndSearchRelevanceInputSchema.array(),ICDOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ICDWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28489,7 +29102,7 @@ export const ICDFindFirstArgsSchema: z.ZodType<Prisma.ICDFindFirstArgs> = z.obje
 export const ICDFindFirstOrThrowArgsSchema: z.ZodType<Prisma.ICDFindFirstOrThrowArgs> = z.object({
   select: ICDSelectSchema.optional(),
   where: ICDWhereInputSchema.optional(),
-  orderBy: z.union([ ICDOrderByWithRelationInputSchema.array(),ICDOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ ICDOrderByWithRelationAndSearchRelevanceInputSchema.array(),ICDOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ICDWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28499,7 +29112,7 @@ export const ICDFindFirstOrThrowArgsSchema: z.ZodType<Prisma.ICDFindFirstOrThrow
 export const ICDFindManyArgsSchema: z.ZodType<Prisma.ICDFindManyArgs> = z.object({
   select: ICDSelectSchema.optional(),
   where: ICDWhereInputSchema.optional(),
-  orderBy: z.union([ ICDOrderByWithRelationInputSchema.array(),ICDOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ ICDOrderByWithRelationAndSearchRelevanceInputSchema.array(),ICDOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ICDWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28508,7 +29121,7 @@ export const ICDFindManyArgsSchema: z.ZodType<Prisma.ICDFindManyArgs> = z.object
 
 export const ICDAggregateArgsSchema: z.ZodType<Prisma.ICDAggregateArgs> = z.object({
   where: ICDWhereInputSchema.optional(),
-  orderBy: z.union([ ICDOrderByWithRelationInputSchema.array(),ICDOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ ICDOrderByWithRelationAndSearchRelevanceInputSchema.array(),ICDOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ICDWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28537,7 +29150,7 @@ export const LOINCFindFirstArgsSchema: z.ZodType<Prisma.LOINCFindFirstArgs> = z.
   select: LOINCSelectSchema.optional(),
   include: LOINCIncludeSchema.optional(),
   where: LOINCWhereInputSchema.optional(),
-  orderBy: z.union([ LOINCOrderByWithRelationInputSchema.array(),LOINCOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LOINCOrderByWithRelationAndSearchRelevanceInputSchema.array(),LOINCOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LOINCWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28548,7 +29161,7 @@ export const LOINCFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LOINCFindFirstOrT
   select: LOINCSelectSchema.optional(),
   include: LOINCIncludeSchema.optional(),
   where: LOINCWhereInputSchema.optional(),
-  orderBy: z.union([ LOINCOrderByWithRelationInputSchema.array(),LOINCOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LOINCOrderByWithRelationAndSearchRelevanceInputSchema.array(),LOINCOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LOINCWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28559,7 +29172,7 @@ export const LOINCFindManyArgsSchema: z.ZodType<Prisma.LOINCFindManyArgs> = z.ob
   select: LOINCSelectSchema.optional(),
   include: LOINCIncludeSchema.optional(),
   where: LOINCWhereInputSchema.optional(),
-  orderBy: z.union([ LOINCOrderByWithRelationInputSchema.array(),LOINCOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LOINCOrderByWithRelationAndSearchRelevanceInputSchema.array(),LOINCOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LOINCWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28568,7 +29181,7 @@ export const LOINCFindManyArgsSchema: z.ZodType<Prisma.LOINCFindManyArgs> = z.ob
 
 export const LOINCAggregateArgsSchema: z.ZodType<Prisma.LOINCAggregateArgs> = z.object({
   where: LOINCWhereInputSchema.optional(),
-  orderBy: z.union([ LOINCOrderByWithRelationInputSchema.array(),LOINCOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LOINCOrderByWithRelationAndSearchRelevanceInputSchema.array(),LOINCOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LOINCWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28599,7 +29212,7 @@ export const LabFindFirstArgsSchema: z.ZodType<Prisma.LabFindFirstArgs> = z.obje
   select: LabSelectSchema.optional(),
   include: LabIncludeSchema.optional(),
   where: LabWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderByWithRelationInputSchema.array(),LabOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28610,7 +29223,7 @@ export const LabFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LabFindFirstOrThrow
   select: LabSelectSchema.optional(),
   include: LabIncludeSchema.optional(),
   where: LabWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderByWithRelationInputSchema.array(),LabOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28621,7 +29234,7 @@ export const LabFindManyArgsSchema: z.ZodType<Prisma.LabFindManyArgs> = z.object
   select: LabSelectSchema.optional(),
   include: LabIncludeSchema.optional(),
   where: LabWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderByWithRelationInputSchema.array(),LabOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28630,7 +29243,7 @@ export const LabFindManyArgsSchema: z.ZodType<Prisma.LabFindManyArgs> = z.object
 
 export const LabAggregateArgsSchema: z.ZodType<Prisma.LabAggregateArgs> = z.object({
   where: LabWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderByWithRelationInputSchema.array(),LabOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28661,7 +29274,7 @@ export const LabOrderFindFirstArgsSchema: z.ZodType<Prisma.LabOrderFindFirstArgs
   select: LabOrderSelectSchema.optional(),
   include: LabOrderIncludeSchema.optional(),
   where: LabOrderWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderOrderByWithRelationInputSchema.array(),LabOrderOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28672,7 +29285,7 @@ export const LabOrderFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LabOrderFindFi
   select: LabOrderSelectSchema.optional(),
   include: LabOrderIncludeSchema.optional(),
   where: LabOrderWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderOrderByWithRelationInputSchema.array(),LabOrderOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28683,7 +29296,7 @@ export const LabOrderFindManyArgsSchema: z.ZodType<Prisma.LabOrderFindManyArgs> 
   select: LabOrderSelectSchema.optional(),
   include: LabOrderIncludeSchema.optional(),
   where: LabOrderWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderOrderByWithRelationInputSchema.array(),LabOrderOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28692,7 +29305,7 @@ export const LabOrderFindManyArgsSchema: z.ZodType<Prisma.LabOrderFindManyArgs> 
 
 export const LabOrderAggregateArgsSchema: z.ZodType<Prisma.LabOrderAggregateArgs> = z.object({
   where: LabOrderWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderOrderByWithRelationInputSchema.array(),LabOrderOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28723,7 +29336,7 @@ export const LabOrderAttachmentFindFirstArgsSchema: z.ZodType<Prisma.LabOrderAtt
   select: LabOrderAttachmentSelectSchema.optional(),
   include: LabOrderAttachmentIncludeSchema.optional(),
   where: LabOrderAttachmentWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderAttachmentOrderByWithRelationInputSchema.array(),LabOrderAttachmentOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderAttachmentOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderAttachmentOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderAttachmentWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28734,7 +29347,7 @@ export const LabOrderAttachmentFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LabO
   select: LabOrderAttachmentSelectSchema.optional(),
   include: LabOrderAttachmentIncludeSchema.optional(),
   where: LabOrderAttachmentWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderAttachmentOrderByWithRelationInputSchema.array(),LabOrderAttachmentOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderAttachmentOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderAttachmentOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderAttachmentWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28745,7 +29358,7 @@ export const LabOrderAttachmentFindManyArgsSchema: z.ZodType<Prisma.LabOrderAtta
   select: LabOrderAttachmentSelectSchema.optional(),
   include: LabOrderAttachmentIncludeSchema.optional(),
   where: LabOrderAttachmentWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderAttachmentOrderByWithRelationInputSchema.array(),LabOrderAttachmentOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderAttachmentOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderAttachmentOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderAttachmentWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28754,7 +29367,7 @@ export const LabOrderAttachmentFindManyArgsSchema: z.ZodType<Prisma.LabOrderAtta
 
 export const LabOrderAttachmentAggregateArgsSchema: z.ZodType<Prisma.LabOrderAttachmentAggregateArgs> = z.object({
   where: LabOrderAttachmentWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderAttachmentOrderByWithRelationInputSchema.array(),LabOrderAttachmentOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderAttachmentOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderAttachmentOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderAttachmentWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28785,7 +29398,7 @@ export const LabOrderBillingFindFirstArgsSchema: z.ZodType<Prisma.LabOrderBillin
   select: LabOrderBillingSelectSchema.optional(),
   include: LabOrderBillingIncludeSchema.optional(),
   where: LabOrderBillingWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderBillingOrderByWithRelationInputSchema.array(),LabOrderBillingOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderBillingOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderBillingOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderBillingWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28796,7 +29409,7 @@ export const LabOrderBillingFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LabOrde
   select: LabOrderBillingSelectSchema.optional(),
   include: LabOrderBillingIncludeSchema.optional(),
   where: LabOrderBillingWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderBillingOrderByWithRelationInputSchema.array(),LabOrderBillingOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderBillingOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderBillingOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderBillingWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28807,7 +29420,7 @@ export const LabOrderBillingFindManyArgsSchema: z.ZodType<Prisma.LabOrderBilling
   select: LabOrderBillingSelectSchema.optional(),
   include: LabOrderBillingIncludeSchema.optional(),
   where: LabOrderBillingWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderBillingOrderByWithRelationInputSchema.array(),LabOrderBillingOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderBillingOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderBillingOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderBillingWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28816,7 +29429,7 @@ export const LabOrderBillingFindManyArgsSchema: z.ZodType<Prisma.LabOrderBilling
 
 export const LabOrderBillingAggregateArgsSchema: z.ZodType<Prisma.LabOrderBillingAggregateArgs> = z.object({
   where: LabOrderBillingWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderBillingOrderByWithRelationInputSchema.array(),LabOrderBillingOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderBillingOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderBillingOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderBillingWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28847,7 +29460,7 @@ export const LabOrderCptFindFirstArgsSchema: z.ZodType<Prisma.LabOrderCptFindFir
   select: LabOrderCptSelectSchema.optional(),
   include: LabOrderCptIncludeSchema.optional(),
   where: LabOrderCptWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderCptOrderByWithRelationInputSchema.array(),LabOrderCptOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderCptOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderCptOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderCptWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28858,7 +29471,7 @@ export const LabOrderCptFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LabOrderCpt
   select: LabOrderCptSelectSchema.optional(),
   include: LabOrderCptIncludeSchema.optional(),
   where: LabOrderCptWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderCptOrderByWithRelationInputSchema.array(),LabOrderCptOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderCptOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderCptOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderCptWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28869,7 +29482,7 @@ export const LabOrderCptFindManyArgsSchema: z.ZodType<Prisma.LabOrderCptFindMany
   select: LabOrderCptSelectSchema.optional(),
   include: LabOrderCptIncludeSchema.optional(),
   where: LabOrderCptWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderCptOrderByWithRelationInputSchema.array(),LabOrderCptOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderCptOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderCptOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderCptWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28878,7 +29491,7 @@ export const LabOrderCptFindManyArgsSchema: z.ZodType<Prisma.LabOrderCptFindMany
 
 export const LabOrderCptAggregateArgsSchema: z.ZodType<Prisma.LabOrderCptAggregateArgs> = z.object({
   where: LabOrderCptWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderCptOrderByWithRelationInputSchema.array(),LabOrderCptOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderCptOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderCptOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderCptWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28909,7 +29522,7 @@ export const LabOrderSpecimenFindFirstArgsSchema: z.ZodType<Prisma.LabOrderSpeci
   select: LabOrderSpecimenSelectSchema.optional(),
   include: LabOrderSpecimenIncludeSchema.optional(),
   where: LabOrderSpecimenWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderSpecimenOrderByWithRelationInputSchema.array(),LabOrderSpecimenOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderSpecimenOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderSpecimenOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderSpecimenWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28920,7 +29533,7 @@ export const LabOrderSpecimenFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LabOrd
   select: LabOrderSpecimenSelectSchema.optional(),
   include: LabOrderSpecimenIncludeSchema.optional(),
   where: LabOrderSpecimenWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderSpecimenOrderByWithRelationInputSchema.array(),LabOrderSpecimenOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderSpecimenOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderSpecimenOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderSpecimenWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28931,7 +29544,7 @@ export const LabOrderSpecimenFindManyArgsSchema: z.ZodType<Prisma.LabOrderSpecim
   select: LabOrderSpecimenSelectSchema.optional(),
   include: LabOrderSpecimenIncludeSchema.optional(),
   where: LabOrderSpecimenWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderSpecimenOrderByWithRelationInputSchema.array(),LabOrderSpecimenOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderSpecimenOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderSpecimenOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderSpecimenWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28940,7 +29553,7 @@ export const LabOrderSpecimenFindManyArgsSchema: z.ZodType<Prisma.LabOrderSpecim
 
 export const LabOrderSpecimenAggregateArgsSchema: z.ZodType<Prisma.LabOrderSpecimenAggregateArgs> = z.object({
   where: LabOrderSpecimenWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderSpecimenOrderByWithRelationInputSchema.array(),LabOrderSpecimenOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderSpecimenOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderSpecimenOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderSpecimenWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28971,7 +29584,7 @@ export const LabOrderSponsoredTestConsentFindFirstArgsSchema: z.ZodType<Prisma.L
   select: LabOrderSponsoredTestConsentSelectSchema.optional(),
   include: LabOrderSponsoredTestConsentIncludeSchema.optional(),
   where: LabOrderSponsoredTestConsentWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderSponsoredTestConsentOrderByWithRelationInputSchema.array(),LabOrderSponsoredTestConsentOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderSponsoredTestConsentOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderSponsoredTestConsentOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderSponsoredTestConsentWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28982,7 +29595,7 @@ export const LabOrderSponsoredTestConsentFindFirstOrThrowArgsSchema: z.ZodType<P
   select: LabOrderSponsoredTestConsentSelectSchema.optional(),
   include: LabOrderSponsoredTestConsentIncludeSchema.optional(),
   where: LabOrderSponsoredTestConsentWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderSponsoredTestConsentOrderByWithRelationInputSchema.array(),LabOrderSponsoredTestConsentOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderSponsoredTestConsentOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderSponsoredTestConsentOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderSponsoredTestConsentWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -28993,7 +29606,7 @@ export const LabOrderSponsoredTestConsentFindManyArgsSchema: z.ZodType<Prisma.La
   select: LabOrderSponsoredTestConsentSelectSchema.optional(),
   include: LabOrderSponsoredTestConsentIncludeSchema.optional(),
   where: LabOrderSponsoredTestConsentWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderSponsoredTestConsentOrderByWithRelationInputSchema.array(),LabOrderSponsoredTestConsentOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderSponsoredTestConsentOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderSponsoredTestConsentOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderSponsoredTestConsentWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29002,7 +29615,7 @@ export const LabOrderSponsoredTestConsentFindManyArgsSchema: z.ZodType<Prisma.La
 
 export const LabOrderSponsoredTestConsentAggregateArgsSchema: z.ZodType<Prisma.LabOrderSponsoredTestConsentAggregateArgs> = z.object({
   where: LabOrderSponsoredTestConsentWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderSponsoredTestConsentOrderByWithRelationInputSchema.array(),LabOrderSponsoredTestConsentOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderSponsoredTestConsentOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderSponsoredTestConsentOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderSponsoredTestConsentWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29033,7 +29646,7 @@ export const LabOrderStatusFindFirstArgsSchema: z.ZodType<Prisma.LabOrderStatusF
   select: LabOrderStatusSelectSchema.optional(),
   include: LabOrderStatusIncludeSchema.optional(),
   where: LabOrderStatusWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderStatusOrderByWithRelationInputSchema.array(),LabOrderStatusOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderStatusOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderStatusOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderStatusWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29044,7 +29657,7 @@ export const LabOrderStatusFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LabOrder
   select: LabOrderStatusSelectSchema.optional(),
   include: LabOrderStatusIncludeSchema.optional(),
   where: LabOrderStatusWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderStatusOrderByWithRelationInputSchema.array(),LabOrderStatusOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderStatusOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderStatusOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderStatusWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29055,7 +29668,7 @@ export const LabOrderStatusFindManyArgsSchema: z.ZodType<Prisma.LabOrderStatusFi
   select: LabOrderStatusSelectSchema.optional(),
   include: LabOrderStatusIncludeSchema.optional(),
   where: LabOrderStatusWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderStatusOrderByWithRelationInputSchema.array(),LabOrderStatusOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderStatusOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderStatusOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderStatusWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29064,7 +29677,7 @@ export const LabOrderStatusFindManyArgsSchema: z.ZodType<Prisma.LabOrderStatusFi
 
 export const LabOrderStatusAggregateArgsSchema: z.ZodType<Prisma.LabOrderStatusAggregateArgs> = z.object({
   where: LabOrderStatusWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderStatusOrderByWithRelationInputSchema.array(),LabOrderStatusOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderStatusOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderStatusOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderStatusWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29095,7 +29708,7 @@ export const LabOrderTestFindFirstArgsSchema: z.ZodType<Prisma.LabOrderTestFindF
   select: LabOrderTestSelectSchema.optional(),
   include: LabOrderTestIncludeSchema.optional(),
   where: LabOrderTestWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderTestOrderByWithRelationInputSchema.array(),LabOrderTestOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29106,7 +29719,7 @@ export const LabOrderTestFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LabOrderTe
   select: LabOrderTestSelectSchema.optional(),
   include: LabOrderTestIncludeSchema.optional(),
   where: LabOrderTestWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderTestOrderByWithRelationInputSchema.array(),LabOrderTestOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29117,7 +29730,7 @@ export const LabOrderTestFindManyArgsSchema: z.ZodType<Prisma.LabOrderTestFindMa
   select: LabOrderTestSelectSchema.optional(),
   include: LabOrderTestIncludeSchema.optional(),
   where: LabOrderTestWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderTestOrderByWithRelationInputSchema.array(),LabOrderTestOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29126,7 +29739,7 @@ export const LabOrderTestFindManyArgsSchema: z.ZodType<Prisma.LabOrderTestFindMa
 
 export const LabOrderTestAggregateArgsSchema: z.ZodType<Prisma.LabOrderTestAggregateArgs> = z.object({
   where: LabOrderTestWhereInputSchema.optional(),
-  orderBy: z.union([ LabOrderTestOrderByWithRelationInputSchema.array(),LabOrderTestOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LabOrderTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabOrderTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LabOrderTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29153,10 +29766,72 @@ export const LabOrderTestFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.LabOrderT
   where: LabOrderTestWhereUniqueInputSchema,
 }).strict() ;
 
+export const LabResultsFindFirstArgsSchema: z.ZodType<Prisma.LabResultsFindFirstArgs> = z.object({
+  select: LabResultsSelectSchema.optional(),
+  include: LabResultsIncludeSchema.optional(),
+  where: LabResultsWhereInputSchema.optional(),
+  orderBy: z.union([ LabResultsOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabResultsOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  cursor: LabResultsWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ LabResultsScalarFieldEnumSchema,LabResultsScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const LabResultsFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LabResultsFindFirstOrThrowArgs> = z.object({
+  select: LabResultsSelectSchema.optional(),
+  include: LabResultsIncludeSchema.optional(),
+  where: LabResultsWhereInputSchema.optional(),
+  orderBy: z.union([ LabResultsOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabResultsOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  cursor: LabResultsWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ LabResultsScalarFieldEnumSchema,LabResultsScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const LabResultsFindManyArgsSchema: z.ZodType<Prisma.LabResultsFindManyArgs> = z.object({
+  select: LabResultsSelectSchema.optional(),
+  include: LabResultsIncludeSchema.optional(),
+  where: LabResultsWhereInputSchema.optional(),
+  orderBy: z.union([ LabResultsOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabResultsOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  cursor: LabResultsWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+  distinct: z.union([ LabResultsScalarFieldEnumSchema,LabResultsScalarFieldEnumSchema.array() ]).optional(),
+}).strict() ;
+
+export const LabResultsAggregateArgsSchema: z.ZodType<Prisma.LabResultsAggregateArgs> = z.object({
+  where: LabResultsWhereInputSchema.optional(),
+  orderBy: z.union([ LabResultsOrderByWithRelationAndSearchRelevanceInputSchema.array(),LabResultsOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
+  cursor: LabResultsWhereUniqueInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+}).strict() ;
+
+export const LabResultsGroupByArgsSchema: z.ZodType<Prisma.LabResultsGroupByArgs> = z.object({
+  where: LabResultsWhereInputSchema.optional(),
+  orderBy: z.union([ LabResultsOrderByWithAggregationInputSchema.array(),LabResultsOrderByWithAggregationInputSchema ]).optional(),
+  by: LabResultsScalarFieldEnumSchema.array(),
+  having: LabResultsScalarWhereWithAggregatesInputSchema.optional(),
+  take: z.number().optional(),
+  skip: z.number().optional(),
+}).strict() ;
+
+export const LabResultsFindUniqueArgsSchema: z.ZodType<Prisma.LabResultsFindUniqueArgs> = z.object({
+  select: LabResultsSelectSchema.optional(),
+  include: LabResultsIncludeSchema.optional(),
+  where: LabResultsWhereUniqueInputSchema,
+}).strict() ;
+
+export const LabResultsFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.LabResultsFindUniqueOrThrowArgs> = z.object({
+  select: LabResultsSelectSchema.optional(),
+  include: LabResultsIncludeSchema.optional(),
+  where: LabResultsWhereUniqueInputSchema,
+}).strict() ;
+
 export const LoincComponentHierarchyFindFirstArgsSchema: z.ZodType<Prisma.LoincComponentHierarchyFindFirstArgs> = z.object({
   select: LoincComponentHierarchySelectSchema.optional(),
   where: LoincComponentHierarchyWhereInputSchema.optional(),
-  orderBy: z.union([ LoincComponentHierarchyOrderByWithRelationInputSchema.array(),LoincComponentHierarchyOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LoincComponentHierarchyOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincComponentHierarchyOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LoincComponentHierarchyWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29166,7 +29841,7 @@ export const LoincComponentHierarchyFindFirstArgsSchema: z.ZodType<Prisma.LoincC
 export const LoincComponentHierarchyFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LoincComponentHierarchyFindFirstOrThrowArgs> = z.object({
   select: LoincComponentHierarchySelectSchema.optional(),
   where: LoincComponentHierarchyWhereInputSchema.optional(),
-  orderBy: z.union([ LoincComponentHierarchyOrderByWithRelationInputSchema.array(),LoincComponentHierarchyOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LoincComponentHierarchyOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincComponentHierarchyOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LoincComponentHierarchyWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29176,7 +29851,7 @@ export const LoincComponentHierarchyFindFirstOrThrowArgsSchema: z.ZodType<Prisma
 export const LoincComponentHierarchyFindManyArgsSchema: z.ZodType<Prisma.LoincComponentHierarchyFindManyArgs> = z.object({
   select: LoincComponentHierarchySelectSchema.optional(),
   where: LoincComponentHierarchyWhereInputSchema.optional(),
-  orderBy: z.union([ LoincComponentHierarchyOrderByWithRelationInputSchema.array(),LoincComponentHierarchyOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LoincComponentHierarchyOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincComponentHierarchyOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LoincComponentHierarchyWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29185,7 +29860,7 @@ export const LoincComponentHierarchyFindManyArgsSchema: z.ZodType<Prisma.LoincCo
 
 export const LoincComponentHierarchyAggregateArgsSchema: z.ZodType<Prisma.LoincComponentHierarchyAggregateArgs> = z.object({
   where: LoincComponentHierarchyWhereInputSchema.optional(),
-  orderBy: z.union([ LoincComponentHierarchyOrderByWithRelationInputSchema.array(),LoincComponentHierarchyOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LoincComponentHierarchyOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincComponentHierarchyOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LoincComponentHierarchyWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29213,7 +29888,7 @@ export const LoincComponentHierarchyFindUniqueOrThrowArgsSchema: z.ZodType<Prism
 export const LoincPanelHierarchyFindFirstArgsSchema: z.ZodType<Prisma.LoincPanelHierarchyFindFirstArgs> = z.object({
   select: LoincPanelHierarchySelectSchema.optional(),
   where: LoincPanelHierarchyWhereInputSchema.optional(),
-  orderBy: z.union([ LoincPanelHierarchyOrderByWithRelationInputSchema.array(),LoincPanelHierarchyOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LoincPanelHierarchyOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincPanelHierarchyOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LoincPanelHierarchyWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29223,7 +29898,7 @@ export const LoincPanelHierarchyFindFirstArgsSchema: z.ZodType<Prisma.LoincPanel
 export const LoincPanelHierarchyFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LoincPanelHierarchyFindFirstOrThrowArgs> = z.object({
   select: LoincPanelHierarchySelectSchema.optional(),
   where: LoincPanelHierarchyWhereInputSchema.optional(),
-  orderBy: z.union([ LoincPanelHierarchyOrderByWithRelationInputSchema.array(),LoincPanelHierarchyOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LoincPanelHierarchyOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincPanelHierarchyOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LoincPanelHierarchyWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29233,7 +29908,7 @@ export const LoincPanelHierarchyFindFirstOrThrowArgsSchema: z.ZodType<Prisma.Loi
 export const LoincPanelHierarchyFindManyArgsSchema: z.ZodType<Prisma.LoincPanelHierarchyFindManyArgs> = z.object({
   select: LoincPanelHierarchySelectSchema.optional(),
   where: LoincPanelHierarchyWhereInputSchema.optional(),
-  orderBy: z.union([ LoincPanelHierarchyOrderByWithRelationInputSchema.array(),LoincPanelHierarchyOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LoincPanelHierarchyOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincPanelHierarchyOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LoincPanelHierarchyWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29242,7 +29917,7 @@ export const LoincPanelHierarchyFindManyArgsSchema: z.ZodType<Prisma.LoincPanelH
 
 export const LoincPanelHierarchyAggregateArgsSchema: z.ZodType<Prisma.LoincPanelHierarchyAggregateArgs> = z.object({
   where: LoincPanelHierarchyWhereInputSchema.optional(),
-  orderBy: z.union([ LoincPanelHierarchyOrderByWithRelationInputSchema.array(),LoincPanelHierarchyOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LoincPanelHierarchyOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincPanelHierarchyOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LoincPanelHierarchyWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29270,7 +29945,7 @@ export const LoincPanelHierarchyFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.Lo
 export const LoincUniveralLabOrdersFindFirstArgsSchema: z.ZodType<Prisma.LoincUniveralLabOrdersFindFirstArgs> = z.object({
   select: LoincUniveralLabOrdersSelectSchema.optional(),
   where: LoincUniveralLabOrdersWhereInputSchema.optional(),
-  orderBy: z.union([ LoincUniveralLabOrdersOrderByWithRelationInputSchema.array(),LoincUniveralLabOrdersOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LoincUniveralLabOrdersOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincUniveralLabOrdersOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LoincUniveralLabOrdersWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29280,7 +29955,7 @@ export const LoincUniveralLabOrdersFindFirstArgsSchema: z.ZodType<Prisma.LoincUn
 export const LoincUniveralLabOrdersFindFirstOrThrowArgsSchema: z.ZodType<Prisma.LoincUniveralLabOrdersFindFirstOrThrowArgs> = z.object({
   select: LoincUniveralLabOrdersSelectSchema.optional(),
   where: LoincUniveralLabOrdersWhereInputSchema.optional(),
-  orderBy: z.union([ LoincUniveralLabOrdersOrderByWithRelationInputSchema.array(),LoincUniveralLabOrdersOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LoincUniveralLabOrdersOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincUniveralLabOrdersOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LoincUniveralLabOrdersWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29290,7 +29965,7 @@ export const LoincUniveralLabOrdersFindFirstOrThrowArgsSchema: z.ZodType<Prisma.
 export const LoincUniveralLabOrdersFindManyArgsSchema: z.ZodType<Prisma.LoincUniveralLabOrdersFindManyArgs> = z.object({
   select: LoincUniveralLabOrdersSelectSchema.optional(),
   where: LoincUniveralLabOrdersWhereInputSchema.optional(),
-  orderBy: z.union([ LoincUniveralLabOrdersOrderByWithRelationInputSchema.array(),LoincUniveralLabOrdersOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LoincUniveralLabOrdersOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincUniveralLabOrdersOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LoincUniveralLabOrdersWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29299,7 +29974,7 @@ export const LoincUniveralLabOrdersFindManyArgsSchema: z.ZodType<Prisma.LoincUni
 
 export const LoincUniveralLabOrdersAggregateArgsSchema: z.ZodType<Prisma.LoincUniveralLabOrdersAggregateArgs> = z.object({
   where: LoincUniveralLabOrdersWhereInputSchema.optional(),
-  orderBy: z.union([ LoincUniveralLabOrdersOrderByWithRelationInputSchema.array(),LoincUniveralLabOrdersOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ LoincUniveralLabOrdersOrderByWithRelationAndSearchRelevanceInputSchema.array(),LoincUniveralLabOrdersOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: LoincUniveralLabOrdersWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29328,7 +30003,7 @@ export const OrganizationFindFirstArgsSchema: z.ZodType<Prisma.OrganizationFindF
   select: OrganizationSelectSchema.optional(),
   include: OrganizationIncludeSchema.optional(),
   where: OrganizationWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationOrderByWithRelationInputSchema.array(),OrganizationOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ OrganizationOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: OrganizationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29339,7 +30014,7 @@ export const OrganizationFindFirstOrThrowArgsSchema: z.ZodType<Prisma.Organizati
   select: OrganizationSelectSchema.optional(),
   include: OrganizationIncludeSchema.optional(),
   where: OrganizationWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationOrderByWithRelationInputSchema.array(),OrganizationOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ OrganizationOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: OrganizationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29350,7 +30025,7 @@ export const OrganizationFindManyArgsSchema: z.ZodType<Prisma.OrganizationFindMa
   select: OrganizationSelectSchema.optional(),
   include: OrganizationIncludeSchema.optional(),
   where: OrganizationWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationOrderByWithRelationInputSchema.array(),OrganizationOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ OrganizationOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: OrganizationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29359,7 +30034,7 @@ export const OrganizationFindManyArgsSchema: z.ZodType<Prisma.OrganizationFindMa
 
 export const OrganizationAggregateArgsSchema: z.ZodType<Prisma.OrganizationAggregateArgs> = z.object({
   where: OrganizationWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationOrderByWithRelationInputSchema.array(),OrganizationOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ OrganizationOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: OrganizationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29389,7 +30064,7 @@ export const OrganizationFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.Organizat
 export const OrganizationEndpointFindFirstArgsSchema: z.ZodType<Prisma.OrganizationEndpointFindFirstArgs> = z.object({
   select: OrganizationEndpointSelectSchema.optional(),
   where: OrganizationEndpointWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationEndpointOrderByWithRelationInputSchema.array(),OrganizationEndpointOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ OrganizationEndpointOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationEndpointOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: OrganizationEndpointWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29399,7 +30074,7 @@ export const OrganizationEndpointFindFirstArgsSchema: z.ZodType<Prisma.Organizat
 export const OrganizationEndpointFindFirstOrThrowArgsSchema: z.ZodType<Prisma.OrganizationEndpointFindFirstOrThrowArgs> = z.object({
   select: OrganizationEndpointSelectSchema.optional(),
   where: OrganizationEndpointWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationEndpointOrderByWithRelationInputSchema.array(),OrganizationEndpointOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ OrganizationEndpointOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationEndpointOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: OrganizationEndpointWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29409,7 +30084,7 @@ export const OrganizationEndpointFindFirstOrThrowArgsSchema: z.ZodType<Prisma.Or
 export const OrganizationEndpointFindManyArgsSchema: z.ZodType<Prisma.OrganizationEndpointFindManyArgs> = z.object({
   select: OrganizationEndpointSelectSchema.optional(),
   where: OrganizationEndpointWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationEndpointOrderByWithRelationInputSchema.array(),OrganizationEndpointOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ OrganizationEndpointOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationEndpointOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: OrganizationEndpointWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29418,7 +30093,7 @@ export const OrganizationEndpointFindManyArgsSchema: z.ZodType<Prisma.Organizati
 
 export const OrganizationEndpointAggregateArgsSchema: z.ZodType<Prisma.OrganizationEndpointAggregateArgs> = z.object({
   where: OrganizationEndpointWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationEndpointOrderByWithRelationInputSchema.array(),OrganizationEndpointOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ OrganizationEndpointOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationEndpointOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: OrganizationEndpointWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29447,7 +30122,7 @@ export const OrganizationFavoriteTestFindFirstArgsSchema: z.ZodType<Prisma.Organ
   select: OrganizationFavoriteTestSelectSchema.optional(),
   include: OrganizationFavoriteTestIncludeSchema.optional(),
   where: OrganizationFavoriteTestWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationFavoriteTestOrderByWithRelationInputSchema.array(),OrganizationFavoriteTestOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ OrganizationFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: OrganizationFavoriteTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29458,7 +30133,7 @@ export const OrganizationFavoriteTestFindFirstOrThrowArgsSchema: z.ZodType<Prism
   select: OrganizationFavoriteTestSelectSchema.optional(),
   include: OrganizationFavoriteTestIncludeSchema.optional(),
   where: OrganizationFavoriteTestWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationFavoriteTestOrderByWithRelationInputSchema.array(),OrganizationFavoriteTestOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ OrganizationFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: OrganizationFavoriteTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29469,7 +30144,7 @@ export const OrganizationFavoriteTestFindManyArgsSchema: z.ZodType<Prisma.Organi
   select: OrganizationFavoriteTestSelectSchema.optional(),
   include: OrganizationFavoriteTestIncludeSchema.optional(),
   where: OrganizationFavoriteTestWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationFavoriteTestOrderByWithRelationInputSchema.array(),OrganizationFavoriteTestOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ OrganizationFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: OrganizationFavoriteTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29478,7 +30153,7 @@ export const OrganizationFavoriteTestFindManyArgsSchema: z.ZodType<Prisma.Organi
 
 export const OrganizationFavoriteTestAggregateArgsSchema: z.ZodType<Prisma.OrganizationFavoriteTestAggregateArgs> = z.object({
   where: OrganizationFavoriteTestWhereInputSchema.optional(),
-  orderBy: z.union([ OrganizationFavoriteTestOrderByWithRelationInputSchema.array(),OrganizationFavoriteTestOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ OrganizationFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),OrganizationFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: OrganizationFavoriteTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29509,7 +30184,7 @@ export const PatientFindFirstArgsSchema: z.ZodType<Prisma.PatientFindFirstArgs> 
   select: PatientSelectSchema.optional(),
   include: PatientIncludeSchema.optional(),
   where: PatientWhereInputSchema.optional(),
-  orderBy: z.union([ PatientOrderByWithRelationInputSchema.array(),PatientOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ PatientOrderByWithRelationAndSearchRelevanceInputSchema.array(),PatientOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: PatientWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29520,7 +30195,7 @@ export const PatientFindFirstOrThrowArgsSchema: z.ZodType<Prisma.PatientFindFirs
   select: PatientSelectSchema.optional(),
   include: PatientIncludeSchema.optional(),
   where: PatientWhereInputSchema.optional(),
-  orderBy: z.union([ PatientOrderByWithRelationInputSchema.array(),PatientOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ PatientOrderByWithRelationAndSearchRelevanceInputSchema.array(),PatientOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: PatientWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29531,7 +30206,7 @@ export const PatientFindManyArgsSchema: z.ZodType<Prisma.PatientFindManyArgs> = 
   select: PatientSelectSchema.optional(),
   include: PatientIncludeSchema.optional(),
   where: PatientWhereInputSchema.optional(),
-  orderBy: z.union([ PatientOrderByWithRelationInputSchema.array(),PatientOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ PatientOrderByWithRelationAndSearchRelevanceInputSchema.array(),PatientOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: PatientWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29540,7 +30215,7 @@ export const PatientFindManyArgsSchema: z.ZodType<Prisma.PatientFindManyArgs> = 
 
 export const PatientAggregateArgsSchema: z.ZodType<Prisma.PatientAggregateArgs> = z.object({
   where: PatientWhereInputSchema.optional(),
-  orderBy: z.union([ PatientOrderByWithRelationInputSchema.array(),PatientOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ PatientOrderByWithRelationAndSearchRelevanceInputSchema.array(),PatientOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: PatientWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29571,7 +30246,7 @@ export const PatientOrganizationFindFirstArgsSchema: z.ZodType<Prisma.PatientOrg
   select: PatientOrganizationSelectSchema.optional(),
   include: PatientOrganizationIncludeSchema.optional(),
   where: PatientOrganizationWhereInputSchema.optional(),
-  orderBy: z.union([ PatientOrganizationOrderByWithRelationInputSchema.array(),PatientOrganizationOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ PatientOrganizationOrderByWithRelationAndSearchRelevanceInputSchema.array(),PatientOrganizationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: PatientOrganizationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29582,7 +30257,7 @@ export const PatientOrganizationFindFirstOrThrowArgsSchema: z.ZodType<Prisma.Pat
   select: PatientOrganizationSelectSchema.optional(),
   include: PatientOrganizationIncludeSchema.optional(),
   where: PatientOrganizationWhereInputSchema.optional(),
-  orderBy: z.union([ PatientOrganizationOrderByWithRelationInputSchema.array(),PatientOrganizationOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ PatientOrganizationOrderByWithRelationAndSearchRelevanceInputSchema.array(),PatientOrganizationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: PatientOrganizationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29593,7 +30268,7 @@ export const PatientOrganizationFindManyArgsSchema: z.ZodType<Prisma.PatientOrga
   select: PatientOrganizationSelectSchema.optional(),
   include: PatientOrganizationIncludeSchema.optional(),
   where: PatientOrganizationWhereInputSchema.optional(),
-  orderBy: z.union([ PatientOrganizationOrderByWithRelationInputSchema.array(),PatientOrganizationOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ PatientOrganizationOrderByWithRelationAndSearchRelevanceInputSchema.array(),PatientOrganizationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: PatientOrganizationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29602,7 +30277,7 @@ export const PatientOrganizationFindManyArgsSchema: z.ZodType<Prisma.PatientOrga
 
 export const PatientOrganizationAggregateArgsSchema: z.ZodType<Prisma.PatientOrganizationAggregateArgs> = z.object({
   where: PatientOrganizationWhereInputSchema.optional(),
-  orderBy: z.union([ PatientOrganizationOrderByWithRelationInputSchema.array(),PatientOrganizationOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ PatientOrganizationOrderByWithRelationAndSearchRelevanceInputSchema.array(),PatientOrganizationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: PatientOrganizationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29632,7 +30307,7 @@ export const PatientOrganizationFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.Pa
 export const PostFindFirstArgsSchema: z.ZodType<Prisma.PostFindFirstArgs> = z.object({
   select: PostSelectSchema.optional(),
   where: PostWhereInputSchema.optional(),
-  orderBy: z.union([ PostOrderByWithRelationInputSchema.array(),PostOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ PostOrderByWithRelationAndSearchRelevanceInputSchema.array(),PostOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: PostWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29642,7 +30317,7 @@ export const PostFindFirstArgsSchema: z.ZodType<Prisma.PostFindFirstArgs> = z.ob
 export const PostFindFirstOrThrowArgsSchema: z.ZodType<Prisma.PostFindFirstOrThrowArgs> = z.object({
   select: PostSelectSchema.optional(),
   where: PostWhereInputSchema.optional(),
-  orderBy: z.union([ PostOrderByWithRelationInputSchema.array(),PostOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ PostOrderByWithRelationAndSearchRelevanceInputSchema.array(),PostOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: PostWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29652,7 +30327,7 @@ export const PostFindFirstOrThrowArgsSchema: z.ZodType<Prisma.PostFindFirstOrThr
 export const PostFindManyArgsSchema: z.ZodType<Prisma.PostFindManyArgs> = z.object({
   select: PostSelectSchema.optional(),
   where: PostWhereInputSchema.optional(),
-  orderBy: z.union([ PostOrderByWithRelationInputSchema.array(),PostOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ PostOrderByWithRelationAndSearchRelevanceInputSchema.array(),PostOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: PostWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29661,7 +30336,7 @@ export const PostFindManyArgsSchema: z.ZodType<Prisma.PostFindManyArgs> = z.obje
 
 export const PostAggregateArgsSchema: z.ZodType<Prisma.PostAggregateArgs> = z.object({
   where: PostWhereInputSchema.optional(),
-  orderBy: z.union([ PostOrderByWithRelationInputSchema.array(),PostOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ PostOrderByWithRelationAndSearchRelevanceInputSchema.array(),PostOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: PostWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29690,7 +30365,7 @@ export const ProviderFindFirstArgsSchema: z.ZodType<Prisma.ProviderFindFirstArgs
   select: ProviderSelectSchema.optional(),
   include: ProviderIncludeSchema.optional(),
   where: ProviderWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderOrderByWithRelationInputSchema.array(),ProviderOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ ProviderOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ProviderWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29701,7 +30376,7 @@ export const ProviderFindFirstOrThrowArgsSchema: z.ZodType<Prisma.ProviderFindFi
   select: ProviderSelectSchema.optional(),
   include: ProviderIncludeSchema.optional(),
   where: ProviderWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderOrderByWithRelationInputSchema.array(),ProviderOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ ProviderOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ProviderWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29712,7 +30387,7 @@ export const ProviderFindManyArgsSchema: z.ZodType<Prisma.ProviderFindManyArgs> 
   select: ProviderSelectSchema.optional(),
   include: ProviderIncludeSchema.optional(),
   where: ProviderWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderOrderByWithRelationInputSchema.array(),ProviderOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ ProviderOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ProviderWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29721,7 +30396,7 @@ export const ProviderFindManyArgsSchema: z.ZodType<Prisma.ProviderFindManyArgs> 
 
 export const ProviderAggregateArgsSchema: z.ZodType<Prisma.ProviderAggregateArgs> = z.object({
   where: ProviderWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderOrderByWithRelationInputSchema.array(),ProviderOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ ProviderOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ProviderWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29752,7 +30427,7 @@ export const ProviderEducationFindFirstArgsSchema: z.ZodType<Prisma.ProviderEduc
   select: ProviderEducationSelectSchema.optional(),
   include: ProviderEducationIncludeSchema.optional(),
   where: ProviderEducationWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderEducationOrderByWithRelationInputSchema.array(),ProviderEducationOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ ProviderEducationOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderEducationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ProviderEducationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29763,7 +30438,7 @@ export const ProviderEducationFindFirstOrThrowArgsSchema: z.ZodType<Prisma.Provi
   select: ProviderEducationSelectSchema.optional(),
   include: ProviderEducationIncludeSchema.optional(),
   where: ProviderEducationWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderEducationOrderByWithRelationInputSchema.array(),ProviderEducationOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ ProviderEducationOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderEducationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ProviderEducationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29774,7 +30449,7 @@ export const ProviderEducationFindManyArgsSchema: z.ZodType<Prisma.ProviderEduca
   select: ProviderEducationSelectSchema.optional(),
   include: ProviderEducationIncludeSchema.optional(),
   where: ProviderEducationWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderEducationOrderByWithRelationInputSchema.array(),ProviderEducationOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ ProviderEducationOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderEducationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ProviderEducationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29783,7 +30458,7 @@ export const ProviderEducationFindManyArgsSchema: z.ZodType<Prisma.ProviderEduca
 
 export const ProviderEducationAggregateArgsSchema: z.ZodType<Prisma.ProviderEducationAggregateArgs> = z.object({
   where: ProviderEducationWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderEducationOrderByWithRelationInputSchema.array(),ProviderEducationOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ ProviderEducationOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderEducationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ProviderEducationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29814,7 +30489,7 @@ export const ProviderFavoriteTestFindFirstArgsSchema: z.ZodType<Prisma.ProviderF
   select: ProviderFavoriteTestSelectSchema.optional(),
   include: ProviderFavoriteTestIncludeSchema.optional(),
   where: ProviderFavoriteTestWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderFavoriteTestOrderByWithRelationInputSchema.array(),ProviderFavoriteTestOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ ProviderFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ProviderFavoriteTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29825,7 +30500,7 @@ export const ProviderFavoriteTestFindFirstOrThrowArgsSchema: z.ZodType<Prisma.Pr
   select: ProviderFavoriteTestSelectSchema.optional(),
   include: ProviderFavoriteTestIncludeSchema.optional(),
   where: ProviderFavoriteTestWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderFavoriteTestOrderByWithRelationInputSchema.array(),ProviderFavoriteTestOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ ProviderFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ProviderFavoriteTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29836,7 +30511,7 @@ export const ProviderFavoriteTestFindManyArgsSchema: z.ZodType<Prisma.ProviderFa
   select: ProviderFavoriteTestSelectSchema.optional(),
   include: ProviderFavoriteTestIncludeSchema.optional(),
   where: ProviderFavoriteTestWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderFavoriteTestOrderByWithRelationInputSchema.array(),ProviderFavoriteTestOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ ProviderFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ProviderFavoriteTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29845,7 +30520,7 @@ export const ProviderFavoriteTestFindManyArgsSchema: z.ZodType<Prisma.ProviderFa
 
 export const ProviderFavoriteTestAggregateArgsSchema: z.ZodType<Prisma.ProviderFavoriteTestAggregateArgs> = z.object({
   where: ProviderFavoriteTestWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderFavoriteTestOrderByWithRelationInputSchema.array(),ProviderFavoriteTestOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ ProviderFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderFavoriteTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ProviderFavoriteTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29876,7 +30551,7 @@ export const ProviderOrganizationFindFirstArgsSchema: z.ZodType<Prisma.ProviderO
   select: ProviderOrganizationSelectSchema.optional(),
   include: ProviderOrganizationIncludeSchema.optional(),
   where: ProviderOrganizationWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderOrganizationOrderByWithRelationInputSchema.array(),ProviderOrganizationOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ ProviderOrganizationOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderOrganizationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ProviderOrganizationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29887,7 +30562,7 @@ export const ProviderOrganizationFindFirstOrThrowArgsSchema: z.ZodType<Prisma.Pr
   select: ProviderOrganizationSelectSchema.optional(),
   include: ProviderOrganizationIncludeSchema.optional(),
   where: ProviderOrganizationWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderOrganizationOrderByWithRelationInputSchema.array(),ProviderOrganizationOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ ProviderOrganizationOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderOrganizationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ProviderOrganizationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29898,7 +30573,7 @@ export const ProviderOrganizationFindManyArgsSchema: z.ZodType<Prisma.ProviderOr
   select: ProviderOrganizationSelectSchema.optional(),
   include: ProviderOrganizationIncludeSchema.optional(),
   where: ProviderOrganizationWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderOrganizationOrderByWithRelationInputSchema.array(),ProviderOrganizationOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ ProviderOrganizationOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderOrganizationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ProviderOrganizationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29907,7 +30582,7 @@ export const ProviderOrganizationFindManyArgsSchema: z.ZodType<Prisma.ProviderOr
 
 export const ProviderOrganizationAggregateArgsSchema: z.ZodType<Prisma.ProviderOrganizationAggregateArgs> = z.object({
   where: ProviderOrganizationWhereInputSchema.optional(),
-  orderBy: z.union([ ProviderOrganizationOrderByWithRelationInputSchema.array(),ProviderOrganizationOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ ProviderOrganizationOrderByWithRelationAndSearchRelevanceInputSchema.array(),ProviderOrganizationOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: ProviderOrganizationWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29938,7 +30613,7 @@ export const SessionFindFirstArgsSchema: z.ZodType<Prisma.SessionFindFirstArgs> 
   select: SessionSelectSchema.optional(),
   include: SessionIncludeSchema.optional(),
   where: SessionWhereInputSchema.optional(),
-  orderBy: z.union([ SessionOrderByWithRelationInputSchema.array(),SessionOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ SessionOrderByWithRelationAndSearchRelevanceInputSchema.array(),SessionOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: SessionWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29949,7 +30624,7 @@ export const SessionFindFirstOrThrowArgsSchema: z.ZodType<Prisma.SessionFindFirs
   select: SessionSelectSchema.optional(),
   include: SessionIncludeSchema.optional(),
   where: SessionWhereInputSchema.optional(),
-  orderBy: z.union([ SessionOrderByWithRelationInputSchema.array(),SessionOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ SessionOrderByWithRelationAndSearchRelevanceInputSchema.array(),SessionOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: SessionWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29960,7 +30635,7 @@ export const SessionFindManyArgsSchema: z.ZodType<Prisma.SessionFindManyArgs> = 
   select: SessionSelectSchema.optional(),
   include: SessionIncludeSchema.optional(),
   where: SessionWhereInputSchema.optional(),
-  orderBy: z.union([ SessionOrderByWithRelationInputSchema.array(),SessionOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ SessionOrderByWithRelationAndSearchRelevanceInputSchema.array(),SessionOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: SessionWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -29969,7 +30644,7 @@ export const SessionFindManyArgsSchema: z.ZodType<Prisma.SessionFindManyArgs> = 
 
 export const SessionAggregateArgsSchema: z.ZodType<Prisma.SessionAggregateArgs> = z.object({
   where: SessionWhereInputSchema.optional(),
-  orderBy: z.union([ SessionOrderByWithRelationInputSchema.array(),SessionOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ SessionOrderByWithRelationAndSearchRelevanceInputSchema.array(),SessionOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: SessionWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30000,7 +30675,7 @@ export const SponsorFindFirstArgsSchema: z.ZodType<Prisma.SponsorFindFirstArgs> 
   select: SponsorSelectSchema.optional(),
   include: SponsorIncludeSchema.optional(),
   where: SponsorWhereInputSchema.optional(),
-  orderBy: z.union([ SponsorOrderByWithRelationInputSchema.array(),SponsorOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ SponsorOrderByWithRelationAndSearchRelevanceInputSchema.array(),SponsorOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: SponsorWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30011,7 +30686,7 @@ export const SponsorFindFirstOrThrowArgsSchema: z.ZodType<Prisma.SponsorFindFirs
   select: SponsorSelectSchema.optional(),
   include: SponsorIncludeSchema.optional(),
   where: SponsorWhereInputSchema.optional(),
-  orderBy: z.union([ SponsorOrderByWithRelationInputSchema.array(),SponsorOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ SponsorOrderByWithRelationAndSearchRelevanceInputSchema.array(),SponsorOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: SponsorWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30022,7 +30697,7 @@ export const SponsorFindManyArgsSchema: z.ZodType<Prisma.SponsorFindManyArgs> = 
   select: SponsorSelectSchema.optional(),
   include: SponsorIncludeSchema.optional(),
   where: SponsorWhereInputSchema.optional(),
-  orderBy: z.union([ SponsorOrderByWithRelationInputSchema.array(),SponsorOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ SponsorOrderByWithRelationAndSearchRelevanceInputSchema.array(),SponsorOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: SponsorWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30031,7 +30706,7 @@ export const SponsorFindManyArgsSchema: z.ZodType<Prisma.SponsorFindManyArgs> = 
 
 export const SponsorAggregateArgsSchema: z.ZodType<Prisma.SponsorAggregateArgs> = z.object({
   where: SponsorWhereInputSchema.optional(),
-  orderBy: z.union([ SponsorOrderByWithRelationInputSchema.array(),SponsorOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ SponsorOrderByWithRelationAndSearchRelevanceInputSchema.array(),SponsorOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: SponsorWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30062,7 +30737,7 @@ export const SponsoredProgramFindFirstArgsSchema: z.ZodType<Prisma.SponsoredProg
   select: SponsoredProgramSelectSchema.optional(),
   include: SponsoredProgramIncludeSchema.optional(),
   where: SponsoredProgramWhereInputSchema.optional(),
-  orderBy: z.union([ SponsoredProgramOrderByWithRelationInputSchema.array(),SponsoredProgramOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ SponsoredProgramOrderByWithRelationAndSearchRelevanceInputSchema.array(),SponsoredProgramOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: SponsoredProgramWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30073,7 +30748,7 @@ export const SponsoredProgramFindFirstOrThrowArgsSchema: z.ZodType<Prisma.Sponso
   select: SponsoredProgramSelectSchema.optional(),
   include: SponsoredProgramIncludeSchema.optional(),
   where: SponsoredProgramWhereInputSchema.optional(),
-  orderBy: z.union([ SponsoredProgramOrderByWithRelationInputSchema.array(),SponsoredProgramOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ SponsoredProgramOrderByWithRelationAndSearchRelevanceInputSchema.array(),SponsoredProgramOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: SponsoredProgramWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30084,7 +30759,7 @@ export const SponsoredProgramFindManyArgsSchema: z.ZodType<Prisma.SponsoredProgr
   select: SponsoredProgramSelectSchema.optional(),
   include: SponsoredProgramIncludeSchema.optional(),
   where: SponsoredProgramWhereInputSchema.optional(),
-  orderBy: z.union([ SponsoredProgramOrderByWithRelationInputSchema.array(),SponsoredProgramOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ SponsoredProgramOrderByWithRelationAndSearchRelevanceInputSchema.array(),SponsoredProgramOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: SponsoredProgramWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30093,7 +30768,7 @@ export const SponsoredProgramFindManyArgsSchema: z.ZodType<Prisma.SponsoredProgr
 
 export const SponsoredProgramAggregateArgsSchema: z.ZodType<Prisma.SponsoredProgramAggregateArgs> = z.object({
   where: SponsoredProgramWhereInputSchema.optional(),
-  orderBy: z.union([ SponsoredProgramOrderByWithRelationInputSchema.array(),SponsoredProgramOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ SponsoredProgramOrderByWithRelationAndSearchRelevanceInputSchema.array(),SponsoredProgramOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: SponsoredProgramWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30124,7 +30799,7 @@ export const SponsoredTestFindFirstArgsSchema: z.ZodType<Prisma.SponsoredTestFin
   select: SponsoredTestSelectSchema.optional(),
   include: SponsoredTestIncludeSchema.optional(),
   where: SponsoredTestWhereInputSchema.optional(),
-  orderBy: z.union([ SponsoredTestOrderByWithRelationInputSchema.array(),SponsoredTestOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ SponsoredTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),SponsoredTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: SponsoredTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30135,7 +30810,7 @@ export const SponsoredTestFindFirstOrThrowArgsSchema: z.ZodType<Prisma.Sponsored
   select: SponsoredTestSelectSchema.optional(),
   include: SponsoredTestIncludeSchema.optional(),
   where: SponsoredTestWhereInputSchema.optional(),
-  orderBy: z.union([ SponsoredTestOrderByWithRelationInputSchema.array(),SponsoredTestOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ SponsoredTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),SponsoredTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: SponsoredTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30146,7 +30821,7 @@ export const SponsoredTestFindManyArgsSchema: z.ZodType<Prisma.SponsoredTestFind
   select: SponsoredTestSelectSchema.optional(),
   include: SponsoredTestIncludeSchema.optional(),
   where: SponsoredTestWhereInputSchema.optional(),
-  orderBy: z.union([ SponsoredTestOrderByWithRelationInputSchema.array(),SponsoredTestOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ SponsoredTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),SponsoredTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: SponsoredTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30155,7 +30830,7 @@ export const SponsoredTestFindManyArgsSchema: z.ZodType<Prisma.SponsoredTestFind
 
 export const SponsoredTestAggregateArgsSchema: z.ZodType<Prisma.SponsoredTestAggregateArgs> = z.object({
   where: SponsoredTestWhereInputSchema.optional(),
-  orderBy: z.union([ SponsoredTestOrderByWithRelationInputSchema.array(),SponsoredTestOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ SponsoredTestOrderByWithRelationAndSearchRelevanceInputSchema.array(),SponsoredTestOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: SponsoredTestWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30186,7 +30861,7 @@ export const TestBiomarkerFindFirstArgsSchema: z.ZodType<Prisma.TestBiomarkerFin
   select: TestBiomarkerSelectSchema.optional(),
   include: TestBiomarkerIncludeSchema.optional(),
   where: TestBiomarkerWhereInputSchema.optional(),
-  orderBy: z.union([ TestBiomarkerOrderByWithRelationInputSchema.array(),TestBiomarkerOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestBiomarkerOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestBiomarkerOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestBiomarkerWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30197,7 +30872,7 @@ export const TestBiomarkerFindFirstOrThrowArgsSchema: z.ZodType<Prisma.TestBioma
   select: TestBiomarkerSelectSchema.optional(),
   include: TestBiomarkerIncludeSchema.optional(),
   where: TestBiomarkerWhereInputSchema.optional(),
-  orderBy: z.union([ TestBiomarkerOrderByWithRelationInputSchema.array(),TestBiomarkerOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestBiomarkerOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestBiomarkerOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestBiomarkerWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30208,7 +30883,7 @@ export const TestBiomarkerFindManyArgsSchema: z.ZodType<Prisma.TestBiomarkerFind
   select: TestBiomarkerSelectSchema.optional(),
   include: TestBiomarkerIncludeSchema.optional(),
   where: TestBiomarkerWhereInputSchema.optional(),
-  orderBy: z.union([ TestBiomarkerOrderByWithRelationInputSchema.array(),TestBiomarkerOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestBiomarkerOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestBiomarkerOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestBiomarkerWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30217,7 +30892,7 @@ export const TestBiomarkerFindManyArgsSchema: z.ZodType<Prisma.TestBiomarkerFind
 
 export const TestBiomarkerAggregateArgsSchema: z.ZodType<Prisma.TestBiomarkerAggregateArgs> = z.object({
   where: TestBiomarkerWhereInputSchema.optional(),
-  orderBy: z.union([ TestBiomarkerOrderByWithRelationInputSchema.array(),TestBiomarkerOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestBiomarkerOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestBiomarkerOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestBiomarkerWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30248,7 +30923,7 @@ export const TestCatalogFindFirstArgsSchema: z.ZodType<Prisma.TestCatalogFindFir
   select: TestCatalogSelectSchema.optional(),
   include: TestCatalogIncludeSchema.optional(),
   where: TestCatalogWhereInputSchema.optional(),
-  orderBy: z.union([ TestCatalogOrderByWithRelationInputSchema.array(),TestCatalogOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestCatalogWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30259,7 +30934,7 @@ export const TestCatalogFindFirstOrThrowArgsSchema: z.ZodType<Prisma.TestCatalog
   select: TestCatalogSelectSchema.optional(),
   include: TestCatalogIncludeSchema.optional(),
   where: TestCatalogWhereInputSchema.optional(),
-  orderBy: z.union([ TestCatalogOrderByWithRelationInputSchema.array(),TestCatalogOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestCatalogWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30270,7 +30945,7 @@ export const TestCatalogFindManyArgsSchema: z.ZodType<Prisma.TestCatalogFindMany
   select: TestCatalogSelectSchema.optional(),
   include: TestCatalogIncludeSchema.optional(),
   where: TestCatalogWhereInputSchema.optional(),
-  orderBy: z.union([ TestCatalogOrderByWithRelationInputSchema.array(),TestCatalogOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestCatalogWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30279,7 +30954,7 @@ export const TestCatalogFindManyArgsSchema: z.ZodType<Prisma.TestCatalogFindMany
 
 export const TestCatalogAggregateArgsSchema: z.ZodType<Prisma.TestCatalogAggregateArgs> = z.object({
   where: TestCatalogWhereInputSchema.optional(),
-  orderBy: z.union([ TestCatalogOrderByWithRelationInputSchema.array(),TestCatalogOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestCatalogOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestCatalogWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30310,7 +30985,7 @@ export const TestCptCodeFindFirstArgsSchema: z.ZodType<Prisma.TestCptCodeFindFir
   select: TestCptCodeSelectSchema.optional(),
   include: TestCptCodeIncludeSchema.optional(),
   where: TestCptCodeWhereInputSchema.optional(),
-  orderBy: z.union([ TestCptCodeOrderByWithRelationInputSchema.array(),TestCptCodeOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestCptCodeOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestCptCodeOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestCptCodeWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30321,7 +30996,7 @@ export const TestCptCodeFindFirstOrThrowArgsSchema: z.ZodType<Prisma.TestCptCode
   select: TestCptCodeSelectSchema.optional(),
   include: TestCptCodeIncludeSchema.optional(),
   where: TestCptCodeWhereInputSchema.optional(),
-  orderBy: z.union([ TestCptCodeOrderByWithRelationInputSchema.array(),TestCptCodeOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestCptCodeOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestCptCodeOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestCptCodeWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30332,7 +31007,7 @@ export const TestCptCodeFindManyArgsSchema: z.ZodType<Prisma.TestCptCodeFindMany
   select: TestCptCodeSelectSchema.optional(),
   include: TestCptCodeIncludeSchema.optional(),
   where: TestCptCodeWhereInputSchema.optional(),
-  orderBy: z.union([ TestCptCodeOrderByWithRelationInputSchema.array(),TestCptCodeOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestCptCodeOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestCptCodeOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestCptCodeWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30341,7 +31016,7 @@ export const TestCptCodeFindManyArgsSchema: z.ZodType<Prisma.TestCptCodeFindMany
 
 export const TestCptCodeAggregateArgsSchema: z.ZodType<Prisma.TestCptCodeAggregateArgs> = z.object({
   where: TestCptCodeWhereInputSchema.optional(),
-  orderBy: z.union([ TestCptCodeOrderByWithRelationInputSchema.array(),TestCptCodeOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestCptCodeOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestCptCodeOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestCptCodeWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30372,7 +31047,7 @@ export const TestGeneFindFirstArgsSchema: z.ZodType<Prisma.TestGeneFindFirstArgs
   select: TestGeneSelectSchema.optional(),
   include: TestGeneIncludeSchema.optional(),
   where: TestGeneWhereInputSchema.optional(),
-  orderBy: z.union([ TestGeneOrderByWithRelationInputSchema.array(),TestGeneOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestGeneOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestGeneOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestGeneWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30383,7 +31058,7 @@ export const TestGeneFindFirstOrThrowArgsSchema: z.ZodType<Prisma.TestGeneFindFi
   select: TestGeneSelectSchema.optional(),
   include: TestGeneIncludeSchema.optional(),
   where: TestGeneWhereInputSchema.optional(),
-  orderBy: z.union([ TestGeneOrderByWithRelationInputSchema.array(),TestGeneOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestGeneOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestGeneOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestGeneWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30394,7 +31069,7 @@ export const TestGeneFindManyArgsSchema: z.ZodType<Prisma.TestGeneFindManyArgs> 
   select: TestGeneSelectSchema.optional(),
   include: TestGeneIncludeSchema.optional(),
   where: TestGeneWhereInputSchema.optional(),
-  orderBy: z.union([ TestGeneOrderByWithRelationInputSchema.array(),TestGeneOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestGeneOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestGeneOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestGeneWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30403,7 +31078,7 @@ export const TestGeneFindManyArgsSchema: z.ZodType<Prisma.TestGeneFindManyArgs> 
 
 export const TestGeneAggregateArgsSchema: z.ZodType<Prisma.TestGeneAggregateArgs> = z.object({
   where: TestGeneWhereInputSchema.optional(),
-  orderBy: z.union([ TestGeneOrderByWithRelationInputSchema.array(),TestGeneOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestGeneOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestGeneOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestGeneWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30434,7 +31109,7 @@ export const TestOrderLoincFindFirstArgsSchema: z.ZodType<Prisma.TestOrderLoincF
   select: TestOrderLoincSelectSchema.optional(),
   include: TestOrderLoincIncludeSchema.optional(),
   where: TestOrderLoincWhereInputSchema.optional(),
-  orderBy: z.union([ TestOrderLoincOrderByWithRelationInputSchema.array(),TestOrderLoincOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestOrderLoincOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestOrderLoincOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestOrderLoincWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30445,7 +31120,7 @@ export const TestOrderLoincFindFirstOrThrowArgsSchema: z.ZodType<Prisma.TestOrde
   select: TestOrderLoincSelectSchema.optional(),
   include: TestOrderLoincIncludeSchema.optional(),
   where: TestOrderLoincWhereInputSchema.optional(),
-  orderBy: z.union([ TestOrderLoincOrderByWithRelationInputSchema.array(),TestOrderLoincOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestOrderLoincOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestOrderLoincOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestOrderLoincWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30456,7 +31131,7 @@ export const TestOrderLoincFindManyArgsSchema: z.ZodType<Prisma.TestOrderLoincFi
   select: TestOrderLoincSelectSchema.optional(),
   include: TestOrderLoincIncludeSchema.optional(),
   where: TestOrderLoincWhereInputSchema.optional(),
-  orderBy: z.union([ TestOrderLoincOrderByWithRelationInputSchema.array(),TestOrderLoincOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestOrderLoincOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestOrderLoincOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestOrderLoincWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30465,7 +31140,7 @@ export const TestOrderLoincFindManyArgsSchema: z.ZodType<Prisma.TestOrderLoincFi
 
 export const TestOrderLoincAggregateArgsSchema: z.ZodType<Prisma.TestOrderLoincAggregateArgs> = z.object({
   where: TestOrderLoincWhereInputSchema.optional(),
-  orderBy: z.union([ TestOrderLoincOrderByWithRelationInputSchema.array(),TestOrderLoincOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestOrderLoincOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestOrderLoincOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestOrderLoincWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30496,7 +31171,7 @@ export const TestResultLoincFindFirstArgsSchema: z.ZodType<Prisma.TestResultLoin
   select: TestResultLoincSelectSchema.optional(),
   include: TestResultLoincIncludeSchema.optional(),
   where: TestResultLoincWhereInputSchema.optional(),
-  orderBy: z.union([ TestResultLoincOrderByWithRelationInputSchema.array(),TestResultLoincOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestResultLoincOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestResultLoincOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestResultLoincWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30507,7 +31182,7 @@ export const TestResultLoincFindFirstOrThrowArgsSchema: z.ZodType<Prisma.TestRes
   select: TestResultLoincSelectSchema.optional(),
   include: TestResultLoincIncludeSchema.optional(),
   where: TestResultLoincWhereInputSchema.optional(),
-  orderBy: z.union([ TestResultLoincOrderByWithRelationInputSchema.array(),TestResultLoincOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestResultLoincOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestResultLoincOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestResultLoincWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30518,7 +31193,7 @@ export const TestResultLoincFindManyArgsSchema: z.ZodType<Prisma.TestResultLoinc
   select: TestResultLoincSelectSchema.optional(),
   include: TestResultLoincIncludeSchema.optional(),
   where: TestResultLoincWhereInputSchema.optional(),
-  orderBy: z.union([ TestResultLoincOrderByWithRelationInputSchema.array(),TestResultLoincOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestResultLoincOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestResultLoincOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestResultLoincWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30527,7 +31202,7 @@ export const TestResultLoincFindManyArgsSchema: z.ZodType<Prisma.TestResultLoinc
 
 export const TestResultLoincAggregateArgsSchema: z.ZodType<Prisma.TestResultLoincAggregateArgs> = z.object({
   where: TestResultLoincWhereInputSchema.optional(),
-  orderBy: z.union([ TestResultLoincOrderByWithRelationInputSchema.array(),TestResultLoincOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ TestResultLoincOrderByWithRelationAndSearchRelevanceInputSchema.array(),TestResultLoincOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: TestResultLoincWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30558,7 +31233,7 @@ export const UserFindFirstArgsSchema: z.ZodType<Prisma.UserFindFirstArgs> = z.ob
   select: UserSelectSchema.optional(),
   include: UserIncludeSchema.optional(),
   where: UserWhereInputSchema.optional(),
-  orderBy: z.union([ UserOrderByWithRelationInputSchema.array(),UserOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ UserOrderByWithRelationAndSearchRelevanceInputSchema.array(),UserOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: UserWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30569,7 +31244,7 @@ export const UserFindFirstOrThrowArgsSchema: z.ZodType<Prisma.UserFindFirstOrThr
   select: UserSelectSchema.optional(),
   include: UserIncludeSchema.optional(),
   where: UserWhereInputSchema.optional(),
-  orderBy: z.union([ UserOrderByWithRelationInputSchema.array(),UserOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ UserOrderByWithRelationAndSearchRelevanceInputSchema.array(),UserOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: UserWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30580,7 +31255,7 @@ export const UserFindManyArgsSchema: z.ZodType<Prisma.UserFindManyArgs> = z.obje
   select: UserSelectSchema.optional(),
   include: UserIncludeSchema.optional(),
   where: UserWhereInputSchema.optional(),
-  orderBy: z.union([ UserOrderByWithRelationInputSchema.array(),UserOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ UserOrderByWithRelationAndSearchRelevanceInputSchema.array(),UserOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: UserWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30589,7 +31264,7 @@ export const UserFindManyArgsSchema: z.ZodType<Prisma.UserFindManyArgs> = z.obje
 
 export const UserAggregateArgsSchema: z.ZodType<Prisma.UserAggregateArgs> = z.object({
   where: UserWhereInputSchema.optional(),
-  orderBy: z.union([ UserOrderByWithRelationInputSchema.array(),UserOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ UserOrderByWithRelationAndSearchRelevanceInputSchema.array(),UserOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: UserWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30620,7 +31295,7 @@ export const UserAttributeFindFirstArgsSchema: z.ZodType<Prisma.UserAttributeFin
   select: UserAttributeSelectSchema.optional(),
   include: UserAttributeIncludeSchema.optional(),
   where: UserAttributeWhereInputSchema.optional(),
-  orderBy: z.union([ UserAttributeOrderByWithRelationInputSchema.array(),UserAttributeOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema.array(),UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: UserAttributeWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30631,7 +31306,7 @@ export const UserAttributeFindFirstOrThrowArgsSchema: z.ZodType<Prisma.UserAttri
   select: UserAttributeSelectSchema.optional(),
   include: UserAttributeIncludeSchema.optional(),
   where: UserAttributeWhereInputSchema.optional(),
-  orderBy: z.union([ UserAttributeOrderByWithRelationInputSchema.array(),UserAttributeOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema.array(),UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: UserAttributeWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30642,7 +31317,7 @@ export const UserAttributeFindManyArgsSchema: z.ZodType<Prisma.UserAttributeFind
   select: UserAttributeSelectSchema.optional(),
   include: UserAttributeIncludeSchema.optional(),
   where: UserAttributeWhereInputSchema.optional(),
-  orderBy: z.union([ UserAttributeOrderByWithRelationInputSchema.array(),UserAttributeOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema.array(),UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: UserAttributeWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30651,7 +31326,7 @@ export const UserAttributeFindManyArgsSchema: z.ZodType<Prisma.UserAttributeFind
 
 export const UserAttributeAggregateArgsSchema: z.ZodType<Prisma.UserAttributeAggregateArgs> = z.object({
   where: UserAttributeWhereInputSchema.optional(),
-  orderBy: z.union([ UserAttributeOrderByWithRelationInputSchema.array(),UserAttributeOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema.array(),UserAttributeOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: UserAttributeWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30681,7 +31356,7 @@ export const UserAttributeFindUniqueOrThrowArgsSchema: z.ZodType<Prisma.UserAttr
 export const VerificationTokenFindFirstArgsSchema: z.ZodType<Prisma.VerificationTokenFindFirstArgs> = z.object({
   select: VerificationTokenSelectSchema.optional(),
   where: VerificationTokenWhereInputSchema.optional(),
-  orderBy: z.union([ VerificationTokenOrderByWithRelationInputSchema.array(),VerificationTokenOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ VerificationTokenOrderByWithRelationAndSearchRelevanceInputSchema.array(),VerificationTokenOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: VerificationTokenWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30691,7 +31366,7 @@ export const VerificationTokenFindFirstArgsSchema: z.ZodType<Prisma.Verification
 export const VerificationTokenFindFirstOrThrowArgsSchema: z.ZodType<Prisma.VerificationTokenFindFirstOrThrowArgs> = z.object({
   select: VerificationTokenSelectSchema.optional(),
   where: VerificationTokenWhereInputSchema.optional(),
-  orderBy: z.union([ VerificationTokenOrderByWithRelationInputSchema.array(),VerificationTokenOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ VerificationTokenOrderByWithRelationAndSearchRelevanceInputSchema.array(),VerificationTokenOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: VerificationTokenWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30701,7 +31376,7 @@ export const VerificationTokenFindFirstOrThrowArgsSchema: z.ZodType<Prisma.Verif
 export const VerificationTokenFindManyArgsSchema: z.ZodType<Prisma.VerificationTokenFindManyArgs> = z.object({
   select: VerificationTokenSelectSchema.optional(),
   where: VerificationTokenWhereInputSchema.optional(),
-  orderBy: z.union([ VerificationTokenOrderByWithRelationInputSchema.array(),VerificationTokenOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ VerificationTokenOrderByWithRelationAndSearchRelevanceInputSchema.array(),VerificationTokenOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: VerificationTokenWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -30710,7 +31385,7 @@ export const VerificationTokenFindManyArgsSchema: z.ZodType<Prisma.VerificationT
 
 export const VerificationTokenAggregateArgsSchema: z.ZodType<Prisma.VerificationTokenAggregateArgs> = z.object({
   where: VerificationTokenWhereInputSchema.optional(),
-  orderBy: z.union([ VerificationTokenOrderByWithRelationInputSchema.array(),VerificationTokenOrderByWithRelationInputSchema ]).optional(),
+  orderBy: z.union([ VerificationTokenOrderByWithRelationAndSearchRelevanceInputSchema.array(),VerificationTokenOrderByWithRelationAndSearchRelevanceInputSchema ]).optional(),
   cursor: VerificationTokenWhereUniqueInputSchema.optional(),
   take: z.number().optional(),
   skip: z.number().optional(),
@@ -31422,6 +32097,47 @@ export const LabOrderTestUpdateManyArgsSchema: z.ZodType<Prisma.LabOrderTestUpda
 
 export const LabOrderTestDeleteManyArgsSchema: z.ZodType<Prisma.LabOrderTestDeleteManyArgs> = z.object({
   where: LabOrderTestWhereInputSchema.optional(),
+}).strict() ;
+
+export const LabResultsCreateArgsSchema: z.ZodType<Prisma.LabResultsCreateArgs> = z.object({
+  select: LabResultsSelectSchema.optional(),
+  include: LabResultsIncludeSchema.optional(),
+  data: z.union([ LabResultsCreateInputSchema,LabResultsUncheckedCreateInputSchema ]).optional(),
+}).strict() ;
+
+export const LabResultsUpsertArgsSchema: z.ZodType<Prisma.LabResultsUpsertArgs> = z.object({
+  select: LabResultsSelectSchema.optional(),
+  include: LabResultsIncludeSchema.optional(),
+  where: LabResultsWhereUniqueInputSchema,
+  create: z.union([ LabResultsCreateInputSchema,LabResultsUncheckedCreateInputSchema ]),
+  update: z.union([ LabResultsUpdateInputSchema,LabResultsUncheckedUpdateInputSchema ]),
+}).strict() ;
+
+export const LabResultsCreateManyArgsSchema: z.ZodType<Prisma.LabResultsCreateManyArgs> = z.object({
+  data: z.union([ LabResultsCreateManyInputSchema,LabResultsCreateManyInputSchema.array() ]),
+  skipDuplicates: z.boolean().optional(),
+}).strict() ;
+
+export const LabResultsDeleteArgsSchema: z.ZodType<Prisma.LabResultsDeleteArgs> = z.object({
+  select: LabResultsSelectSchema.optional(),
+  include: LabResultsIncludeSchema.optional(),
+  where: LabResultsWhereUniqueInputSchema,
+}).strict() ;
+
+export const LabResultsUpdateArgsSchema: z.ZodType<Prisma.LabResultsUpdateArgs> = z.object({
+  select: LabResultsSelectSchema.optional(),
+  include: LabResultsIncludeSchema.optional(),
+  data: z.union([ LabResultsUpdateInputSchema,LabResultsUncheckedUpdateInputSchema ]),
+  where: LabResultsWhereUniqueInputSchema,
+}).strict() ;
+
+export const LabResultsUpdateManyArgsSchema: z.ZodType<Prisma.LabResultsUpdateManyArgs> = z.object({
+  data: z.union([ LabResultsUpdateManyMutationInputSchema,LabResultsUncheckedUpdateManyInputSchema ]),
+  where: LabResultsWhereInputSchema.optional(),
+}).strict() ;
+
+export const LabResultsDeleteManyArgsSchema: z.ZodType<Prisma.LabResultsDeleteManyArgs> = z.object({
+  where: LabResultsWhereInputSchema.optional(),
 }).strict() ;
 
 export const LoincComponentHierarchyCreateArgsSchema: z.ZodType<Prisma.LoincComponentHierarchyCreateArgs> = z.object({
