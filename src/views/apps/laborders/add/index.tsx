@@ -132,34 +132,24 @@ type LabOrderContextType = {
   loading: boolean
 };
 
-const generateOrderNumber = () => {
-  // Generate a 5-digit random number
-  const randomNumber = Math.floor(Math.random() * 90000) + 10000;
-
-  // Return 'CS' concatenated with the random number
-  return `CS${randomNumber}`;
-};
-
-const labOrderId = uuid.v4() as string
 const labOrderTestId = uuid.v4() as string
 const labOrderEligibilityConsentId = uuid.v4() as string
 
 // Step 1: Create a new context
 export const LabOrderContext = createContext<LabOrderContextType>({} as LabOrderContextType)
 
-const AddLabOrder = () => {
+const AddLabOrder = (labOrderIn: LabOrderWithRelations) => {
 
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
-  // States
-  const labOrderStatus = { Id: uuid.v4() as string, Status: 'Order Created', StatusDate: new Date() }
 
   const [activeStep, setActiveStep] = useState<number>(0)
   const [patientId, setPatientId] = useState<string>('')
   const [collectionMethod, setCollectionMethod] = useState<string>('')
   const [consentAt] = useState<Date>(new Date())
-  const [labOrder, setLabOrder] = useState<LabOrderWithRelations>({ Id: labOrderId, OrderDate: new Date(), OrderNumber: generateOrderNumber(), LabOrderStatus: [labOrderStatus] } as LabOrderWithRelations)
+
+  const [labOrder, setLabOrder] = useState<LabOrderWithRelations>(labOrderIn)
   const [labOrderCopy, setLabOrderCopy] = useState<LabOrderWithRelations>({ ...labOrder } as LabOrderWithRelations)
   const [steps, setSteps] = useState<Step[]>(stepEntries)
   const [loading, setLoading] = useState(false);
@@ -317,7 +307,8 @@ const AddLabOrder = () => {
 
         const labOrderTest = [{
             Id: labOrderTestId,
-            LabOrderId: labOrderId,
+
+            // LabOrderId: labOrder.Id,
             TestId: matchingLabTest.TestId,
             Type: item.Type,
             DrugName: item.DrugName,
@@ -354,7 +345,8 @@ const AddLabOrder = () => {
           // Generate the LabOrderTest
           const labOrderEligibilityConsent = [{
             Id: labOrderEligibilityConsentId,
-            LabOrderId: labOrderId,
+
+            // LabOrderId: labOrder.Id,
             SponsoredCasandraTestId: matchingLabTest.CasandraTestId,
             ProviderName: '',
             ProviderNPI: '',
@@ -417,7 +409,7 @@ const AddLabOrder = () => {
       }
 
     }
-  }, [consentAt, drugName, indication, labName, labOrderCopy, searchType, tcData]);
+  }, [consentAt, drugName, indication, labName, labOrderCopy, searchType, tcData, labOrder.Id]);
 
   useEffect(() => {
     console.log('labOrderCopy in another useEffect: ', labOrderCopy)
@@ -516,6 +508,7 @@ const AddLabOrder = () => {
       OrganizationId: labOrder.Organization?.Id,
       PatientId: labOrder.Patient?.Id,
       OrderDate: labOrder.OrderDate,
+      LabOrderBilling: { connectOrCreate: labOrder.LabOrderBilling?.map(labBilling => ({ where: { Id: labBilling.Id }, create: labBilling })) },
       LabOrderCpt: { connectOrCreate: labOrder.LabOrderCpt?.map(labCpt => ({ where: { Id: labCpt.Id }, create: { Id: labCpt.Id, CPTCode: labCpt.CPTCode, ICDCodes: JSON.parse(labCpt.ICDCodes as string) } })) },
       LabOrderTest: { connectOrCreate: labOrder.LabOrderTest?.map(labTest => ({ where: { Id: labTest.Id }, create: { Id: labTest.Id, TestId: labTest.TestId } })) },
       LabOrderSpecimen: { connectOrCreate: labOrder.LabOrderSpecimen?.map(labSpecimen => ({ where: { Id: labSpecimen.Id }, create: labSpecimen })) },

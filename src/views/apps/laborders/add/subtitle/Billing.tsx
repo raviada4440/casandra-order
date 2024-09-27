@@ -22,7 +22,7 @@ const BillingSubtitle = () => {
 
         <div className='flex items-center gap-4'>
           <Typography className='step-subtitle min-is-[65px]'>Healthplan Id:</Typography>
-          <Typography className={`step-subtitle`}> {`${billing.HealthPalnId}`}</Typography>
+          <Typography className={`step-subtitle`}> {`${billing.HealthPlanId}`}</Typography>
        </div>
        <div className='flex items-center gap-4'>
           <Typography className='step-subtitle min-is-[65px]'>Subscriber Id:</Typography>

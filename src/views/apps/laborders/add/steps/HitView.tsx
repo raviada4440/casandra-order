@@ -82,7 +82,8 @@ const HitView = (props: any) => {
       // Generate the LabOrderTest
       const labOrderEligibilityConsent = [{
         Id: uuid.v4() as string,
-        LabOrderId: labOrder.Id,
+
+        // LabOrderId: labOrder.Id,
         SponsoredCasandraTestId: hit.CasandraTestId,
         ProviderName: '',
         ProviderNPI: '',
@@ -154,9 +155,10 @@ const HitView = (props: any) => {
 
       const labOrderBilling = [{
         Id: uuid.v4() as string,
-        LabOrderId: labOrder.Id,
+
+        // LabOrderId: labOrder.Id,
         BillToId: '',
-        HealthPalnId: '',
+        HealthPlanId: '',
         PatientStatus: '',
         SubscriberId: '',
         SponoseredTestCouponCode: '',

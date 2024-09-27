@@ -39,7 +39,8 @@ const CptDetails = () => {
   const getEmptyCptRecord = () => {
     return {
       Id: uuid.v4(),
-      LabOrderId: labOrder.Id,
+      
+      // LabOrderId: labOrder.Id,
       CPTCode: undefined,
       ICDCodes: undefined
     } as unknown as LabOrderCptWithPartialRelations

@@ -323,7 +323,7 @@ const LabOrderListTable = ({ labOrdersData, columnFiltersData }: { labOrdersData
           </Typography>
         ),
       }),
-      
+
       // columnHelper.accessor('Status', {
       //   header: 'Status',
       //   cell: ({ row }) => <Typography className={`${classes.cell150}`}>{row.original.Status}</Typography>
@@ -333,9 +333,9 @@ const LabOrderListTable = ({ labOrdersData, columnFiltersData }: { labOrdersData
         enableColumnFilter:false,
         cell: ({ row }) => (
           <div className='flex items-center'>
-            <IconButton onClick={() => handleEditPermission(row.original.OrderNumber as string)}>
-              <i className='ri-edit-box-line text-[22px] text-textSecondary' />
-            </IconButton>
+            <Link href={getLocalizedUrl(`apps/laborders/edit/${row.original.Id}`, locale as Locale)} className='flex'>
+              <i className='ri-edit-box-line  text-[22px] text-textSecondary' />
+            </Link>
             {row.original.Status === 'Order Resulted' &&
               <IconButton onClick={() => showResults(row.original.Id)}>
                 <i className='ri-bank-card-line text-[22px] text-textSecondary' />

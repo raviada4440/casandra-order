@@ -1,3 +1,4 @@
+import type { SyntheticEvent} from 'react';
 import { useContext, useState } from 'react'
 
 // MUI Imports
@@ -121,8 +122,8 @@ const StepBillingDetails = ({ activeStep, handleNext, handlePrev, steps }: Props
                           id='healthplan-select'
                           label='Health Plan'
                           labelId='select-healthplan'
-                          value={formData?.HealthPalnId || ''}
-                          onChange={e => handleFormChange('HealthPalnId', e.target.value)}
+                          value={formData?.HealthPlanId || ''}
+                          onChange={e => handleFormChange('HealthPlanId', e.target.value)}
                         >
                           <MenuItem value='bcbsnc'>BCBS of North Carolina</MenuItem>
                           <MenuItem value='bcbstx'>BCBS of Texas</MenuItem>

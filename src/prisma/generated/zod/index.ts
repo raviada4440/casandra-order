@@ -78,7 +78,7 @@ export const LabOrderScalarFieldEnumSchema = z.enum(['Id','OrderNumber','Accessi
 
 export const LabOrderAttachmentScalarFieldEnumSchema = z.enum(['Id','LabOrderId','AttachmentId','CreatedAt','UpdatedAt']);
 
-export const LabOrderBillingScalarFieldEnumSchema = z.enum(['Id','LabOrderId','BillToId','HealthPalnId','PatientStatus','SubscriberId','SponoseredTestCouponCode','CreatedAt','UpdatedAt']);
+export const LabOrderBillingScalarFieldEnumSchema = z.enum(['Id','LabOrderId','BillToId','HealthPlanId','PatientStatus','SubscriberId','SponoseredTestCouponCode','CreatedAt','UpdatedAt']);
 
 export const LabOrderCptScalarFieldEnumSchema = z.enum(['Id','LabOrderId','CPTCode','ICDCodes','CreatedAt','UpdatedAt']);
 
@@ -172,7 +172,7 @@ export const LabOrderOrderByRelevanceFieldEnumSchema = z.enum(['Id','OrderNumber
 
 export const LabOrderAttachmentOrderByRelevanceFieldEnumSchema = z.enum(['Id','LabOrderId','AttachmentId']);
 
-export const LabOrderBillingOrderByRelevanceFieldEnumSchema = z.enum(['Id','LabOrderId','BillToId','HealthPalnId','PatientStatus','SubscriberId','SponoseredTestCouponCode']);
+export const LabOrderBillingOrderByRelevanceFieldEnumSchema = z.enum(['Id','LabOrderId','BillToId','HealthPlanId','PatientStatus','SubscriberId','SponoseredTestCouponCode']);
 
 export const JsonNullValueFilterSchema = z.enum(['DbNull','JsonNull','AnyNull',]).transform((value) => value === 'JsonNull' ? Prisma.JsonNull : value === 'DbNull' ? Prisma.JsonNull : value === 'AnyNull' ? Prisma.AnyNull : value);
 
@@ -974,7 +974,7 @@ export const LabOrderBillingSchema = z.object({
   Id: z.string(),
   LabOrderId: z.string().nullable(),
   BillToId: z.string().nullable(),
-  HealthPalnId: z.string().nullable(),
+  HealthPlanId: z.string().nullable(),
   PatientStatus: z.string().nullable(),
   SubscriberId: z.string().nullable(),
   SponoseredTestCouponCode: z.string().nullable(),
@@ -3324,7 +3324,7 @@ export const LabOrderBillingSelectSchema: z.ZodType<Prisma.LabOrderBillingSelect
   Id: z.boolean().optional(),
   LabOrderId: z.boolean().optional(),
   BillToId: z.boolean().optional(),
-  HealthPalnId: z.boolean().optional(),
+  HealthPlanId: z.boolean().optional(),
   PatientStatus: z.boolean().optional(),
   SubscriberId: z.boolean().optional(),
   SponoseredTestCouponCode: z.boolean().optional(),
@@ -5608,7 +5608,7 @@ export const LabOrderBillingWhereInputSchema: z.ZodType<Prisma.LabOrderBillingWh
   Id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   LabOrderId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   BillToId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  HealthPalnId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  HealthPlanId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   PatientStatus: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   SubscriberId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   SponoseredTestCouponCode: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
@@ -5621,7 +5621,7 @@ export const LabOrderBillingOrderByWithRelationAndSearchRelevanceInputSchema: z.
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   BillToId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  HealthPalnId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  HealthPlanId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   PatientStatus: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   SubscriberId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   SponoseredTestCouponCode: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -5641,7 +5641,7 @@ export const LabOrderBillingWhereUniqueInputSchema: z.ZodType<Prisma.LabOrderBil
   NOT: z.union([ z.lazy(() => LabOrderBillingWhereInputSchema),z.lazy(() => LabOrderBillingWhereInputSchema).array() ]).optional(),
   LabOrderId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   BillToId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  HealthPalnId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  HealthPlanId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   PatientStatus: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   SubscriberId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   SponoseredTestCouponCode: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
@@ -5654,7 +5654,7 @@ export const LabOrderBillingOrderByWithAggregationInputSchema: z.ZodType<Prisma.
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   BillToId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
-  HealthPalnId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  HealthPlanId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   PatientStatus: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   SubscriberId: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   SponoseredTestCouponCode: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
@@ -5672,7 +5672,7 @@ export const LabOrderBillingScalarWhereWithAggregatesInputSchema: z.ZodType<Pris
   Id: z.union([ z.lazy(() => StringWithAggregatesFilterSchema),z.string() ]).optional(),
   LabOrderId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   BillToId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
-  HealthPalnId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  HealthPlanId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   PatientStatus: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   SubscriberId: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   SponoseredTestCouponCode: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
@@ -9992,7 +9992,7 @@ export const LabOrderAttachmentUncheckedUpdateManyInputSchema: z.ZodType<Prisma.
 export const LabOrderBillingCreateInputSchema: z.ZodType<Prisma.LabOrderBillingCreateInput> = z.object({
   Id: z.string().optional(),
   BillToId: z.string().optional().nullable(),
-  HealthPalnId: z.string().optional().nullable(),
+  HealthPlanId: z.string().optional().nullable(),
   PatientStatus: z.string().optional().nullable(),
   SubscriberId: z.string().optional().nullable(),
   SponoseredTestCouponCode: z.string().optional().nullable(),
@@ -10005,7 +10005,7 @@ export const LabOrderBillingUncheckedCreateInputSchema: z.ZodType<Prisma.LabOrde
   Id: z.string().optional(),
   LabOrderId: z.string().optional().nullable(),
   BillToId: z.string().optional().nullable(),
-  HealthPalnId: z.string().optional().nullable(),
+  HealthPlanId: z.string().optional().nullable(),
   PatientStatus: z.string().optional().nullable(),
   SubscriberId: z.string().optional().nullable(),
   SponoseredTestCouponCode: z.string().optional().nullable(),
@@ -10016,7 +10016,7 @@ export const LabOrderBillingUncheckedCreateInputSchema: z.ZodType<Prisma.LabOrde
 export const LabOrderBillingUpdateInputSchema: z.ZodType<Prisma.LabOrderBillingUpdateInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   BillToId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  HealthPalnId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  HealthPlanId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   PatientStatus: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   SubscriberId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   SponoseredTestCouponCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -10029,7 +10029,7 @@ export const LabOrderBillingUncheckedUpdateInputSchema: z.ZodType<Prisma.LabOrde
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   BillToId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  HealthPalnId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  HealthPlanId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   PatientStatus: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   SubscriberId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   SponoseredTestCouponCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -10041,7 +10041,7 @@ export const LabOrderBillingCreateManyInputSchema: z.ZodType<Prisma.LabOrderBill
   Id: z.string().optional(),
   LabOrderId: z.string().optional().nullable(),
   BillToId: z.string().optional().nullable(),
-  HealthPalnId: z.string().optional().nullable(),
+  HealthPlanId: z.string().optional().nullable(),
   PatientStatus: z.string().optional().nullable(),
   SubscriberId: z.string().optional().nullable(),
   SponoseredTestCouponCode: z.string().optional().nullable(),
@@ -10052,7 +10052,7 @@ export const LabOrderBillingCreateManyInputSchema: z.ZodType<Prisma.LabOrderBill
 export const LabOrderBillingUpdateManyMutationInputSchema: z.ZodType<Prisma.LabOrderBillingUpdateManyMutationInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   BillToId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  HealthPalnId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  HealthPlanId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   PatientStatus: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   SubscriberId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   SponoseredTestCouponCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -10064,7 +10064,7 @@ export const LabOrderBillingUncheckedUpdateManyInputSchema: z.ZodType<Prisma.Lab
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   LabOrderId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   BillToId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  HealthPalnId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  HealthPlanId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   PatientStatus: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   SubscriberId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   SponoseredTestCouponCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -13955,7 +13955,7 @@ export const LabOrderBillingCountOrderByAggregateInputSchema: z.ZodType<Prisma.L
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.lazy(() => SortOrderSchema).optional(),
   BillToId: z.lazy(() => SortOrderSchema).optional(),
-  HealthPalnId: z.lazy(() => SortOrderSchema).optional(),
+  HealthPlanId: z.lazy(() => SortOrderSchema).optional(),
   PatientStatus: z.lazy(() => SortOrderSchema).optional(),
   SubscriberId: z.lazy(() => SortOrderSchema).optional(),
   SponoseredTestCouponCode: z.lazy(() => SortOrderSchema).optional(),
@@ -13967,7 +13967,7 @@ export const LabOrderBillingMaxOrderByAggregateInputSchema: z.ZodType<Prisma.Lab
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.lazy(() => SortOrderSchema).optional(),
   BillToId: z.lazy(() => SortOrderSchema).optional(),
-  HealthPalnId: z.lazy(() => SortOrderSchema).optional(),
+  HealthPlanId: z.lazy(() => SortOrderSchema).optional(),
   PatientStatus: z.lazy(() => SortOrderSchema).optional(),
   SubscriberId: z.lazy(() => SortOrderSchema).optional(),
   SponoseredTestCouponCode: z.lazy(() => SortOrderSchema).optional(),
@@ -13979,7 +13979,7 @@ export const LabOrderBillingMinOrderByAggregateInputSchema: z.ZodType<Prisma.Lab
   Id: z.lazy(() => SortOrderSchema).optional(),
   LabOrderId: z.lazy(() => SortOrderSchema).optional(),
   BillToId: z.lazy(() => SortOrderSchema).optional(),
-  HealthPalnId: z.lazy(() => SortOrderSchema).optional(),
+  HealthPlanId: z.lazy(() => SortOrderSchema).optional(),
   PatientStatus: z.lazy(() => SortOrderSchema).optional(),
   SubscriberId: z.lazy(() => SortOrderSchema).optional(),
   SponoseredTestCouponCode: z.lazy(() => SortOrderSchema).optional(),
@@ -19555,7 +19555,7 @@ export const LabOrderAttachmentCreateManyLabOrderInputEnvelopeSchema: z.ZodType<
 export const LabOrderBillingCreateWithoutLabOrderInputSchema: z.ZodType<Prisma.LabOrderBillingCreateWithoutLabOrderInput> = z.object({
   Id: z.string().optional(),
   BillToId: z.string().optional().nullable(),
-  HealthPalnId: z.string().optional().nullable(),
+  HealthPlanId: z.string().optional().nullable(),
   PatientStatus: z.string().optional().nullable(),
   SubscriberId: z.string().optional().nullable(),
   SponoseredTestCouponCode: z.string().optional().nullable(),
@@ -19566,7 +19566,7 @@ export const LabOrderBillingCreateWithoutLabOrderInputSchema: z.ZodType<Prisma.L
 export const LabOrderBillingUncheckedCreateWithoutLabOrderInputSchema: z.ZodType<Prisma.LabOrderBillingUncheckedCreateWithoutLabOrderInput> = z.object({
   Id: z.string().optional(),
   BillToId: z.string().optional().nullable(),
-  HealthPalnId: z.string().optional().nullable(),
+  HealthPlanId: z.string().optional().nullable(),
   PatientStatus: z.string().optional().nullable(),
   SubscriberId: z.string().optional().nullable(),
   SponoseredTestCouponCode: z.string().optional().nullable(),
@@ -20029,7 +20029,7 @@ export const LabOrderBillingScalarWhereInputSchema: z.ZodType<Prisma.LabOrderBil
   Id: z.union([ z.lazy(() => StringFilterSchema),z.string() ]).optional(),
   LabOrderId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   BillToId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
-  HealthPalnId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  HealthPlanId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   PatientStatus: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   SubscriberId: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   SponoseredTestCouponCode: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
@@ -27122,7 +27122,7 @@ export const LabOrderAttachmentCreateManyLabOrderInputSchema: z.ZodType<Prisma.L
 export const LabOrderBillingCreateManyLabOrderInputSchema: z.ZodType<Prisma.LabOrderBillingCreateManyLabOrderInput> = z.object({
   Id: z.string().optional(),
   BillToId: z.string().optional().nullable(),
-  HealthPalnId: z.string().optional().nullable(),
+  HealthPlanId: z.string().optional().nullable(),
   PatientStatus: z.string().optional().nullable(),
   SubscriberId: z.string().optional().nullable(),
   SponoseredTestCouponCode: z.string().optional().nullable(),
@@ -27231,7 +27231,7 @@ export const LabOrderAttachmentUncheckedUpdateManyWithoutLabOrderInputSchema: z.
 export const LabOrderBillingUpdateWithoutLabOrderInputSchema: z.ZodType<Prisma.LabOrderBillingUpdateWithoutLabOrderInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   BillToId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  HealthPalnId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  HealthPlanId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   PatientStatus: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   SubscriberId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   SponoseredTestCouponCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -27242,7 +27242,7 @@ export const LabOrderBillingUpdateWithoutLabOrderInputSchema: z.ZodType<Prisma.L
 export const LabOrderBillingUncheckedUpdateWithoutLabOrderInputSchema: z.ZodType<Prisma.LabOrderBillingUncheckedUpdateWithoutLabOrderInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   BillToId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  HealthPalnId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  HealthPlanId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   PatientStatus: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   SubscriberId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   SponoseredTestCouponCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
@@ -27253,7 +27253,7 @@ export const LabOrderBillingUncheckedUpdateWithoutLabOrderInputSchema: z.ZodType
 export const LabOrderBillingUncheckedUpdateManyWithoutLabOrderInputSchema: z.ZodType<Prisma.LabOrderBillingUncheckedUpdateManyWithoutLabOrderInput> = z.object({
   Id: z.union([ z.string(),z.lazy(() => StringFieldUpdateOperationsInputSchema) ]).optional(),
   BillToId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
-  HealthPalnId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  HealthPlanId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   PatientStatus: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   SubscriberId: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   SponoseredTestCouponCode: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),

@@ -270,7 +270,7 @@ model LabOrderBilling {
   Id                       String    @id @default(dbgenerated("(uuid())")) @db.VarChar(45)
   LabOrderId               String?   @db.VarChar(45)
   BillToId                 String?   @db.VarChar(45)
-  HealthPalnId             String?   @db.VarChar(45)
+  HealthPlanId             String?   @db.VarChar(45)
   PatientStatus            String?   @db.VarChar(45)
   SubscriberId             String?   @db.VarChar(45)
   SponoseredTestCouponCode String?   @db.VarChar(45)
