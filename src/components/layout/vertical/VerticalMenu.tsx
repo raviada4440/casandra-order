@@ -87,29 +87,29 @@ const VerticalMenu = ({ dictionary, scrollMenu }: Props) => {
         renderExpandedMenuItemIcon={{ icon: <i className='ri-circle-line' /> }}
         menuSectionStyles={menuSectionStyles(verticalNavOptions, theme)}
       >
-          <MenuItem href={`/${locale}/apps/laborders/list`} icon={<i className='ri-home-smile-line'/>}>{dictionary['navigation'].orders}</MenuItem>
+          <MenuItem href={`/${locale}/apps/laborders/list`} icon={<i className='ri-bill-line'/>}>{dictionary['navigation'].orders}</MenuItem>
           {/* <SubMenu label={dictionary['navigation'].orders} icon={<i className='ri-home-smile-line' />}>
             <MenuItem href={`/${locale}/apps/laborders/list`}>{dictionary['navigation'].orderList}</MenuItem>
             <MenuItem href={`/${locale}/apps/laborders/edit/${id}`}>{dictionary['navigation'].orderDetails}</MenuItem>
             <MenuItem href={`/${locale}/apps/laborders/add`}>{dictionary['navigation'].orderNew}</MenuItem>
           </SubMenu> */}
-          <MenuItem href={`/${locale}/dashboards/analytics`} icon={<i className='ri-bill-line' />}>
+          <MenuItem href={`/${locale}/dashboards/analytics`} icon={<i className='ri-group-line' />}>
             {dictionary['navigation'].patients}
           </MenuItem>
-          <MenuItem href={`/${locale}/dashboards/ecommerce`} icon={<i className='ri-layout-left-line' />}>
+          <MenuItem href={`/${locale}/dashboards/ecommerce`} icon={<i className='ri-list-ordered' />}>
             {dictionary['navigation'].results}
           </MenuItem>
 
-          <MenuItem href={`/${locale}/apps/calendar`} icon={<i className='ri-calendar-line' />}>
+          <MenuItem href={`/${locale}/apps/calendar`} icon={<i className='ri-test-tube-line' />}>
             {dictionary['navigation'].specimen}
           </MenuItem>
-          <MenuItem href={`/${locale}/pages/dialog-examples`} icon={<i className='ri-tv-2-line' />}>
+          <MenuItem href={`/${locale}/pages/dialog-examples`} icon={<i className='ri-p2p-line' />}>
             {dictionary['navigation'].trials}
           </MenuItem>
-          <MenuItem href={`/${locale}/forms/form-layouts`} icon={<i className='ri-layout-4-line' />}>
+          <MenuItem href={`/${locale}/forms/form-layouts`} icon={<i className='ri-capsule-line' />}>
             {dictionary['navigation'].therapies}
           </MenuItem>
-          <MenuItem href={`/${locale}/forms/form-validation`} icon={<i className='ri-checkbox-multiple-line' />}>
+          <MenuItem href={`/${locale}/forms/form-validation`} icon={<i className='ri-funds-box-line' />}>
             {dictionary['navigation'].utilization}
           </MenuItem>
       </Menu>

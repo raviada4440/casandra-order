@@ -307,8 +307,6 @@ const AddLabOrder = (labOrderIn: LabOrderWithRelations) => {
 
         const labOrderTest = [{
             Id: labOrderTestId,
-
-            // LabOrderId: labOrder.Id,
             TestId: matchingLabTest.TestId,
             Type: item.Type,
             DrugName: item.DrugName,
@@ -345,8 +343,6 @@ const AddLabOrder = (labOrderIn: LabOrderWithRelations) => {
           // Generate the LabOrderTest
           const labOrderEligibilityConsent = [{
             Id: labOrderEligibilityConsentId,
-
-            // LabOrderId: labOrder.Id,
             SponsoredCasandraTestId: matchingLabTest.CasandraTestId,
             ProviderName: '',
             ProviderNPI: '',
