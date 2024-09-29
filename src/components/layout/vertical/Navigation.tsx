@@ -4,8 +4,6 @@
 import { useEffect, useRef } from 'react'
 
 // MUI Imports
-import { useParams } from 'next/navigation'
-
 import { styled, useColorScheme, useTheme } from '@mui/material/styles'
 
 // Type Imports
@@ -22,7 +20,6 @@ import { useSettings } from '@core/hooks/useSettings'
 
 // Style Imports
 import navigationCustomStyles from '@core/styles/vertical/navigationCustomStyles'
-import Logo from '@components/layout/shared/Logo'
 
 type Props = {
   dictionary: Awaited<ReturnType<typeof getDictionary>>
@@ -57,7 +54,6 @@ const Navigation = (props: Props) => {
   const { updateSettings, settings } = useSettings()
   const { mode: muiMode, systemMode: muiSystemMode } = useColorScheme()
   const theme = useTheme()
-  const { lang: locale } = useParams()
 
   // Refs
   const shadowRef = useRef(null)
