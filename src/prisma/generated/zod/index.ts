@@ -104,7 +104,7 @@ export const OrganizationEndpointScalarFieldEnumSchema = z.enum(['Id','OrgName',
 
 export const OrganizationFavoriteTestScalarFieldEnumSchema = z.enum(['Id','OrganizationId','ParentId','ParentName','Level','TestId','CreatedAt','UpdatedAt']);
 
-export const PatientScalarFieldEnumSchema = z.enum(['Id','FirstName','LastName','DateOfBirth','Gender','Email','Mobile','CreatedAt','UpdatedAt']);
+export const PatientScalarFieldEnumSchema = z.enum(['Id','FirstName','LastName','DateOfBirth','Gender','Email','Mobile','Source','CreatedAt','UpdatedAt']);
 
 export const PatientOrganizationScalarFieldEnumSchema = z.enum(['Id','PatientId','OrganizationId','MRN','Mobile','Email']);
 
@@ -200,7 +200,7 @@ export const OrganizationEndpointOrderByRelevanceFieldEnumSchema = z.enum(['Id',
 
 export const OrganizationFavoriteTestOrderByRelevanceFieldEnumSchema = z.enum(['Id','OrganizationId','ParentId','ParentName']);
 
-export const PatientOrderByRelevanceFieldEnumSchema = z.enum(['Id','FirstName','LastName','Gender','Email','Mobile']);
+export const PatientOrderByRelevanceFieldEnumSchema = z.enum(['Id','FirstName','LastName','Gender','Email','Mobile','Source']);
 
 export const PatientOrganizationOrderByRelevanceFieldEnumSchema = z.enum(['Id','PatientId','OrganizationId','MRN','Mobile','Email']);
 
@@ -1657,6 +1657,7 @@ export const PatientSchema = z.object({
   Gender: z.string().nullable(),
   Email: z.string().nullable(),
   Mobile: z.string().nullable(),
+  Source: z.string().nullable(),
   CreatedAt: z.date().nullable(),
   UpdatedAt: z.date().nullable(),
 })
@@ -3661,6 +3662,7 @@ export const PatientSelectSchema: z.ZodType<Prisma.PatientSelect> = z.object({
   Gender: z.boolean().optional(),
   Email: z.boolean().optional(),
   Mobile: z.boolean().optional(),
+  Source: z.boolean().optional(),
   CreatedAt: z.boolean().optional(),
   UpdatedAt: z.boolean().optional(),
   LabOrder: z.union([z.boolean(),z.lazy(() => LabOrderFindManyArgsSchema)]).optional(),
@@ -6696,6 +6698,7 @@ export const PatientWhereInputSchema: z.ZodType<Prisma.PatientWhereInput> = z.ob
   Gender: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   Email: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   Mobile: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Source: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   LabOrder: z.lazy(() => LabOrderListRelationFilterSchema).optional(),
@@ -6710,6 +6713,7 @@ export const PatientOrderByWithRelationAndSearchRelevanceInputSchema: z.ZodType<
   Gender: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   Email: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   Mobile: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Source: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   LabOrder: z.lazy(() => LabOrderOrderByRelationAggregateInputSchema).optional(),
@@ -6731,6 +6735,7 @@ export const PatientWhereUniqueInputSchema: z.ZodType<Prisma.PatientWhereUniqueI
   Gender: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   Email: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   Mobile: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
+  Source: z.union([ z.lazy(() => StringNullableFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeNullableFilterSchema),z.date() ]).optional().nullable(),
   LabOrder: z.lazy(() => LabOrderListRelationFilterSchema).optional(),
@@ -6745,6 +6750,7 @@ export const PatientOrderByWithAggregationInputSchema: z.ZodType<Prisma.PatientO
   Gender: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   Email: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   Mobile: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
+  Source: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   CreatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   UpdatedAt: z.union([ z.lazy(() => SortOrderSchema),z.lazy(() => SortOrderInputSchema) ]).optional(),
   _count: z.lazy(() => PatientCountOrderByAggregateInputSchema).optional(),
@@ -6763,6 +6769,7 @@ export const PatientScalarWhereWithAggregatesInputSchema: z.ZodType<Prisma.Patie
   Gender: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   Email: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   Mobile: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
+  Source: z.union([ z.lazy(() => StringNullableWithAggregatesFilterSchema),z.string() ]).optional().nullable(),
   CreatedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
   UpdatedAt: z.union([ z.lazy(() => DateTimeNullableWithAggregatesFilterSchema),z.date() ]).optional().nullable(),
 }).strict();
@@ -11146,6 +11153,7 @@ export const PatientCreateInputSchema: z.ZodType<Prisma.PatientCreateInput> = z.
   Gender: z.string().optional().nullable(),
   Email: z.string().optional().nullable(),
   Mobile: z.string().optional().nullable(),
+  Source: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable(),
   LabOrder: z.lazy(() => LabOrderCreateNestedManyWithoutPatientInputSchema).optional(),
@@ -11160,6 +11168,7 @@ export const PatientUncheckedCreateInputSchema: z.ZodType<Prisma.PatientUnchecke
   Gender: z.string().optional().nullable(),
   Email: z.string().optional().nullable(),
   Mobile: z.string().optional().nullable(),
+  Source: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable(),
   LabOrder: z.lazy(() => LabOrderUncheckedCreateNestedManyWithoutPatientInputSchema).optional(),
@@ -11174,6 +11183,7 @@ export const PatientUpdateInputSchema: z.ZodType<Prisma.PatientUpdateInput> = z.
   Gender: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Source: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LabOrder: z.lazy(() => LabOrderUpdateManyWithoutPatientNestedInputSchema).optional(),
@@ -11188,6 +11198,7 @@ export const PatientUncheckedUpdateInputSchema: z.ZodType<Prisma.PatientUnchecke
   Gender: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Source: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LabOrder: z.lazy(() => LabOrderUncheckedUpdateManyWithoutPatientNestedInputSchema).optional(),
@@ -11202,6 +11213,7 @@ export const PatientCreateManyInputSchema: z.ZodType<Prisma.PatientCreateManyInp
   Gender: z.string().optional().nullable(),
   Email: z.string().optional().nullable(),
   Mobile: z.string().optional().nullable(),
+  Source: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable()
 }).strict();
@@ -11214,6 +11226,7 @@ export const PatientUpdateManyMutationInputSchema: z.ZodType<Prisma.PatientUpdat
   Gender: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Source: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
@@ -11226,6 +11239,7 @@ export const PatientUncheckedUpdateManyInputSchema: z.ZodType<Prisma.PatientUnch
   Gender: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Source: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
 }).strict();
@@ -14696,6 +14710,7 @@ export const PatientCountOrderByAggregateInputSchema: z.ZodType<Prisma.PatientCo
   Gender: z.lazy(() => SortOrderSchema).optional(),
   Email: z.lazy(() => SortOrderSchema).optional(),
   Mobile: z.lazy(() => SortOrderSchema).optional(),
+  Source: z.lazy(() => SortOrderSchema).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -14708,6 +14723,7 @@ export const PatientMaxOrderByAggregateInputSchema: z.ZodType<Prisma.PatientMaxO
   Gender: z.lazy(() => SortOrderSchema).optional(),
   Email: z.lazy(() => SortOrderSchema).optional(),
   Mobile: z.lazy(() => SortOrderSchema).optional(),
+  Source: z.lazy(() => SortOrderSchema).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -14720,6 +14736,7 @@ export const PatientMinOrderByAggregateInputSchema: z.ZodType<Prisma.PatientMinO
   Gender: z.lazy(() => SortOrderSchema).optional(),
   Email: z.lazy(() => SortOrderSchema).optional(),
   Mobile: z.lazy(() => SortOrderSchema).optional(),
+  Source: z.lazy(() => SortOrderSchema).optional(),
   CreatedAt: z.lazy(() => SortOrderSchema).optional(),
   UpdatedAt: z.lazy(() => SortOrderSchema).optional()
 }).strict();
@@ -19462,6 +19479,7 @@ export const PatientCreateWithoutLabOrderInputSchema: z.ZodType<Prisma.PatientCr
   Gender: z.string().optional().nullable(),
   Email: z.string().optional().nullable(),
   Mobile: z.string().optional().nullable(),
+  Source: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable(),
   PatientOrganization: z.lazy(() => PatientOrganizationCreateNestedManyWithoutPatientInputSchema).optional()
@@ -19475,6 +19493,7 @@ export const PatientUncheckedCreateWithoutLabOrderInputSchema: z.ZodType<Prisma.
   Gender: z.string().optional().nullable(),
   Email: z.string().optional().nullable(),
   Mobile: z.string().optional().nullable(),
+  Source: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable(),
   PatientOrganization: z.lazy(() => PatientOrganizationUncheckedCreateNestedManyWithoutPatientInputSchema).optional()
@@ -19923,6 +19942,7 @@ export const PatientUpdateWithoutLabOrderInputSchema: z.ZodType<Prisma.PatientUp
   Gender: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Source: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   PatientOrganization: z.lazy(() => PatientOrganizationUpdateManyWithoutPatientNestedInputSchema).optional()
@@ -19936,6 +19956,7 @@ export const PatientUncheckedUpdateWithoutLabOrderInputSchema: z.ZodType<Prisma.
   Gender: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Source: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   PatientOrganization: z.lazy(() => PatientOrganizationUncheckedUpdateManyWithoutPatientNestedInputSchema).optional()
@@ -22436,6 +22457,7 @@ export const PatientCreateWithoutPatientOrganizationInputSchema: z.ZodType<Prism
   Gender: z.string().optional().nullable(),
   Email: z.string().optional().nullable(),
   Mobile: z.string().optional().nullable(),
+  Source: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable(),
   LabOrder: z.lazy(() => LabOrderCreateNestedManyWithoutPatientInputSchema).optional()
@@ -22449,6 +22471,7 @@ export const PatientUncheckedCreateWithoutPatientOrganizationInputSchema: z.ZodT
   Gender: z.string().optional().nullable(),
   Email: z.string().optional().nullable(),
   Mobile: z.string().optional().nullable(),
+  Source: z.string().optional().nullable(),
   CreatedAt: z.date().optional().nullable(),
   UpdatedAt: z.date().optional().nullable(),
   LabOrder: z.lazy(() => LabOrderUncheckedCreateNestedManyWithoutPatientInputSchema).optional()
@@ -22527,6 +22550,7 @@ export const PatientUpdateWithoutPatientOrganizationInputSchema: z.ZodType<Prism
   Gender: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Source: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LabOrder: z.lazy(() => LabOrderUpdateManyWithoutPatientNestedInputSchema).optional()
@@ -22540,6 +22564,7 @@ export const PatientUncheckedUpdateWithoutPatientOrganizationInputSchema: z.ZodT
   Gender: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Email: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   Mobile: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
+  Source: z.union([ z.string(),z.lazy(() => NullableStringFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   CreatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   UpdatedAt: z.union([ z.date(),z.lazy(() => NullableDateTimeFieldUpdateOperationsInputSchema) ]).optional().nullable(),
   LabOrder: z.lazy(() => LabOrderUncheckedUpdateManyWithoutPatientNestedInputSchema).optional()

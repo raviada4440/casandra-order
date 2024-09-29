@@ -478,6 +478,7 @@ model Patient {
   Gender              String?               @db.VarChar(512)
   Email               String?               @db.VarChar(512)
   Mobile              String?               @db.Text
+  Source              String?               @db.VarChar(45)
   CreatedAt           DateTime?             @default(now()) @db.DateTime(0)
   UpdatedAt           DateTime?             @default(now()) @db.DateTime(0)
   LabOrder            LabOrder[]

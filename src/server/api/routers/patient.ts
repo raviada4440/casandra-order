@@ -1,4 +1,3 @@
-
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "@server/api/trpc";
@@ -51,5 +50,18 @@ export const patientRouter = createTRPCRouter({
         take: input.searchStr == undefined || '' ? undefined : 10,
       })
     }),
+
+  getPatientList: publicProcedure.query(async ({ ctx }) => {
+    return ctx.db.patient.findMany({
+      include: {
+        LabOrder: true,
+        PatientOrganization: {
+          include: {
+            Organization: true,
+          }
+        },
+      },
+    })
+  }),
 
 });
